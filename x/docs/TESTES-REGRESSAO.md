@@ -27,3 +27,7 @@ Atualizado em 07/11/2026. Não marcar como aprovado sem evidência observada.
 
 ## Regra para promover à main
 Revisão técnica + testes isolados + testes de contrato + regressão crítica + aceite no celular + aprovação expressa. Um deploy “Ready” confirma publicação, **não** a correção funcional.
+
+
+## Situação dos testes automatizados em 07/11/2026
+Foi adicionado `x/tests/catalogo.test.cjs` (Node.js 22, sem dependências) e workflow `.github/workflows/testes-tereon-x.yml` para push em `desenvolvimento` e PR para `main`. Na checagem imediatamente posterior, a API de Actions ainda retornava **0 execuções**. O teste permanece **não comprovado no CI**. A checagem isolada anterior do motor em ambiente de avaliação JavaScript carregou 24 fichas e verificou obrigatoriedade/condições básicas. Executar o script pelo GitHub Actions antes de homologar.
