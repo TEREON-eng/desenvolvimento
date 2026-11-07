@@ -39,6 +39,7 @@ A arquitetura está **em transição**, não plenamente modular. Há separaçõe
 - O teste isolado do motor carregou **24/24 fichas**, com **24 identificadores internos únicos**, **24 não homologadas**; Eletrodutos reteve **13 detalhes**, incluindo **2 sem opções**.
 - Fluxos de UI, PDF, compartilhamento real, Apps Script, atualização do PWA e status de Cloudflare **não foram testados em navegador**.
 - Não foi executado merge para `main` nem alterado o aplicativo antigo.
+- Teste de contrato e workflow CI foram adicionados após a auditoria; sem execução registrada no Actions até o encerramento da checagem.
 
 ## Ordem sugerida das próximas entregas
 1. Implementar teste automático de contrato/sintaxe e integridade de fichas para o X.
