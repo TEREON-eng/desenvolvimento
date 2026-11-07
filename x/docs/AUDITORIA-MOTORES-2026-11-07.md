@@ -48,3 +48,7 @@ A arquitetura está **em transição**, não plenamente modular. Há separaçõe
 4. Resolver IDs provisórios e normalização única das fichas.
 5. Ajustar Compartilhar aos perfis acordados, com testes de regressão.
 6. Consolidar navegação de Biblioteca, Catálogo e Listas e testar no celular.
+
+
+## Evidência adicional de automação
+O GitHub Actions confirmou **success** para o contrato de catálogo no commit `78628c4` (run 42427001982). Esta aprovação automatizada não homologa o aplicativo completo nem seus dados técnicos.
