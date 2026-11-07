@@ -22,3 +22,7 @@ https://docs.google.com/spreadsheets/d/1REYIoeYHOI7gbnggm8xQR77sd6V8VQtvFNFzUhTw
 - A aprovação/publicação é manual e feita pelo fundador.
 - Em modo não configurado, o formulário registra propostas locais para exportação CSV; não as transmite.
 - Em modo configurado, o navegador envia via POST e abre a confirmação numa nova aba. A tela de origem não declara envio bem-sucedido porque a confirmação acontece no Apps Script.
+
+
+## Auditoria 07/11/2026 — nova hospedagem
+A implantação corrente do X usa Cloudflare Workers em nova conta, enquanto o exemplo `apps-script.gs` possui validação de origem associada a `https://tereon.pages.dev`. **Não considerar a confirmação por postMessage funcional na nova origem sem testar e ajustar a lista de origens autorizadas no Apps Script implantado.** O JSONP também precisa de teste de recebimento real. Atualizar código de produção do Apps Script somente após identificar o deployment correto e confirmar autorização. A proposta nunca entra no Catálogo Oficial sem aprovação do fundador.
