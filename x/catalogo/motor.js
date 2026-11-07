@@ -44,7 +44,7 @@ async function load(){
  if(!loading)loading=fetch('/x/fichario-x/simulacao-24.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Catálogo indisponível ('+r.status+')');return r.json()}).then(d=>{
   if(d.schema!==1||!Array.isArray(d.fichas))throw Error('Esquema de catálogo incompatível');
   const all=d.fichas.map(normalize);const ids=new Set();
-  all.forEach(f=>{if(ids.has(f.id))throw Error('Código duplicado: '+f.id);ids.add(f.id)});
+  all.forEach((f,i)=>{if(ids.has(f.id)){f.pendencias.push('Código do fichário duplicado: '+f.id);f.id=f.id+'-SIM-'+String(i+1).padStart(2,'0');}ids.add(f.id)});
   cache=Object.freeze(all);return cache;
  }).catch(e=>{loading=null;throw e});
  return loading;
