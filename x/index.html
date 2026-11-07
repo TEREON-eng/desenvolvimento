@@ -85,6 +85,8 @@ dialog::backdrop{background:#14281d77;backdrop-filter:blur(2px)}
  </div>
 </dialog>
 <script src="/x/motor-compartilhar.js?v=1"></script>
+<script src="/x/catalogo/motor.js?v=2"></script>
+<script src="/x/catalogo/seletor.js?v=1"></script>
 <script>
 (function(){
 'use strict';
@@ -111,7 +113,7 @@ function draw(){
   html='<h1>Listas de materiais</h1><p class="muted">Comece uma lista ou continue de onde parou.</p><div class="grid2">'+
    '<button class="tile" data-action="lists"><span class="symbol">☷</span><div><strong>Minhas listas</strong><br><span>'+data.lists.length+' lista(s)</span></div></button>'+
    '<button class="tile" data-action="create"><span class="symbol">＋</span><div><strong>Criar lista</strong><br><span>Nova lista de materiais</span></div></button></div>'+ 
-   '<a class="listrow" href="/x/fichario-x/simulador.html" style="margin-top:10px;text-decoration:none;color:inherit;align-items:center"><span><strong>Laboratório de fichas · 24</strong><br><small class="muted">Simular o Fichário Oficial sem alterar suas listas</small></span><span>›</span></a>'+
+   '<a class="listrow" href="/x/biblioteca/" style="margin-top:10px;text-decoration:none;color:inherit;align-items:center"><span><strong>Biblioteca · Fichas Técnicas</strong><br><small class="muted">Catálogo Oficial com fichas em revisão para testes</small></span><span>›</span></a>'+
    '<a class="listrow" href="/x/contribuir.html" style="margin-top:18px;text-decoration:none;color:inherit;align-items:center"><span><strong>Envie seu item para nós</strong><br><small class="muted">Sugira materiais para avaliação do Catálogo Oficial · estudo</small></span><span>›</span></a>';
  }else if(page==='lists'){
   html='<div class="row"><h1>Minhas listas</h1><button class="btn small" data-action="create">＋ Nova</button></div><div class="stack">';
@@ -171,6 +173,21 @@ function openAdd(item){
  $('saveItem').textContent=item?'✓ Salvar alterações':'＋ Adicionar à lista';
  redrawAdd();$('addDialog').showModal();
 }
+function openCatalogAdd(item){
+ if(!list())return;
+ const active=list(),originalId=item?String(item.id):null;
+ if(!window.TereonXCatalogUI){alert('Motor do catálogo indisponível. Atualize a página.');return;}
+ window.TereonXCatalogUI.open({item:item||null,onSave:function(entry){
+  if(!entry||!entry.catalogId||!entry.name)throw Error('Item inválido');
+  const chosenStage=entry.stage.trim();
+  const existingStage=active.stages.find(s=>s.toLocaleLowerCase('pt-BR')===chosenStage.toLocaleLowerCase('pt-BR'));
+  if(!existingStage)active.stages.push(chosenStage);
+  entry.stage=existingStage||chosenStage;
+  if(originalId){const original=active.items.find(x=>String(x.id)===originalId);if(!original)throw Error('Item original não encontrado');Object.assign(original,entry)}
+  else active.items.push(Object.assign({id:newId()},entry));
+  persist();draw();
+ }}).catch(e=>alert('Erro ao abrir catálogo: '+e.message));
+}
 function newId(){return String(Date.now())+'-'+Math.random().toString(36).slice(2,8);}
 function close(id){$(id).close();}
 $('homeButton').addEventListener('click',function(){navigate('home');});
@@ -179,12 +196,12 @@ $('screen').addEventListener('click',function(e){
   if(a.dataset.action==='create'){$('newName').value='';$('createDialog').showModal();$('newName').focus();}
   if(a.dataset.action==='lists')navigate('lists');
   if(a.dataset.action==='share'&&list())window.TereonXShare?.open(list());
-  if(a.dataset.action==='add')openAdd();
+  if(a.dataset.action==='add')openCatalogAdd();
  }
  var open=e.target.closest('[data-open]');if(open){activeId=open.dataset.open;navigate('list');}
  var edit=e.target.closest('[data-edit]');if(edit&&list()){
   var existing=list().items.find(function(x){return String(x.id)===edit.dataset.edit;});
-  if(existing)openAdd(existing);
+  if(existing){if(existing.catalogId)openCatalogAdd(existing);else openAdd(existing);}
  }
  var duplicate=e.target.closest('[data-duplicate]');if(duplicate&&list()){
   var source=list().items.find(function(x){return String(x.id)===duplicate.dataset.duplicate;});
@@ -237,7 +254,7 @@ load();draw();
 <script>
 (function(){
  'use strict';
- const VERSION='x.0.3.4';
+ const VERSION='x.0.3.5';
  let installPrompt=null;
  let refreshPending=false;
  const button=document.getElementById('installButton');
