@@ -51,4 +51,27 @@ Um módulo **não** deve abrir a tela interna de outro, conhecer IDs de elemento
 ## 7. Condição de substituição do legado
 O X substituirá o legado por capacidades homologadas, nunca por importar indiscriminadamente seus scripts. As funcionalidades antigas servem como **referência de regras e critérios**, não como código obrigatório. Migração de dados, quando houver, será tratada separadamente, com cópia de segurança, compatibilidade validada e autorização explícita.
 
-**Regra de revisão:** qualquer proposta que exija mudar dois ou mais módulos para uma alteração de interface isolada deve primeiro ser reavaliada arquiteturalmente. 
+**Regra de revisão:** qualquer proposta que exija mudar dois ou mais módulos para uma alteração de interface isolada deve primeiro ser reavaliada arquiteturalmente.
+
+
+## 8. Situação real da implementação (auditoria de 07/11/2026)
+
+Este documento define **o padrão obrigatório**, não declara que todo código já cumpre o padrão. O mapa de implementação e as exceções estão em [docs/MAPA-MODULOS.md](docs/MAPA-MODULOS.md); o diagnóstico detalhado em [docs/AUDITORIA-MOTORES-2026-11-07.md](docs/AUDITORIA-MOTORES-2026-11-07.md).
+
+### Desvios conhecidos
+- `x/index.html` ainda combina shell, persistência, operações de listas e uma ficha fixa histórica de condutor. A separação deve ser incremental, com regressão, não por reescrita completa.
+- O seletor do catálogo usa API global explícita e callback, mas depende do motor `TereonXCatalog`; a Biblioteca também o consome.
+- Os leitores de fichas do simulador e do catálogo têm normalizações distintas; devem convergir para uma única fonte de regras.
+- Os perfis de Compartilhar acordados ainda não estão integralmente implementados; não declarar conformidade por existir arquivo separado.
+- Os dados atuais são demonstrativos: 24 entradas, sendo 2 reais em revisão e 22 hipotéticas. Catálogo Oficial é nome da coleção, não garantia de aprovação.
+- Condições livres não verificadas não representam autorização técnica para especificação.
+
+### Portas obrigatórias para novos módulos
+1. Declarar entrada, saída, dependências e dono dos dados.
+2. Demonstrar teste isolado e ausência de acesso a estado interno alheio.
+3. Não promover fichas pelo simples status, consulta na Biblioteca ou participação em lista.
+4. Preservar lançamentos antigos e dados locais em cada migração.
+5. Não realizar merge para `main` por êxito de deploy; exigir testes funcionais e aprovação.
+
+### Próxima refatoração permitida
+Priorizar `listas/store.js` e `listas/servico.js`, com extração gradual e testes antes de substituir código inline. Essa prioridade não autoriza alterar fluxos da interface já aprovados sem validação do usuário.
