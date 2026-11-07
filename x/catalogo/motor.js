@@ -1,6 +1,6 @@
 /* TEREON X — motor de catálogo / biblioteca v1.
    Catálogo para listas e acervo de fichas compartilham a mesma fonte.
-   Nenhuma ficha em revisão ou hipotética adquire status Oficial. */
+   Visibilidade no catálogo não significa aprovação ou homologação. */
 (function(root){
 'use strict';
 let cache=null,loading=null;
@@ -17,7 +17,8 @@ function normalize(f){
  })).filter(d=>d.options.length);
  const sourceType=f.tipo==='hipotetica'?'simulacao':isOfficial(f)?'oficial':'revisao';
  return {id:clean(f.codigo),name:clean(f.nome),reference:clean(f.referencia)||clean(f.codigo),
-   status:clean(f.status),kind:sourceType,details,source:'fichario-x/simulacao-24.json'};
+   status:clean(f.status),kind:sourceType,collection:'catalogo-oficial',homologada:isOfficial(f),
+   pendencias:[...(sourceType==='simulacao'?['Ficha ainda não criada: opções fictícias']:[]),...details.filter(d=>!d.condition||!d.classification||d.name==='[Detalhe sem nome]').map(d=>'Revisar: '+d.name)],\n   details,source:'fichario-x/simulacao-24.json'};
 }
 function applyRule(rule,values,details){
  const r=clean(rule);if(!r||norm(r)==='sempre')return {visible:true,verified:!!r};
