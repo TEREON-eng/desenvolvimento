@@ -1,6 +1,6 @@
 /* TEREON X · SW exclusivo do escopo /x/; nunca tocar nos caches do legado. */
 'use strict';
-const CACHE='tereon-x-lab-0.3.5';
+const CACHE='tereon-x-lab-0.3.6';
 const START='/x/';
 const OFFLINE=[START,'/x/index.html','/x/manifest.webmanifest','/x/catalogo/motor.js','/x/catalogo/seletor.js','/x/fichario-x/simulacao-24.json','/x/biblioteca/'];
 self.addEventListener('install',event=>{
