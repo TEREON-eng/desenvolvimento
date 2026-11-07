@@ -27,3 +27,13 @@
 
 ## Verificação automatizada adicional — 07/11/2026
 - GitHub Actions do catálogo passou (run 42427001982, commit `78628c4`); apenas o contrato do motor, não a UI ou PWA.
+
+
+## 07/11/2026 — X.0.3.7, separação efetiva de módulos
+- Extraídos do `index.html`: estilos `styles.css`, instalação PWA `pwa.js`, apresentação `listas/app.js`.
+- Criados `listas/store.js` (armazenamento) e `listas/servico.js` (CRUD e validação) com API injetável e sem DOM.
+- A UI das listas deixa de modificar `localStorage` e estruturas persistidas diretamente; usa serviço exclusivo e snapshots.
+- Preservada chave `tereon-x-lab-v1` e interface histórica de condutor apenas para edição de lançamentos antigos.
+- Adicionado `tests/modulos.test.cjs` e CI com testes de contrato, persistência, dados históricos, isolamento e sintaxe.
+- Atualizado service worker para pré-cache dos arquivos independentes.
+- Somente `desenvolvimento`; promoção à `main` depende de teste funcional e aprovação.
