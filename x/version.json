@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.6",
+  "version": "x.0.3.7",
   "build": "2026-11-07",
-  "notes": "Correção de carregamento da Biblioteca e dos 24 materiais simulados"
+  "notes": "Refatoração modular do shell, motor de listas e persistência com testes de regressão"
 }
