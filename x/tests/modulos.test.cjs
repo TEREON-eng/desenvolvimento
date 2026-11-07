@@ -1,0 +1,59 @@
+/* TEREON X — regressão de módulos sem browser e sem dependências. */
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
+const base=path.resolve(__dirname,'../..');
+function src(p){return fs.readFileSync(path.join(base,p),'utf8')}
+function run(){
+ const context={window:{},console,Date,Math};vm.createContext(context);
+ for(const file of ['x/listas/store.js','x/listas/servico.js'])new vm.Script(src(file),{filename:file}).runInContext(context);
+ return context.window;
+}
+const root=run(),map=new Map(),storage={getItem:k=>map.has(k)?map.get(k):null,setItem:(k,v)=>map.set(k,v)};
+const key=root.TereonXListStore.KEY;
+assert.equal(key,'tereon-x-lab-v1','preservar chave localStorage existente');
+map.set(key,JSON.stringify({lists:[{id:'antiga',name:'Lista histórica',items:[{id:'old-1',name:'Condutor',qty:'100',unit:'m',stage:'Geral',values:{cor:'Azul'}}],stages:['Geral']}] }));
+let sequence=0;
+const repository=root.TereonXListStore.create({storage}),service=root.TereonXLists.create(repository,{newId:()=>String(++sequence)});
+assert.equal(service.snapshot().lists[0].items[0].name,'Condutor');
+assert.equal(service.get('antiga').items[0].values.cor,'Azul');
+const listId=service.createList('  Obra A  ');
+assert.equal(service.get(listId).name,'Obra A');
+const item={catalogId:'FT_INFRA-001',name:'Eletrodutos · Rígido',qty:3,unit:'un',stage:'  GERAL  ',values:{'DET-001':'Rígido'},simulacao:true};
+const itemId=service.upsertItem(listId,item);
+assert.equal(service.get(listId).items.length,1);
+assert.equal(service.get(listId).stages[0],'GERAL');
+assert.equal(item.stage,'  GERAL  ','módulo não altera entrada');
+const stageId=service.upsertItem(listId,{...item,name:'Novo',stage:'geral'},itemId);
+assert.equal(stageId,itemId);
+assert.equal(service.get(listId).items[0].stage,'GERAL');
+assert.equal(service.get(listId).stages.length,1);
+const duplicate=service.duplicateItem(listId,itemId);
+assert.notEqual(duplicate,itemId);assert.equal(service.get(listId).items.length,2);
+service.removeItem(listId,duplicate);
+assert.equal(service.get(listId).items.length,1);
+assert.equal(service.get('antiga').items.length,1,'registro histórico preservado');
+const snapshot=service.exportList(listId);
+snapshot.items[0].name='MODIFICADO';
+assert.equal(service.get(listId).items[0].name,'Novo','snapshot de exportação não pode alterar lista');
+const before=map.get(key);
+assert.throws(()=>service.upsertItem(listId,{...item,qty:0}),/Preencha/);
+assert.equal(map.get(key),before,'erro de validação não grava');
+const broken={getItem:()=>map.get(key),setItem:()=>{throw Error('quota')}};
+const brokenStore=root.TereonXListStore.create({storage:broken});
+const brokenService=root.TereonXLists.create(brokenStore);
+assert.throws(()=>brokenService.createList('Falha'),/Alteração cancelada/);
+assert.equal(brokenService.snapshot().lists.length,2,'erro de gravação não altera memória');
+assert.throws(()=>root.TereonXListStore.create({storage:{getItem:()=>'{',setItem(){}}}),/Nenhum dado foi alterado/);
+
+const html=src('x/index.html');
+const scripts=[...html.matchAll(/<script src="([^"]+)"/g)].map(x=>x[1].split('?')[0]);
+const expected=['/x/listas/store.js','/x/listas/servico.js','/x/motor-compartilhar.js','/x/catalogo/motor.js','/x/catalogo/seletor.js','/x/listas/app.js','/x/pwa.js'];
+assert.deepEqual(scripts,expected,'ordem explícita de dependências');
+assert.equal(/<script>/.test(html),false,'shell não deve conter lógica inline');
+for(const url of scripts)new vm.Script(src(url.slice(1)),{filename:url});
+for(const file of ['x/fichario-x/leitor.js','x/fichario-x/simulador.js','x/motor-compartilhar.js','x/sugestoes-config.js','x/sw.js'])new vm.Script(src(file),{filename:file});
+assert.ok(html.includes('/x/styles.css'));
+assert.equal(src('x/listas/app.js').includes('localStorage'),false);
+assert.equal(src('x/listas/servico.js').includes('document.'),false);
+assert.equal(src('x/listas/store.js').includes('document.'),false);
+console.log('TEREON X: contratos de Listas, persistência e separação do shell OK');
