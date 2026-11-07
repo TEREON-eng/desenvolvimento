@@ -31,3 +31,27 @@ Atualizado em 07/11/2026. Estado observado na branch `desenvolvimento`.
 3. O fichário hipotético nunca fornece dados técnicos homologados.
 4. A aprovação/publicação será processo explícito, não inferido apenas do campo `status`.
 5. Não criar wrappers de funções globais para interligar módulos.
+
+
+## Evolução implantada — x.0.3.7
+| Módulo | Função | Dependência permitida |
+|---|---|---|
+| `x/index.html` | shell HTML e ordem de scripts | scripts e estilos declarados |
+| `x/styles.css` | estilo do shell e modal histórico | nenhuma lógica JS |
+| `x/listas/store.js` | leitura/gravação atômica em `tereon-x-lab-v1` | storage injetável |
+| `x/listas/servico.js` | CRUD de listas, etapas e itens; validação; snapshots | repositório injetado |
+| `x/listas/app.js` | navegação e UI das listas | API `TereonXLists.create`, seletor e compartilhador |
+| `x/pwa.js` | instalação e ciclo de vida PWA | DOM de instalação, `sw.js`, `version.json` |
+| `x/catalogo/motor.js` | regras técnicas e fonte de fichas | JSON de laboratório |
+| `x/catalogo/seletor.js` | UI da seleção de características | motor catálogo + callback `onSave` |
+| `x/biblioteca/index.html` | consulta às fichas | motor catálogo |
+| `x/motor-compartilhar.js` | exportação e envio | snapshot independente de lista |
+| `x/contribuir.html` | rascunhos e envio de sugestões | integração Apps Script |
+
+**Fluxo de escrita:** UI `app.js` → `servico.js` → `store.js` → `localStorage`. A UI não escreve diretamente. O seletor só retorna `entry` via callback; o serviço grava. O Compartilhador recebe cópia criada por `exportList`.
+
+**Contrato público do motor de listas (v1):** `TereonXLists.create(repository, options?)` retorna `snapshot/get/createList/upsertItem/duplicateItem/removeItem/exportList`. O repositório v1 oferece `snapshot/save`. O serviço aplica as mutações em cópia, valida e só atualiza estado após escrita bem-sucedida.
+
+**Preservação de dados:** nome da chave no navegador é `tereon-x-lab-v1`. Sem migração destrutiva; leitura inválida bloqueia gravações e exibe erro em vez de sobrescrever listas.
+
+**Limitação:** a apresentação e navegação ainda estão juntas em `app.js`; a ficha histórica de condutor continua nesse adaptador apenas para editar registros antigos. Não removê-la antes de migrar esses registros. Esta estrutura é evolução modular parcial, não independência absoluta de todas as telas.
