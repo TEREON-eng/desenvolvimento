@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.4",
-  "build": "2026-11-06",
-  "notes": "Após remover várias tags, retoma sempre o primeiro detalhe obrigatório pendente"
+  "version": "x.0.3.5",
+  "build": "2026-11-07",
+  "notes": "Biblioteca de fichas e Catálogo Oficial para listas de simulação, sem homologação"
 }
