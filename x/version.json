@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.5",
+  "version": "x.0.3.6",
   "build": "2026-11-07",
-  "notes": "Biblioteca de fichas e Catálogo Oficial para listas de simulação, sem homologação"
+  "notes": "Correção de carregamento da Biblioteca e dos 24 materiais simulados"
 }
