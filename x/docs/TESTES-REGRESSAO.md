@@ -31,3 +31,7 @@ Revisão técnica + testes isolados + testes de contrato + regressão crítica +
 
 ## Situação dos testes automatizados em 07/11/2026
 Foi adicionado `x/tests/catalogo.test.cjs` (Node.js 22, sem dependências) e workflow `.github/workflows/testes-tereon-x.yml` para push em `desenvolvimento` e PR para `main`. Na checagem imediatamente posterior, a API de Actions ainda retornava **0 execuções**. O teste permanece **não comprovado no CI**. A checagem isolada anterior do motor em ambiente de avaliação JavaScript carregou 24 fichas e verificou obrigatoriedade/condições básicas. Executar o script pelo GitHub Actions antes de homologar.
+
+
+## Confirmação posterior do GitHub Actions
+Em 07/11/2026, o workflow **TEREON X - testes do catálogo** executou com sucesso para o commit `78628c4` (run 42427001982). O escopo validado é o contrato do motor de catálogo; UI, PWA, integração externa e testes reais permanecem pendentes.
