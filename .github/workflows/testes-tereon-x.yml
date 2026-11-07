@@ -1,0 +1,16 @@
+name: TEREON X - testes do catálogo
+on:
+  push:
+    branches: [desenvolvimento]
+  pull_request:
+    branches: [main]
+jobs:
+  catalog-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validar contrato do catálogo
+        run: node x/tests/catalogo.test.cjs
