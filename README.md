@@ -1,5 +1,31 @@
-# TEREON X
+# TEREON X — Repositório independente
 
-Repositório dedicado ao laboratório TEREON X. A aplicação está em `/x/`, com recursos compartilhados em `/assets/`, `/fonts/` e `/vendor/`.
+**Ambiente ativo:** TEREON X, sob `/x/`. A branch `desenvolvimento` recebe experimentos e testes; `main` recebe somente versões aprovadas. O endereço do Worker chamado `desenvolvimento` pode ser a **produção** do Cloudflare; não inferir ambiente pelo nome do hostname.
 
-Versão de origem: X.0.3.4 (branch desenvolvimento de jhcolba-del/tereon).
+## Estrutura do código
+- `x/index.html`: shell, telas de listas, persistência local e código de condutor legado de protótipo (a extrair gradualmente).
+- `x/catalogo/motor.js`: leitura e normalização de fichas, condições, obrigatoriedade e nome técnico; sem DOM/armazenamento de listas.
+- `x/catalogo/seletor.js`: interface do modal; salva exclusivamente por callback da Lista.
+- `x/biblioteca/index.html`: apresentação de fichas; apenas consulta.
+- `x/fichario-x/`: snapshots de testes, leitor e simulador isolado.
+- `x/motor-compartilhar.js`: recebe snapshot da lista e gera formatos.
+- `x/contribuir.html`: propostas e rascunhos, sem aprovação.
+- `x/integracao-sugestoes/`: backend Apps Script documentado, separado do app.
+- `x/sw.js`: cache PWA limitado ao escopo `/x/`.
+- `assets/`, `vendor/`, `fonts/`: dependências estáticas necessárias ao X.
+
+## Catálogo e homologação
+O rótulo **Catálogo Oficial** indica a coleção/candidatos em estudo, **não uma certificação**. O catálogo de testes possui 24 entradas: 2 fichas reais em revisão e 22 hipotéticas. Nenhuma está homologada. Pendências permanecem visíveis; aprovação/publicação exige decisão explícita do responsável e mecanismo próprio (ainda não implementado). Não usar opções fictícias como especificações técnicas válidas.
+
+## Documentação de referência
+- [Arquitetura e contratos](x/ARQUITETURA-MODULAR.md)
+- [Auditoria de independência dos motores](x/docs/AUDITORIA-MOTORES-2026-11-07.md)
+- [Matriz de módulos e contratos](x/docs/MAPA-MODULOS.md)
+- [Plano de testes e critérios de aceite](x/docs/TESTES-REGRESSAO.md)
+- [Histórico técnico](x/docs/CHANGELOG.md)
+
+## Segurança de evolução
+1. Trabalhar apenas em `desenvolvimento`; não fazer merge na `main` sem revisão/testes.
+2. Não editar arquivos de produção ou código do aplicativo antigo.
+3. Salvar/capturar backup dos dados locais antes de alterações de armazenamento.
+4. Registrar fatos verificados, limitações e riscos de cada revisão.
