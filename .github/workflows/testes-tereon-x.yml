@@ -14,3 +14,5 @@ jobs:
           node-version: '22'
       - name: Validar contrato do catálogo
         run: node x/tests/catalogo.test.cjs
+      - name: Validar módulos independentes, listas e persistência
+        run: node x/tests/modulos.test.cjs
