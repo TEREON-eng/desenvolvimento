@@ -35,3 +35,11 @@ Foi adicionado `x/tests/catalogo.test.cjs` (Node.js 22, sem dependências) e wor
 
 ## Confirmação posterior do GitHub Actions
 Em 07/11/2026, o workflow **TEREON X - testes do catálogo** executou com sucesso para o commit `78628c4` (run 42427001982). O escopo validado é o contrato do motor de catálogo; UI, PWA, integração externa e testes reais permanecem pendentes.
+
+
+## Testes adicionados em x.0.3.7
+O workflow `.github/workflows/testes-tereon-x.yml` agora executa:
+1. `node x/tests/catalogo.test.cjs` — integridade e contratos de fichas.
+2. `node x/tests/modulos.test.cjs` — armazenamento, CRUD de listas, dados históricos, módulos separados, sintaxe JS, ordem de carregamento.
+
+Esses testes **não** reproduzem interações reais no modal, edição móvel, atualização do service worker ou exportação PDF. O teste manual antes de `main` deve criar lista, adicionar dois materiais distintos, editar, duplicar, remover, voltar, recarregar e confirmar persistência, Biblioteca e PWA. Testar erro de armazenamento e comportamento offline.
