@@ -6,6 +6,8 @@
 - Catálogo passou a exigir publicação/homologação explícita, não inferida por status isolado.
 - Detalhes sem opções preservados no motor; pendências devem ser tratadas antes de homologação.
 - Documentação de arquitetura, mapa, auditoria e testes revisada.
+- Criado teste automatizado Node de contrato e workflow GitHub Actions; execução no CI ainda não confirmada.
+- Revisada documentação da integração de sugestões (origem Cloudflare ainda requer validação).
 - Nenhuma alteração aprovada para a `main`.
 
 ## 07/11/2026 — X.0.3.6
