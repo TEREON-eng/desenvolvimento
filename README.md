@@ -29,3 +29,7 @@ O rótulo **Catálogo Oficial** indica a coleção/candidatos em estudo, **não 
 2. Não editar arquivos de produção ou código do aplicativo antigo.
 3. Salvar/capturar backup dos dados locais antes de alterações de armazenamento.
 4. Registrar fatos verificados, limitações e riscos de cada revisão.
+
+
+## Refatoração incremental x.0.3.7
+O shell `x/index.html` agora contém apenas estrutura HTML e scripts ordenados. Estilos em `x/styles.css`, PWA em `x/pwa.js`, apresentação de listas em `x/listas/app.js`, operações em `x/listas/servico.js` e persistência em `x/listas/store.js`. A chave `tereon-x-lab-v1` foi preservada para manter listas históricas. Testes de contrato em `x/tests/modulos.test.cjs` e `x/tests/catalogo.test.cjs`, executados pelo GitHub Actions. Consulte a auditoria para limites conhecidos.
