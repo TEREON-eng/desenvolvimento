@@ -6,7 +6,7 @@
 let cache=null,loading=null;
 const clean=x=>String(x??'').trim();
 const norm=x=>clean(x).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
-function isOfficial(f){return ['aprovada','publicada','oficial'].includes(norm(f.status)) && f.tipo!=='hipotetica';}
+function isOfficial(f){return f?.publicacao?.homologada===true && ['aprovada','publicada','oficial'].includes(norm(f.status)) && f.tipo!=='hipotetica';}
 function normalize(f){
  if(!f||!clean(f.codigo)||!clean(f.nome))throw Error('Ficha sem identificação');
  const details=(f.detalhes||[]).map((d,i)=>({
@@ -14,11 +14,11 @@ function normalize(f){
    options:Array.isArray(d.valores)?d.valores.map(clean).filter(Boolean):clean(d.valores).split(';').map(clean).filter(Boolean),
    condition:clean(d.condicao),required:norm(d.classificacao).includes('obrigat'),
    classification:clean(d.classificacao)
- })).filter(d=>d.options.length);
+ }));
  const sourceType=f.tipo==='hipotetica'?'simulacao':isOfficial(f)?'oficial':'revisao';
  return {id:clean(f.codigo),name:clean(f.nome),reference:clean(f.referencia)||clean(f.codigo),
    status:clean(f.status),kind:sourceType,collection:'catalogo-oficial',homologada:isOfficial(f),
-   pendencias:[...(sourceType==='simulacao'?['Ficha ainda não criada: opções fictícias']:[]),...details.filter(d=>!d.condition||!d.classification||d.name==='[Detalhe sem nome]').map(d=>'Revisar: '+d.name)],
+   pendencias:[...(sourceType==='simulacao'?['Ficha ainda não criada: opções fictícias']:[]),...details.filter(d=>!d.condition||!d.classification||d.name==='[Detalhe sem nome]'||!d.options.length).map(d=>'Revisar: '+d.name)],
    details,source:'fichario-x/simulacao-24.json'};
 }
 function applyRule(rule,values,details){
@@ -33,7 +33,7 @@ function visibleDetails(f,values){
  return f.details.filter(d=>applyRule(d.condition,values||{},f.details).visible);
 }
 function missing(f,values){
- return visibleDetails(f,values).filter(d=>d.required&&!values[d.id] && d.options.length).map(d=>d.id);
+ return visibleDetails(f,values).filter(d=>d.required&&!values[d.id]).map(d=>d.id);
 }
 function technicalName(f,values){
  let picks=visibleDetails(f,values).filter(d=>values[d.id]).map(d=>values[d.id]);
