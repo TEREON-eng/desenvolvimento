@@ -24,3 +24,6 @@
 - Copiados arquivos exclusivos do X para `TEREON-eng/desenvolvimento`.
 - Branches `main` e `desenvolvimento` separadas; Cloudflare Workers e Previews configurados.
 - Produção e Preview devem ser distinguidas pelo deployment/branch, não pelo nome do Worker.
+
+## Verificação automatizada adicional — 07/11/2026
+- GitHub Actions do catálogo passou (run 42427001982, commit `78628c4`); apenas o contrato do motor, não a UI ou PWA.
