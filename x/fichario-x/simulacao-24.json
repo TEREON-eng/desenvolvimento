@@ -1,0 +1,1216 @@
+{
+  "schema": 1,
+  "fonte": "Fichario.xlsm (Drive) — Índice, 07/11/2026",
+  "aviso": "Simulação sem publicação. Apenas 2 fichas têm detalhes originais; demais possuem opções fictícias para testar a interface.",
+  "fichas": [
+    {
+      "indice": 1,
+      "referencia": "FT_INFRA-001 - Eletrodutos",
+      "codigo": "FT_INFRA-001",
+      "nome": "Eletrodutos",
+      "status": "Em revisão",
+      "tipo": "real",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Rígido",
+            "Flexível"
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-002",
+          "nome": "Material",
+          "valores": [
+            "Aço",
+            "PVC",
+            "PEAD"
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-003",
+          "nome": "Diâmetro Aço",
+          "valores": [
+            "1/2\"",
+            "3/4\"",
+            "1\"",
+            "1.1/4\"",
+            "1.1/2\"",
+            "2\"",
+            "2.1/2\"",
+            "3\"",
+            "4\""
+          ],
+          "condicao": "Rígido+Aço",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-004",
+          "nome": "Diâmetro PVC",
+          "valores": [
+            "1/2\"",
+            "3/4\"",
+            "1\"",
+            "1.1/4\"",
+            "1.1/2\"",
+            "2\"",
+            "2.1/2\"",
+            "3\"",
+            "4\""
+          ],
+          "condicao": "Rígido+PVC",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-005",
+          "nome": "Diâmetro PEAD",
+          "valores": [
+            "1/2\"",
+            "3/4\"",
+            "1\"",
+            "1.1/4\"",
+            "1.1/2\"",
+            "2\"",
+            "2.1/2\"",
+            "3\"",
+            "4\""
+          ],
+          "condicao": "Flexível+PEAD",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-006",
+          "nome": "Cobertura",
+          "valores": [
+            "COM capa",
+            "SEM capa"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-007",
+          "nome": "[Sem nome na ficha]",
+          "valores": [
+            "Liso",
+            "Corrugado"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-008",
+          "nome": "Resistencia PVC_Flex",
+          "valores": [],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-009",
+          "nome": "Resistencia PVC_Rig",
+          "valores": [],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-010",
+          "nome": "Revestimento_Aço",
+          "valores": [
+            "Galvanização eletrolítica",
+            "Imersão a quente (a fogo)"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-011",
+          "nome": "Tipo ponta",
+          "valores": [
+            "Rosqueável",
+            "Soldável"
+          ],
+          "condicao": "Rígido+PVC",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-012",
+          "nome": "Unidade de compra",
+          "valores": [
+            "m",
+            "rl25",
+            "rl50",
+            "rl100"
+          ],
+          "condicao": "Flexível",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-013",
+          "nome": "Unidade de compra",
+          "valores": [
+            "br3m"
+          ],
+          "condicao": "Rígido",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 2,
+      "referencia": "FT_COND-001 - Fios e cabos",
+      "codigo": "FT_COND-001",
+      "nome": "Fios e cabos",
+      "status": "Em revisão",
+      "tipo": "real",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Unipolar",
+            "Multipolar"
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-002",
+          "nome": "Material",
+          "valores": [
+            "Cobre",
+            "Alumínio"
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-003",
+          "nome": "Seção",
+          "valores": [
+            "1,5",
+            "2,5",
+            "4,0",
+            "6,0",
+            "10,0",
+            "16,0",
+            "25,0",
+            "35,0",
+            "50,0",
+            "70,0",
+            "95,0",
+            "120,0",
+            "150,0",
+            "185,0",
+            "240,0"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-004",
+          "nome": "Qnt de vias",
+          "valores": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-005",
+          "nome": "Temperatura de operação",
+          "valores": [
+            "70 C",
+            "90 C"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-006",
+          "nome": "Tensão nominal",
+          "valores": [
+            "450/750 V",
+            "0,6/1,0 kV"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-007",
+          "nome": "Blindagem",
+          "valores": [
+            "SEM blindagem",
+            "Malha",
+            "Fita"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-008",
+          "nome": "Unidade compra",
+          "valores": [
+            "m",
+            "rl50m",
+            "rl100m",
+            "rl200m"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 3,
+      "referencia": "FT_INFRA-002 - Curvas para eletroduto",
+      "codigo": "FT_INFRA-002",
+      "nome": "Curvas para eletroduto",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Rígido",
+            "Flexível",
+            "Outro"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Material",
+          "valores": [
+            "Aço",
+            "PVC",
+            "Alumínio"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Dimensão",
+          "valores": [
+            "Pequeno",
+            "Médio",
+            "Grande"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 4,
+      "referencia": "FT_INFRA-003 - Conectores para eletroduto",
+      "codigo": "FT_INFRA-003",
+      "nome": "Conectores para eletroduto",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Rígido",
+            "Flexível",
+            "Outro"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Material",
+          "valores": [
+            "Aço",
+            "PVC",
+            "Alumínio"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Dimensão",
+          "valores": [
+            "Pequeno",
+            "Médio",
+            "Grande"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 5,
+      "referencia": "FT_INFRA-004 - Abraçadeiras",
+      "codigo": "FT_INFRA-004",
+      "nome": "Abraçadeiras",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Rígido",
+            "Flexível",
+            "Outro"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Material",
+          "valores": [
+            "Aço",
+            "PVC",
+            "Alumínio"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Dimensão",
+          "valores": [
+            "Pequeno",
+            "Médio",
+            "Grande"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 6,
+      "referencia": "FT_INFRA-005 - Caixas de passagem",
+      "codigo": "FT_INFRA-005",
+      "nome": "Caixas de passagem",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Rígido",
+            "Flexível",
+            "Outro"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Material",
+          "valores": [
+            "Aço",
+            "PVC",
+            "Alumínio"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Dimensão",
+          "valores": [
+            "Pequeno",
+            "Médio",
+            "Grande"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 7,
+      "referencia": "FT_INFRA-006 - Conduletes",
+      "codigo": "FT_INFRA-006",
+      "nome": "Conduletes",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Rígido",
+            "Flexível",
+            "Outro"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Material",
+          "valores": [
+            "Aço",
+            "PVC",
+            "Alumínio"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Dimensão",
+          "valores": [
+            "Pequeno",
+            "Médio",
+            "Grande"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 8,
+      "referencia": "FT_INFRA-007 - Eletrocalhas",
+      "codigo": "FT_INFRA-007",
+      "nome": "Eletrocalhas",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Rígido",
+            "Flexível",
+            "Outro"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Material",
+          "valores": [
+            "Aço",
+            "PVC",
+            "Alumínio"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Dimensão",
+          "valores": [
+            "Pequeno",
+            "Médio",
+            "Grande"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 9,
+      "referencia": "FT_INFRA - Perfilados",
+      "codigo": "FT_INFRA",
+      "nome": "Perfilados",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Rígido",
+            "Flexível",
+            "Outro"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Material",
+          "valores": [
+            "Aço",
+            "PVC",
+            "Alumínio"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Dimensão",
+          "valores": [
+            "Pequeno",
+            "Médio",
+            "Grande"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 10,
+      "referencia": "FT_INFRA - Leitos",
+      "codigo": "FT_INFRA",
+      "nome": "Leitos",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Rígido",
+            "Flexível",
+            "Outro"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Material",
+          "valores": [
+            "Aço",
+            "PVC",
+            "Alumínio"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Dimensão",
+          "valores": [
+            "Pequeno",
+            "Médio",
+            "Grande"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 11,
+      "referencia": "FT_INFRA - Parafusos e fixação",
+      "codigo": "FT_INFRA",
+      "nome": "Parafusos e fixação",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Rígido",
+            "Flexível",
+            "Outro"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Material",
+          "valores": [
+            "Aço",
+            "PVC",
+            "Alumínio"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Dimensão",
+          "valores": [
+            "Pequeno",
+            "Médio",
+            "Grande"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 12,
+      "referencia": "FT_PROT-001 - Disjuntores",
+      "codigo": "FT_PROT-001",
+      "nome": "Disjuntores",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Tipo A",
+            "Tipo B",
+            "Tipo C"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Polos",
+          "valores": [
+            "1P",
+            "2P",
+            "3P",
+            "4P"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Corrente",
+          "valores": [
+            "10 A",
+            "16 A",
+            "32 A"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 13,
+      "referencia": "FT_PROT-002 - Seccionadoras",
+      "codigo": "FT_PROT-002",
+      "nome": "Seccionadoras",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Tipo A",
+            "Tipo B",
+            "Tipo C"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Polos",
+          "valores": [
+            "1P",
+            "2P",
+            "3P",
+            "4P"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Corrente",
+          "valores": [
+            "10 A",
+            "16 A",
+            "32 A"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 14,
+      "referencia": "FT_PROT-003 - Fusíveis",
+      "codigo": "FT_PROT-003",
+      "nome": "Fusíveis",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Tipo A",
+            "Tipo B",
+            "Tipo C"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Polos",
+          "valores": [
+            "1P",
+            "2P",
+            "3P",
+            "4P"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Corrente",
+          "valores": [
+            "10 A",
+            "16 A",
+            "32 A"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 15,
+      "referencia": "FT_PROT-004 - Proteção contra surtos de tensão \"DPS\"",
+      "codigo": "FT_PROT-004",
+      "nome": "Proteção contra surtos de tensão \"DPS\"",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Tipo A",
+            "Tipo B",
+            "Tipo C"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Polos",
+          "valores": [
+            "1P",
+            "2P",
+            "3P",
+            "4P"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Corrente",
+          "valores": [
+            "10 A",
+            "16 A",
+            "32 A"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 16,
+      "referencia": "FT_PROT-005 - Proteção contra choque elétrico \"DR\"",
+      "codigo": "FT_PROT-005",
+      "nome": "Proteção contra choque elétrico \"DR\"",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Tipo A",
+            "Tipo B",
+            "Tipo C"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Polos",
+          "valores": [
+            "1P",
+            "2P",
+            "3P",
+            "4P"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Corrente",
+          "valores": [
+            "10 A",
+            "16 A",
+            "32 A"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 17,
+      "referencia": "FT_SPDA-001 - Cabos",
+      "codigo": "FT_SPDA-001",
+      "nome": "Cabos",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Tipo A",
+            "Tipo B"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Material",
+          "valores": [
+            "Cobre",
+            "Aço",
+            "Alumínio"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Dimensão",
+          "valores": [
+            "Pequeno",
+            "Médio",
+            "Grande"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 18,
+      "referencia": "FT_SPDA-002 - Hastes e eletrodos",
+      "codigo": "FT_SPDA-002",
+      "nome": "Hastes e eletrodos",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Tipo A",
+            "Tipo B"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Material",
+          "valores": [
+            "Cobre",
+            "Aço",
+            "Alumínio"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Dimensão",
+          "valores": [
+            "Pequeno",
+            "Médio",
+            "Grande"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 19,
+      "referencia": "FT_SPDA-003 - Sistema de captação",
+      "codigo": "FT_SPDA-003",
+      "nome": "Sistema de captação",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Tipo A",
+            "Tipo B"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Material",
+          "valores": [
+            "Cobre",
+            "Aço",
+            "Alumínio"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Dimensão",
+          "valores": [
+            "Pequeno",
+            "Médio",
+            "Grande"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 20,
+      "referencia": "FT_SPDA-004 - Isoladores",
+      "codigo": "FT_SPDA-004",
+      "nome": "Isoladores",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Tipo A",
+            "Tipo B"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Material",
+          "valores": [
+            "Cobre",
+            "Aço",
+            "Alumínio"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Dimensão",
+          "valores": [
+            "Pequeno",
+            "Médio",
+            "Grande"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 21,
+      "referencia": "FT_SPDA-005 - Conectores",
+      "codigo": "FT_SPDA-005",
+      "nome": "Conectores",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Tipo A",
+            "Tipo B"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Material",
+          "valores": [
+            "Cobre",
+            "Aço",
+            "Alumínio"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Dimensão",
+          "valores": [
+            "Pequeno",
+            "Médio",
+            "Grande"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 22,
+      "referencia": "FT_COND-002 - Terminais e conectores",
+      "codigo": "FT_COND-002",
+      "nome": "Terminais e conectores",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Unipolar",
+            "Multipolar",
+            "Outro"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Material",
+          "valores": [
+            "Cobre",
+            "Alumínio"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Seção",
+          "valores": [
+            "2,5 mm²",
+            "4,0 mm²",
+            "10,0 mm²"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 23,
+      "referencia": "FT_QUADROS-001 - Caixas e quadros",
+      "codigo": "FT_QUADROS-001",
+      "nome": "Caixas e quadros",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Distribuição",
+            "Comando",
+            "Outro"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Instalação",
+          "valores": [
+            "Embutir",
+            "Sobrepor"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Dimensão",
+          "valores": [
+            "Pequeno",
+            "Médio",
+            "Grande"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "indice": 24,
+      "referencia": "FT_QUADROS-002 - Barramentos",
+      "codigo": "FT_QUADROS-002",
+      "nome": "Barramentos",
+      "status": "Não criada",
+      "tipo": "hipotetica",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "nome": "Tipo",
+          "valores": [
+            "Distribuição",
+            "Comando",
+            "Outro"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-002",
+          "nome": "Instalação",
+          "valores": [
+            "Embutir",
+            "Sobrepor"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-003",
+          "nome": "Dimensão",
+          "valores": [
+            "Pequeno",
+            "Médio",
+            "Grande"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,195 @@
+{
+  "tipo": "TEREON_FICHARIO_OFICIAL_SNAPSHOT",
+  "versao": 1,
+  "fonte": "Fichario.xlsm — Google Drive (cópia de leitura; não sincroniza automaticamente)",
+  "exportadoEm": "2026-11-07",
+  "fichas": [
+    {
+      "codigo": "FT_INFRA-001",
+      "nome": "Eletroduto",
+      "categoria": "INFRAESTRUTURA",
+      "status": "Em revisão",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "ordem": 1,
+          "nome": "Tipo",
+          "valores": "Rígido; Flexível",
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório",
+          "status": "Em revisão"
+        },
+        {
+          "id": "DET-002",
+          "ordem": 2,
+          "nome": "Material",
+          "valores": "Aço; PVC; PEAD",
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório",
+          "status": "Em revisão"
+        },
+        {
+          "id": "DET-003",
+          "ordem": 3,
+          "nome": "Diâmetro Aço",
+          "valores": "1/2\";3/4\";1\";1.1/4\";1.1/2\";2\";2.1/2\";3\";4\"",
+          "condicao": "Rígido+Aço",
+          "classificacao": "",
+          "status": ""
+        },
+        {
+          "id": "DET-004",
+          "ordem": 4,
+          "nome": "Diâmetro PVC",
+          "valores": "1/2\";3/4\";1\";1.1/4\";1.1/2\";2\";2.1/2\";3\";4\"",
+          "condicao": "Rígido+PVC",
+          "classificacao": "",
+          "status": ""
+        },
+        {
+          "id": "DET-005",
+          "ordem": 5,
+          "nome": "Diâmetro PEAD",
+          "valores": "1/2\";3/4\";1\";1.1/4\";1.1/2\";2\";2.1/2\";3\";4\"",
+          "condicao": "Flexível+PEAD",
+          "classificacao": "",
+          "status": ""
+        },
+        {
+          "id": "DET-006",
+          "ordem": 6,
+          "nome": "Cobertura",
+          "valores": "COM capa; SEM capa",
+          "condicao": "",
+          "classificacao": "",
+          "status": ""
+        },
+        {
+          "id": "DET-007",
+          "ordem": 7,
+          "nome": "",
+          "valores": "Liso; Corrugado",
+          "condicao": "",
+          "classificacao": "",
+          "status": ""
+        },
+        {
+          "id": "DET-008",
+          "ordem": 8,
+          "nome": "Resistencia PVC_Flex",
+          "valores": "",
+          "condicao": "",
+          "classificacao": "",
+          "status": ""
+        },
+        {
+          "id": "DET-009",
+          "ordem": 9,
+          "nome": "Resistencia PVC_Rig",
+          "valores": "",
+          "condicao": "",
+          "classificacao": "",
+          "status": ""
+        },
+        {
+          "id": "DET-010",
+          "ordem": 10,
+          "nome": "Revestimento_Aço",
+          "valores": "Galvanização eletrolítica; Imersão a quente (a fogo)",
+          "condicao": "",
+          "classificacao": "",
+          "status": ""
+        },
+        {
+          "id": "DET-011",
+          "ordem": 11,
+          "nome": "Tipo ponta",
+          "valores": "Rosqueável; Soldável",
+          "condicao": "Rígido+PVC",
+          "classificacao": "",
+          "status": ""
+        },
+        {
+          "id": "DET-012",
+          "ordem": 12,
+          "nome": "Unidade de compra",
+          "valores": "",
+          "condicao": "",
+          "classificacao": "",
+          "status": ""
+        }
+      ]
+    },
+    {
+      "codigo": "FT_COND-001",
+      "nome": "Condutor elétrico",
+      "categoria": "CONDUTORES",
+      "status": "Em revisão",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "ordem": 1,
+          "nome": "Tipo",
+          "valores": "Unipolar; Multipolar",
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório",
+          "status": "Em revisão"
+        },
+        {
+          "id": "DET-002",
+          "ordem": 2,
+          "nome": "Material",
+          "valores": "Cobre; Alumínio",
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório",
+          "status": "Em revisão"
+        },
+        {
+          "id": "DET-003",
+          "ordem": 3,
+          "nome": "Seção",
+          "valores": "1,5;2,5;4,0;6,0;10,0;16,0;25,0;35,0;50,0;70,0;95,0;120,0;150,0;185,0;240,0",
+          "condicao": "",
+          "classificacao": "",
+          "status": ""
+        },
+        {
+          "id": "DET-004",
+          "ordem": 4,
+          "nome": "Qnt de vias",
+          "valores": "2; 3; 4; 5; 6",
+          "condicao": "",
+          "classificacao": "",
+          "status": ""
+        },
+        {
+          "id": "DET-005",
+          "ordem": 5,
+          "nome": "Temperatura de operação",
+          "valores": "70 C; 90 C",
+          "condicao": "",
+          "classificacao": "",
+          "status": ""
+        },
+        {
+          "id": "DET-006",
+          "ordem": 6,
+          "nome": "Tensão nominal",
+          "valores": "450/750 V; 0,6/1,0 kV",
+          "condicao": "",
+          "classificacao": "",
+          "status": ""
+        },
+        {
+          "id": "DET-007",
+          "ordem": 7,
+          "nome": "Blindagem",
+          "valores": "SEM blindagem; Malha; Fita",
+          "condicao": "",
+          "classificacao": "",
+          "status": ""
+        }
+      ]
+    }
+  ]
+}

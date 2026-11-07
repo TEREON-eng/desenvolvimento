@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>TEREON X · Laboratório de fichas</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#17241d;background:#f5f7f4}
+*{box-sizing:border-box}body{margin:0}main{max-width:900px;margin:auto;padding:17px 15px 70px}
+header{display:flex;align-items:center;gap:12px;padding:10px 0 18px}a{color:#234c33}
+.back{color:#173d2d;text-decoration:none;font-weight:650}h1{font-size:23px;margin:0 0 5px}p{margin:5px 0 12px;line-height:1.45}
+.sub{font-size:12px;color:#617368}.bar{background:#fff;border:1px solid #dce3dd;border-radius:15px;padding:15px;margin:12px 0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{text-align:center;background:#edf3ed;border-radius:10px;padding:10px 3px}.stat strong{font-size:23px;display:block}.stat small{font-size:11px}
+.filters{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:12px}input,select{font:inherit;border:1px solid #bdcbbd;border-radius:10px;padding:12px;background:#fff;width:100%;min-width:0}
+.list{display:grid;gap:8px}.item{display:flex;align-items:center;justify-content:space-between;text-align:left;width:100%;border:1px solid #dce3dd;background:#fff;border-radius:12px;padding:12px 13px;gap:12px;cursor:pointer;color:#14241b}.item strong{display:block;font-size:14px}.item small{display:block;color:#64796a;font-size:11px;margin-top:3px}
+.chip{font-size:10px;border-radius:30px;background:#e9eeea;padding:5px 8px;white-space:nowrap;color:#475d4b}
+.chip.real{background:#e3f0de;color:#245b2e}
+.note{background:#fff3d8;border:1px solid #f1d89b;padding:12px;border-radius:11px;font-size:12px}
+dialog{border:0;border-radius:17px;width:min(95vw,620px);max-height:91dvh;padding:0;box-shadow:0 20px 80px #0005}dialog::backdrop{background:#122119aa}
+.dialog{padding:17px;display:flex;flex-direction:column;gap:12px;max-height:91dvh;overflow:hidden}
+.top{display:flex;justify-content:space-between;gap:10px}.close{border:0;background:#eef2ed;padding:8px 11px;border-radius:10px;align-self:start;cursor:pointer}
+.body{overflow:auto;min-height:0;padding:2px}.question{margin:15px 0;padding:13px;background:#f4f7f3;border-radius:12px;border:1px solid #dbe4da}
+.q-title{font-size:13px;font-weight:700;margin-bottom:8px}.opts{display:flex;flex-wrap:wrap;gap:7px}
+.choice{border:1px solid #acbcad;background:#fff;color:#234031;border-radius:22px;padding:8px 11px;font-size:12px;cursor:pointer}.choice[aria-pressed=true]{background:#183d29;color:#fff;border-color:#183d29}
+.muted{font-size:12px;color:#69796b}.bottom{border-top:1px solid #dbe4da;padding-top:10px}
+.preview{background:#eff4ef;border-radius:10px;padding:10px;font-size:13px;overflow-wrap:anywhere;line-height:1.5}
+button.primary{background:#173d2b;color:white;border:0;padding:12px;border-radius:10px;font:600 14px system-ui;width:100%;cursor:pointer}
+.arch{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.arch>div{background:#f1f5f1;border-radius:9px;padding:10px;font-size:12px}.arch strong{display:block}
+[hidden]{display:none!important}
+</style></head><body><main>
+<header><a class="back" href="/x/">← X</a><div><strong>TEREON X</strong><div class="sub">Laboratório · Fichário Oficial</div></div></header>
+<h1>Simulador de fichas</h1>
+<p class="sub">Nomes das fichas do Índice oficial. Teste de seleção e de independência entre módulos, sem salvar itens nem publicar materiais.</p>
+<div class="bar"><div class="stats"><div class="stat"><strong id="total">—</strong><small>Relacionadas</small></div><div class="stat"><strong id="reais">—</strong><small>Iniciadas</small></div><div class="stat"><strong id="vazias">—</strong><small>Sem ficha</small></div></div>
+<div class="filters"><input id="search" placeholder="Buscar ficha, código ou família" aria-label="Buscar fichas">
+<select id="filter" aria-label="Filtrar fichas"><option value="todos">Todas</option><option value="real">Iniciadas</option><option value="hipotetica">Simuladas</option></select></div></div>
+<div class="note">As 22 fichas ainda não criadas usam escolhas <strong>fictícias</strong> apenas para testar o motor. Não representam o Catálogo Oficial aprovado.</div>
+<div class="bar"><details><summary><strong>Como dividimos módulos e motores?</strong></summary><div class="arch" style="margin-top:10px"><div><strong>Navegação X</strong>Abre páginas e modais</div><div><strong>Listas</strong>Guarda os lançamentos</div><div><strong>Catálogo / Fichário</strong>Define fichas e valores</div><div><strong>Especificação</strong>Apresenta escolhas e confirmações</div><div><strong>Compartilhamento</strong>Recebe cópia dos registros</div><div><strong>Contribuições</strong>Recebe propostas para análise</div></div><p class="sub" style="margin-top:10px">Nesta página, o simulador lê apenas seu próprio JSON. Não toca nas listas, no armazenamento nem nos demais motores.</p></details></div>
+<div class="list" id="list" aria-live="polite"></div>
+<dialog id="detail"><div class="dialog">
+<div class="top"><div><strong id="modalTitle"></strong><div class="sub" id="modalCode"></div></div><button id="close" class="close" aria-label="Fechar">✕</button></div>
+<div class="note" id="modalNote"></div>
+<div class="body" id="questions"></div>
+<div class="bottom"><div class="sub">Nome formado com as opções selecionadas</div><div class="preview" id="preview"></div><p class="muted" id="progress"></p><button class="primary" id="reset">Limpar seleções deste teste</button></div>
+</div></dialog>
+</main><script src="/x/fichario-x/simulador.js?v=1" defer></script></body></html>

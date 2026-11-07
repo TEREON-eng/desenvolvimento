@@ -1,0 +1,5 @@
+{
+  "version": "x.0.3.4",
+  "build": "2026-11-06",
+  "notes": "Após remover várias tags, retoma sempre o primeiro detalhe obrigatório pendente"
+}

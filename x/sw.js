@@ -1,0 +1,41 @@
+/* TEREON X · SW exclusivo do escopo /x/; nunca tocar nos caches do legado. */
+'use strict';
+const CACHE='tereon-x-lab-0.3.4';
+const START='/x/';
+const OFFLINE=[START,'/x/index.html','/x/manifest.webmanifest'];
+self.addEventListener('install',event=>{
+ event.waitUntil((async()=>{
+  const cache=await caches.open(CACHE);
+  await cache.addAll(OFFLINE.map(u=>new Request(u,{cache:'reload'})));
+  await self.skipWaiting();
+ })());
+});
+self.addEventListener('activate',event=>{
+ event.waitUntil((async()=>{
+  const names=await caches.keys();
+  await Promise.all(names.filter(x=>x.startsWith('tereon-x-lab-')&&x!==CACHE).map(x=>caches.delete(x)));
+  await self.clients.claim();
+ })());
+});
+self.addEventListener('fetch',event=>{
+ const request=event.request;
+ if(request.method!=='GET')return;
+ const url=new URL(request.url);
+ if(url.origin!==self.location.origin || !url.pathname.startsWith('/x/'))return;
+ if(url.pathname.endsWith('/version.json'))return;
+ if(request.mode==='navigate'){
+  event.respondWith((async()=>{
+   try {
+    const response=await fetch(new Request(request,{cache:'no-store'}));
+    if(response.ok){
+     const cache=await caches.open(CACHE);
+     cache.put(START,response.clone());
+    }
+    return response;
+   }catch(e){
+    return await caches.match(START) || await caches.match('/x/index.html') ||
+      new Response('TEREON X temporariamente indisponível.',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}});
+   }
+  })());
+ }
+});

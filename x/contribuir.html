@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f6f8f6">
+<title>TEREON X · Envie seu item</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#18221e;background:#f6f8f6;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0}.shell{max-width:660px;margin:auto;padding:17px 15px 36px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid #e1e6e2;margin-bottom:20px}
+.brand{font-size:16px;font-weight:750;letter-spacing:.05em}.sub{font-size:11px;color:#718078}
+h1{font-size:24px;letter-spacing:-.6px;margin:0 0 8px}p{margin:0;line-height:1.5;font-size:13px;color:#647368}
+.btn{font:inherit;font-size:13px;font-weight:600;border:1px solid #d3ded6;border-radius:11px;min-height:42px;padding:10px 13px;background:#fff;color:#24342b;cursor:pointer}
+.btn.primary{background:#213d2d;border-color:#213d2d;color:#fff}.btn.full{width:100%}.btn.small{min-height:32px;padding:6px 10px;font-size:12px}
+.card{margin-top:18px;border:1px solid #e0e7e1;background:white;border-radius:17px;padding:17px;display:grid;gap:15px}
+label{font-size:12px;font-weight:600;color:#536558;display:grid;gap:7px}
+input,select,textarea{font:inherit;width:100%;min-width:0;min-height:41px;border:1px solid #d5ded6;background:#fff;border-radius:9px;padding:10px;color:#18221e;font-size:14px}
+textarea{resize:vertical;min-height:76px}
+input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid #317a57;outline-offset:2px}
+.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid #e8eee9;padding-top:15px;font-size:14px}
+.detail{background:#f5f8f5;border:1px solid #e1e9e3;border-radius:12px;padding:13px;display:grid;gap:10px}
+.detail-head{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:#62766a;font-weight:600}
+.detail-head button{border:0;background:transparent;color:#8f625e;cursor:pointer;padding:6px;font-size:12px}
+.notice{padding:11px 13px;border-radius:11px;background:#eef3ee;color:#506453;font-size:12px;line-height:1.5}
+.actions{display:grid;gap:10px}.actions>.status{order:1}.actions>.inline-actions{order:2}.actions>.micro{order:3}.micro{font-size:11px;color:#819084}.inline-actions{display:flex;gap:8px;flex-wrap:wrap}
+.status{display:none;padding:12px 13px;border-radius:10px;background:#eef4ed;color:#234b3d;font-size:13px;line-height:1.45;border:1px solid #d9e8db}.status.on{display:block}.status[data-state="error"]{background:#fff7ed;border-color:#f1dfc5;color:#7b4b21}.status[data-state="success"]{background:#e5f5e6;border-color:#b7dfbe;color:#1d5b35}
+@media(max-width:380px){.shell{padding:13px 11px 24px}.card{padding:13px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="top"><div><div class="brand">TEREON X</div><div class="sub">Laboratório · contribuição de materiais</div></div><a class="btn small" href="/x/">← Listas</a></header>
+<h1>Envie seu item para nós</h1>
+<p>Descreva o material e suas características. A equipe TEREON irá avaliar, ajustar e validar antes de qualquer publicação.</p>
+<form id="proposalForm" class="card">
+<label>Família do material
+<select id="family" required>
+<option value="">Selecione uma família</option>
+<option>Infraestrutura</option><option>Condutores</option><option>Proteções</option>
+<option>Pontos de utilização e comando</option><option>Iluminação</option><option>Miscelânea</option><option>Outra</option>
+</select></label>
+<label>Nome do item<input id="itemName" maxlength="120" autocomplete="off" placeholder="Ex.: Eletroduto" required></label>
+<div class="section-title"><strong>Detalhes e valores</strong><span class="micro" id="detailCount"></span></div>
+<div id="details"></div>
+<button type="button" class="btn full" id="addDetail">＋ Adicionar detalhe</button>
+<label>Observações (opcional)<textarea id="notes" maxlength="1500" placeholder="Ex.: uso, aplicação, referência comercial ou dúvida técnica"></textarea></label>
+<div class="notice">Sua sugestão será avaliada pela equipe TEREON antes de integrar o catálogo oficial.</div>
+<div class="actions">
+<button type="submit" class="btn primary full">Enviar sugestão</button>
+<div class="inline-actions"><button type="button" class="btn" id="exportCsv">Exportar propostas (CSV)</button><button type="button" class="btn" id="clearForm">Limpar formulário</button></div>
+<div class="micro" id="savedCount"></div><div class="status" id="status" role="status"></div>
+</div>
+</form>
+</div>
+<script src="/x/sugestoes-config.js"></script>
+<script>
+(function(){
+'use strict';
+var DRAFT='tereon-x-proposta-rascunho-v1',QUEUE='tereon-x-propostas-pendentes-v1';
+var form=document.getElementById('proposalForm'),details=document.getElementById('details'),status=document.getElementById('status');
+var fields=[],next=1;
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c];});}
+function read(key,fallback){try{return JSON.parse(localStorage.getItem(key))||fallback;}catch(e){return fallback;}}
+function write(key,obj){try{localStorage.setItem(key,JSON.stringify(obj));return true;}catch(e){show('Não foi possível salvar no navegador. Verifique o espaço disponível.');return false;}}
+function show(message,state){status.textContent=message;status.dataset.state=state||'info';status.classList.add('on');}
+function syncValues(){fields.forEach(function(d){var row=details.querySelector('[data-id="'+d.id+'"]');if(row){d.name=row.querySelector('[data-field="name"]').value;d.values=row.querySelector('[data-field="values"]').value;}});}
+function saveDraft(){syncValues();write(DRAFT,{family:document.getElementById('family').value,name:document.getElementById('itemName').value,notes:document.getElementById('notes').value,details:fields});}
+function render(){details.innerHTML=fields.map(function(d,i){return '<div class="detail" data-id="'+d.id+'"><div class="detail-head"><span>Detalhe '+(i+1)+'</span><button type="button" data-remove="'+d.id+'" aria-label="Remover detalhe '+(i+1)+'">Remover ×</button></div><label>Nome do detalhe<input data-field="name" maxlength="100" placeholder="Ex.: Material" value="'+esc(d.name)+'"></label><label>Valores possíveis<textarea data-field="values" maxlength="1600" placeholder="Ex.: PVC; Aço; PEAD">'+esc(d.values)+'</textarea></label></div>';}).join('');document.getElementById('detailCount').textContent=fields.length+' detalhe(s)';updateCount();}
+function updateCount(){document.getElementById('savedCount').textContent=read(QUEUE,[]).length+' proposta(s) de teste registrada(s) neste navegador';}
+function add(){syncValues();fields.push({id:next++,name:'',values:''});render();saveDraft();}
+function reset(){fields=[];next=1;form.reset();add();status.classList.remove('on');saveDraft();}
+function csvCell(v){return '"'+String(v==null?'':v).replace(/"/g,'""')+'"';}
+var pendingSend=null,tereonSeq=0;
+function sending(busy){
+ var b=form.querySelector('button[type="submit"]');
+ b.disabled=busy;b.textContent=busy?'Enviando...':'Enviar sugestão';
+}
+function submitLive(proposal){
+ var endpoint=String(window.TEREON_SUGESTOES_ENDPOINT||'').trim();
+ try { var u=new URL(endpoint); if(u.protocol!=='https:'||u.hostname!=='script.google.com'||!u.pathname.startsWith('/macros/s/')||!u.pathname.endsWith('/exec'))return false; } catch(e) { return false; }
+ if(pendingSend)return true;
+ var token=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():String(Date.now())+'-'+Math.random().toString(36).slice(2);
+ var iframe=document.createElement('iframe');
+ iframe.name='tereon-sugestao-'+token.replace(/[^a-z0-9-]/gi,'');
+ iframe.title='Confirmação de recebimento';
+ iframe.style.cssText='display:none;width:0;height:0;border:0';
+ document.body.appendChild(iframe);
+ var send=document.createElement('form');
+ send.method='POST';send.action=endpoint;send.target=iframe.name;send.style.display='none';
+ var payload=document.createElement('input');payload.type='hidden';payload.name='payload';
+ payload.value=JSON.stringify(Object.assign({},proposal,{clientToken:token,clientOrigin:location.origin}));
+ send.appendChild(payload);
+ var honeypot=document.createElement('input');honeypot.type='hidden';honeypot.name='website';honeypot.value='';
+ send.appendChild(honeypot);document.body.appendChild(send);
+ pendingSend={token:token,frame:iframe};
+ sending(true);show('Enviando sua sugestão...');
+ send.submit();send.remove();
+ // Nunca declarar sucesso apenas pelo carregamento do iframe.
+ pendingSend.verifyTimer=setInterval(function(){if(pendingSend&&pendingSend.token===token)verificarRecebimento(token,endpoint);},1700);
+ verificarRecebimento(token,endpoint);
+ pendingSend.timeout=setTimeout(function(){
+   if(!pendingSend||pendingSend.token!==token)return;
+   var old=pendingSend;pendingSend=null;clearInterval(old.verifyTimer);sending(false);
+   show('Sua proposta foi enviada, mas o retorno ainda está pendente. Mantenha os dados e evite um segundo envio neste momento.','error');
+   old.frame.remove();
+ },12000);
+ return true;
+}
+function verificarRecebimento(token,endpoint){
+ if(!pendingSend||pendingSend.token!==token)return;
+ var nome='tereonConfirm_'+(++tereonSeq);
+ var elemento=document.createElement('script');
+ window[nome]=function(resultado){
+   elemento.remove();delete window[nome];
+   if(!pendingSend||pendingSend.token!==token)return;
+   if(resultado&&resultado.ok&&resultado.token===token){
+     clearTimeout(pendingSend.timeout);clearInterval(pendingSend.verifyTimer);
+     pendingSend.frame.remove();pendingSend=null;sending(false);
+     reset();updateCount();show('✓ Item enviado com sucesso! Protocolo '+resultado.id+'.','success');
+   }
+ };
+ elemento.onerror=function(){elemento.remove();delete window[nome];};
+ elemento.src=endpoint+'?token='+encodeURIComponent(token)+'&callback='+encodeURIComponent(nome);
+ document.head.appendChild(elemento);
+}
+window.addEventListener('message',function(event){
+ if(!pendingSend||!event.data||event.data.type!=='tereon-proposta-resposta')return;
+ // O HTML Service do Apps Script pode responder com origem opaca ("null") devido ao sandbox.
+ // O token aleatório por envio vincula a resposta à solicitação em andamento.
+ if(event.origin!=='null'&&!['https://script.google.com','https://script.googleusercontent.com'].includes(event.origin)&&!event.origin.endsWith('.googleusercontent.com'))return;
+ if(event.data.token!==pendingSend.token)return;
+ var p=pendingSend;pendingSend=null;clearTimeout(p.timeout);clearInterval(p.verifyTimer);p.frame.remove();sending(false);
+ if(event.data.ok===true&&/^SG-[A-F0-9]{8}$/.test(event.data.id||'')){
+   reset();updateCount();show('✓ Item enviado com sucesso! Protocolo '+event.data.id+'.','success');
+ }else{
+   show('Não foi possível registrar: '+String(event.data.message||'Erro desconhecido')+'. Os campos foram preservados.');
+ }
+});
+
+document.getElementById('addDetail').addEventListener('click',add);
+details.addEventListener('input',saveDraft);
+details.addEventListener('click',function(e){var b=e.target.closest('[data-remove]');if(!b)return;syncValues();fields=fields.filter(function(x){return String(x.id)!==b.dataset.remove;});if(!fields.length)fields.push({id:next++,name:'',values:''});render();saveDraft();});
+['family','itemName','notes'].forEach(function(id){document.getElementById(id).addEventListener('input',saveDraft);});
+form.addEventListener('submit',function(e){e.preventDefault();syncValues();var family=document.getElementById('family').value,name=document.getElementById('itemName').value.trim(),valid=fields.filter(function(d){return d.name.trim()&&d.values.trim();});if(!family||!name){show('Informe a família e o nome do item.');return;}if(!valid.length){show('Inclua ao menos um detalhe com valores.');return;}if(fields.some(function(d){return Boolean(d.name.trim())!==Boolean(d.values.trim());})){show('Preencha o nome e os valores dos detalhes iniciados.');return;}var arr=read(QUEUE,[]),id='PROP-'+Date.now().toString(36).toUpperCase();arr.push({id:id,data:new Date().toISOString(),situacao:'Pendente (teste local)',familia:family,item:name,detalhes:valid.map(function(d){return {nome:d.name.trim(),valores:d.values.trim()};}),observacoes:document.getElementById('notes').value.trim()});if(submitLive({familia:family,item:name,detalhes:valid.map(function(d){return {nome:d.name.trim(),valores:d.values.trim()};}),observacoes:document.getElementById('notes').value.trim()}))return;if(!write(QUEUE,arr))return;reset();updateCount();show('Proposta '+id+' registrada neste navegador para teste. Ainda não foi enviada ao Google Planilhas.');});
+document.getElementById('clearForm').addEventListener('click',function(){if(confirm('Limpar apenas o formulário em andamento?'))reset();});
+document.getElementById('exportCsv').addEventListener('click',function(){var arr=read(QUEUE,[]);if(!arr.length){show('Nenhuma proposta de teste para exportar.');return;}var header=['ID','Data','Situação','Família','Item','Detalhes','Observações'];var rows=arr.map(function(p){return [p.id,p.data,p.situacao,p.familia,p.item,p.detalhes.map(function(d){return d.nome+': '+d.valores;}).join(' | '),p.observacoes];});var csv='\ufeff'+[header].concat(rows).map(function(row){return row.map(csvCell).join(';');}).join('\r\n');var url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));var a=document.createElement('a');a.href=url;a.download='tereon-propostas-teste.csv';a.click();setTimeout(function(){URL.revokeObjectURL(url);},3000);show(arr.length+' proposta(s) exportada(s) em CSV.');});
+var draft=read(DRAFT,null);if(draft){document.getElementById('family').value=draft.family||'';document.getElementById('itemName').value=draft.name||'';document.getElementById('notes').value=draft.notes||'';fields=Array.isArray(draft.details)?draft.details:[];next=fields.reduce(function(a,d){return Math.max(a,Number(d.id)||0);},0)+1;}
+if(!fields.length)fields=[{id:next++,name:'',values:''}];render();
+})();
+</script>
+</body>
+</html>
