@@ -52,3 +52,11 @@ A arquitetura está **em transição**, não plenamente modular. Há separaçõe
 
 ## Evidência adicional de automação
 O GitHub Actions confirmou **success** para o contrato de catálogo no commit `78628c4` (run 42427001982). Esta aprovação automatizada não homologa o aplicativo completo nem seus dados técnicos.
+
+
+## Atualização de implementação — X.0.3.7
+Após esta auditoria, o maior acoplamento foi reduzido: `index.html` agora é um shell declarativo; a camada de Listas foi dividida em `app.js`, `servico.js` e `store.js`, e o PWA em arquivo próprio. O serviço de Listas é testável sem DOM e não importa catálogo ou compartilhamento. A persistência só confirma a alteração quando a gravação passa.
+
+**Os achados acima são o retrato da versão x.0.3.6**, preservados como histórico da auditoria original. Em x.0.3.7, o risco de monólito no HTML foi mitigado, mas ainda há código histórico fixo de condutor na UI, navegação junto com lista, regras técnicas heterogêneas, e necessidade de testes mobile/PWA. Não declarar modularidade perfeita.
+
+**Teste automatizado:** `x/tests/modulos.test.cjs` valida o estado histórico, criação, atualização, duplicação, remoção, falha de persistência, snapshot imutável do consumidor, sintaxe e carregamento ordenado. A execução de CI foi verificada separadamente no GitHub Actions; validação de interface em navegador e Cloudflare ainda é exigida.
