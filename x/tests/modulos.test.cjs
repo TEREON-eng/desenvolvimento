@@ -53,6 +53,9 @@ assert.equal(/<script>/.test(html),false,'shell não deve conter lógica inline'
 for(const url of scripts)new vm.Script(src(url.slice(1)),{filename:url});
 for(const file of ['x/fichario-x/leitor.js','x/fichario-x/simulador.js','x/motor-compartilhar.js','x/sugestoes-config.js','x/sw.js'])new vm.Script(src(file),{filename:file});
 assert.ok(html.includes('/x/styles.css'));
+assert.ok(html.includes('href="/x/laboratorios/"'),'Início retorna à central de laboratórios');
+assert.equal(html.includes('id="homeButton"'),false,'sem dois botões Início conflitantes');
+assert.equal(src('x/listas/app.js').includes("$('homeButton').addEventListener"),false,'sem listener órfão');
 assert.equal(src('x/listas/app.js').includes('localStorage'),false);
 assert.equal(src('x/listas/servico.js').includes('document.'),false);
 assert.equal(src('x/listas/store.js').includes('document.'),false);
