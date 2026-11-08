@@ -53,7 +53,8 @@ context.fetch=async url=>{
 new vm.Script(read('x/listas/app.js')).runInContext(context);
 function click(selector,attrs={}){
  const target={dataset:attrs,closest:s=>s===selector?target:null};
- documentEvents.click({target});
+ if(['[data-ficha]','[data-pick]','[data-ficha-back]'].includes(selector))element('choices').listeners.click({target});
+ else documentEvents.click({target});
 }
 function choice(v){
  click('[data-pick]',{pick:v});
