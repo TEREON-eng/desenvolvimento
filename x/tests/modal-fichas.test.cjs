@@ -97,5 +97,11 @@ function choice(v){
  assert.ok(element('addDialog').open,'edição usa o mesmo modal aprovado');
  assert.equal(element('liveName').textContent,saved.name);
  assert.equal(element('saveItem').disabled,false);
- console.log('TEREON X: 6 fichas reais → modal aprovado → condição → tags → salvar → editar OK');
+ // Um item anterior sem catalogId permanece editável no modal aprovado.
+ element('addDialog').close();
+ stored.lists[0].items.push({id:'legado-1',name:'Condutor elétrico',values:{material:'Cobre'},qty:'10',unit:'m',stage:'Geral'});
+ click('[data-edit]',{edit:'legado-1'});
+ assert.ok(element('addDialog').open,'registro anterior continua abrindo');
+ assert.equal(element('fieldLabel').textContent,'Formação','registro sem ficha conserva seus campos existentes');
+ console.log('TEREON X: 6 fichas reais → modal aprovado → condição → tags → salvar → editar e legado OK');
 })().catch(error=>{console.error(error);process.exitCode=1});
