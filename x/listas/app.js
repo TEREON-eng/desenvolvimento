@@ -52,6 +52,8 @@ async function activateAccount(userId,cloud){
 function openInitialCreate(){
  if(initialView!=='create')return;
  initialView='';
+ // Link antigo ?view=create abre o modal uma vez; o Início permanece a URL canônica.
+ window.history?.replaceState?.(null,'','/x/');
  $('newName').value='';$('createDialog').showModal();$('newName').focus();
 }
 window.TereonXAppActivateAccount=activateAccount;
@@ -81,7 +83,9 @@ function navigate(target){
   page='list';draw();return;
  }
  if($('listDialog').open)$('listDialog').close();
- activeId=null;page=target;listBackdrop=target;draw();
+ activeId=null;page=target;listBackdrop=target;
+ if(target==='home'){initialView='';window.history?.replaceState?.(null,'','/x/')}
+ draw();
 }
 function exitList(){
  if($('listDialog').open)$('listDialog').close();
