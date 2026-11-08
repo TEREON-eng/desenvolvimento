@@ -7,9 +7,16 @@ const clean=x=>String(x??'').trim();
 const newId=()=>String(Date.now())+'-'+Math.random().toString(36).slice(2,8);
 const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const generateUuid=()=>{
- const value=globalThis.crypto?.randomUUID?.();
- if(!value||!UUID.test(value))throw Error('Este navegador não oferece geração segura de identificadores. Os dados não foram alterados.');
- return value;
+ const cryptoApi=globalThis.crypto;
+ if(cryptoApi?.randomUUID)return cryptoApi.randomUUID();
+ if(cryptoApi?.getRandomValues){
+  const bytes=cryptoApi.getRandomValues(new Uint8Array(16));
+  bytes[6]=(bytes[6]&15)|64;
+  bytes[8]=(bytes[8]&63)|128;
+  const hex=Array.from(bytes,x=>x.toString(16).padStart(2,'0')).join('');
+  return hex.slice(0,8)+'-'+hex.slice(8,12)+'-'+hex.slice(12,16)+'-'+hex.slice(16,20)+'-'+hex.slice(20);
+ }
+ throw Error('Este navegador não oferece geração segura de identificadores. Os dados não foram alterados.');
 };
 function create(repository,options){
  if(!repository||typeof repository.snapshot!=='function'||typeof repository.save!=='function')throw Error('Repositório de listas inválido.');
