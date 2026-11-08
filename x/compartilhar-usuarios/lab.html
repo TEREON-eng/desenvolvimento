@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TEREON X · Compartilhamento entre usuários</title>
+<link rel="stylesheet" href="./lab.css">
+</head>
+<body>
+<main class="shell">
+  <header>
+    <div class="brand">TEREON <span>X</span></div>
+    <p class="kicker">LABORATÓRIO INDEPENDENTE</p>
+    <h1>Listas compartilhadas</h1>
+    <p>Troque uma cópia de lista com outro usuário TEREON, sem alterar sua lista original e sem iniciar solicitação de compra.</p>
+  </header>
+  <section id="logged-out" class="panel hidden">
+    <h2>Entre na sua conta</h2>
+    <p>Acesse primeiro o laboratório de identidade e depois volte a esta tela.</p>
+    <a href="../identidade/lab.html">Abrir minha conta</a>
+  </section>
+  <div id="workspace" class="hidden">
+    <section class="panel">
+      <h2>Minha identificação</h2>
+      <p id="user-email" class="muted">Verificando sessão...</p>
+      <label for="my-code">Meu identificador TEREON (para receber listas)</label>
+      <div class="inline"><input id="my-code" readonly aria-label="Meu identificador"><button id="copy-code" type="button" class="minor">Copiar</button></div>
+      <p class="hint">Envie este identificador para outro profissional TEREON. Nesta primeira versão, não fazemos busca pública de e-mails.</p>
+    </section>
+    <section class="panel">
+      <h2>Enviar lista</h2>
+      <form id="share-form">
+        <label for="source-list">Lista de materiais</label>
+        <select id="source-list" required></select>
+        <label for="recipient">Identificador TEREON do destinatário</label>
+        <input id="recipient" type="text" required spellcheck="false" autocapitalize="off" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
+        <button class="primary" type="submit" id="send">Compartilhar cópia</button>
+      </form>
+      <p class="hint">A lista original continua no seu dispositivo. A cópia enviada ficará disponível somente para o destinatário indicado.</p>
+    </section>
+    <section class="panel">
+      <div class="section-head"><h2>Recebidas</h2><button id="refresh-inbox" type="button" class="minor">Atualizar</button></div>
+      <div id="inbox" class="stack"></div>
+    </section>
+    <section class="panel">
+      <div class="section-head"><h2>Enviadas</h2><button id="refresh-outbox" type="button" class="minor">Atualizar</button></div>
+      <div id="outbox" class="stack"></div>
+    </section>
+  </div>
+  <p id="message" class="message" role="status" aria-live="polite">Verificando sessão...</p>
+  <footer>Laboratório isolado: sem alterações no Motor de Listas, sem solicitação e sem aprovação.</footer>
+</main>
+<script src="../listas/store.js"></script>
+<script src="../listas/servico.js"></script>
+<script src="./motor.js"></script>
+<script type="module" src="./lab.js"></script>
+</body></html>
