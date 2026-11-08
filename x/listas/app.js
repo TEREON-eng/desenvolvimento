@@ -176,6 +176,7 @@ function paintFichaChoices(){
    '<p class="tiny muted">Nenhuma ficha encontrada.</p>');
 }
 function redrawAdd(){
+ $('addDialog').classList.toggle('is-choosing',choosingFicha);
  if(choosingFicha){
   $('liveName').textContent='Selecione um material';
   $('progress').innerHTML='';
@@ -196,9 +197,11 @@ function redrawAdd(){
   $('tags').innerHTML=fields.filter(x=>values[x.id]).map(x=>'<button type="button" class="tag'+(x.required?' required':'')+'" data-remove="'+esc(x.id)+'" title="Remover '+esc(x.label)+'">'+esc(values[x.id])+' ×</button>').join('')||'<span class="tiny muted">As tags confirmadas aparecem aqui.</span>';
   const field=fields[focus];
   $('fieldLabel').textContent=field?.label||'Características';
+  if(selectedFicha){
+   $('fieldLabel').insertAdjacentHTML('beforeend',' <button type="button" class="tag ficha-trocar" data-ficha-back="1" aria-label="Trocar material '+esc(selectedFicha.name)+'" title="Trocar material">'+esc(selectedFicha.name)+' ×</button>');
+  }
   $('fieldType').textContent=field?(field.required?'Obrigatório':'Opcional'):'Sem opções definidas';
-  $('choices').innerHTML=(selectedFicha?'<button type="button" class="tag ficha-voltar" data-ficha-back="1">← Trocar material</button>':'')+
-   (field?field.options.map(o=>'<button type="button" class="tag option'+(values[field.id]===o?' on':'')+'" data-pick="'+esc(o)+'">'+esc(o)+'</button>').join(''):'');
+  $('choices').innerHTML=field?field.options.map(o=>'<button type="button" class="tag option'+(values[field.id]===o?' on':'')+'" data-pick="'+esc(o)+'">'+esc(o)+'</button>').join(''):'';
   const incomplete=selectedFicha?.pendencias?.length||0;
   $('fieldHelp').textContent=selectedFicha?
    (incomplete?'Ficha em revisão: há '+incomplete+' pendência(s) cadastrais. ':'')+
@@ -279,6 +282,9 @@ document.addEventListener('click',function(e){
   if(a.dataset.action==='lists'){exitList();return;}
   if(a.dataset.action==='share'&&list())window.TereonXShare?.open(lists.exportList(activeId));
   if(a.dataset.action==='add')openAdd();
+  if(e.target.closest('[data-ficha-back]')){
+   selectedFicha=null;choosingFicha=true;values={};fields=legacyFields;focus=0;fichaSearch='';redrawAdd();return;
+  }
  }
  var open=e.target.closest('[data-open]');if(open){activeId=open.dataset.open;navigate('list');}
  var edit=e.target.closest('[data-edit]');if(edit&&list()){
@@ -315,8 +321,6 @@ $('choices').addEventListener('input',function(e){
  });
 });
 $('choices').addEventListener('click',function(e){
- const back=e.target.closest('[data-ficha-back]');
- if(back){selectedFicha=null;choosingFicha=true;values={};fields=legacyFields;focus=0;redrawAdd();return}
  const select=e.target.closest('[data-ficha]');
  if(select){
   selectedFicha=window.TereonXCatalog.get(select.dataset.ficha);
