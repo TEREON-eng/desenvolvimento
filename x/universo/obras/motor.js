@@ -52,8 +52,11 @@
   }
   const fields='id,workspace_id,name,description,status,planned_start,planned_end,created_at,deleted_at';
   async function listAll(){
-   await userId();
-   return unpack(await client.from('x_works').select(fields).is('deleted_at',null).order('created_at',{ascending:false}));
+   const owned=await spaces();
+   if(!owned.length)return [];
+   return unpack(await client.from('x_works').select(fields)
+      .in('workspace_id',owned.map(s=>s.id))
+      .is('deleted_at',null).order('created_at',{ascending:false}));
   }
   async function list(workspaceId){
    await userId();checkId(workspaceId,'Espaço');
