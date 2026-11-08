@@ -68,6 +68,8 @@ var fields=[
  {id:'cor',label:'Cor',required:true,options:['Preto','Azul','Vermelho','Branco']},
  {id:'classe',label:'Encordoamento',required:false,options:['Classe 2','Classe 5','Classe 6']}
 ];
+const legacyFields=fields;
+let selectedFicha=null,choosingFicha=false,fichaSearch='',loadingFichas=false,fichaError='';
 var $=function(id){return document.getElementById(id);};
 var esc=function(x){return String(x==null?'':x).replace(/[&<>"']/g,function(k){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[k];});};
 function list(){return lists.get(activeId);}
@@ -133,40 +135,114 @@ function draw(){
  }
 }
 function name(){
+ if(selectedFicha)return window.TereonXCatalog.technicalName(selectedFicha,values);
  return 'Condutor elétrico'+(values.formacao?' '+values.formacao.toLowerCase():'')+
  (values.material?' de '+values.material.toLowerCase():'')+(values.secao?' · # '+values.secao:'')+
  (values.isolacao?' · '+values.isolacao:'')+(values.tensao?' · '+values.tensao:'')+
  (values.cor?' · '+values.cor.toLowerCase():'')+(values.classe?' · '+values.classe:'');
 }
-function count(){return fields.filter(function(x){return x.required&&values[x.id];}).length;}
-function pickFirstMissing(){var i=fields.findIndex(function(x){return x.required&&!values[x.id];});return i===-1?fields.length-1:i;}
+function getFields(){
+ if(!selectedFicha)return legacyFields;
+ return window.TereonXCatalog.visibleDetails(selectedFicha,values)
+  .filter(d=>d.options.length&&d.name!=='[Detalhe sem nome]')
+  .map(d=>({id:d.id,label:d.name,required:d.required,options:d.options}));
+}
+function count(){return fields.filter(f=>f.required&&values[f.id]).length}
+function pickFirstMissing(){
+ let i=fields.findIndex(f=>f.required&&!values[f.id]);
+ if(i<0)i=fields.findIndex(f=>!values[f.id]);
+ return i<0?Math.max(0,fields.length-1):i;
+}
+function cleanHiddenValues(){
+ if(!selectedFicha)return;
+ for(const d of selectedFicha.details){
+  const status=window.TereonXCatalog.applyRule(d.condition,values,selectedFicha.details);
+  if(status.verified&&!status.visible)delete values[d.id];
+ }
+}
+function populateUnitOptions(){
+ const known=['m','un','rl','br3m','rl25','rl50','rl100','rl50m','rl100m','rl200m'];
+ const current=$('unit').value;
+ $('unit').innerHTML=known.map(u=>'<option value="'+u+'">'+u+'</option>').join('');
+ if(known.includes(current))$('unit').value=current;
+}
+function paintFichaChoices(){
+ const all=window.TereonXCatalog?.list()||[];
+ const q=fichaSearch.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+ const candidates=all.filter(f=>(f.name+' '+f.id+' '+f.reference).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(q));
+ $('choices').innerHTML='<input id="fichaSearch" class="ficha-search" type="search" autocomplete="off" placeholder="Buscar material ou família..." aria-label="Pesquisar fichas técnicas" value="'+esc(fichaSearch)+'">'+
+  (loadingFichas?'<p class="tiny muted">Carregando fichas...</p>':fichaError?'<p class="notice">'+esc(fichaError)+'</p>':candidates.length?candidates.map(f=>
+   '<button type="button" class="ficha-option" data-ficha="'+esc(f.id)+'"><strong>'+esc(f.name)+'</strong><small>'+esc(f.id)+' · '+esc(f.status||'Em revisão')+'</small></button>').join(''):
+   '<p class="tiny muted">Nenhuma ficha encontrada.</p>');
+}
 function redrawAdd(){
- $('liveName').textContent=name();
- $('progress').innerHTML=fields.filter(function(x){return x.required;}).map(function(x){return '<span class="segment'+(values[x.id]?' done':'')+'"></span>';}).join('');
- $('counter').textContent=count()+' / '+fields.filter(function(x){return x.required;}).length+' obrigatórios';
- $('tags').innerHTML=fields.filter(function(x){return values[x.id];}).map(function(x){return '<button class="tag'+(x.required?' required':'')+'" data-remove="'+x.id+'" title="Remover '+esc(x.label)+'">'+esc(values[x.id])+' ×</button>';}).join('')||'<span class="tiny muted">As tags confirmadas aparecem aqui.</span>';
- var f=fields[focus];
- $('fieldLabel').textContent=f.label;
- $('fieldType').textContent=f.required?'Obrigatório':'Opcional';
- $('choices').innerHTML=f.options.map(function(o){return '<button class="tag option'+(values[f.id]===o?' on':'')+'" data-pick="'+esc(o)+'">'+esc(o)+'</button>';}).join('');
- $('fieldHelp').textContent=count()===6?'Obrigatórios preenchidos. O último card é opcional.':'Escolha uma opção; a próxima característica aparecerá automaticamente.';
- var l=list();$('stageTags').innerHTML=(l?.stages||[]).map(function(s){return '<button class="tag" data-stage="'+esc(s)+'">'+esc(s)+'</button>';}).join('');
+ if(choosingFicha){
+  $('liveName').textContent='Selecione um material';
+  $('progress').innerHTML='';
+  $('counter').textContent=(window.TereonXCatalog?.list()||[]).length+' fichas disponíveis';
+  $('counter').nextElementSibling.textContent='Fichário em revisão';
+  $('tags').innerHTML='<span class="tiny muted">Selecione uma ficha para iniciar a especificação.</span>';
+  $('fieldLabel').textContent='Escolher material';
+  $('fieldType').textContent='';
+  paintFichaChoices();
+  $('fieldHelp').textContent='As fichas determinam os detalhes, valores e condições. Nenhuma escolha técnica é presumida.';
+ }else{
+  fields=getFields();
+  $('liveName').textContent=name();
+  const required=fields.filter(x=>x.required);
+  $('progress').innerHTML=required.map(x=>'<span class="segment'+(values[x.id]?' done':'')+'"></span>').join('');
+  $('counter').textContent=count()+' / '+required.length+' obrigatórios';
+  $('counter').nextElementSibling.textContent=selectedFicha?'Ficha em revisão':'Registro anterior';
+  $('tags').innerHTML=fields.filter(x=>values[x.id]).map(x=>'<button type="button" class="tag'+(x.required?' required':'')+'" data-remove="'+esc(x.id)+'" title="Remover '+esc(x.label)+'">'+esc(values[x.id])+' ×</button>').join('')||'<span class="tiny muted">As tags confirmadas aparecem aqui.</span>';
+  const field=fields[focus];
+  $('fieldLabel').textContent=field?.label||'Características';
+  $('fieldType').textContent=field?(field.required?'Obrigatório':'Opcional'):'Sem opções definidas';
+  $('choices').innerHTML=(selectedFicha?'<button type="button" class="tag ficha-voltar" data-ficha-back="1">← Trocar material</button>':'')+
+   (field?field.options.map(o=>'<button type="button" class="tag option'+(values[field.id]===o?' on':'')+'" data-pick="'+esc(o)+'">'+esc(o)+'</button>').join(''):'');
+  const incomplete=selectedFicha?.pendencias?.length||0;
+  $('fieldHelp').textContent=selectedFicha?
+   (incomplete?'Ficha em revisão: há '+incomplete+' pendência(s) cadastrais. ':'')+
+   (window.TereonXCatalog.missing(selectedFicha,values).length?'Confirme as características obrigatórias para adicionar.':'Obrigatórios confirmados; você pode continuar escolhendo detalhes opcionais.'):
+   'Escolha uma opção; a próxima característica aparecerá automaticamente.';
+ }
+ const current=list();$('stageTags').innerHTML=(current?.stages||[]).map(s=>'<button type="button" class="tag" data-stage="'+esc(s)+'">'+esc(s)+'</button>').join('');
  validate();
 }
 function validate(){
- $('saveItem').disabled=!(count()===6&&Number($('qty').value)>0&&$('stage').value.trim());
+ const complete=!choosingFicha && (selectedFicha?
+  window.TereonXCatalog.missing(selectedFicha,values).length===0 : count()===6);
+ $('saveItem').disabled=!(complete&&Number($('qty').value)>0&&$('stage').value.trim());
 }
-function openAdd(item){
+async function openAdd(item){
  if(!list())return;
  editId=item?String(item.id):null;
  values=item&&item.values?Object.assign({},item.values):{};
- focus=pickFirstMissing();
+ fichaSearch='';fichaError='';loadingFichas=!item;
+ selectedFicha=null;choosingFicha=!item;
+ fields=legacyFields;focus=pickFirstMissing();
+ populateUnitOptions();
  $('qty').value=item?String(item.qty):'100';
- $('unit').value=item?String(item.unit):'m';
+ $('unit').value=item?String(item.unit):(item?.catalogId==='FT_COND-001'?'m':'un');
  $('stage').value=item?String(item.stage):'Geral';
  $('addTitle').textContent=item?'Editar item':'Adicionar item';
  $('saveItem').textContent=item?'✓ Salvar alterações':'＋ Adicionar à lista';
- redrawAdd();$('addDialog').showModal();
+ if(item?.catalogId)choosingFicha=true;
+ redrawAdd();
+ $('addDialog').showModal();
+ try{
+  await window.TereonXCatalog.load();
+  if(!$('addDialog').open)return;
+  if(item?.catalogId){
+   selectedFicha=window.TereonXCatalog.get(item.catalogId);
+   if(!selectedFicha){fichaError='A ficha deste material não existe mais nesta revisão. Não altere o item até verificar a origem.';choosingFicha=true;}
+   else{choosingFicha=false;fields=getFields();focus=pickFirstMissing();}
+  }
+  loadingFichas=false;
+  redrawAdd();
+ }catch(error){
+  fichaError='Não foi possível carregar o fichário: '+error.message;
+  loadingFichas=false;choosingFicha=true;redrawAdd();
+ }
 }
 function openCatalogAdd(item){
  if(!list())return;
@@ -205,7 +281,7 @@ document.addEventListener('click',function(e){
  var open=e.target.closest('[data-open]');if(open){activeId=open.dataset.open;navigate('list');}
  var edit=e.target.closest('[data-edit]');if(edit&&list()){
   var existing=list().items.find(function(x){return String(x.id)===edit.dataset.edit;});
-  if(existing){if(existing.catalogId)openCatalogAdd(existing);else openAdd(existing);}
+  if(existing)openAdd(existing);
  }
  var duplicate=e.target.closest('[data-duplicate]');if(duplicate&&list()){
   var source=list().items.find(function(x){return String(x.id)===duplicate.dataset.duplicate;});
@@ -223,20 +299,41 @@ $('createForm').addEventListener('submit',function(e){
 });
 $('tags').addEventListener('click',function(e){
  var b=e.target.closest('[data-remove]');if(!b)return;
- delete values[b.dataset.remove];
+ delete values[b.dataset.remove];cleanHiddenValues();fields=getFields();
  // Sempre retoma a primeira característica obrigatória ainda pendente,
  // mesmo quando várias tags são removidas em sequência.
  focus=pickFirstMissing();redrawAdd();
 });
+$('choices').addEventListener('input',function(e){
+ if(e.target.id!=='fichaSearch')return;
+ fichaSearch=e.target.value;
+ const q=fichaSearch.normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase();
+ $('choices').querySelectorAll('[data-ficha]').forEach(button=>{
+  button.hidden=!(button.textContent.normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().includes(q));
+ });
+});
 $('choices').addEventListener('click',function(e){
- var b=e.target.closest('[data-pick]');if(!b)return;
- values[fields[focus].id]=b.dataset.pick;focus=pickFirstMissing();redrawAdd();
+ const back=e.target.closest('[data-ficha-back]');
+ if(back){selectedFicha=null;choosingFicha=true;values={};fields=legacyFields;focus=0;redrawAdd();return}
+ const select=e.target.closest('[data-ficha]');
+ if(select){
+  selectedFicha=window.TereonXCatalog.get(select.dataset.ficha);
+  if(!selectedFicha)return;
+  choosingFicha=false;values={};fields=getFields();focus=pickFirstMissing();
+  $('unit').value=selectedFicha.id==='FT_COND-001'?'m':'un';
+  redrawAdd();return;
+ }
+ const b=e.target.closest('[data-pick]');if(!b||!fields[focus])return;
+ const field=fields[focus];values[field.id]=b.dataset.pick;
+ cleanHiddenValues();fields=getFields();focus=pickFirstMissing();redrawAdd();
 });
 $('stageTags').addEventListener('click',function(e){var b=e.target.closest('[data-stage]');if(b){$('stage').value=b.dataset.stage;validate();}});
 ['qty','stage'].forEach(function(x){$(x).addEventListener('input',validate);});
 $('saveItem').addEventListener('click',function(){
- var l=list();if(!l||count()!==6||!(Number($('qty').value)>0)||!$('stage').value.trim())return;
- var itemData={name:name(),values:Object.assign({},values),qty:$('qty').value,unit:$('unit').value,stage:$('stage').value.trim()};
+ var l=list();if(!l||choosingFicha||!(Number($('qty').value)>0)||!$('stage').value.trim())return;
+ if(selectedFicha&&window.TereonXCatalog.missing(selectedFicha,values).length)return;
+ if(!selectedFicha&&count()!==6)return;
+ var itemData={name:name(),catalogId:selectedFicha?.id||null,values:Object.assign({},values),qty:$('qty').value,unit:$('unit').value,stage:$('stage').value.trim(),fichaStatus:selectedFicha?.status||'Ficha anterior',simulacao:true};
  if(!safe(function(){return lists.upsertItem(activeId,itemData,editId);}))return;
  close('addDialog');editId=null;draw();
 });
