@@ -28,7 +28,7 @@ function refreshView(){if(ready)draw()}
 async function activateAccount(userId,cloud){
  const session=++accountSession;
  if(syncController)syncController.stop();
- syncController=null;ready=false;if($('listDialog')?.open)$('listDialog').close();page=initialView==='home'?'home':'lists';activeId=null;
+ syncController=null;ready=false;if($('listDialog')?.open)$('listDialog').close();page=initialView==='lists'?'lists':'home';listBackdrop=page;activeId=null;
  if(!userId||!cloud){
   accountId=null;lists=window.TereonXLists.create(guestRepository);ready=true;draw();openInitialCreate();return;
  }
@@ -51,14 +51,14 @@ async function activateAccount(userId,cloud){
 }
 function openInitialCreate(){
  if(initialView!=='create')return;
- initialView='lists';
+ initialView='';
  $('newName').value='';$('createDialog').showModal();$('newName').focus();
 }
 window.TereonXAppActivateAccount=activateAccount;
 window.TereonXAppRefreshCloud=()=>syncController?.refresh().then(refreshView);
 
 var initialView=(new URLSearchParams(window.location.search).get('view')||'');
-var page=(initialView==='lists'||initialView==='create')?'lists':'home',activeId=null,values={},focus=0,editId=null;
+var page=initialView==='lists'?'lists':'home',listBackdrop=page,activeId=null,values={},focus=0,editId=null;
 var fields=[
  {id:'material',label:'Material do condutor',required:true,options:['Cobre','Alumínio']},
  {id:'formacao',label:'Formação',required:true,options:['Unipolar','Multipolar']},
@@ -76,30 +76,35 @@ function list(){return lists.get(activeId);}
 function safe(op){try{return op();}catch(e){alert('TEREON X: '+e.message);return null;}}
 function navigate(target){
  if(target==='list'){
-  if(page!=='lists'){page='lists';draw();}
-  page='list';draw();
-  return;
+  // A tela anterior permanece intacta atrás do modal da lista.
+  listBackdrop=page==='home'?'home':'lists';
+  page='list';draw();return;
  }
  if($('listDialog').open)$('listDialog').close();
- activeId=null;page=target;draw();
+ activeId=null;page=target;listBackdrop=target;draw();
 }
 function exitList(){
  if($('listDialog').open)$('listDialog').close();
- activeId=null;page='lists';draw();
+ activeId=null;page=listBackdrop;draw();
 }
 $('listDialog').addEventListener('close',function(){
- if(page==='list'){activeId=null;page='lists';draw();}
+ if(page==='list'){activeId=null;page=listBackdrop;draw();}
 });
 function draw(){
  if(!ready){$('screen').innerHTML='<p class="muted">Carregando suas listas...</p>';return;}
  var data=lists.snapshot();
  var html='';
  if(page==='home'){
-  html='<h1>Listas de materiais</h1><p class="muted">Comece uma lista ou continue de onde parou.</p><div class="grid2">'+
-   '<button class="tile" data-action="lists"><span class="symbol">☷</span><div><strong>Minhas listas</strong><br><span>'+data.lists.length+' lista(s)</span></div></button>'+
-   '<button class="tile" data-action="create"><span class="symbol">＋</span><div><strong>Criar lista</strong><br><span>Nova lista de materiais</span></div></button></div>'+ 
-   '<a class="listrow" href="/x/biblioteca/" style="margin-top:10px;text-decoration:none;color:inherit;align-items:center"><span><strong>Biblioteca · Fichas Técnicas</strong><br><small class="muted">Catálogo Oficial com fichas em revisão para testes</small></span><span>›</span></a>'+
-   '<a class="listrow" href="/x/contribuir.html" style="margin-top:18px;text-decoration:none;color:inherit;align-items:center"><span><strong>Envie seu item para nós</strong><br><small class="muted">Sugira materiais para avaliação do Catálogo Oficial · estudo</small></span><span>›</span></a>';
+  html='<section class="home-intro"><h1>Início</h1><p>Seu espaço de trabalho no TEREON X · ambiente de desenvolvimento</p></section>'+
+   '<nav class="home-heroes" aria-label="Listas de materiais">'+
+   '<button type="button" class="home-hero" data-action="lists"><span class="home-icon">☷</span><strong>Minhas listas</strong><small>Consultar e continuar · '+data.lists.length+' lista(s)</small></button>'+
+   '<button type="button" class="home-hero primary" data-action="create"><span class="home-icon">＋</span><strong>Criar lista</strong><small>Começar uma nova lista</small></button></nav>'+
+   '<p class="home-section-head">FERRAMENTAS E ÁREAS</p>'+
+   '<nav class="home-grid" aria-label="Módulos do TEREON X">'+
+   '<div class="home-tile disabled" aria-label="Dimensionamento em preparação"><span class="home-icon">▤</span><strong>Dimensionamento</strong><span>Cálculos e especificação orientada.</span><small>Em preparação</small></div>'+
+   '<div class="home-tile disabled" aria-label="Canivete em preparação"><span class="home-icon">⚒</span><strong>Canivete</strong><span>Ferramentas técnicas rápidas.</span><small>Em preparação</small></div>'+
+   '<a class="home-tile" href="/x/universo/obras/lab.html"><span class="home-icon">▥</span><strong>Universo</strong><span>Obras e acompanhamento.</span></a>'+
+   '<a class="home-tile" href="/x/escola/"><span class="home-icon">▱</span><strong>Escola</strong><span>Aprendizagem e Biblioteca.</span></a></nav>';
  }else if(page==='lists'){
   html='<div class="row"><h1>Minhas listas</h1><button class="btn small" data-action="create">＋ Nova</button></div><div class="stack">';
   if(!data.lists.length)html+='<div class="empty">Nenhuma lista criada ainda.</div>';
@@ -107,7 +112,7 @@ function draw(){
   html+='</div>';
  }else if(page==='list'){
   var l=list();if(!l){exitList();return;}
-  html='<div class="row list-detail-header"><div><button class="btn ghost small list-return" data-action="lists" aria-label="Voltar para Minhas listas">← Minhas listas</button><h1>'+esc(l.name)+'</h1><span class="tiny muted">'+l.items.length+' lançamento(s)</span></div><button class="btn ghost small" data-action="lists" aria-label="Fechar lista">✕</button></div>'+
+  html='<div class="row list-detail-header"><div><button class="btn ghost small list-return" data-action="lists" aria-label="Voltar para a tela anterior">'+(listBackdrop==='home'?'← Início':'← Minhas listas')+'</button><h1>'+esc(l.name)+'</h1><span class="tiny muted">'+l.items.length+' lançamento(s)</span></div><button class="btn ghost small" data-action="lists" aria-label="Fechar lista">✕</button></div>'+
    '<div style="margin-top:20px"><button class="btn primary full" data-action="add">＋ Adicionar item</button></div>'+ 
    '<div style="margin-top:10px"><button class="btn full" data-action="share">↗ Compartilhar lista</button></div>'+ 
    '<div style="margin-top:10px;text-align:right"><a href="/x/contribuir.html" style="color:#4f6f59;font-size:12px">Não encontrou o material? Envie seu item para nós ›</a></div>'+
