@@ -1,25 +1,16 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#f6f8f6"><meta name="apple-mobile-web-app-capable" content="yes">
-<link rel="manifest" href="../manifest.webmanifest"><link rel="apple-touch-icon" href="../../assets/icon-192-v518.png">
-<title>TEREON X · Central de Laboratórios</title>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f6f8f6">
+<link rel="manifest" href="../manifest.webmanifest"><link rel="icon" href="../../assets/icon-192-v518.png"><title>TEREON X · Central</title>
 <style>
-:root{font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:#f6f8f6;color:#19291e;color-scheme:light}*{box-sizing:border-box}
-body{margin:0}.shell{max-width:710px;margin:auto;padding:22px 16px 40px}.top{border-bottom:1px solid #dce5dd;padding-bottom:15px;display:flex;justify-content:space-between;align-items:center;gap:8px}
-.brand{font-weight:790;font-size:18px;letter-spacing:.03em}.brand span{color:#31794b}.mark{color:#738276;font-size:10px;letter-spacing:.08em}
-h1{font-size:25px;margin:26px 0 6px}.sub{font-size:13px;color:#67786c;line-height:1.55;margin:0 0 21px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.tile{display:flex;flex-direction:column;min-height:162px;padding:16px;background:white;border:1px solid #dce6dd;border-radius:15px;text-decoration:none;color:inherit;gap:8px}
-.tile:hover,.tile:focus-visible{border-color:#658f6c;outline:none;box-shadow:0 4px 18px #123b1e0c}.glyph{font-size:24px;color:#355d40}.tile strong{font-size:15px}.tile span{font-size:12px;color:#78877b;line-height:1.35}.tile small{margin-top:auto;font-size:10px;color:#4b7858}
-.panel{border:1px solid #dfe6df;background:#fff;border-radius:14px;padding:16px;margin-top:16px}h2{font-size:14px;margin:0 0 9px}.panel p{color:#718274;font-size:12px;line-height:1.5;margin:0}.muted{color:#869187;font-size:11px;margin-top:20px}
-@media(max-width:440px){.shell{padding:17px 12px}.grid{gap:9px}.tile{min-height:160px;padding:13px}.tile strong{font-size:14px}.tile span{font-size:11px}}
-</style></head>
-<body><main class="shell"><header class="top"><div class="brand">TEREON <span>X</span></div><div class="mark">DESENVOLVIMENTO</div></header>
-<h1>Central de Laboratórios</h1><p class="sub">Todos os ambientes de teste em um só lugar, no celular ou no computador. Cada motor continua independente.</p>
-<nav class="grid" aria-label="Laboratórios disponíveis">
-<a class="tile" href="../index.html"><span class="glyph" aria-hidden="true">▦</span><strong>Canivete X</strong><span>Listas de materiais, especificação e Biblioteca.</span><small>Abrir aplicativo de listas</small></a>
-<a class="tile" href="../universo/obras/lab.html"><span class="glyph" aria-hidden="true">▤</span><strong>Universo · Obras</strong><span>Espaços, obras, datas, filtros e lixeira.</span><small>Gerenciar obras</small></a>
-<a class="tile" href="../identidade/lab.html"><span class="glyph" aria-hidden="true">♙</span><strong>Minha conta</strong><span>Entrar, consultar ou editar seu perfil.</span><small>Gerenciar identidade</small></a>
-<a class="tile" href="../compartilhar-usuarios/lab.html"><span class="glyph" aria-hidden="true">⇄</span><strong>Compartilhar listas</strong><span>Enviar e receber cópias entre contas TEREON.</span><small>Laboratório multiusuário</small></a>
-</nav><section class="panel"><h2>Como usar no celular</h2><p>Salve esta Central na tela inicial pelo menu do navegador. Ao abrir um módulo, use o mesmo domínio de desenvolvimento para preservar sua sessão. Listas ainda são armazenadas localmente no navegador; os cadastros de obras ficam no Supabase.</p></section>
-<p class="muted">Ambiente de testes. Este painel apenas navega entre motores; ainda não unifica seus dados, permissões ou fluxos.</p>
-</main></body></html>
+:root{font:14px system-ui,-apple-system,"Segoe UI",sans-serif;color:#1c2a20;background:#f6f8f6;color-scheme:light}*{box-sizing:border-box}body{margin:0}.shell{max-width:660px;min-height:100dvh;margin:auto;padding:18px 16px 40px}
+.top{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e1e6e2;padding:0 0 14px}.brand{font-size:16px;font-weight:750;letter-spacing:.045em}.profile{width:38px;height:38px;border:1px solid #d3ded6;background:#fff;color:#294633;border-radius:11px;display:grid;place-items:center}.profile svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.intro{margin:28px 0 22px}h1{font-size:25px;font-weight:690;letter-spacing:-.5px;margin:0 0 7px}.intro p{margin:0;color:#738076;font-size:12px;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.tile{min-height:146px;background:#fff;border:1px solid #dfe5df;border-radius:16px;padding:17px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:8px}.tile:first-child{grid-column:1/-1;min-height:142px}.tile:hover,.tile:focus-visible{border-color:#789783;outline-offset:2px}.tile svg{width:25px;height:25px;color:#356249;stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}.tile strong{font-size:15px;font-weight:650}.tile span{color:#77847a;font-size:12px;line-height:1.4}.hint{margin:20px 0 0;color:#8a968d;font-size:11px;line-height:1.5}
+@media(max-width:380px){.shell{padding:14px 12px}.grid{gap:9px}.tile{padding:13px}.tile span{font-size:11px}}
+</style></head><body><main class="shell"><header class="top"><div class="brand">TEREON X</div><a class="profile" href="../identidade/lab.html" title="Minha conta" aria-label="Minha conta"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg></a></header>
+<section class="intro"><h1>Início</h1><p>Seu espaço de trabalho no TEREON X · ambiente de desenvolvimento</p></section>
+<nav class="grid" aria-label="Módulos do TEREON X">
+<a class="tile" href="../index.html"><svg viewBox="0 0 24 24"><path d="M3 4h18v16H3zM3 10h18M9 10v10"/></svg><strong>Canivete</strong><span>Listas de materiais e especificação técnica.</span></a>
+<a class="tile" href="../universo/obras/lab.html"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M9 7h2m2 0h2M9 11h2m2 0h2M9 15h6"/></svg><strong>Universo</strong><span>Espaços, obras e acompanhamento.</span></a>
+<a class="tile" href="../compartilhar-usuarios/lab.html"><svg viewBox="0 0 24 24"><path d="M4 7h16l-4-4M20 17H4l4 4M20 7l-4 4M4 17l4-4"/></svg><strong>Compartilhar</strong><span>Cópias de listas entre contas.</span></a>
+</nav><p class="hint">Central de testes. Os motores continuam independentes e ainda não compartilham dados automaticamente.</p></main></body></html>
