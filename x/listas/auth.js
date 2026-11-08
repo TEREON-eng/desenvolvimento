@@ -17,7 +17,7 @@ async function resolveSession(){
   if(current!==revision)return;
   if(result.error)throw result.error;
   const uid=result.data?.user?.id||null;
-  if(uid===active)return;
+  if(uid===active){if(uid)window.TereonXAppRefreshCloud?.()?.catch(e=>console.warn('TEREON X: atualização da nuvem',e));return;}
   active=uid;
   await window.TereonXAppActivateAccount(uid,uid?window.TereonXCloudLists.create(client):null);
  }catch(error){
