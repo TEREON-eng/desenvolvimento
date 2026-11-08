@@ -67,3 +67,6 @@ Atualizado em 07/11/2026. Estado observado na branch `desenvolvimento`.
 | Plano comercial/cobrança | direitos de módulos pagos | conceito; não implementado |
 
 Não confundir Compartilhar texto/PDF, Compartilhar entre contas, e Solicitar materiais. Redesenho visual não modifica motores nem contratos. Consulte o Mestre e Universo no índice.
+
+## Novo motor independente — Obras (Universo v1)
+`x/universo/obras/motor.js`: contrato `TereonXWorks.create(client)`, métodos `spaces/createSpace/list/createWork/updateWork/archive`, sem DOM, sem referências às Listas. `x/universo/obras/lab.html` é a apresentação de laboratório. `x_works` pertence a `x_workspaces`; só proprietário do espaço administra na primeira versão. RLS existente e grants por coluna aplicados ao Supabase; acesso como colaborador será outra etapa. `x/tests/obras.test.cjs` incorporado ao CI. Não implementa Solicitações, Diário nem acesso de equipes.
