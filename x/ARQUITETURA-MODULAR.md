@@ -92,3 +92,14 @@ Supabase, projeto **TEREON X** da organização **TEREON-app**: tabelas `x_profi
 **Ainda não implementado:** tela de login, cadastro automático de perfil, emissão/aceitação/revogação de convites, gestão de participantes, papéis detalhados por ação, banco de Listas/Solicitações, sincronização offline, testes reais entre dois usuários. Não conceder inserção de membros/atribuições diretamente ao frontend: criar fluxo controlado, validado e auditável.
 
 **Segurança:** não expor chave privilegiada no navegador; políticas RLS devem ser testadas com usuários autenticados diferentes antes da integração. O verificador de segurança Supabase não apontou alertas após a criação, mas isso não substitui testes de autorização.
+
+## 10. Compartilhamento entre usuários — laboratório independente
+
+Motor `x/compartilhar-usuarios/motor.js`, banco `public.x_list_shares` e interface de laboratório `x/compartilhar-usuarios/lab.html`. Não alterar nem integrar a tela principal de Listas antes de testar com dois usuários.
+
+- **Lista original:** dados locais gerenciados exclusivamente por Listas; saída pública de leitura `exportList(id)`.
+- **Compartilhamento entre usuários:** recebe cópia estruturada, grava snapshot com remetente e destinatário, aceita/recusa/revoga; nenhuma edição na lista de origem, nenhum fluxo de compra.
+- **Solicitações:** processo futuro distinto (aprovação → compra → recebimento). Não confundir com Compartilhar por texto/PDF/WhatsApp ou com o envio de cópia a outra conta TEREON.
+- **Acessos e autorização:** banco Supabase RLS com permissões por coluna; identificadores UUID somente como endereço de usuário no primeiro laboratório, sem expor um diretório de e-mails.
+- **Visual:** a interface pode ser redesenhada por CSS/HTML mantendo os contratos públicos do motor, os eventos documentados e testes. **É proibido alterar mecânicas de Listas ou registros no banco para corrigir aparência.** Antes de mudar visual, registrar comportamento de referência e executar regressão.
+- **Status:** esquema e código criados em desenvolvimento; não testado com dois usuários reais, não integrado ao aplicativo principal e não homologado.
