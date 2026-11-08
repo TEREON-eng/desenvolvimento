@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.8",
+  "version": "x.0.3.9",
   "build": "2026-11-08",
-  "notes": "Motor único de Listas com cache por conta, sincronização e conflitos"
+  "notes": "Lista abre em modal sobre Minhas listas, com retorno explícito e seletor técnico preservado"
 }
