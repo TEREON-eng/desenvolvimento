@@ -1,0 +1,499 @@
+{
+  "schema": 1,
+  "fonte": "Fichario.xlsm (Google Drive), leitura 2026-11-08; fonte da verdade: abas das fichas",
+  "aviso": "Todas as fichas estão em revisão, sem homologação técnica. Campos incompletos são exibidos como pendências; não preencher valores por inferência.",
+  "fichas": [
+    {
+      "codigo": "FT_INFRA-001",
+      "nome": "Eletroduto",
+      "categoria": "INFRAESTRUTURA",
+      "status": "Em revisão",
+      "tipo": "real",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "ordem": 1,
+          "nome": "Tipo",
+          "valores": [
+            "Rígido",
+            "Flexível"
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-002",
+          "ordem": 2,
+          "nome": "Material",
+          "valores": [
+            "Aço",
+            "PVC",
+            "PEAD"
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-003",
+          "ordem": 3,
+          "nome": "Diâmetro Aço",
+          "valores": [
+            "1/2\"",
+            "3/4\"",
+            "1\"",
+            "1.1/4\"",
+            "1.1/2\"",
+            "2\"",
+            "2.1/2\"",
+            "3\"",
+            "4\""
+          ],
+          "condicao": "Rígido+Aço",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-004",
+          "ordem": 4,
+          "nome": "Diâmetro PVC",
+          "valores": [
+            "1/2\"",
+            "3/4\"",
+            "1\"",
+            "1.1/4\"",
+            "1.1/2\"",
+            "2\"",
+            "2.1/2\"",
+            "3\"",
+            "4\""
+          ],
+          "condicao": "Rígido+PVC",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-005",
+          "ordem": 5,
+          "nome": "Diâmetro PEAD",
+          "valores": [
+            "1/2\"",
+            "3/4\"",
+            "1\"",
+            "1.1/4\"",
+            "1.1/2\"",
+            "2\"",
+            "2.1/2\"",
+            "3\"",
+            "4\""
+          ],
+          "condicao": "Flexível+PEAD",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-006",
+          "ordem": 6,
+          "nome": "Cobertura",
+          "valores": [
+            "COM capa",
+            "SEM capa"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-007",
+          "ordem": 7,
+          "nome": "",
+          "valores": [
+            "Liso",
+            "Corrugado"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-008",
+          "ordem": 8,
+          "nome": "Resistencia PVC_Flex",
+          "valores": [],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-009",
+          "ordem": 9,
+          "nome": "Resistencia PVC_Rig",
+          "valores": [],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-010",
+          "ordem": 10,
+          "nome": "Revestimento_Aço",
+          "valores": [
+            "Galvanização eletrolítica",
+            "Imersão a quente (a fogo)"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-011",
+          "ordem": 11,
+          "nome": "Tipo ponta",
+          "valores": [
+            "Rosqueável",
+            "Soldável"
+          ],
+          "condicao": "Rígido+PVC",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-012",
+          "ordem": 12,
+          "nome": "Unidade de compra",
+          "valores": [
+            "m",
+            "rl25",
+            "rl50",
+            "rl100"
+          ],
+          "condicao": "Flexível",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-013",
+          "ordem": 13,
+          "nome": "Unidade de compra",
+          "valores": [
+            "br3m"
+          ],
+          "condicao": "Rígido",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "codigo": "FT_COND-001",
+      "nome": "Condutor elétrico",
+      "categoria": "CONDUTORES",
+      "status": "Em revisão",
+      "tipo": "real",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "ordem": 1,
+          "nome": "Tipo",
+          "valores": [
+            "Unipolar",
+            "Multipolar"
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-002",
+          "ordem": 2,
+          "nome": "Material",
+          "valores": [
+            "Cobre",
+            "Alumínio"
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-003",
+          "ordem": 3,
+          "nome": "Seção",
+          "valores": [
+            "1,5",
+            "2,5",
+            "4,0",
+            "6,0",
+            "10,0",
+            "16,0",
+            "25,0",
+            "35,0",
+            "50,0",
+            "70,0",
+            "95,0",
+            "120,0",
+            "150,0",
+            "185,0",
+            "240,0"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-004",
+          "ordem": 4,
+          "nome": "Qnt de vias",
+          "valores": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-005",
+          "ordem": 5,
+          "nome": "Temperatura de operação",
+          "valores": [
+            "70 C",
+            "90 C"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-006",
+          "ordem": 6,
+          "nome": "Tensão nominal",
+          "valores": [
+            "450/750 V",
+            "0,6/1,0 kV"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-007",
+          "ordem": 7,
+          "nome": "Blindagem",
+          "valores": [
+            "SEM blindagem",
+            "Malha",
+            "Fita"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-008",
+          "ordem": 8,
+          "nome": "Unidade compra",
+          "valores": [
+            "m",
+            "rl50m",
+            "rl100m",
+            "rl200m"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "codigo": "FT_INFRA-002",
+      "nome": "Curva para eletroduto",
+      "categoria": "INFRAESTRUTURA",
+      "status": "Em revisão",
+      "tipo": "real",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "ordem": 1,
+          "nome": "Tipo",
+          "valores": [
+            "45°",
+            "90°"
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-002",
+          "ordem": 2,
+          "nome": "Material",
+          "valores": [
+            "Aço",
+            "PVC"
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-003",
+          "ordem": 3,
+          "nome": "Diâmetro",
+          "valores": [
+            "1/2\"",
+            "3/4\"",
+            "1\"",
+            "1.1/4\"",
+            "1.1/2\"",
+            "2\"",
+            "2.1/2\"",
+            "3\"",
+            "4\""
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-004",
+          "ordem": 4,
+          "nome": "Revestimento_Aço",
+          "valores": [
+            "Galvanização eletrolítica",
+            "Imersão a quente (a fogo)"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-005",
+          "ordem": 5,
+          "nome": "Tipo ponta",
+          "valores": [
+            "Rosqueável",
+            "Soldável"
+          ],
+          "condicao": "PVC",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "codigo": "FT_INFRA-003",
+      "nome": "Conectores para eletroduto",
+      "categoria": "INFRAESTRUTURA",
+      "status": "Em revisão",
+      "tipo": "real",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "ordem": 1,
+          "nome": "Tipo",
+          "valores": [
+            "Reto, Cônico, Múltiplo"
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-002",
+          "ordem": 2,
+          "nome": "Diâmetro",
+          "valores": [
+            "1/2\"",
+            "3/4\"",
+            "1\"",
+            "1.1/4\"",
+            "1.1/2\"",
+            "2\"",
+            "2.1/2\"",
+            "3\"",
+            "4\""
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        }
+      ]
+    },
+    {
+      "codigo": "FT_INFRA-004",
+      "nome": "Abraçadeiras",
+      "nomeNaPlanilha": "Conectores para eletroduto",
+      "categoria": "INFRAESTRUTURA",
+      "status": "Em revisão",
+      "tipo": "real",
+      "pendencias": [
+        "Na aba FT_INFRA-004, a célula B5 contém 'Conectores para eletroduto'. Nome exibido usa o assunto da aba e o código, sem modificar a fonte."
+      ],
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "ordem": 1,
+          "nome": "Tipo",
+          "valores": [
+            "Tipo \"D\" c/ cunha",
+            "Tipo \"U\" p/ perfialdo",
+            "Tipo \"U Ohmega\""
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-002",
+          "ordem": 2,
+          "nome": "Diâmetro",
+          "valores": [
+            "1/2\"",
+            "3/4\"",
+            "1\"",
+            "1.1/4\"",
+            "1.1/2\"",
+            "2\"",
+            "2.1/2\"",
+            "3\"",
+            "4\""
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        }
+      ]
+    },
+    {
+      "codigo": "FT_INFRA-005",
+      "nome": "Caixa de passagem",
+      "categoria": "INFRAESTRUTURA",
+      "status": "Em revisão",
+      "tipo": "real",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "ordem": 1,
+          "nome": "Tipo",
+          "valores": [
+            "Sobrepor",
+            "Embutir"
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-002",
+          "ordem": 2,
+          "nome": "Material",
+          "valores": [
+            "Chapa de aço",
+            "Alumínio",
+            "PVC"
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-003",
+          "ordem": 3,
+          "nome": "Tamanho",
+          "valores": [
+            "10x10",
+            "20x20",
+            "30x30",
+            "40x40"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-004",
+          "ordem": 4,
+          "nome": "Tamanho PVC",
+          "valores": [
+            "4x2",
+            "4x4"
+          ],
+          "condicao": "PVC+Embutir",
+          "classificacao": ""
+        }
+      ]
+    }
+  ]
+}
