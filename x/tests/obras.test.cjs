@@ -86,5 +86,16 @@ const client={auth:{getUser:async()=>({data:{user:{id:uid}},error:null})},from};
  const hub=fs.readFileSync(path.join(__dirname,'../laboratorios/index.html'),'utf8');
  assert.ok(hub.includes('../index.html')&&hub.includes('../universo/obras/lab.html')&&hub.includes('../identidade/lab.html')&&hub.includes('../compartilhar-usuarios/lab.html'));
  assert.ok(lab.includes('works.removeWork')&&lab.includes('works.restore'));
+ const read=p=>fs.readFileSync(path.join(__dirname,'..',p),'utf8');
+ const central=read('laboratorios/index.html');
+ assert.ok(central.includes('href="../identidade/lab.html"'),'perfil no cabeçalho');
+ assert.ok(!central.includes('class="tile" href="../identidade/'),'perfil não é card');
+ for(const [p,anchor] of [['index.html','/x/laboratorios/'],['identidade/lab.html','../laboratorios/'],['compartilhar-usuarios/lab.html','../laboratorios/'],['universo/obras/lab.html','../../laboratorios/']]){
+   assert.ok(read(p).includes('href="'+anchor+'"'),'retorno à central em '+p);
+ }
+ for(const p of ['identidade/lab.css','compartilhar-usuarios/lab.css','universo/obras/lab.css']){
+   assert.ok(read(p).includes('color-scheme:light'),'tema claro em '+p);
+   assert.ok(!read(p).includes('color-scheme:dark'),'não regressar a tema escuro em '+p);
+ }
  console.log('TEREON X: motor isolado de Obras e contratos básicos OK');
 })().catch(e=>{console.error(e);process.exitCode=1});
