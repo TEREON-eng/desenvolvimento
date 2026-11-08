@@ -31,8 +31,11 @@
     async function logout() { await unpack(await client.auth.signOut()); }
     async function session() { return (await unpack(await client.auth.getSession())).session; }
     async function currentUser() {
+      // Sem sessão é estado normal, não erro: evita bloquear a tela de login.
+      const active = await session();
+      if (!active) return null;
       const data = await unpack(await client.auth.getUser());
-      return data.user;
+      return data.user || null;
     }
     async function sendReset(email, redirectTo) {
       email = requireEmail(email);
