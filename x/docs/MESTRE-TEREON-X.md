@@ -83,3 +83,9 @@ O Diário de Obras é uma consolidação **por obra e data**, contendo múltiplo
 ## 12. Implementação inicial do Motor de Obras — 07/11/2026
 **IMPLEMENTADO em `desenvolvimento`, ainda não homologado em navegador:** `x/universo/obras/motor.js` e laboratório `lab.html/lab.js/lab.css`. Reusa `x_workspaces` e `x_works` com RLS, registra cinco situações de obra (planejamento, em andamento, pausada, concluída, arquivada), cria e edita obras vinculadas a espaço próprio. Arquivar não exclui. Primeiro painel apresenta total e obras em andamento, calculados da lista autorizada.
 **PENDENTE:** teste de uso no Preview, CI confirmado, múltiplas contas, espaços compartilhados, lista vinculada, equipes, Solicitações, Diário, alertas e indicadores. O Centro de Controle real ainda está em construção; essa tela é laboratório, não o módulo completo. Não houve alteração no Canivete nem na main.
+
+## 13. Terminologia e padrão visual do Universo (decisão 07/11/2026)
+- **Espaço de Trabalho**: agrupamento de obras controlado por uma conta; modalidade Pessoal (trabalho do próprio profissional) ou Organização (empresa/negócio gerenciado). Não corresponde à profissão, e "empreiteiro" não é um tipo obrigatório de espaço.
+- **Obra**: registro vinculado a um espaço; pode ser editada e excluída com recuperação, mantendo dados relacionais.
+- **Exclusão recuperável**: `deleted_at` e Lixeira, sem apagar definitivamente; arquivamento continua status independente.
+- **Padrão de interface**: tema claro da linha TEREON X, formulários de cadastro/edição em modais, não voltar à aparência do TEREON legado. Alterações visuais não alteram o motor. Trabalho aplicado apenas no laboratório `x/universo/obras/`, aguardando teste do fundador.
