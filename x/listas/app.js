@@ -32,7 +32,7 @@ async function activateAccount(userId,cloud){
  }
  accountId=userId;
  const base=window.TereonXListStore.create({key:storageKey(userId)});
- const integration=window.TereonXListIntegration.create({store:base,cloud,onStatus:refreshView});
+ const integration=window.TereonXListIntegration.create({store:base,cloud,accountId:userId,onStatus:refreshView});
  syncController=integration;
  lists=window.TereonXLists.create(integration.repository);
  draw();
@@ -102,7 +102,7 @@ function draw(){
  if(page==='home'||page==='lists'||page==='list'){
   html=syncBanner()+html;
   if(page==='lists'&&accountId&&guestRepository.snapshot().lists.length){
-   const already=localStorage.getItem('tereon-x-imported-'+accountId);
+   const already=syncController?.guestImported();
    if(!already)html+='<button class="btn small" style="margin-top:14px" type="button" data-action="import">Trazer listas deste aparelho para minha conta</button>';
   }
  }
@@ -168,7 +168,7 @@ $('screen').addEventListener('click',function(e){
    if(!confirm('Copiar '+incoming.length+' lista(s) deste aparelho para sua conta? As originais serão mantidas no aparelho.'))return;
    const state=syncController.repository.snapshot();
    for(const old of incoming)state.lists.push({id:uuid(),recordUid:uuid(),name:old.name,items:JSON.parse(JSON.stringify(old.items)),stages:JSON.parse(JSON.stringify(old.stages))});
-   try{syncController.repository.save(state);localStorage.setItem('tereon-x-imported-'+accountId,'1');draw();}
+   try{syncController.repository.save(state);syncController.markGuestImported();draw();}
    catch(e){alert('Não foi possível copiar: '+e.message)}
    return;
   }
