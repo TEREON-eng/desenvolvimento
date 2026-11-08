@@ -3,7 +3,8 @@
 'use strict';
 const repository=window.TereonXListStore.create();
 const lists=window.TereonXLists.create(repository);
-var page='home',activeId=null,values={},focus=0,editId=null;
+var initialView=(new URLSearchParams(window.location.search).get('view')||'');
+var page=(initialView==='lists'||initialView==='create')?'lists':'home',activeId=null,values={},focus=0,editId=null;
 var fields=[
  {id:'material',label:'Material do condutor',required:true,options:['Cobre','Alumínio']},
  {id:'formacao',label:'Formação',required:true,options:['Unipolar','Multipolar']},
@@ -144,4 +145,9 @@ $('saveItem').addEventListener('click',function(){
 });
 $('addDialog').addEventListener('cancel',function(){values={};});
 draw();
+if(initialView==='create'){
+ $('newName').value='';
+ $('createDialog').showModal();
+ $('newName').focus();
+}
 })();
