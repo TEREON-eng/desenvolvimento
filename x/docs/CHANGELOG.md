@@ -89,3 +89,11 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Identidade de relações ampliada para `list` apenas de lista já salva na nuvem pelo usuário autenticado; ainda sem relação real com obra.
 - Link discreto de teste na Central, testes de contrato incluídos no CI e documentação atualizada.
 - **PENDENTE:** teste de navegador, duas contas, dois aparelhos e integração funcional com Motor de Listas existente. `main` não alterada.
+
+## 08/11/2026 — x.0.3.8 · Motor Único de Listas com armazenamento por contexto
+- Frontend principal de Listas agora usa o mesmo `x/listas/servico.js` e modal técnico tanto para dados avulsos no dispositivo quanto para conta com `x_cloud_lists`; eliminada entrada pública concorrente para laboratório de nuvem.
+- Criados `x/listas/integracao.js` (cache por conta, sincronização, versão otimista, preservação de conflitos) e `x/listas/auth.js` (sessão e fallback local).
+- Novas listas da conta usam UUID de origem estável, autorizado no Supabase em `x/listas/sql/002_client_uuid.sql`. Sincronização de gravações em background com informação visível no topo da lista, sem afirmar sucesso quando rede falha.
+- Listas avulsas não são importadas automaticamente; usuário pode escolher copiá-las para sua conta em **Minhas listas**. Originais são mantidas no aparelho.
+- PWA x.0.3.8: cache atualizado com módulos da integração, fallback de recursos locais e versão do app.
+- Testes simulados `x/tests/listas-integracao.test.cjs` e `x/tests/modulos.test.cjs` passaram. Browser e CI a conferir; `main` não alterada.
