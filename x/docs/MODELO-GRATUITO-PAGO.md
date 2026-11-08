@@ -55,3 +55,13 @@ Ativação: criou primeira lista real sem ajuda. Qualidade: completou especifica
 - Solicitações é add-on do Universo Equipe ou módulo adquirido separadamente?
 - Limites gratuitos: número de obras/listas/compartilhamentos; evitar cortes arbitrários.
 - Qual cronograma comercial realista com testes em novembro de 2026?
+
+## 8. Consequência do Universo original para o modelo comercial
+Em 07/11, o fundador reafirmou o **Universo Individual** como acompanhamento de obra de verdade: listas vinculadas, aplicação/consumo de materiais, Diário de Obras, Visitas/Relatórios e Alertas. Não propor preço como se o módulo entregasse somente cadastro de obra.
+**Possível linha de valor a validar (sem aprovação de planos):**
+- **Canivete gratuito**: fazer bem a lista, com especificação correta e compartilhamento básico. Não enfraquecer o grátis para vender obras.
+- **Universo Individual**: organizar obras particulares e registrar a execução, materiais aplicados, diários, visitas e alertas.
+- **Universo Equipe**: mesmo núcleo com participantes autorizados, responsabilidade e colaboração, sem exigir contas novas.
+- **Solicitações**: processo próprio e opcional com aprovações, aquisição e recebimento, inclusive parciais; não confundir com registro de aplicação.
+**Hipótese:** preço pode ter como fundamento a economia de tempo, continuidade histórica e redução de perda de informações; número de cadastros de obra, isoladamente, não justifica a oferta.
+**Nenhuma funcionalidade, pacote, preço, quantidade de obras/usuários ou data comercial foi aprovada nesta revisão.**
