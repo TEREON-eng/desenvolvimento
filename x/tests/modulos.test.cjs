@@ -64,6 +64,22 @@ assert.equal(failingService.get('legacy2').recordUid,undefined,'falha na migraç
 assert.equal(JSON.parse(map.get(key)).lists[0].recordUid,undefined,'falha na migração preserva dados gravados');
 assert.throws(()=>root.TereonXListStore.create({storage:{getItem:()=>'{',setItem(){}}}),/Nenhum dado foi alterado/);
 
+// Adaptador Listas → Relações: consulta não escreve e preparo é explícito.
+const adapterContext={};vm.createContext(adapterContext);
+new vm.Script(src('x/relacoes/origem-listas.js'),{filename:'x/relacoes/origem-listas.js'}).runInContext(adapterContext);
+const adapter=adapterContext.TereonXListRelationsAdapter.create(service);
+const reference=adapter.reference('antiga');
+assert.equal(reference.type,'list');
+assert.equal(reference.originId,'antiga');
+assert.equal(reference.recordUid,oldUid);
+assert.equal(reference.synchronized,false);
+assert.equal(reference.remoteLinkAllowed,false);
+assert.throws(()=>adapter.reference('não existe'),/não encontrada/);
+const beforePrepare=map.get(key);
+const prepared=adapter.prepare('antiga');
+assert.equal(prepared.recordUid,oldUid,'não muda identidade existente');
+assert.equal(map.get(key),beforePrepare,'preparo repetido não regrava lista existente');
+
 const html=src('x/index.html');
 const scripts=[...html.matchAll(/<script src="([^"]+)"/g)].map(x=>x[1].split('?')[0]);
 const expected=['/x/listas/store.js','/x/listas/servico.js','/x/motor-compartilhar.js','/x/catalogo/motor.js','/x/catalogo/seletor.js','/x/listas/app.js','/x/pwa.js'];
