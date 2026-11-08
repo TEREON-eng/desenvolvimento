@@ -53,3 +53,27 @@ Não confiar no frontend para autorizar ações; banco aplica papéis por obra. 
 - O que acontece com dados ao sair da empresa, encerrar a obra ou deixar de pagar?
 - Qual o recorte grátis/pago, limites e preço após testes de valor?
 **Regra:** apresentar ao fundador como decisões de produto, não construir por suposições.
+
+## 9. Recuperação da primeira concepção do Universo (registro de 07/11/2026 à noite)
+**CORREÇÃO DE ESCOPO trazida pelo fundador:** o Universo original não era apenas cadastro de obras e filas de solicitações. Já tinha objetivos de **acompanhamento de aplicação de materiais, Diário de Obras, Relatórios de Visitas e Alertas**. Essa direção foi congelada para focar a especificação técnica e as listas, preparando testes até 17/11. O retorno ao Universo deverá considerar o Canivete como núcleo estabilizado e a alimentação técnica das fichas por Juliano (propostas sob aprovação exclusiva do fundador).
+
+**Definições recuperadas de outubro, sem afirmar que estão implementadas no X:**
+- O "Acompanhamento" anterior foi reconceituado como **Resumo da obra**: pendências, próximas atividades, últimas visitas, registros, prazos e atenção necessária.
+- **Atividade** é serviço/intervenção que pode durar vários dias e ser citada por múltiplos Diários.
+- **Diário de Obras**: registros por data com atividades, ocorrências, impedimentos e fotografias.
+- **Visitas**: data, finalidade, observações, providências e fotografias. Vínculos com atividades são opcionais e devem ficar recolhidos; não impor na tela campos de identificação/verificação desnecessários.
+- **Alertas internos**: materiais sem confirmação, próximas atividades, pedidos atrasados e pendências de providências de visitas. O alerta é derivado de eventos/datas registrados; não inventar compra, prazo ou consumo.
+- **Listas**: criação avulsa e veloz no Canivete, com vínculo posterior e explícito à obra; preservar dados locais e experiência mobile-first.
+- **Aplicação de Materiais:** dimensão central reafirmada pelo fundador em 07/11. O modelo deverá distinguir **previsto/solicitado/comprado/recebido/aplicado** e suas quantidades, com origem rastreável e sem confundir consumo com solicitação. O detalhamento exato e as regras de lançamento são **PROPOSTA a validar**, não função pronta.
+- A arquitetura visual antiga usou "Centro de Controle" com área geral de obras e relatórios e área de obra ativa com visitas/atividade atual/listas em atenção. Aproveitar a lógica de apresentação sem copiar os acoplamentos do código legado.
+
+### Primeiro valor comercial a validar
+Não reduzir Universo Individual a uma lista de nomes de obras. Mínimo útil **proposto**: cadastro de obra, vínculo das listas, acompanhamento do material aplicado, atividade/diário, visita e pendências/alertas básicos. O conjunto e a profundidade serão discutidos antes de implementação. Os motores podem ser independentes e o Universo funciona como uma composição de experiências, não um monólito.
+
+### Trabalho paralelo e critério de lançamento
+**Frente 1:** estabilização e teste de campo do Canivete/Especificação para 17/11 (meta, não homologação garantida), com Juliano contribuindo com propostas de fichas sob governança no Drive.
+**Frente 2:** desenho e contratos do Universo, diários, visitas, atividades, alertas e aplicação de materiais em laboratórios separados. Não desestabilizar o Canivete para adiantar o Universo.
+**Marco comercial seguinte:** a visão do fundador é um lançamento de produto mais completo após essa etapa, mas **escopo, versão e data ainda precisam ser aprovados**.
+
+### Revisão de ordem
+O roteiro anterior U1–U5 continua como referência de fundação técnica, mas não representa sozinho a prioridade de valor percebido. Acrescentar prova de uso de diário, visitas, materiais aplicados e alertas **antes de declarar Universo Individual como produto comercialmente pronto**.
