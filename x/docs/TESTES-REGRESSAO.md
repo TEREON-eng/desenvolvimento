@@ -120,3 +120,15 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 - Testar conta B: não pode visualizar ou editar listas da conta A. O mesmo vale para identidade do tipo `list` no Motor de Relações.
 - Confirmar que Canivete continua com listas locais intactas e que a versão de UI online não usa os dados locais automaticamente.
 - Auditoria SQL confirma RLS habilitada e `record_type` permitido `work/list`; teste real de isolamento e navegador ainda necessário.
+
+## Aceite — interface única de Listas x.0.3.8
+- Sem login, abrir **Minhas listas / Criar lista**, selecionar materiais e confirmar: o fluxo deve funcionar localmente e avisar **Salvo neste aparelho**.
+- Entrar na conta pela mesma Central e voltar às listas: a mesma tela deve mostrar listas online, inclusive listas anteriores criadas no laboratório `/x/listas/nuvem/lab.html`; o modal técnico existente deve continuar funcional.
+- Criar lista autenticado, adicionar dois materiais com opções/tags, editar, duplicar e remover; verificar atualização online após sincronização.
+- Em outro aparelho com a **mesma conta**, abrir **Minhas listas** e verificar os mesmos itens. Se houve atualização em um aparelho, usar **↻ Atualizar** no outro.
+- Em duas contas diferentes, jamais misturar caches, listas nem remeter dados avulsos automaticamente.
+- Usuário com listas avulsas pode clicar **Trazer listas deste aparelho para minha conta**; copiar só mediante confirmação e preservar origem.
+- Cortar rede depois do carregamento da sessão: novas alterações devem permanecer em cache com indicador pendente. Reconectar e verificar envio.
+- Conflito: editar simultaneamente nos dois aparelhos. Salvar no primeiro e depois no segundo; preservar edição local e bloquear sobrescrita na nuvem, com aviso. Resolução/mesclagem automática **não implementada**.
+- Atualização PWA: x.0.3.8, novos JS no SW; não limpar dados de outros apps.
+- Testes de contrato simulados passaram, incluindo `x/tests/listas-integracao.test.cjs`; **teste manual com aparelhos reais e consulta posterior da tabela ainda obrigatório**.
