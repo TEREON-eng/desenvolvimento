@@ -81,3 +81,11 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Novo `x/relacoes/origem-listas.js` transforma lista em referência local; `remoteLinkAllowed:false` evita fingir sincronização.
 - Testes de regressão ampliados para lista antiga, reabertura, idempotência, rollback de gravação e adaptador.
 - Nenhuma nova tabela nem upload de Listas ao Supabase nesta etapa; vínculo obra–lista continua pendente. Sem alteração na `main`.
+
+## 08/11/2026 — Laboratório independente de Listas na Nuvem
+- Criada `public.x_cloud_lists` no Supabase, protegida por RLS proprietário e permissões de coluna, sem exclusão física habilitada no cliente.
+- Serviço `x/listas/nuvem/motor.js`: listar, abrir, criar e salvar lista com materiais/etapas. Controle de versão transacional impede sobrescrita acidental por outro aparelho.
+- Laboratório de uso simples `x/listas/nuvem/lab.html` com criação, lançamento/edição de material, salvamento e recuperação, sem tocar no Canivete local.
+- Identidade de relações ampliada para `list` apenas de lista já salva na nuvem pelo usuário autenticado; ainda sem relação real com obra.
+- Link discreto de teste na Central, testes de contrato incluídos no CI e documentação atualizada.
+- **PENDENTE:** teste de navegador, duas contas, dois aparelhos e integração funcional com Motor de Listas existente. `main` não alterada.
