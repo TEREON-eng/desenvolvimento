@@ -335,7 +335,7 @@ $('saveItem').addEventListener('click',function(){
  var l=list();if(!l||choosingFicha||!(Number($('qty').value)>0)||!$('stage').value.trim())return;
  if(selectedFicha&&window.TereonXCatalog.missing(selectedFicha,values).length)return;
  if(!selectedFicha&&count()!==6)return;
- var itemData={name:name(),catalogId:selectedFicha?.id||null,values:Object.assign({},values),qty:$('qty').value,unit:$('unit').value,stage:$('stage').value.trim(),fichaStatus:selectedFicha?.status||'Ficha anterior',simulacao:true};
+ var itemData={name:name(),catalogId:selectedFicha?.id||null,values:Object.assign({},values),qty:$('qty').value,unit:$('unit').value,stage:$('stage').value.trim(),fichaStatus:selectedFicha?.status||'Ficha anterior',simulacao:selectedFicha?.kind==='simulacao'};
  if(!safe(function(){return lists.upsertItem(activeId,itemData,editId);}))return;
  close('addDialog');editId=null;draw();
 });
