@@ -1,7 +1,7 @@
 /* TEREON X · Identidade e Relações v1
  * Serviço sem interface, sem acoplamento a Obras ou Listas.
- * Apenas identidade remota para 'work' nesta fase: demais tipos exigem
- * autorização de origem, sincronização e políticas próprias.
+ * Identidade remota para work e list online; fontes locais ainda não
+ * são elegíveis a registro remoto.
  */
 (function(root,factory){
  const api=factory();
@@ -12,7 +12,7 @@
  const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
  const check=(value,name)=>{if(!UUID.test(String(value||'')))throw Error(name+' inválido.');return value;};
  const unpack=res=>{if(res.error)throw res.error;return res.data;};
- const TYPES=Object.freeze(['work']);
+ const TYPES=Object.freeze(['work','list']);
  const RELATIONS=Object.freeze(['related_to','derived_from']);
  function create(client){
   if(typeof client?.from!=='function'||typeof client?.auth?.getUser!=='function')throw Error('Cliente de relações inválido.');
