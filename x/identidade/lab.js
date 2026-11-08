@@ -7,8 +7,20 @@ const authPanel = document.querySelector('.panel[aria-labelledby="auth-title"]')
 const signedPanel = $('signed');
 const tabs = [...document.querySelectorAll('[data-mode]')];
 let mode = 'login', user = null, recovering = false, busy = false;
+const initialQuery = new URLSearchParams(location.search);
+const initialHash = new URLSearchParams(location.hash.replace(/^#/, ''));
+const returningFromReset = initialQuery.get('type') === 'recovery' || initialHash.get('type') === 'recovery';
+const linkError = initialQuery.get('error_description') || initialHash.get('error_description');
+if (returningFromReset) recovering = true;
+const shortDate = value => value ? new Intl.DateTimeFormat('pt-BR',{day:'2-digit',month:'short',year:'numeric'}).format(new Date(value)) : 'Não informado';
+
 const redirectTo = new URL('./lab.html', location.href).href;
 function notice(message, error=false){$('message').textContent=message;$('message').classList.toggle('error',error)}
+function renderRecovery(){
+  $('recovery-panel').classList.toggle('hidden', !(user && recovering));
+  $('recovery-title').textContent = 'Definir nova senha';
+  $('recovery-hint').textContent = 'Escolha uma senha com pelo menos 8 caracteres.';
+}
 function displayMode(next){
   mode=next;
   tabs.forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
@@ -35,9 +47,15 @@ async function refresh(){
   signedPanel.classList.toggle('hidden',!user);
   if(!user) { $('recovery-panel').classList.add('hidden');return; }
   $('account').textContent=user.email||'Conta autenticada';
+  $('confirmed').textContent=user.email_confirmed_at?'Confirmado':'Pendente';
+  $('created').textContent=shortDate(user.created_at);
+  $('last-access').textContent=shortDate(user.last_sign_in_at);
   const profile=await auth.getProfile(user.id);
+  const name=profile?.display_name||'Profissional TEREON';
+  $('profile-title').textContent=name;
+  $('avatar').textContent=(name==='Profissional TEREON'?'TX':name.split(/\s+/).slice(0,2).map(x=>x[0]).join('').toUpperCase());
   $('display-name').value=profile?.display_name||'';
-  $('recovery-panel').classList.toggle('hidden',!recovering);
+  renderRecovery();
 }
 tabs.forEach(b=>b.addEventListener('click',()=>{if(!busy)displayMode(b.dataset.mode)}));
 $('auth-form').addEventListener('submit',async event=>{
@@ -51,8 +69,15 @@ $('auth-form').addEventListener('submit',async event=>{
 });
 $('profile-form').addEventListener('submit',async event=>{
  event.preventDefault();if(!user||busy)return;toggleBusy(true);
- try{await auth.saveProfile(user.id,$('display-name').value);notice('Perfil salvo.');}
+ try{await auth.saveProfile(user.id,$('display-name').value);await refresh();notice('Perfil salvo.');}
  catch(err){notice(errorMessage(err),true)}finally{toggleBusy(false)}
+});
+$('change-password').addEventListener('click',()=>{
+ if(!user)return;
+ recovering=true;
+ renderRecovery();
+ $('new-password').focus();
+ notice('Digite sua nova senha no campo abaixo.');
 });
 $('logout').addEventListener('click',async()=>{
  if(busy)return;toggleBusy(true);
@@ -61,18 +86,25 @@ $('logout').addEventListener('click',async()=>{
 });
 $('recovery-form').addEventListener('submit',async event=>{
  event.preventDefault();toggleBusy(true);
- try{await auth.changePassword($('new-password').value);recovering=false;$('recovery-panel').classList.add('hidden');$('new-password').value='';notice('Senha atualizada.')}
+ try{await auth.changePassword($('new-password').value);recovering=false;renderRecovery();$('new-password').value='';notice('Senha atualizada. Você já pode utilizar a nova senha ao entrar novamente.')}
  catch(err){notice(errorMessage(err),true)}finally{toggleBusy(false)}
 });
 auth.onChange(event=>{
  if(event==='PASSWORD_RECOVERY')recovering=true;
  if(event==='SIGNED_OUT'){user=null;recovering=false}
  // Defer chamadas ao cliente para fora do callback de Auth.
- queueMicrotask(()=>{refresh().catch(err=>notice(errorMessage(err),true))});
+ queueMicrotask(()=>{refresh().then(()=>{
+   if(event==='PASSWORD_RECOVERY') notice('Link confirmado. Defina sua nova senha.');
+ }).catch(err=>notice(errorMessage(err),true))});
 });
 displayMode('login');
 notice('Verificando sessão...');
-refresh().then(()=>notice('')).catch(err=>{
+refresh().then(()=>{
+ if(linkError) notice('Não foi possível validar o link de recuperação. Ele pode ter expirado ou já ter sido usado. Solicite outro e-mail.',true);
+ else if(returningFromReset && user) notice('Link recebido. Defina sua nova senha abaixo.');
+ else if(returningFromReset && !user) notice('Não foi possível ativar a recuperação. Solicite um novo link de redefinição de senha.',true);
+ else notice('');
+}).catch(err=>{
   authPanel.classList.remove('hidden');
   signedPanel.classList.add('hidden');
   notice(errorMessage(err),true);
