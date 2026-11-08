@@ -10,7 +10,7 @@ Qualquer pessoa pode começar com um registro avulso. A criação de obra, empre
 - `motor.js` expõe `create(client)` e os métodos `register(type,originId)`, `identityFor(type,originId)`, `relate(from,to,type)`, `relations(recordId)` e `end(relationId)`. Contrato puro, recebe Supabase client, nenhuma interface ou dependência de Listas/Obras.
 
 ## Segurança e limitação deliberada da primeira versão
-- **Somente `work` está habilitado** para registro remoto de identidade. O banco exige obra ativa pertencente a espaço ativo do usuário autenticado. Outros tipos estão bloqueados até sua própria fonte de verdade, autenticação/autorização e persistência estarem definidos.
+- **`work` e `list` online estão habilitados** para registro remoto de identidade. O banco exige obra própria ativa ou lista persistida em `x_cloud_lists` pertencente ao usuário autenticado. Listas exclusivamente locais e outros tipos continuam bloqueados até possuírem origem verificável e políticas próprias.
 - Relações só podem ligar identidades sob o mesmo `owner_id`. Banco com RLS e privilégios por coluna. Essa **não é a solução final** multiempresa ou para trabalhadores de outras equipes. Próxima etapa exigirá modelo de grants entre entidades.
 - Uma lista ainda é guardada no `localStorage`. Seus IDs atuais não são uma referência remota verificável e não devem ser enviados ao registry como se houvesse sincronização. Evitar criar cadastros fantasma para avulsos.
 - Não cria, modifica ou movimenta informação de origem. A circulação entre motores deverá ser feita por resolvers/adaptadores específicos que consultam a fonte original, com permissões e eventual snapshot quando processo exigir (por exemplo, solicitação).
@@ -23,7 +23,7 @@ Qualquer pessoa pode começar com um registro avulso. A criação de obra, empre
 - `x/tests/relacoes.test.cjs`: teste simulado incluído no CI.
 
 ## Próximos passos
-1. Definir identidade e sincronização de Listas com backup seguro e consentimento do usuário.
+1. Integrar o Motor de Listas completo ao laboratório de nuvem, mantendo operação avulsa e consentimento explícito antes de transferir dados locais.
 2. Resolver permissões e escopo entre membros de vários espaços e obras.
 3. Criar resolvers de referência por motor; Listas → Obra será a primeira integração visível ao profissional.
 4. Validar com **duas contas reais** e registros avulsos, vinculados, desvinculados e acessados por diferentes perfis.
