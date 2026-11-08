@@ -54,3 +54,12 @@ dialog::backdrop{background:#14281d77;backdrop-filter:blur(2px)}
 .sync-line a{color:#2b6840;text-decoration:underline;text-underline-offset:2px}
 .sync-refresh{font:inherit;font-weight:650;color:#2b6840;border:0;background:transparent;cursor:pointer;padding:2px 5px;white-space:nowrap}
 .sync-refresh:focus-visible{outline:2px solid #3b7850;outline-offset:2px}
+
+/* Detalhes da lista: modal sobre Minhas listas; Catálogo pode abrir outro modal acima. */
+#listDialog{width:min(640px,calc(100vw - 20px));height:min(750px,calc(100dvh - 24px));padding:0;overscroll-behavior:contain}
+#listDialog .list-detail-content{padding:18px;min-height:100%;overflow-y:auto}
+#listDialog .list-detail-header{align-items:flex-start}
+#listDialog .list-detail-header h1{margin:12px 0 4px;overflow-wrap:anywhere;font-size:22px}
+#listDialog .list-return{padding:6px 0;color:#3d6450;text-align:left;font-size:12px}
+#listDialog .items{margin-bottom:18px}
+@media(max-width:420px){#listDialog{width:calc(100vw - 12px);height:calc(100dvh - 12px);max-height:calc(100dvh - 12px);border-radius:15px}#listDialog .list-detail-content{padding:14px 12px}#listDialog .list-detail-header h1{font-size:20px}}
