@@ -95,3 +95,19 @@ dialog::backdrop{background:#14281d77;backdrop-filter:blur(2px)}
 .home-tile small{font-size:10px;color:#948569}.home-tile.disabled{background:#f9faf9;opacity:.75}
 .home-hero:focus-visible,.home-tile:focus-visible{outline:2px solid #377c51;outline-offset:2px}
 @media(max-width:380px){.home-heroes,.home-grid{gap:9px}.home-hero,.home-tile{padding:13px}}
+
+/* Criar lista no celular: modal alto, acima do teclado virtual.
+   Escopo restrito: não altera os modais de lista nem de especificação. */
+@media(max-width:600px){
+ #createDialog[open]{
+  position:fixed;
+  inset:max(12px, env(safe-area-inset-top)) 12px auto;
+  margin:0 auto;
+  width:calc(100vw - 24px);
+  max-width:440px;
+  max-height:calc(100dvh - max(24px, env(safe-area-inset-top) + 12px));
+  overflow-y:auto;
+  overscroll-behavior:contain;
+ }
+ #createDialog .dialog-inner{padding:18px 16px;gap:14px}
+}
