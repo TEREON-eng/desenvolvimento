@@ -24,3 +24,5 @@ jobs:
         run: node x/tests/obras.test.cjs
       - name: Validar motor de Identidade e Relações
         run: node x/tests/relacoes.test.cjs
+      - name: Validar listas na nuvem e conflitos
+        run: node x/tests/listas-nuvem.test.cjs
