@@ -96,7 +96,7 @@ function openCatalogAdd(item){
  }}).catch(e=>alert('Erro ao abrir catálogo: '+e.message));
 }
 function close(id){$(id).close();}
-$('homeButton').addEventListener('click',function(){navigate('home');});
+// Retorno global agora é o link HTML do cabeçalho; navegação de Listas preservada nos controles internos.
 $('screen').addEventListener('click',function(e){
  var a=e.target.closest('[data-action]');if(a){
   if(a.dataset.action==='create'){$('newName').value='';$('createDialog').showModal();$('newName').focus();}
