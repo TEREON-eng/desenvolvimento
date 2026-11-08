@@ -84,13 +84,13 @@ const client={auth:{getUser:async()=>({data:{user:{id:uid}},error:null})},from};
  assert.ok(lab.includes('works.listAll()')&&lab.includes('works.createWork'));
  assert.ok(page.includes('id="work-start"')&&page.includes('id="work-end"')&&page.includes('id="work-workspace"'));
  const hub=fs.readFileSync(path.join(__dirname,'../laboratorios/index.html'),'utf8');
- assert.ok(hub.includes('../?view=lists')&&hub.includes('../universo/obras/lab.html')&&hub.includes('../identidade/lab.html'));
+ assert.ok(hub.includes("location.replace('/x/'"),'antiga Central encaminha para o Início único');
  assert.ok(lab.includes('works.removeWork')&&lab.includes('works.restore'));
  const read=p=>fs.readFileSync(path.join(__dirname,'..',p),'utf8');
  const central=read('laboratorios/index.html');
- assert.ok(central.includes('href="../identidade/lab.html"'),'perfil no cabeçalho');
+ assert.ok(read('index.html').includes('href="/x/identidade/lab.html"'),'perfil no cabeçalho do Início único');
  assert.ok(!central.includes('class="tile" href="../identidade/'),'perfil não é card');
- for(const [p,anchor] of [['index.html','/x/laboratorios/'],['identidade/lab.html','../laboratorios/'],['compartilhar-usuarios/lab.html','../laboratorios/'],['universo/obras/lab.html','../../laboratorios/']]){
+ for(const [p,anchor] of [['identidade/lab.html','../laboratorios/'],['compartilhar-usuarios/lab.html','../laboratorios/'],['universo/obras/lab.html','../../laboratorios/']]){
    assert.ok(read(p).includes('href="'+anchor+'"'),'retorno à central em '+p);
  }
  for(const p of ['identidade/lab.css','compartilhar-usuarios/lab.css','universo/obras/lab.css']){
