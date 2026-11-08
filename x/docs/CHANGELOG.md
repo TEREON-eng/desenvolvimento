@@ -74,3 +74,10 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Primeiro tipo autorizado: `work` de usuário dono de obra ativa; tipos futuros **não** foram habilitados sem validação de propriedade e persistência. Listas continuam locais e avulsas.
 - `x/tests/relacoes.test.cjs` passou em simulação e foi incluído no CI. Validação com duas contas reais ainda pendente.
 - Preservados os serviços existentes, UI, Canivete, Universo e `main`.
+
+## 08/11/2026 — Identificação técnica não destrutiva de Listas
+- Motor de Listas v2 ganhou `recordUid` (UUID) nas listas novas e método explícito `ensureRecordUid(listId)` para listas antigas.
+- Identidade adicionada sem renomear IDs existentes, alterar itens, migrar chave do localStorage nem criar obrigações de cadastro de obra/conta.
+- Novo `x/relacoes/origem-listas.js` transforma lista em referência local; `remoteLinkAllowed:false` evita fingir sincronização.
+- Testes de regressão ampliados para lista antiga, reabertura, idempotência, rollback de gravação e adaptador.
+- Nenhuma nova tabela nem upload de Listas ao Supabase nesta etapa; vínculo obra–lista continua pendente. Sem alteração na `main`.
