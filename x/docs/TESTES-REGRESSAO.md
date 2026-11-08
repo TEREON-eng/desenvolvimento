@@ -91,3 +91,13 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 - Canivete exibe calculadoras *em preparação* (não botão funcional enganoso). Escola oferece Biblioteca real. Universo e Compartilhar mantêm links.
 - Abrir ícone da PWA após atualização do manifesto: deve chegar à Central; instalação antiga pode necessitar atualizar/reinstalar conforme navegador.
 - A existência de obra no Supabase **não** vincula automaticamente lista local; nenhum registro adicional deve ser criado. Teste navegador ainda necessário.
+
+## Identidade e Relações — fundação v1
+- Rodar `node x/tests/relacoes.test.cjs` no GitHub Actions e localmente.
+- Verificar no Supabase que ambas as tabelas estão com RLS e grants mínimos.
+- Logado em conta A, registrar identidade de obra de espaço A; repetir e conferir mesmo identificador.
+- Conta B deve ser incapaz de ler/registrar identidade de obra de A; sem ligação cruzada de identidades.
+- Encerrar uma relação e confirmar que ela permanece no histórico, mas não é retornada no filtro ativo; tentar reabrir/regravar deve ser negado.
+- Tentar registrar tipo `list` antes da sincronização e garantir rejeição; não pode existir referência fantasma.
+- Conferir que o cadastro de obras e as listas locais funcionam sem depender do novo motor.
+**Testes de sessão/RLS multiusuário e navegador ainda pendentes.**
