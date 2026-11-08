@@ -45,3 +45,6 @@ Confirmado pelo fundador: o eletricista poderá registrar várias atividades ao 
 
 ## 07/11, noite — Uma obra, vários empreiteiros, um diário consolidado
 O fundador corrigiu uma interpretação inicial restrita ao trabalhador ou à equipe: o Diário deve poder reunir, em uma mesma obra e data, registros de vários funcionários, equipes e empreiteiros. Assim, a obra passa a ser o eixo da consolidação, enquanto cada registro continua individual e rastreável. O mesmo acervo pode oferecer visões distintas ao executor, ao empreiteiro e à construtora conforme permissões; não é uma duplicação de diários. Direção registrada, ainda não implementada.
+
+## 07/11, noite — O Universo ganha seu primeiro motor
+Após definir a Obra como eixo dos registros e o Centro de Controle como consolidador dos motores, o fundador autorizou começar o desenvolvimento. Foi aproveitada a estrutura do novo Supabase e criado laboratório independente de Obras: espaços pessoais/organizacionais, obra, situação, edição e arquivamento. Nenhuma tela de Listas foi modificada. A implantação não constitui Universo final nem teste real completo; acompanhamento de solicitações, equipes e Diário serão evoluções próprias.
