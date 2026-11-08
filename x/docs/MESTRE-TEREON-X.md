@@ -1,0 +1,64 @@
+# TEREON X — Documento Mestre vivo
+**Consolidação: 07/11/2026 (noite) · Fonte canônica de produto do laboratório X · Situação: desenho em evolução**
+
+## 0. Como ler
+- **DECIDIDO**: princípio ou separação aprovada pelo fundador.
+- **IMPLEMENTADO**: existe código e/ou banco, mas pode carecer de teste real.
+- **TESTADO**: teste observado e descrito.
+- **PROPOSTA**: hipótese para debate; não executar como requisito irrevogável.
+- **PENDENTE**: necessidade conhecida ainda não concluída.
+Os Documentos Mestres antigos, Diário Volume 01 e Plano de Negócios v0.0 **continuam arquivos históricos**, sem reescrever retrospectivamente decisões ou misturar código legado com X.
+
+## 1. Identidade e propósito
+**TEREON X — Tecnologia que faz a engenharia fluir.**
+O problema fundador são levantamentos elétricos com informações incompletas, perda de contexto entre campo, engenharia, compra e recebimento; catálogo técnico e especificação confiável são fundamento. Público: eletricistas, encarregados, engenheiros, estudantes, prestadores autônomos e equipes. O produto é mobile-first, funcional com poucos passos; o usuário não precisa organizar tudo previamente.
+Princípios DECIDIDOS: o grátis deve ser útil de verdade e nunca tecnicamente incorreto; atributos técnicos interpretados pelo texto são **sugestões**, só confirmadas mediante clique; nenhuma ficha hipotética se transforma em homologada por estar visível no catálogo. A governança de fichas reside nas planilhas do Drive, com publicação e aprovação exclusiva do fundador por enquanto; Juliano pode propor alterações.
+
+## 2. Mapa do produto
+- **Canivete** — ponto de entrada da especificação e das listas de materiais; captura rápida, tags técnicas progressivas, unidades/etapas, edição, busca, exportação.
+- **Biblioteca** — consulta às fichas e fontes, somente leitura; regras e normas mantidas no Catálogo.
+- **Universo** — **módulo de gestão de obras e espaços de trabalho**, da obra pessoal ao portfólio empresarial. Detalhado em [PRODUTO-UNIVERSO.md](PRODUTO-UNIVERSO.md).
+- **Escola** — conteúdo e aprendizagem contextual, visão futura; não confundir com validação normativa.
+- **Conta e Acessos** — identidade individual, associação a diversos espaços/obras e permissões granulares.
+- **Compartilhar** — saídas texto/WhatsApp/PDF/e-mail (comunicação), e envio de **cópia de lista para outro usuário TEREON** (colaboração), sem iniciar compra.
+- **Solicitações** — motor futuro e distinto: lista gera solicitação com identificador e fotografia do momento; aprovação, aquisição, envio, recebimento, pendências, histórico e parciais por item.
+
+## 3. Limites entre motores — DECIDIDOS
+| Responsável | Faz | Não faz |
+|---|---|---|
+| Catálogo | fonte técnica, fichas, opções, obrigatoriedades, condições e nomes | guarda lista ou regras de interface |
+| Especificação | guia escolhas e confirma tags, estado temporário | inventa regra técnica ou grava permanentemente |
+| Listas | CRUD, etapas, quantidades, persistência via repositório | aprova/compra/recebe |
+| Compartilhar documento | transforma snapshot em formatos | altera dados da lista |
+| Compartilhar entre contas | transmite snapshot a usuário autorizado | inicia solicitação/edita original |
+| Solicitações | fluxo e histórico de materiais solicitados | muda silenciosamente lista-base |
+| Identidade | autenticação e sessão | organiza materiais |
+| Acessos/Espaços | participantes e permissões por obra | regras técnicas |
+| Obras / Universo | organiza obras, contexto, status, vínculos e visão gerencial | reescreve regras de listas ou solicitações |
+| Armazenamento | grava e recupera dados sob contratos | decide regras de negócio |
+**Separar CSS/HTML de serviços/contratos:** qualquer futura renovação visual não deve reimplementar nem quebrar funcionalidades já aprovadas; testes de regressão são porta obrigatória.
+
+## 4. Estado técnico confirmado nesta consolidação
+Repositório `TEREON-eng/desenvolvimento`. Trabalhar somente em `desenvolvimento`; `main` depende de aprovação explícita. Cloudflare Worker de nome `desenvolvimento` aponta para produção/main; Preview tem URL distinta. App principal no X versão **x.0.3.7** (não alterar número por apenas acrescentar laboratórios isolados).
+- **IMPLEMENTADO:** `x/listas/store.js` chave `tereon-x-lab-v1`, `servico.js`, `app.js`; Catálogo e seletor; Biblioteca; motor de exportação; PWA; CI; 24 fichas de demonstração (2 reais em revisão, 22 hipóteses; nenhuma homologada).
+- **IMPLEMENTADO e TESTADO pelo usuário:** laboratório de identidade `x/identidade/`: cadastro, confirmação, login, persistência, logout/reentrada, troca de senha autenticada e edição de perfil. Recuperação via link de e-mail **não homologada** (retorno inicialmente ao localhost/limites SMTP); layout exibido pelo usuário; tremulação inicial corrigida.
+- **IMPLEMENTADO em banco:** Supabase organização `TEREON-app`, projeto `TEREON X` (`kjikzdpqejhsgutakigw`, us-east-1), tabelas `x_profiles`, `x_workspaces`, `x_workspace_members`, `x_works`, `x_work_access`, `x_list_shares`; RLS. Quase todas vazias; uma conta criada/confirmada e um perfil no último diagnóstico; ausência de testes de políticas com duas contas.
+- **IMPLEMENTADO, ainda sem aceite de ponta a ponta:** `x/compartilhar-usuarios/` com cópia de lista, inbox/outbox, aceitar/recusar/revogar. Falta testar com duas contas reais; em 07/11 cadastro de segunda conta bloqueado por limite SMTP. Tratamento de ausência de sessão corrigido; preview ainda requer verificação do usuário.
+- **PENDENTE:** módulo Universo funcional, vínculos reais multiempresa, convites, autenticação definitiva no aplicativo principal, sincronização offline, Solicitações, planos comerciais e cobrança, SMTP próprio, permissão de senha vazada no Supabase. Não afirmar que fluxo completo existe.
+
+## 5. Dados e colaboração — DECIDIDOS
+Uma conta TEREON por pessoa; pode manter obras particulares e simultaneamente participar de uma obra específica de outra empresa. Obra pertence a um **espaço de trabalho** pessoal ou empresarial; acesso à obra não abre todas as obras da empresa. Listas são privadas por padrão. Uma lista compartilhada por cópia não se transforma automaticamente em solicitação; lista original preservada; novos registros têm identidade/histórico próprios. Para uso online futuro, cada motor mantém seu contrato e usa serviço de armazenamento; sincronização local/nuvem exige plano específico.
+
+## 6. Produto, venda e evolução
+Acesso gratuito **permanente** à utilidade essencial de Listas e especificação técnica responsável é diretriz; monetizar profundidade, gestão e colaboração, nunca correção técnica. **Proposta** de matriz e limites em [MODELO-GRATUITO-PAGO.md](MODELO-GRATUITO-PAGO.md). Não há preços, pacotes ou limites aprovados. Horizonte estratégico anterior: testes de campo em novembro/2026, operação a partir de 01/01/2027 como objetivo (não compromisso comprovado), revisão abril/2027, alvo de 30 assinantes como meta, não resultado.
+
+## 7. Documentação e evidência
+- [Arquitetura e contratos](../ARQUITETURA-MODULAR.md)
+- [Mapa de módulos](MAPA-MODULOS.md)
+- [Plano de regressão](TESTES-REGRESSAO.md)
+- [Changelog técnico](CHANGELOG.md)
+- [Universo — desenho](PRODUTO-UNIVERSO.md)
+- [Gratuito e pago — proposta](MODELO-GRATUITO-PAGO.md)
+- [Histórico narrativo](HISTORIA-TEREON-X.md)
+- [Índice e pendências](INDICE-DOCUMENTACAO.md)
+- Fichário governado no Drive; não substituir a planilha por hipótese inserida em documentação.
