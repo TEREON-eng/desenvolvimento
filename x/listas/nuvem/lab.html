@@ -1,0 +1,27 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TEREON X · Listas na nuvem (lab)</title><link rel="stylesheet" href="./lab.css"></head><body>
+<main class="shell"><header class="top"><div class="brand">TEREON X <small>· LISTAS</small></div><a class="back" href="../../laboratorios/">← Início</a></header>
+<h1>Listas na nuvem</h1><p class="muted">Laboratório de sincronização com sua conta. As listas do Canivete não são alteradas nem importadas aqui.</p>
+<section id="logged-out" class="panel hidden"><h2>Conta necessária</h2><p>Entre com sua conta TEREON X e volte a esta página.</p><a href="../../identidade/lab.html">Abrir minha conta</a></section>
+<div id="app" class="hidden"><section class="panel">
+<div class="head"><h2>Minhas listas online</h2><button type="button" id="new-list" class="btn primary">+ Criar lista</button></div>
+<div id="list-rows" class="stack"></div>
+</section>
+<section id="detail" class="panel hidden">
+<div class="head"><div><small>LISTA NA NUVEM</small><h2 id="detail-title"></h2></div><button class="btn" id="close-detail" type="button">Fechar</button></div>
+<div class="detail-tools"><button class="btn" id="rename-list" type="button">Editar nome</button><button class="btn" id="add-item" type="button">+ Material</button></div>
+<div id="items" class="stack"></div>
+<p class="muted">As alterações de materiais só são enviadas à nuvem ao tocar em <strong>Salvar alterações</strong>.</p>
+<button class="btn primary full" type="button" id="save-list">Salvar alterações</button>
+</section></div>
+<p id="notice" role="status" aria-live="polite">Verificando sessão...</p>
+<footer>Somente testes · Sem vínculo com obras e sem importação de listas locais.</footer></main>
+<dialog id="list-dialog"><form id="list-form" class="dialog-inner"><div class="head"><h2 id="list-dialog-title">Nova lista</h2><button type="button" class="btn" data-close="list-dialog">✕</button></div>
+<label for="list-name">Nome da lista</label><input id="list-name" required maxlength="160" placeholder="Ex.: Reforma da escola A">
+<div class="actions"><button class="btn" type="button" data-close="list-dialog">Cancelar</button><button type="submit" class="btn primary">Confirmar</button></div></form></dialog>
+<dialog id="item-dialog"><form id="item-form" class="dialog-inner"><div class="head"><h2 id="item-dialog-title">Adicionar material</h2><button type="button" class="btn" data-close="item-dialog">✕</button></div>
+<label for="item-name">Material</label><input id="item-name" maxlength="180" required placeholder="Ex.: Cabo de cobre 2,5 mm²">
+<div class="fields"><label for="item-qty">Quantidade<input id="item-qty" type="number" step="any" min="0.001" required></label><label for="item-unit">Unidade<select id="item-unit"><option value="un">un</option><option value="m">m</option><option value="rl">rl</option><option value="br">br</option></select></label></div>
+<label for="item-stage">Etapa</label><input id="item-stage" maxlength="100" required value="Geral">
+<div class="actions"><button type="button" class="btn" data-close="item-dialog">Cancelar</button><button type="submit" class="btn primary">Adicionar</button></div></form></dialog>
+<script src="./motor.js"></script><script type="module" src="./lab.js"></script></body></html>
