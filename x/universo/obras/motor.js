@@ -10,6 +10,11 @@
  const STATUS=Object.freeze(['planning','active','paused','completed','archived']);
  const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
  const clean=value=>String(value??'').trim();
+ const dateOrNull=value=>{
+  const d=clean(value);if(!d)return null;
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(d)||Number.isNaN(Date.parse(d+'T12:00:00Z'))||new Date(d+'T12:00:00Z').toISOString().slice(0,10)!==d)throw Error('Data inválida.');
+  return d;
+ };
  const checkId=(id,label)=>{if(!UUID.test(clean(id)))throw Error(label+' inválido.');return clean(id);};
  const unpack=response=>{if(response.error)throw response.error;return response.data;};
  function validateWork(record){
@@ -17,7 +22,9 @@
   if(!name||name.length>160)throw Error('Informe um nome de obra de até 160 caracteres.');
   if(description.length>2000)throw Error('Descrição com mais de 2.000 caracteres.');
   if(!STATUS.includes(status))throw Error('Situação de obra inválida.');
-  return {name,description,status};
+  const planned_start=dateOrNull(record?.planned_start),planned_end=dateOrNull(record?.planned_end);
+  if(planned_start&&planned_end&&planned_end<planned_start)throw Error('A data prevista de término não pode ser anterior ao início.');
+  return {name,description,status,planned_start,planned_end};
  }
  function create(client){
   if(!client?.auth?.getUser||typeof client.from!=='function')throw Error('Cliente de Obras inválido.');
@@ -43,9 +50,14 @@
     .insert({owner_id:uid,name:value,kind})
     .select('id,owner_id,name,kind,created_at,deleted_at').single());
   }
+  const fields='id,workspace_id,name,description,status,planned_start,planned_end,created_at,deleted_at';
+  async function listAll(){
+   await userId();
+   return unpack(await client.from('x_works').select(fields).is('deleted_at',null).order('created_at',{ascending:false}));
+  }
   async function list(workspaceId){
    await userId();checkId(workspaceId,'Espaço');
-   return unpack(await client.from('x_works').select('id,workspace_id,name,description,status,created_at,deleted_at')
+   return unpack(await client.from('x_works').select(fields)
     .eq('workspace_id',workspaceId).is('deleted_at',null).order('created_at',{ascending:false}));
   }
   async function createWork(workspaceId,record){
@@ -53,14 +65,14 @@
    const payload=validateWork(record);
    return unpack(await client.from('x_works')
     .insert({workspace_id:workspaceId,...payload})
-    .select('id,workspace_id,name,description,status,created_at,deleted_at').single());
+    .select(fields).single());
   }
   async function updateWork(workId,record){
    await userId();checkId(workId,'Obra');
    const payload=validateWork(record);
    const updated=unpack(await client.from('x_works')
     .update(payload).eq('id',workId).is('deleted_at',null)
-    .select('id,workspace_id,name,description,status,created_at,deleted_at').maybeSingle());
+    .select(fields).maybeSingle());
    if(!updated)throw Error('Obra não encontrada ou você não possui permissão para editá-la.');
    return updated;
   }
@@ -108,7 +120,7 @@
    if(!result)throw Error('Registro não encontrado ou sem permissão para restaurar.');
    return result;
   }
-  return Object.freeze({version:2,STATUS,spaces,createSpace,updateSpace,list,createWork,updateWork,archive,removeWork,removeSpace,trash,restore});
+  return Object.freeze({version:3,STATUS,spaces,createSpace,updateSpace,list,listAll,createWork,updateWork,archive,removeWork,removeSpace,trash,restore});
  }
- return Object.freeze({version:2,STATUS,create,validateWork});
+ return Object.freeze({version:3,STATUS,create,validateWork});
 });
