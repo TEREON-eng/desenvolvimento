@@ -87,6 +87,8 @@ function choice(v){
  assert.equal(stored.lists[0].items.length,1);
  const saved=stored.lists[0].items[0];
  assert.equal(saved.catalogId,'FT_INFRA-001','identidade da ficha persistida');
+ assert.equal(saved.simulacao,false,'ficha real em revisão não é ficha hipotética');
+ assert.equal(saved.fichaStatus,'Em revisão','ficha não foi homologada');
  assert.equal(saved.values['DET-001'],'Rígido');
  assert.equal(saved.values['DET-002'],'PVC');
  assert.ok(saved.name.startsWith('Eletroduto'),'nome formado pela ficha');
