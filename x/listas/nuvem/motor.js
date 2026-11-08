@@ -46,6 +46,10 @@
   }
   async function createList(data){
    const uid=await userId(),payload=validate(data);
+   if(data?.id!=null){
+    if(!UUID.test(String(data.id)))throw Error('Identificador de lista inválido.');
+    payload.id=String(data.id);
+   }
    return unpack(await client.from('x_cloud_lists').insert({...payload,owner_id:uid}).select(fields).single());
   }
   async function updateList(id,version,data){
