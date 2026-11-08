@@ -132,3 +132,11 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 - Conflito: editar simultaneamente nos dois aparelhos. Salvar no primeiro e depois no segundo; preservar edição local e bloquear sobrescrita na nuvem, com aviso. Resolução/mesclagem automática **não implementada**.
 - Atualização PWA: x.0.3.8, novos JS no SW; não limpar dados de outros apps.
 - Testes de contrato simulados passaram, incluindo `x/tests/listas-integracao.test.cjs`; **teste manual com aparelhos reais e consulta posterior da tabela ainda obrigatório**.
+
+## Falha reportada — modal de adicionar item (08/11/2026)
+- A Central deve conduzir a `/x/?view=lists` ou `/x/?view=create`, e não ao laboratório básico da nuvem.
+- A URL antiga `/x/listas/nuvem/lab.html` sem parâmetros deve encaminhar para `/x/?view=lists`; `?diagnostico=1` preserva somente acesso técnico.
+- Em lista nova e existente, selecionar **Adicionar item** deve abrir o modal do Catálogo (`txCatalogDialog`), nunca abrir formulário avulso nem trocar de página.
+- Dentro do modal, verificar busca, opções condicionais, formação do nome técnico, tags escolhidas e bloqueio de Adicionar antes de obrigatórios.
+- Salvar, editar item e recarregar a mesma lista, tanto com conta quanto em modo avulso. A gravação da nuvem não pode substituir o modal.
+- Validar no celular e no PC no mesmo domínio Preview (e recarregar/atualizar PWA). Verificação visual não executada aqui.
