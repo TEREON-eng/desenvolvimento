@@ -12,7 +12,7 @@
   id:existing?.id||r.id,recordUid:r.id,name:r.name,items:clone(r.items),stages:clone(r.stages),
   cloudVersion:r.version,cloudPending:false,cloudConflict:false
  });
- function create({store,cloud,onStatus=()=>{}}){
+ function create({store,cloud,accountId,onStatus=()=>{}}){
   if(!store?.snapshot||!store?.save||!cloud?.list||!cloud?.createList||!cloud?.updateList)throw Error('Integração de listas inválida.');
   let started=false,working=null,disposed=false,failed='';
   const report=()=>{
@@ -107,8 +107,11 @@
   function status(){
    const all=store.snapshot().lists;return {pending:all.filter(x=>x.cloudPending).length,conflicts:all.filter(x=>x.cloudConflict).length,working:!!working,error:failed,ready:started};
   }
+  const importedKey='tereon-x-imported-'+accountId;
+  function guestImported(){try{return root.localStorage?.getItem(importedKey)==='1'}catch(e){return false}}
+  function markGuestImported(){try{root.localStorage?.setItem(importedKey,'1')}catch(e){/* não afeta gravação da lista */}}
   function stop(){disposed=true}
-  return Object.freeze({repository,refresh,flush,status,stop});
+  return Object.freeze({repository,refresh,flush,status,stop,guestImported,markGuestImported});
  }
  return Object.freeze({create,version:1});
 });
