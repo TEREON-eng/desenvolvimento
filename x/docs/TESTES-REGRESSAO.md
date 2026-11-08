@@ -43,3 +43,11 @@ O workflow `.github/workflows/testes-tereon-x.yml` agora executa:
 2. `node x/tests/modulos.test.cjs` — armazenamento, CRUD de listas, dados históricos, módulos separados, sintaxe JS, ordem de carregamento.
 
 Esses testes **não** reproduzem interações reais no modal, edição móvel, atualização do service worker ou exportação PDF. O teste manual antes de `main` deve criar lista, adicionar dois materiais distintos, editar, duplicar, remover, voltar, recarregar e confirmar persistência, Biblioteca e PWA. Testar erro de armazenamento e comportamento offline.
+
+## Adendo: identidade e compartilhamento (07/11/2026)
+- Workflow contém testes catalogo, modulos, identidade e compartilhar-usuarios; execução mais recente não verificada nesta consolidação.
+- Testados pelo fundador: cadastro, confirmação, sessão após recarga, logout/reentrada, perfil e troca de senha autenticada. Reset via link ainda não homologado.
+- Compartilhamento não testado com segunda conta; validar envio A→B, aceite/recusa, revogação, bloqueio por RLS para A/B/C, inexistência de alteração na lista original e erros de rede.
+- Usuário sem sessão deve ver ligação para login (não Auth session missing).
+- Antes de redesenhar CSS/HTML, repetir toda sequência funcional de Listas e modal de especificação; layout não pode modificar contrato do motor.
+- Universo: validar isolamento de espaços e obras, convites revogáveis e níveis de permissão antes da integração com aplicativo principal.
