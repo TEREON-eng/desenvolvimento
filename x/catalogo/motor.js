@@ -18,7 +18,7 @@ function normalize(f){
  const sourceType=f.tipo==='hipotetica'?'simulacao':isOfficial(f)?'oficial':'revisao';
  return {id:clean(f.codigo),name:clean(f.nome),reference:clean(f.referencia)||clean(f.codigo),
    status:clean(f.status),kind:sourceType,collection:'catalogo-oficial',homologada:isOfficial(f),
-   pendencias:[...(sourceType==='simulacao'?['Ficha ainda não criada: opções fictícias']:[]),...details.filter(d=>!d.condition||!d.classification||d.name==='[Detalhe sem nome]'||!d.options.length).map(d=>'Revisar: '+d.name)],
+   pendencias:[...(Array.isArray(f.pendencias)?f.pendencias:[]),...(sourceType==='simulacao'?['Ficha ainda não criada: opções fictícias']:[]),...details.filter(d=>!d.condition||!d.classification||d.name==='[Detalhe sem nome]'||!d.options.length).map(d=>'Revisar: '+d.name)],
    details:details.sort((a,b)=>a.order-b.order),source:'fichario-x/fichas-drive-2026-11-08.json',sourceName:clean(f.nomeNaPlanilha),sourcePendencias:Array.isArray(f.pendencias)?f.pendencias:[]};
 }
 function applyRule(rule,values,details){
