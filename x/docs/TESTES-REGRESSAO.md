@@ -110,3 +110,13 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 - Adaptador de origem `x/relacoes/origem-listas.js` retorna `synchronized:false` e `remoteLinkAllowed:false` até existir sincronização.
 - Compartilhamento de snapshot não deve transmitir a mesma identidade técnica como se a cópia fosse o mesmo objeto.
 - Testes simulados executados; testar em navegador com listas reais e entre dispositivos antes de vincular a Obra.
+
+## Listas na Nuvem — laboratório v1 (08/11/2026)
+- Abrir Central e link `Testar listas na nuvem`; entrar com conta TEREON.
+- Criar lista com nome, adicionar material e salvar; recarregar e confirmar conteúdo.
+- Abrir a mesma conta em outro aparelho/aba no domínio de desenvolvimento e recuperar os mesmos dados.
+- Testar edição conflitante: salvar alterações concorrentes no aparelho A, depois tentar salvar edição com versão antiga no B — deve bloquear com mensagem clara, sem sobrescrever.
+- Testar sem conta: não pode listar ou salvar dados.
+- Testar conta B: não pode visualizar ou editar listas da conta A. O mesmo vale para identidade do tipo `list` no Motor de Relações.
+- Confirmar que Canivete continua com listas locais intactas e que a versão de UI online não usa os dados locais automaticamente.
+- Auditoria SQL confirma RLS habilitada e `record_type` permitido `work/list`; teste real de isolamento e navegador ainda necessário.
