@@ -166,3 +166,11 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 5. Salvar item: lista deve guardar `catalogId`, tags `values`, quantidade, unidade, etapa e nome técnico. Fechar e reabrir; editar o mesmo item. Materiais antigos sem catalogId ainda devem abrir seu fluxo de edição pré-existente.
 6. Testar com conta e sem conta, no celular e no PC; verificar sincronia somente após estado **Salvo na nuvem**. Conferir abertura de dois modais sobrepostos, rolagem e teclado.
 7. **Execução automatizada:** `x/tests/modal-fichas.test.cjs` cobre escolha, condição, tags, bloqueio, gravar, editar e legado; `x/tests/catalogo.test.cjs` verifica seis fichas, condições e aviso de revisão. **Teste real de navegador pendente.**
+
+## Aceite — refinamento do modal x.0.3.12
+- Abrir lista → **Adicionar item**: a barra **Buscar material ou família** deve rolar junto com os cartões de fichas; não é fixa, não deve encobrir o conteúdo.
+- Durante a pesquisa de materiais, o rodapé de quantidade/unidade/etapa e tags fica recolhido, permitindo aproveitar a altura do modal. Após selecionar uma ficha, o rodapé volta.
+- Selecionar **Eletroduto**. Ao lado de **Tipo**, verificar tag discreta **Eletroduto ×**; a tag não deve aparecer como uma opção de detalhe nem consumir a primeira linha de escolhas.
+- Tocar na tag: deve voltar à busca de fichas, limpar apenas a especificação em andamento, desabilitar Adicionar, sem modificar o material salvo. Escolher outra ficha e confirmar detalhes obrigatórios.
+- Remover uma tag técnica obrigatória: deve voltar ao primeiro detalhe pendente, mantendo o conjunto restante de escolhas válidas.
+- Salvar/editar material e verificar valores e etapas no Motor Único, sem alterar sincronização. **Teste de DOM simulado aprovado; inspeção visual em celular e desktop ainda pendente.**
