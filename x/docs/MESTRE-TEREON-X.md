@@ -62,3 +62,10 @@ Acesso gratuito **permanente** à utilidade essencial de Listas e especificaçã
 - [Histórico narrativo](HISTORIA-TEREON-X.md)
 - [Índice e pendências](INDICE-DOCUMENTACAO.md)
 - Fichário governado no Drive; não substituir a planilha por hipótese inserida em documentação.
+
+## 8. Retomada da concepção original de Universo — 07/11/2026 (decisão contextual)
+O fundador esclareceu que sua visão anterior do Universo inclui **cadastro de obras, vínculo de listas, acompanhamento da aplicação de materiais, Diário de Obras, Relatórios de Visitas e Alertas**; havia congelado esse ambiente para dedicar-se a Especificação/Listas e preparar o teste de 17/11. O Canivete é a semente funcional; o Universo deverá ser o **produto de acompanhamento da execução** da obra, inclusive para eletricista autônomo.
+Foram recuperadas definições anteriores de Resumo da Obra, Atividades com duração de vários dias, Diário por data com registros/fotos, Visitas com providências/fotos e Alertas internos por pendências. O produto deverá distinguir o avanço físico de materiais **aplicados** dos registros de solicitação, compra e recebimento (modelo detalhado ainda a desenhar).
+O apoio de Juliano para **abastecimento/proposição de fichas** não transfere a ele aprovação/publicação; só o fundador homologa por enquanto.
+**Prioridades separadas:** estabilização de listas/catálogo para teste de campo em 17/11 e, paralelamente, desenho dos motores independentes do Universo como próximo passo rumo a lançamento comercial real. Não vender ou marcar como concluído o Universo por existir tabela `x_works`.
+Consultar `PRODUTO-UNIVERSO.md` seção 9 e `MODELO-GRATUITO-PAGO.md` para consequências comerciais.
