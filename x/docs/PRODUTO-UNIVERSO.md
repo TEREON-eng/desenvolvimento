@@ -77,3 +77,12 @@ Não reduzir Universo Individual a uma lista de nomes de obras. Mínimo útil **
 
 ### Revisão de ordem
 O roteiro anterior U1–U5 continua como referência de fundação técnica, mas não representa sozinho a prioridade de valor percebido. Acrescentar prova de uso de diário, visitas, materiais aplicados e alertas **antes de declarar Universo Individual como produto comercialmente pronto**.
+
+## 10. Recorte do primeiro Universo — ajuste aprovado em 07/11/2026
+O fundador definiu que o primeiro esboço **não deve controlar aplicação detalhada de materiais**. A prioridade é acompanhar **pedi → autorizei → chegou**. A obra reúne as solicitações, enquanto o motor de Solicitações conserva estados, responsáveis, datas e histórico. A Lista original é preservada.
+
+**MVP conceitual:** cadastrar obra, vincular lista, criar solicitação com snapshot, acompanhar autorização e recebimento, inclusive parciais quando necessário, e mostrar pendências/alertas simples. Aquisição pode ser um registro intermediário opcional, sem implementar compras completas no primeiro ciclo. Compartilhar uma lista não deve gerar solicitação.
+
+**Depois:** vincular Diário de Obras a etapa prevista na lista ou atividade, sem concluir automaticamente que todos os materiais foram aplicados. Controle detalhado de consumo fica fora deste recorte.
+
+**Separação técnica:** Listas gerencia materiais de origem; Solicitações é dona do fluxo de atendimento; Diário guarda execução; Universo organiza obra e painéis; Identidade/Acessos define autorização. Nada disso significa implementação concluída.
