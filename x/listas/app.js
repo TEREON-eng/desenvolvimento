@@ -200,7 +200,7 @@ document.addEventListener('click',function(e){
   if(a.dataset.action==='create'){$('newName').value='';$('createDialog').showModal();$('newName').focus();}
   if(a.dataset.action==='lists'){exitList();return;}
   if(a.dataset.action==='share'&&list())window.TereonXShare?.open(lists.exportList(activeId));
-  if(a.dataset.action==='add')openCatalogAdd();
+  if(a.dataset.action==='add')openAdd();
  }
  var open=e.target.closest('[data-open]');if(open){activeId=open.dataset.open;navigate('list');}
  var edit=e.target.closest('[data-edit]');if(edit&&list()){
