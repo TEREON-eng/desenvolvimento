@@ -73,3 +73,6 @@ Consultar `PRODUTO-UNIVERSO.md` seção 9 e `MODELO-GRATUITO-PAGO.md` para conse
 ## 9. Gestão multinível e Diário pela ponta — 07/11/2026
 O fundador reafirmou que o **Universo deve servir simultaneamente à construtora, ao empreiteiro com equipes e ao eletricista executor**. O registro de serviços e fotos pelo profissional individual deve alimentar o Diário da obra e, por agregação, o acompanhamento de prestadores/equipes e o Centro de Controle. Cadastro de prestador, gestão de equipes, alocação em obras, Registros de Execução, Diário e Indicadores são responsabilidades diferentes; a interface do Universo as reúne sem reescrever seus motores. Estar alocado não garante acesso digital à obra, e o registro de serviço não é automaticamente aceitação/verificação.
 **Implementação:** visão aprovada conceitualmente, ainda não desenvolvida. [Universo](PRODUTO-UNIVERSO.md) seção 11.
+
+## 10. Diário com registros múltiplos (confirmado em 07/11/2026)
+Cada profissional pode criar vários registros no mesmo dia e obra, incluindo serviço, ocorrência e fotografias. Cada evento mantém identidade, autoria e horário. O Diário é uma visão consolidada, não um formulário único por executor/dia. Registros não significam aprovação, conclusão nem consumo automático de materiais. Motor de Execução e motor/visão de Diário permanecem independentes. Ainda não implementado.
