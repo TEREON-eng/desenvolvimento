@@ -104,3 +104,9 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Teste de regressão acrescentado para exigir que o botão **Adicionar item** abra `TereonXCatalogUI.open`, com opções condicionais, obrigatoriedades e nome técnico.
 - O link de compartilhamento entre contas foi retirado da Central: ferramenta de envio de snapshot ainda experimental, não sincronização colaborativa. Arquivos e dados existentes preservados, acesso técnico permanece por caminho direto.
 - Correção restrita à branch `desenvolvimento`; nenhuma alteração de itens, regras técnicas, dados ou branch `main`. Testes de código/contrato executados; confirmação visual real pendente.
+
+## 08/11/2026 — x.0.3.9 · Abrir lista em modal
+- **Minhas listas** permanece ao fundo. Ao tocar em uma lista, abre o modal `#listDialog` com cabeçalho, botão **← Minhas listas**, fechamento `✕`, lançamentos, compartilhar e adicionar item.
+- O fechamento do modal (inclusive tecla Escape) devolve a relação de listas, sem navegar para outra página.
+- O seletor técnico `TereonXCatalogUI.open` continua como modal independente sobre o detalhe da lista. Não foram modificadas as fichas, regras, armazenamento local/nuvem nem motores de especificação.
+- Versão x.0.3.9 e testes de contrato atualizados; homologação visual em celular/desktop ainda necessária. Branch `main` não alterada.
