@@ -7,7 +7,7 @@ let spaces=[],current=[],editingWork=null,editingSpace=null,busy=false,showTrash
 function say(msg,error=false){$('notice').textContent=msg;$('notice').classList.toggle('error',error);}
 function el(tag,content,cls){const e=document.createElement(tag);if(content!==undefined)e.textContent=String(content);if(cls)e.className=cls;return e;}
 function makeButton(label,click,cls='btn small'){const b=el('button',label,cls);b.type='button';b.onclick=click;return b;}
-function toggleBusy(value){busy=value;document.querySelectorAll('button').forEach(b=>b.disabled=value);}
+function toggleBusy(value){busy=value;document.querySelectorAll('button').forEach(b=>b.disabled=value);if(!value){const disabled=!spaces.length;for(const id of ['new-work','edit-space','remove-space'])$(id).disabled=disabled;}}
 function activeSpace(){return spaces.find(s=>s.id===$('space').value);}
 function close(id){const d=$(id);if(d.open)d.close();}
 function open(id){$(id).showModal();}
