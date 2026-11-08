@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.9",
+  "version": "x.0.3.10",
   "build": "2026-11-08",
-  "notes": "Lista abre em modal sobre Minhas listas, com retorno explícito e seletor técnico preservado"
+  "notes": "Restaurar fluxo original aprovado do modal de Adicionar item e proteção contra regressão"
 }
