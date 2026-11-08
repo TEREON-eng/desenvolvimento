@@ -42,3 +42,6 @@ O princípio reforça a origem do produto: coletar informações no momento real
 
 ## 07/11, noite — Diário formado por vários registros
 Confirmado pelo fundador: o eletricista poderá registrar várias atividades ao longo de um mesmo dia, com fotos e observações, e o sistema reunirá os eventos no Diário da obra. A intenção é reduzir burocracia para quem executa, preservar autoria e permitir visão consolidada ao empreiteiro e à construtora. A decisão é conceitual; não houve implementação.
+
+## 07/11, noite — Uma obra, vários empreiteiros, um diário consolidado
+O fundador corrigiu uma interpretação inicial restrita ao trabalhador ou à equipe: o Diário deve poder reunir, em uma mesma obra e data, registros de vários funcionários, equipes e empreiteiros. Assim, a obra passa a ser o eixo da consolidação, enquanto cada registro continua individual e rastreável. O mesmo acervo pode oferecer visões distintas ao executor, ao empreiteiro e à construtora conforme permissões; não é uma duplicação de diários. Direção registrada, ainda não implementada.
