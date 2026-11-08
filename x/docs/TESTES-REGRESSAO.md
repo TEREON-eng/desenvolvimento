@@ -184,3 +184,10 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 6. No mesmo navegador alternar conta A e B: listas da A não podem aparecer na B; sessão B não pode escrever registros A. Repetir em dois aparelhos, com conteúdo distinto e sincronização.
 7. Dimensionamento e Canivete mostram **Em preparação**; Universo mantém acesso à tela de obras e não exige lista.
 **Automatizado:** `home-navigation.test.cjs` (DOM simulado) e `modal-fichas.test.cjs` passaram. **Pendente:** inspeção visual real e teste com duas sessões autenticadas.
+
+## Aceite — auditoria + teclado (x.0.3.15)
+- No celular com teclado virtual aberto, tocar Criar lista: cabeçalho, campo Nome e botão Criar devem permanecer acessíveis; dialog ancorado próximo do topo, rolagem interna se necessário. Testar pelo menos Chrome Android e Safari iOS quando disponíveis.
+- Fechar e reabrir Criar lista; confirmar que retorna ao Início, não muda quantidade nem duplica salvamento.
+- Abrir lista e modal de Adicionar: conferir que nome técnico, tags, seleção progressiva e botões continuam nas posições aprovadas.
+- Executar `node x/tests/independencia.test.cjs` no CI com demais testes e validar ao menos dois dispositivos/contas.
+- Casos de acesso negado A↔B e cache após troca de conta são **pendentes**, apesar de RLS habilitada.
