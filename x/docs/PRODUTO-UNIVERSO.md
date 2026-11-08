@@ -114,3 +114,7 @@ O fundador confirmou explicitamente que cada profissional pode fazer **vários r
 - Um relatório diário consolidado pode acrescentar observações gerais e validação por responsável, sem apagar autoria ou transformar simples registro em aprovação.
 - Consolidar não significa replicar dados nem dar acesso irrestrito a registros privados de outras organizações.
 **Status:** regra de produto confirmada, motor de Execução/Diário ainda não implementado.
+
+## 14. Fundação implementada — Motor de Obras / laboratório v1
+Em 07/11/2026 foi implantada a primeira etapa técnica: o laboratório `x/universo/obras/lab.html` e o serviço sem DOM `motor.js`. Utiliza as tabelas Supabase `x_workspaces` e `x_works` já existentes, com RLS e permissões de alteração limitadas aos campos permitidos. Cria espaços pessoais ou de organização sob a conta do dono, cadastra/edita/arquiva obra e apresenta contagem de obras ativas/total. A edição do espaço, membros e vínculos entre módulos fica para ciclos posteriores.
+**Não confundir com Universo completo:** ainda não há Centro de Controle com indicadores operacionais, equipe, Solicitações, Diário, Alertas nem Listas vinculadas. Precisa teste em browser e com segunda conta antes de homologar.
