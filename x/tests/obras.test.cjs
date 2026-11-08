@@ -84,7 +84,7 @@ const client={auth:{getUser:async()=>({data:{user:{id:uid}},error:null})},from};
  assert.ok(lab.includes('works.listAll()')&&lab.includes('works.createWork'));
  assert.ok(page.includes('id="work-start"')&&page.includes('id="work-end"')&&page.includes('id="work-workspace"'));
  const hub=fs.readFileSync(path.join(__dirname,'../laboratorios/index.html'),'utf8');
- assert.ok(hub.includes('../index.html')&&hub.includes('../universo/obras/lab.html')&&hub.includes('../identidade/lab.html')&&hub.includes('../compartilhar-usuarios/lab.html'));
+ assert.ok(hub.includes('../?view=lists')&&hub.includes('../universo/obras/lab.html')&&hub.includes('../identidade/lab.html')&&hub.includes('../compartilhar-usuarios/lab.html'));
  assert.ok(lab.includes('works.removeWork')&&lab.includes('works.restore'));
  const read=p=>fs.readFileSync(path.join(__dirname,'..',p),'utf8');
  const central=read('laboratorios/index.html');
