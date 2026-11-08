@@ -20,12 +20,12 @@
   </section>
   <p id="message" class="message" role="status" aria-live="polite">Verificando sessão...</p>
   <section class="panel hidden" id="signed" aria-labelledby="signed-title">
-    <h2 id="signed-title">Sessão ativa</h2><p id="account"></p>
+    <h2 id="signed-title">Meu perfil</h2><div class="account-summary"><div id="avatar" class="avatar" aria-hidden="true">TX</div><div><strong id="profile-title">Profissional TEREON</strong><p id="account"></p><span class="status-dot">Conta conectada</span></div></div><div class="profile-facts"><div><span>Confirmação de e-mail</span><strong id="confirmed">—</strong></div><div><span>Conta criada em</span><strong id="created">—</strong></div><div><span>Último acesso</span><strong id="last-access">—</strong></div></div>
     <form id="profile-form"><label for="display-name">Nome de exibição</label><input id="display-name" maxlength="120" autocomplete="name"><button type="submit" class="primary">Salvar perfil</button></form>
-    <button id="logout" type="button" class="secondary">Sair da conta</button>
+    <button id="change-password" type="button" class="secondary">Alterar senha</button><button id="logout" type="button" class="secondary">Sair da conta</button>
   </section>
   <section class="panel hidden" id="recovery-panel">
-    <h2>Definir nova senha</h2><form id="recovery-form"><label for="new-password">Nova senha</label><input id="new-password" type="password" minlength="8" autocomplete="new-password" required><button type="submit" class="primary">Atualizar senha</button></form>
+    <h2 id="recovery-title">Definir nova senha</h2><p id="recovery-hint">Escolha uma nova senha para esta conta.</p><form id="recovery-form"><label for="new-password">Nova senha</label><input id="new-password" type="password" minlength="8" autocomplete="new-password" required><button type="submit" class="primary">Atualizar senha</button></form>
   </section>
   <footer>Ambiente de teste. Nenhum cadastro de obra ou solicitação é iniciado por esta tela.</footer>
 </main>
