@@ -174,3 +174,13 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 - Tocar na tag: deve voltar à busca de fichas, limpar apenas a especificação em andamento, desabilitar Adicionar, sem modificar o material salvo. Escolher outra ficha e confirmar detalhes obrigatórios.
 - Remover uma tag técnica obrigatória: deve voltar ao primeiro detalhe pendente, mantendo o conjunto restante de escolhas válidas.
 - Salvar/editar material e verificar valores e etapas no Motor Único, sem alterar sincronização. **Teste de DOM simulado aprovado; inspeção visual em celular e desktop ainda pendente.**
+
+## Aceite — Início, criação direta e Escola (x.0.3.14)
+1. Instalar/abrir PWA sem parâmetros: deve abrir **Início**, nunca Minhas listas. A URL `/x/laboratorios/` também deve encaminhar a `/x/`.
+2. Abrir **Criar lista** no Início: a tela inicial deve permanecer ao fundo, com `createDialog` aberto. Salvar e confirmar abertura do modal da lista sobre Início. Fechar: retorna ao Início com contagem atualizada.
+3. Abrir **Minhas listas**, depois criar/abrir lista: fechar o modal volta à relação de listas, não ao Início. O botão do cabeçalho Início retorna à página inicial sem recarregar.
+4. Em lista, **Adicionar item** mantém `addDialog` aprovado com as seis fichas atuais, tags, nome técnico, condicionais e gravação. Testar com conta e modo avulso.
+5. Início → Escola → Biblioteca → **Fichário de Fichas Técnicas** → ficha → fechar → Biblioteca → Escola → Início. Nenhuma rota deve pular a Escola.
+6. No mesmo navegador alternar conta A e B: listas da A não podem aparecer na B; sessão B não pode escrever registros A. Repetir em dois aparelhos, com conteúdo distinto e sincronização.
+7. Dimensionamento e Canivete mostram **Em preparação**; Universo mantém acesso à tela de obras e não exige lista.
+**Automatizado:** `home-navigation.test.cjs` (DOM simulado) e `modal-fichas.test.cjs` passaram. **Pendente:** inspeção visual real e teste com duas sessões autenticadas.
