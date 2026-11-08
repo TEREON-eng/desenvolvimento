@@ -5,16 +5,43 @@
 const clone=x=>JSON.parse(JSON.stringify(x));
 const clean=x=>String(x??'').trim();
 const newId=()=>String(Date.now())+'-'+Math.random().toString(36).slice(2,8);
+const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const generateUuid=()=>{
+ const value=globalThis.crypto?.randomUUID?.();
+ if(!value||!UUID.test(value))throw Error('Este navegador não oferece geração segura de identificadores. Os dados não foram alterados.');
+ return value;
+};
 function create(repository,options){
  if(!repository||typeof repository.snapshot!=='function'||typeof repository.save!=='function')throw Error('Repositório de listas inválido.');
  const ids=options&&options.newId||newId;
+ const newRecordUid=options&&options.newRecordUid||generateUuid;
  const snapshot=()=>repository.snapshot();
  const get=id=>snapshot().lists.find(x=>String(x.id)===String(id))||null;
  function change(fn){const data=snapshot();const result=fn(data);repository.save(data);return result;}
  function find(data,id){const l=data.lists.find(x=>String(x.id)===String(id));if(!l)throw Error('Lista não encontrada.');return l;}
+ function allocateRecordUid(data){
+  const uid=String(newRecordUid());
+  if(!UUID.test(uid))throw Error('Identificador técnico inválido.');
+  if(data.lists.some(l=>l.recordUid===uid))throw Error('Identificador técnico duplicado.');
+  return uid;
+ }
+ function ensureRecordUid(listId){
+  const existing=get(listId);
+  if(!existing)throw Error('Lista não encontrada.');
+  if(existing.recordUid){
+   if(!UUID.test(existing.recordUid))throw Error('A lista possui identificação técnica incompatível. Nenhum dado foi alterado.');
+   return existing.recordUid;
+  }
+  return change(data=>{
+   const target=find(data,listId);
+   const uid=allocateRecordUid(data);
+   target.recordUid=uid;
+   return uid;
+  });
+ }
  function createList(name){
   const title=clean(name);if(!title)throw Error('Informe um nome para a lista.');
-  return change(data=>{const id=String(ids());if(data.lists.some(l=>l.id===id))throw Error('ID de lista repetido.');data.lists.push({id,name:title,items:[],stages:[]});return id;});
+  return change(data=>{const id=String(ids());if(data.lists.some(l=>l.id===id))throw Error('ID de lista repetido.');const recordUid=allocateRecordUid(data);data.lists.push({id,recordUid,name:title,items:[],stages:[]});return id;});
  }
  function upsertItem(listId,entry,itemId){
   if(!entry||!clean(entry.name)||!(Number(entry.qty)>0)||!clean(entry.unit)||!clean(entry.stage))throw Error('Preencha material, quantidade, unidade e etapa.');
@@ -51,7 +78,7 @@ function create(repository,options){
   });
  }
  function exportList(listId){const l=get(listId);if(!l)throw Error('Lista não encontrada.');return clone(l);}
- return Object.freeze({version:1,snapshot,get,createList,upsertItem,duplicateItem,removeItem,exportList});
+ return Object.freeze({version:2,snapshot,get,createList,ensureRecordUid,upsertItem,duplicateItem,removeItem,exportList});
 }
-root.TereonXLists=Object.freeze({version:1,create});
+root.TereonXLists=Object.freeze({version:2,create});
 })(typeof window!=='undefined'?window:globalThis);
