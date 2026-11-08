@@ -1,5 +1,11 @@
 <!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TEREON X · Listas na nuvem (lab)</title><link rel="stylesheet" href="./lab.css"></head><body>
+<title>TEREON X · Listas na nuvem (lab)</title><script>
+/* Antigo laboratório de armazenamento: preservar o endpoint para diagnóstico,
+   mas direcionar o uso comum ao mesmo Motor de Listas com modal técnico. */
+if(new URLSearchParams(location.search).get('diagnostico')!=='1'){
+ location.replace('/x/?view=lists');
+}
+</script><link rel="stylesheet" href="./lab.css"></head><body>
 <main class="shell"><header class="top"><div class="brand">TEREON X <small>· LISTAS</small></div><a class="back" href="../../laboratorios/">← Início</a></header>
 <h1>Listas na nuvem</h1><p class="muted">Laboratório de sincronização com sua conta. As listas do Canivete não são alteradas nem importadas aqui.</p>
 <section id="logged-out" class="panel hidden"><h2>Conta necessária</h2><p>Entre com sua conta TEREON X e volte a esta página.</p><a href="../../identidade/lab.html">Abrir minha conta</a></section>
