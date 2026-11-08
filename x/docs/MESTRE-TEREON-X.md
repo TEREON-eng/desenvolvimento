@@ -69,3 +69,7 @@ Foram recuperadas definições anteriores de Resumo da Obra, Atividades com dura
 O apoio de Juliano para **abastecimento/proposição de fichas** não transfere a ele aprovação/publicação; só o fundador homologa por enquanto.
 **Prioridades separadas:** estabilização de listas/catálogo para teste de campo em 17/11 e, paralelamente, desenho dos motores independentes do Universo como próximo passo rumo a lançamento comercial real. Não vender ou marcar como concluído o Universo por existir tabela `x_works`.
 Consultar `PRODUTO-UNIVERSO.md` seção 9 e `MODELO-GRATUITO-PAGO.md` para consequências comerciais.
+
+## 9. Gestão multinível e Diário pela ponta — 07/11/2026
+O fundador reafirmou que o **Universo deve servir simultaneamente à construtora, ao empreiteiro com equipes e ao eletricista executor**. O registro de serviços e fotos pelo profissional individual deve alimentar o Diário da obra e, por agregação, o acompanhamento de prestadores/equipes e o Centro de Controle. Cadastro de prestador, gestão de equipes, alocação em obras, Registros de Execução, Diário e Indicadores são responsabilidades diferentes; a interface do Universo as reúne sem reescrever seus motores. Estar alocado não garante acesso digital à obra, e o registro de serviço não é automaticamente aceitação/verificação.
+**Implementação:** visão aprovada conceitualmente, ainda não desenvolvida. [Universo](PRODUTO-UNIVERSO.md) seção 11.
