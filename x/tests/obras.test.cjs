@@ -17,7 +17,8 @@ const from=table=>{
   eq(column,value){c.filters.push([column,value]);return q},
   is(column,value){(c.nullFilters??=[]).push([column,value]);return q},
   not(column,operator,value){(c.notFilters??=[]).push([column,operator,value]);return q},
-  order(){return Promise.resolve({data:[],error:null})},
+  order(){return Promise.resolve({data:c.table==='x_workspaces'&&c.filters.some(([k])=>k==='owner_id')?[{id:space,name:'Meu espaço',kind:'personal'}]:[],error:null})},
+  in(column,values){(c.inFilters??=[]).push([column,values]);return q},
   single(){return Promise.resolve({data:{id:work,...(c.insert||{})},error:null})},
   maybeSingle(){return Promise.resolve({data:{id:work,...(c.update||{})},error:null})}
  };return q;
@@ -63,10 +64,11 @@ const client={auth:{getUser:async()=>({data:{user:{id:uid}},error:null})},from};
  await service.restore('spaces',space);
  assert.equal(calls[12].update.deleted_at,null);
  await service.listAll();
- assert.equal(calls[13].table,'x_works');
- assert.equal(calls[13].filters.length,0,'consulta todos não restringe espaço, mas RLS continua no banco');
- assert.deepEqual(calls[13].nullFilters,[['deleted_at',null]]);
- assert.equal(calls.length,14);
+ assert.equal(calls[13].table,'x_workspaces');
+ assert.equal(calls[14].table,'x_works');
+ assert.deepEqual(calls[14].inFilters,[['workspace_id',[space]]]);
+ assert.deepEqual(calls[14].nullFilters,[['deleted_at',null]]);
+ assert.equal(calls.length,15);
  assert.ok(calls.every(x=>!x.delete),'nenhuma exclusão permanente');
  const lab=fs.readFileSync(path.join(__dirname,'../universo/obras/lab.js'),'utf8');
  const page=fs.readFileSync(path.join(__dirname,'../universo/obras/lab.html'),'utf8');
