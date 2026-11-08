@@ -95,20 +95,18 @@ $('listDialog').addEventListener('close',function(){
  if(page==='list'){activeId=null;page=listBackdrop;draw();}
 });
 function draw(){
- if(!ready){$('screen').innerHTML='<p class="muted">Carregando suas listas...</p>';return;}
+ const background=page==='list'?listBackdrop:page;
+ $('homeScreen').hidden=background!=='home';
+ $('listsScreen').hidden=background==='home';
+ if(!ready){
+  if(background==='lists')$('listsScreen').innerHTML='<p class="muted">Carregando suas listas...</p>';
+  return;
+ }
  var data=lists.snapshot();
  var html='';
  if(page==='home'){
-  html='<section class="home-intro"><h1>Início</h1><p>Seu espaço de trabalho no TEREON X · ambiente de desenvolvimento</p></section>'+
-   '<nav class="home-heroes" aria-label="Listas de materiais">'+
-   '<button type="button" class="home-hero" data-action="lists"><span class="home-icon">☷</span><strong>Minhas listas</strong><small>Consultar e continuar · '+data.lists.length+' lista(s)</small></button>'+
-   '<button type="button" class="home-hero primary" data-action="create"><span class="home-icon">＋</span><strong>Criar lista</strong><small>Começar uma nova lista</small></button></nav>'+
-   '<p class="home-section-head">FERRAMENTAS E ÁREAS</p>'+
-   '<nav class="home-grid" aria-label="Módulos do TEREON X">'+
-   '<div class="home-tile disabled" aria-label="Dimensionamento em preparação"><span class="home-icon">▤</span><strong>Dimensionamento</strong><span>Cálculos e especificação orientada.</span><small>Em preparação</small></div>'+
-   '<div class="home-tile disabled" aria-label="Canivete em preparação"><span class="home-icon">⚒</span><strong>Canivete</strong><span>Ferramentas técnicas rápidas.</span><small>Em preparação</small></div>'+
-   '<a class="home-tile" href="/x/universo/obras/lab.html"><span class="home-icon">▥</span><strong>Universo</strong><span>Obras e acompanhamento.</span></a>'+
-   '<a class="home-tile" href="/x/escola/"><span class="home-icon">▱</span><strong>Escola</strong><span>Aprendizagem e Biblioteca.</span></a></nav>';
+  $('homeListCount').textContent=data.lists.length+' lista(s)';
+  return;
  }else if(page==='lists'){
   html='<div class="row"><h1>Minhas listas</h1><button class="btn small" data-action="create">＋ Nova</button></div><div class="stack">';
   if(!data.lists.length)html+='<div class="empty">Nenhuma lista criada ainda.</div>';
@@ -140,7 +138,7 @@ function draw(){
   $('listContent').innerHTML=html;
   if(!$('listDialog').open)$('listDialog').showModal();
  }else{
-  $('screen').innerHTML=html;
+  $('listsScreen').innerHTML=html;
  }
 }
 function name(){
@@ -288,8 +286,13 @@ document.addEventListener('click',function(e){
   }
 
   if(a.dataset.action==='home'){navigate('home');return;}
-  if(a.dataset.action==='create'){$('newName').value='';$('createDialog').showModal();$('newName').focus();}
-  if(a.dataset.action==='lists'){exitList();return;}
+  if(a.dataset.action==='create'){e.preventDefault();$('newName').value='';$('createDialog').showModal();$('newName').focus();}
+  if(a.dataset.action==='lists'){
+   e.preventDefault();
+   if(page==='list')exitList();
+   else navigate('lists');
+   return;
+  }
   if(a.dataset.action==='share'&&list())window.TereonXShare?.open(lists.exportList(activeId));
   if(a.dataset.action==='add')openAdd();
  }
