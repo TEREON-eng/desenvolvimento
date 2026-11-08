@@ -65,5 +65,7 @@ const client={auth:{getUser:async()=>({data:{user:{id:userId}},error:null})},fro
  assert.ok(!html.includes('/x/listas/app.js'),'lab não deve abrir tela interna de Listas');
  const js=fs.readFileSync(path.join(__dirname,'../compartilhar-usuarios/lab.js'),'utf8');
  assert.ok(js.includes('exportList(l.id)'),'laboratório usa contrato público de exportação');
+ assert.ok(js.includes('db.auth.getSession()'),'laboratório confere sessão antes de getUser');
+ assert.ok(js.includes('showLoggedOut()'),'visitante recebe caminho para login');
  console.log('TEREON X: contratos de compartilhamento entre usuários OK');
 })().catch(err=>{console.error(err);process.exitCode=1});
