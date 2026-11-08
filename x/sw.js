@@ -37,7 +37,7 @@ self.addEventListener('fetch',event=>{
       new Response('TEREON X temporariamente indisponível.',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}});
    }
   })());
- }else if(/\\.(?:js|css|json|webmanifest)$/.test(url.pathname)){
+ }else if(/\.(?:js|css|json|webmanifest)$/.test(url.pathname)){
   event.respondWith((async()=>{
    try{return await fetch(request)}
    catch(e){return await caches.match(request,{ignoreSearch:true}) || new Response('Recurso indisponível offline.',{status:503});}
