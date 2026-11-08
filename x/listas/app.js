@@ -229,6 +229,8 @@ async function openAdd(item){
  if(item?.catalogId)choosingFicha=true;
  redrawAdd();
  $('addDialog').showModal();
+ // Edição de registros anteriores continua operando sem depender do fichário remoto.
+ if(item&&!item.catalogId)return;
  try{
   await window.TereonXCatalog.load();
   if(!$('addDialog').open)return;
