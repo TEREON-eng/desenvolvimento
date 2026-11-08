@@ -62,8 +62,10 @@
    if(disposed||!started)return;
    if(working)return working;
    working=(async()=>{
-    const entries=store.snapshot().lists.filter(x=>x.cloudPending&&!x.cloudConflict);
-    for(const entry of entries){
+    while(!disposed){
+     const entries=store.snapshot().lists.filter(x=>x.cloudPending&&!x.cloudConflict);
+     if(!entries.length)break;
+     for(const entry of entries){
      if(disposed)return;
      const uid=entry.recordUid;
      const payload={id:uid,name:entry.name,items:clone(entry.items),stages:clone(entry.stages)};
