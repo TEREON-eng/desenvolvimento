@@ -71,4 +71,9 @@ auth.onChange(event=>{
  queueMicrotask(()=>{refresh().catch(err=>notice(errorMessage(err),true))});
 });
 displayMode('login');
-refresh().catch(err=>notice(errorMessage(err),true));
+notice('Verificando sessão...');
+refresh().then(()=>notice('')).catch(err=>{
+  authPanel.classList.remove('hidden');
+  signedPanel.classList.add('hidden');
+  notice(errorMessage(err),true);
+});
