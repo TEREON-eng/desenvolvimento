@@ -33,3 +33,11 @@ O rótulo **Catálogo Oficial** indica a coleção/candidatos em estudo, **não 
 
 ## Refatoração incremental x.0.3.7
 O shell `x/index.html` agora contém apenas estrutura HTML e scripts ordenados. Estilos em `x/styles.css`, PWA em `x/pwa.js`, apresentação de listas em `x/listas/app.js`, operações em `x/listas/servico.js` e persistência em `x/listas/store.js`. A chave `tereon-x-lab-v1` foi preservada para manter listas históricas. Testes de contrato em `x/tests/modulos.test.cjs` e `x/tests/catalogo.test.cjs`, executados pelo GitHub Actions. Consulte a auditoria para limites conhecidos.
+
+## Documentação TEREON X consolidada — 07/11/2026
+- [Documento Mestre](x/docs/MESTRE-TEREON-X.md) e [Índice](x/docs/INDICE-DOCUMENTACAO.md)
+- [Universo: gestão de obras](x/docs/PRODUTO-UNIVERSO.md)
+- [Gratuito e pago: hipóteses](x/docs/MODELO-GRATUITO-PAGO.md)
+- [História: Diário Volume 02](x/docs/HISTORIA-TEREON-X.md)
+- [Identidade](x/identidade/README.md) e [Compartilhar entre contas](x/compartilhar-usuarios/README.md)
+Os laboratórios novos não alteram o aplicativo principal nem a branch main. Universo, Solicitações e cobrança são propostas, ainda não funcionalidades implementadas.
