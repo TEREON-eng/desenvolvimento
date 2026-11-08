@@ -51,3 +51,12 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 - Usuário sem sessão deve ver ligação para login (não Auth session missing).
 - Antes de redesenhar CSS/HTML, repetir toda sequência funcional de Listas e modal de especificação; layout não pode modificar contrato do motor.
 - Universo: validar isolamento de espaços e obras, convites revogáveis e níveis de permissão antes da integração com aplicativo principal.
+
+## Motor de Obras — laboratório v1
+1. Sem sessão: link para Identidade e nenhuma leitura/gravação indevida.
+2. Criar espaço pessoal; criar espaço organização; alternar e verificar que obras são distintas.
+3. Criar obra; editar nome, descrição e status; arquivar e reativar; atualizar navegador e confirmar persistência.
+4. Testar títulos inválidos, descrições longas, mensagens de erro e escrita negada.
+5. Com segunda conta (quando SMTP liberar), garantir que obra de outro espaço não é lida nem alterada, inclusive por acesso direto com UUID.
+6. Testar mobile/desktop e confirmar que Canivete, Listas e sua chave local não foram alterados.
+7. `node x/tests/obras.test.cjs` no workflow GitHub Actions — execução ainda precisa ser verificada.
