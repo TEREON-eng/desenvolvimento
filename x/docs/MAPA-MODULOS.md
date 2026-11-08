@@ -73,3 +73,6 @@ Não confundir Compartilhar texto/PDF, Compartilhar entre contas, e Solicitar ma
 
 ## Central de Laboratórios — acesso mobile (08/11/2026)
 `x/laboratorios/index.html`: ponto de entrada simples, responsivo, somente links para Canivete X, Motor de Obras, Identidade e Compartilhamento entre Usuários. Não importa serviços entre si, não migra dados e não altera o app principal. Motor de Obras v3 ganhou `listAll()` (espacos próprios) e datas previstas por obra; segue sem dependência de outros motores.
+
+## Identidade persistente de Listas (08/11/2026)
+`x/listas/servico.js` v2 adiciona `recordUid` UUID seguro a novas listas e `ensureRecordUid` explícito para legadas. Chave do repositório `tereon-x-lab-v1` inalterada. `x/relacoes/origem-listas.js` liga o contrato local de Listas ao formato do Motor de Relações, sem conexão remota; `remoteLinkAllowed:false` até resolver sincronização, identidade do usuário e permissões por obra. Não existe vínculo funcional Lista–Obra ainda.
