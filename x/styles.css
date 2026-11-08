@@ -63,3 +63,11 @@ dialog::backdrop{background:#14281d77;backdrop-filter:blur(2px)}
 #listDialog .list-return{padding:6px 0;color:#3d6450;text-align:left;font-size:12px}
 #listDialog .items{margin-bottom:18px}
 @media(max-width:420px){#listDialog{width:calc(100vw - 12px);height:calc(100dvh - 12px);max-height:calc(100dvh - 12px);border-radius:15px}#listDialog .list-detail-content{padding:14px 12px}#listDialog .list-detail-header h1{font-size:20px}}
+
+/* Seletor de fichas dentro do modal aprovado; não cria outra tela nem outro dialog. */
+#addDialog .ficha-search{width:100%;flex:0 0 100%;position:sticky;top:0;background:#fff;z-index:1}
+#addDialog .ficha-option{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:4px;width:100%;padding:10px 12px;border:1px solid #d9e3db;border-radius:10px;background:#fff;color:#273a2c;cursor:pointer}
+#addDialog .ficha-option small{font-size:10px;color:#788778}
+#addDialog .ficha-option[hidden]{display:none!important}
+#addDialog .ficha-option:hover,#addDialog .ficha-option:focus-visible{border-color:#79957d;background:#f2f6f2}
+#addDialog .ficha-voltar{align-self:flex-start;flex:0 0 auto;margin-bottom:4px}
