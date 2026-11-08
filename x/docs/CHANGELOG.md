@@ -97,3 +97,10 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Listas avulsas não são importadas automaticamente; usuário pode escolher copiá-las para sua conta em **Minhas listas**. Originais são mantidas no aparelho.
 - PWA x.0.3.8: cache atualizado com módulos da integração, fallback de recursos locais e versão do app.
 - Testes simulados `x/tests/listas-integracao.test.cjs` e `x/tests/modulos.test.cjs` passaram. Browser e CI a conferir; `main` não alterada.
+
+## 08/11/2026 — Correção de navegação: modal técnico em todas as entradas
+- Problema reportado: ao usar a tela antiga `x/listas/nuvem/lab.html`, o formulário básico de materiais substituía na prática o modal de especificação. O modal técnico `TereonXCatalogUI.open` continuava no Motor de Listas principal, mas o laboratório legado seguia acessível e causava experiências divergentes.
+- A página do laboratório legado agora **encaminha por padrão** a `/x/?view=lists`, com o Motor de Listas e o modal técnico. O modo de diagnóstico continua disponível via `?diagnostico=1`.
+- Teste de regressão acrescentado para exigir que o botão **Adicionar item** abra `TereonXCatalogUI.open`, com opções condicionais, obrigatoriedades e nome técnico.
+- O link de compartilhamento entre contas foi retirado da Central: ferramenta de envio de snapshot ainda experimental, não sincronização colaborativa. Arquivos e dados existentes preservados, acesso técnico permanece por caminho direto.
+- Correção restrita à branch `desenvolvimento`; nenhuma alteração de itens, regras técnicas, dados ou branch `main`. Testes de código/contrato executados; confirmação visual real pendente.
