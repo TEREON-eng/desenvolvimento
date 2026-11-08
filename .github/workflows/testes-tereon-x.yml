@@ -30,3 +30,5 @@ jobs:
         run: node x/tests/listas-integracao.test.cjs
       - name: Validar modal aprovado com fichas atuais
         run: node x/tests/modal-fichas.test.cjs
+      - name: Validar Início único e criação em modal
+        run: node x/tests/home-navigation.test.cjs
