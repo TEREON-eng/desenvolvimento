@@ -83,3 +83,11 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 - Conta e Compartilhar usam fundo claro e controles consistentes; identidade, compartilhamento, formulários, IDs e callbacks permanecem intactos.
 - Conferir no celular a legibilidade dos cabeçalhos e a capacidade de navegar de ida e volta sem perder sessão ou listas locais.
 - O arquivo de testes de Obras agora faz validações estáticas desses links/temas; foi simulado com sucesso, execução do CI e navegador pendentes.
+
+## Entrada principal de Listas e navegação PWA
+- Abrir `/x/laboratorios/` no celular: **Minhas listas** e **Criar lista** são as duas primeiras ações; Perfil no canto.
+- Minhas listas deve ir direto à relação de listas locais existentes no mesmo navegador, sem apagar ou migrar dados.
+- Criar lista deve abrir diretamente o modal de nome no laboratório atual, salvar e aparecer na lista anterior.
+- Canivete exibe calculadoras *em preparação* (não botão funcional enganoso). Escola oferece Biblioteca real. Universo e Compartilhar mantêm links.
+- Abrir ícone da PWA após atualização do manifesto: deve chegar à Central; instalação antiga pode necessitar atualizar/reinstalar conforme navegador.
+- A existência de obra no Supabase **não** vincula automaticamente lista local; nenhum registro adicional deve ser criado. Teste navegador ainda necessário.
