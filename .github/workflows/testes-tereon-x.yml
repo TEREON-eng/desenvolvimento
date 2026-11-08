@@ -32,3 +32,5 @@ jobs:
         run: node x/tests/modal-fichas.test.cjs
       - name: Validar Início único e criação em modal
         run: node x/tests/home-navigation.test.cjs
+      - name: Auditar fronteiras de independência e modal aprovado
+        run: node x/tests/independencia.test.cjs
