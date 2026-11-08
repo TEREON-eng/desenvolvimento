@@ -134,3 +134,13 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - A ação **Trocar material** sai do grupo de opções de características e vira uma tag discreta com nome da ficha e ×, ao lado do título da característica em edição (por exemplo, **Tipo**). Ao remover, volta para a busca das fichas; não grava nem presume novas seleções.
 - O modal HTML aprovado, fichário de seis fichas, Motor Único de Listas, gravação e regras de obrigatoriedade foram preservados.
 - Teste de DOM simulado ampliado para verificar a tag e retorno à escolha; passou. Validação visual em celular ainda pendente. Branch `main` inalterada.
+
+## 08/11/2026 — x.0.3.14 · Início único, independência e Escola em salas
+- **Corrigido:** URL inicial da PWA e da aplicação agora é `/x/` (Início); removedor de sessão não força a tela Minhas listas quando a conta autentica.
+- A Central histórica `/x/laboratorios/` encaminha ao Início, evitando dois espaços semelhantes. Links `?view=lists` e `?view=create` continuam compatíveis.
+- Início renderizado em HTML próprio `#homeScreen`, não pelo Motor de Listas. `#listsScreen` é região separada. Mesmo se Listas falhar, links de Universo/Escola permanecem visíveis.
+- **Criar lista** abre `createDialog` diretamente sobre Início. Após salvar, o modal individual da lista abre sobre a tela anterior, que reaparece ao fechar.
+- Escola vira card próprio → sala Biblioteca → primeiro livro, Fichário de Fichas Técnicas. O leitor técnico original foi movido sem reimplementar o motor de catálogo; headers de Escola/Biblioteca/Fichário seguem padrão visual atual.
+- Dimensionamento e Canivete continuam visivelmente `Em preparação` — sem links falsos. Alterações na branch `desenvolvimento`, `main` inalterada.
+- Avaliação de independência, RLS, duas contas e plano de homogeneização em `x/docs/REVISAO-ARQUITETURA-LAYOUT-2026-11-08.md`.
+- Teste de navegação com DOM simulado `x/tests/home-navigation.test.cjs` passou. Teste de modal técnico `x/tests/modal-fichas.test.cjs` passou. **Validação real de duas contas/dispositivos ainda pendente.**
