@@ -97,6 +97,7 @@
      current.cloudPending=!unchanged;
      current.cloudConflict=false;
      store.save(state);
+     }
     }
     failed='';
    })();
