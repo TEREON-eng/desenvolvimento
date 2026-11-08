@@ -86,3 +86,18 @@ O fundador definiu que o primeiro esboço **não deve controlar aplicação deta
 **Depois:** vincular Diário de Obras a etapa prevista na lista ou atividade, sem concluir automaticamente que todos os materiais foram aplicados. Controle detalhado de consumo fica fora deste recorte.
 
 **Separação técnica:** Listas gerencia materiais de origem; Solicitações é dona do fluxo de atendimento; Diário guarda execução; Universo organiza obra e painéis; Identidade/Acessos define autorização. Nada disso significa implementação concluída.
+
+## 11. Prestadores, equipes e Diário colaborativo — direção do fundador (07/11/2026)
+**DECIDIDO conceitualmente:** o Universo deve atender todos os modelos: construtora com vários empreiteiros em várias obras; empreiteiro pequeno que executa pessoalmente e coordena uma ou mais equipes; profissional/eletricista individual com conta TEREON. A identidade é individual, pode atuar em múltiplos espaços e obras autorizadas.
+
+**Registro de campo como origem:** o eletricista deve poder registrar o serviço executado com fotos, data, local/etapa opcional, texto e responsável, de forma móvel e rápida. O Diário de Obras consolida registros dos profissionais, por dia e por obra; supervisor pode complementar/validar quando exigido. Registro de execução ≠ aprovação ou conclusão automática.
+
+**Divisão de responsabilidades sugerida (a validar antes de codificar):**
+- Prestadores e Equipes: cadastro de empreiteiros, equipes, integrantes, papéis, contatos; prestador não precisa ter conta nem cadastrar todos para ser registrado.
+- Alocação: vínculos temporais equipe ↔ obra; registro de histórico sem confundir alocação com permissão digital.
+- Registro de Execução: autoria, data, obra, etapa/local, serviço, anexos/fotografias, observações; lançamento pelo profissional em sua própria conta.
+- Diário de Obras: visão consolidada dos registros daquele dia e obra, eventos/ocorrências e eventual validação; sem duplicar entrada de informações.
+- Centro de Controle e Indicadores: consultas agregadas por empresa, prestador, obra, equipe e período, respeitando permissões.
+- Identidade/Acessos: autorização de leitura/escrita por obra e função; cada prestador pode manter suas obras particulares sem expô-las à contratante.
+**Hipótese de UX:** a ação "Registrar serviço" deve ser tão curta quanto criar uma lista no Canivete. Foto por serviço é objetivo de experiência; tratar ausência de câmera/sinal, consentimento, armazenamento e envio posterior sem bloquear registro.
+**Futuro:** vincular registros a etapas previstas nas listas sem presumir aplicação quantitativa nem conclusão de materiais. Não há implementação deste fluxo no TEREON X.
