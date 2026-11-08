@@ -101,3 +101,12 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 - Tentar registrar tipo `list` antes da sincronização e garantir rejeição; não pode existir referência fantasma.
 - Conferir que o cadastro de obras e as listas locais funcionam sem depender do novo motor.
 **Testes de sessão/RLS multiusuário e navegador ainda pendentes.**
+
+## Identidade local de Listas — 08/11/2026
+- Lista nova recebe UUID em `recordUid` mantendo o ID de navegação pré-existente.
+- Lista antiga abre sem qualquer escrita automática; ao preparar explicitamente identidade, conserva ID original, etapas, itens, quantidades e ficha técnica.
+- Preparação repetida retorna mesmo identificador; recarregar navegador mantém o UUID.
+- Falha de armazenamento não altera lista em memória nem grava parcialmente.
+- Adaptador de origem `x/relacoes/origem-listas.js` retorna `synchronized:false` e `remoteLinkAllowed:false` até existir sincronização.
+- Compartilhamento de snapshot não deve transmitir a mesma identidade técnica como se a cópia fosse o mesmo objeto.
+- Testes simulados executados; testar em navegador com listas reais e entre dispositivos antes de vincular a Obra.
