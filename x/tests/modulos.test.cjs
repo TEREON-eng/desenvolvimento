@@ -97,7 +97,7 @@ assert.ok(actualPicker.includes("TereonXCatalog.missing")&&actualPicker.includes
 assert.ok(legacyCloudPage.includes("location.replace('/x/?view=lists')"),'laboratório legado direciona para Minhas listas com modal técnico');
 assert.ok(html.includes('id="listDialog"')&&html.includes('id="listContent"'),'detalhes abrem em dialog independente');
 assert.ok(listApp.includes("if(!$('listDialog').open)$('listDialog').showModal()"),'lista abre como modal');
-assert.ok(listApp.includes("data-action=\\\"lists\\\"")&&listApp.includes('← Minhas listas'),'retorno de lista ao conjunto');
+assert.ok(listApp.includes('list-return')&&listApp.includes('← Minhas listas'),'retorno de lista ao conjunto');
 assert.ok(listApp.includes("$('listDialog').addEventListener('close'"),'fechamento por ESC ou botão retorna à relação');
 assert.ok(listApp.includes("document.addEventListener('click'"),'controles dentro do modal usam delegação do documento');
 assert.ok(listApp.includes("if(a.dataset.action==='add')openCatalogAdd()"),'modal técnico preservado dentro do modal de lista');
