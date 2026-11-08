@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.13",
+  "version": "x.0.3.14",
   "build": "2026-11-08",
-  "notes": "Central: Listas em destaque e card Dimensionamento em preparação"
+  "notes": "Início único e independente, Criar lista abre modal sobre Início, Escola > Biblioteca > Fichário"
 }
