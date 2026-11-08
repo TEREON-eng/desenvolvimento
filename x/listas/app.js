@@ -307,9 +307,9 @@ $('tags').addEventListener('click',function(e){
 $('choices').addEventListener('input',function(e){
  if(e.target.id!=='fichaSearch')return;
  fichaSearch=e.target.value;
- const q=fichaSearch.normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase();
+ const q=fichaSearch.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
  $('choices').querySelectorAll('[data-ficha]').forEach(button=>{
-  button.hidden=!(button.textContent.normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().includes(q));
+  button.hidden=!(button.textContent.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(q));
  });
 });
 $('choices').addEventListener('click',function(e){
