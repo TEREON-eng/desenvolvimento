@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.11",
+  "version": "x.0.3.12",
   "build": "2026-11-08",
-  "notes": "Modal aprovado conectado às seis fichas atuais do Fichario.xlsm"
+  "notes": "Busca com rolagem natural e tag de troca de material junto ao detalhe"
 }
