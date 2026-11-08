@@ -144,3 +144,5 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Dimensionamento e Canivete continuam visivelmente `Em preparação` — sem links falsos. Alterações na branch `desenvolvimento`, `main` inalterada.
 - Avaliação de independência, RLS, duas contas e plano de homogeneização em `x/docs/REVISAO-ARQUITETURA-LAYOUT-2026-11-08.md`.
 - Teste de navegação com DOM simulado `x/tests/home-navigation.test.cjs` passou. Teste de modal técnico `x/tests/modal-fichas.test.cjs` passou. **Validação real de duas contas/dispositivos ainda pendente.**
+
+- Auditoria adicional: corrigida expressão de detecção de arquivos JS/CSS/JSON do service worker, que antes impedia o fallback offline desses recursos por um escape incorreto. Sintaxe e correspondência da extensão verificadas; teste offline real ainda pendente.
