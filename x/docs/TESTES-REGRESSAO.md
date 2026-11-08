@@ -140,3 +140,13 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 - Dentro do modal, verificar busca, opções condicionais, formação do nome técnico, tags escolhidas e bloqueio de Adicionar antes de obrigatórios.
 - Salvar, editar item e recarregar a mesma lista, tanto com conta quanto em modo avulso. A gravação da nuvem não pode substituir o modal.
 - Validar no celular e no PC no mesmo domínio Preview (e recarregar/atualizar PWA). Verificação visual não executada aqui.
+
+## Aceite do modal de Lista — x.0.3.9
+1. Na central, entrar em **Minhas listas**, tocar numa lista; ela deve abrir sobre a tela anterior e mostrar **← Minhas listas** e **✕**.
+2. Fechar por ambos os controles e, no desktop, por Escape: deve retornar à mesma relação de listas, sem recarregar a página.
+3. Abrir a lista novamente, tocar **Adicionar item**; deve abrir **o modal técnico do catálogo**, com escolhas condicionais e validação de obrigatórios. Salvar e confirmar que o material aparece no modal da lista.
+4. Editar/duplicar/remover material e conferir atualização na lista sem fechar o modal.
+5. Criar uma lista a partir de **Criar lista** na Central; após criar, o detalhe deve abrir como modal sobre **Minhas listas**.
+6. Com login, repetir no PC e no celular e conferir sincronização sem substituição da interface.
+7. Confirmar que modal de lista e modal de catálogo não bloqueiam os botões um do outro nem causam rolagem inesperada.
+**Executado:** regressão estática de Listas, persistência e rotas passou. **Pendente:** validação visual/tátil em navegador real.
