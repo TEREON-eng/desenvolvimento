@@ -33,3 +33,13 @@ Projeto: **TEREON X**, organização **TEREON-app**, ID `kjikzdpqejhsgutakigw`.
 ## Próxima etapa
 
 Validar o login e a persistência de perfil **no Preview**, depois testar dois usuários reais com isolamento de acesso e só então discutir integração com shell do X. Qualquer integração deve consumir a API do motor, sem duplicar autenticação nas Listas.
+
+## Revisão do perfil e recuperação — 07/11/2026
+
+- Perfil do laboratório exibe nome, e-mail, confirmação, data de criação e último acesso; permite alterar a senha com sessão válida.
+- Ao retornar de link com `type=recovery`, a interface tenta mostrar o formulário de nova senha; também observa `PASSWORD_RECOVERY`.
+- Quando o link retorna com erro de autenticação, a tela apresenta orientação para solicitar outro. A recuperação por e-mail **ainda exige teste ponta a ponta**.
+- Confirme **Redirect URLs** no Supabase com URL exata do Preview incluindo `/x/identidade/lab.html`. Esse endereço não é o domínio Workers de produção.
+- Verifique se a página de destino do e-mail é o Preview e se o hash/query de retorno contém erro. **Nunca compartilhar tokens presentes no link de recuperação**, mesmo para diagnóstico.
+- Testar com o usuário desconectado em aba privada, receber novo e-mail e definir uma senha diferente. Depois validar saída e reentrada com a senha nova.
+- Proteger qualquer sessão já aberta: mudança direta de senha no perfil e recuperação por e-mail são fluxos diferentes; o primeiro depende de conta autenticada.
