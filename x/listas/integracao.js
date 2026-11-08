@@ -3,8 +3,8 @@
  * A cache é segregada por usuário. Não envia listas avulsas sem consentimento.
  */
 (function(root,factory){
- const api=factory();if(typeof module!=='undefined'&&module.exports)module.exports=api;root.TereonXListIntegration=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(){
+ const api=factory(root);if(typeof module!=='undefined'&&module.exports)module.exports=api;root.TereonXListIntegration=api;
+})(typeof globalThis!=='undefined'?globalThis:this,function(root){
  'use strict';
  const clone=x=>JSON.parse(JSON.stringify(x));
  const comparable=x=>JSON.stringify([x.name,x.items,x.stages]);
