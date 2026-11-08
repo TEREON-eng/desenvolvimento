@@ -110,3 +110,10 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - O fechamento do modal (inclusive tecla Escape) devolve a relação de listas, sem navegar para outra página.
 - O seletor técnico `TereonXCatalogUI.open` continua como modal independente sobre o detalhe da lista. Não foram modificadas as fichas, regras, armazenamento local/nuvem nem motores de especificação.
 - Versão x.0.3.9 e testes de contrato atualizados; homologação visual em celular/desktop ainda necessária. Branch `main` não alterada.
+
+## 08/11/2026 — x.0.3.10 · Restauração do modal aprovado (regressão grave)
+- **Causa identificada:** o botão **Adicionar item** foi alterado para invocar `openCatalogAdd()`, um seletor experimental diferente do modal aprovado. O próprio modal aprovado X.0.3.4 nunca havia sido removido do shell; sua rota de abertura foi substituída indevidamente.
+- **Fonte recuperada:** `jhcolba-del/tereon`, commit `9e762fa`, `x/index.html`, versão X.0.3.4. O trecho HTML do modal foi comparado byte a byte com o `addDialog` atual e corresponde integralmente.
+- **Corrigido:** o botão agora invoca `openAdd()`; mantém seleção progressiva, nome técnico em formação, tags removíveis, obrigatórias em contorno duplo, quantidade/unidade/etapa, sugestão de etapas e retorno à primeira obrigatória pendente após remover tags. A gravação usa o Motor Único de Listas existente.
+- **Proteção:** snapshot do HTML aprovado em `x/tests/fixtures/modal-adicionar-aprovado-x034.html`, e teste em `x/tests/modulos.test.cjs` que exige igualdade estrutural e caminho de abertura original. Versão PWA x.0.3.10.
+- **LIMITE:** a ficha desse modal X.0.3.4 é demonstração de condutor, não o catálogo final generalizado; itens de catálogo `catalogId` ainda podem usar seletor experimental em edição. Confirmar resultado visual no navegador e detalhar política única de edição antes de considerar concluída a restauração de todas as fichas. A branch `main` não foi alterada.
