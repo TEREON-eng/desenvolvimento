@@ -120,6 +120,12 @@ const hub=src('x/laboratorios/index.html');
 assert.ok(hub.includes('href="../?view=lists"'),'Minhas listas destaca-se na entrada');
 assert.ok(hub.includes('href="../?view=create"'),'Criar lista destaca-se na entrada');
 assert.ok(hub.includes('Canivete')&&hub.includes('Calculadoras'),'Canivete não representa o motor de Listas');
+assert.ok(hub.includes('Dimensionamento')&&hub.includes('Em preparação'),'Dimensionamento aparece como módulo futuro sem acesso fictício');
+const section=hub.slice(hub.indexOf('aria-label="Módulos do TEREON X"'),hub.indexOf('</nav>',hub.indexOf('aria-label="Módulos do TEREON X"')));
+const order=['Dimensionamento','Canivete','Universo','Escola'].map(name=>section.indexOf('<strong>'+name+'</strong>'));
+assert.ok(order.every(v=>v>=0)&&order.every((v,i)=>i===0||v>order[i-1]),'módulos na ordem Dimensionamento, Canivete, Universo e Escola');
+assert.ok(hub.indexOf('href="../?view=lists"')<hub.indexOf('Dimensionamento')&&hub.indexOf('href="../?view=create"')<hub.indexOf('Dimensionamento'),'Listas em primeiro plano');
+
 assert.ok(hub.includes('Escola')&&hub.includes('href="../biblioteca/"'),'Biblioteca está sob a Escola');
 assert.ok(hub.includes('href="../identidade/lab.html"'),'Perfil no cabeçalho');
 const listUi=src('x/listas/app.js');
