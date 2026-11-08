@@ -76,3 +76,6 @@ O fundador reafirmou que o **Universo deve servir simultaneamente à construtora
 
 ## 10. Diário com registros múltiplos (confirmado em 07/11/2026)
 Cada profissional pode criar vários registros no mesmo dia e obra, incluindo serviço, ocorrência e fotografias. Cada evento mantém identidade, autoria e horário. O Diário é uma visão consolidada, não um formulário único por executor/dia. Registros não significam aprovação, conclusão nem consumo automático de materiais. Motor de Execução e motor/visão de Diário permanecem independentes. Ainda não implementado.
+
+## 11. Escopo correto do Diário: obra, não equipe (decisão confirmada)
+O Diário de Obras é uma consolidação **por obra e data**, contendo múltiplos registros de diferentes trabalhadores, equipes e até vários empreiteiros simultâneos. Cada registro mantém identidade, autor, horário e vínculo à equipe/prestador quando aplicável. O conjunto que cada pessoa vê depende de autorização por obra e escopo de acesso: a construtora pode ter visão de obra, o empreiteiro visão de suas equipes e o executor de seus registros. A apresentação consolidada não altera registros, não elimina autoria nem concede automaticamente acesso entre prestadores. **Não implementado; decisão conceitual registrada.**
