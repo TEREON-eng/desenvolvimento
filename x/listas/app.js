@@ -282,9 +282,9 @@ document.addEventListener('click',function(e){
   if(a.dataset.action==='lists'){exitList();return;}
   if(a.dataset.action==='share'&&list())window.TereonXShare?.open(lists.exportList(activeId));
   if(a.dataset.action==='add')openAdd();
-  if(e.target.closest('[data-ficha-back]')){
-   selectedFicha=null;choosingFicha=true;values={};fields=legacyFields;focus=0;fichaSearch='';redrawAdd();return;
-  }
+ }
+ if(e.target.closest('[data-ficha-back]')){
+  selectedFicha=null;choosingFicha=true;values={};fields=legacyFields;focus=0;fichaSearch='';redrawAdd();return;
  }
  var open=e.target.closest('[data-open]');if(open){activeId=open.dataset.open;navigate('list');}
  var edit=e.target.closest('[data-edit]');if(edit&&list()){
