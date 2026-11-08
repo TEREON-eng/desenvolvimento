@@ -30,3 +30,10 @@ Qualquer pessoa pode começar com um registro avulso. A criação de obra, empre
 5. Depois implementar identidade de Diário, Visitas, Solicitações e equipes conforme modelos dessas fontes.
 
 **Estado de verificação:** migrações aplicadas no Supabase; políticas lidas; teste de contrato executado com cliente simulado. Sem teste real de RLS com duas contas e sem homologação de fluxo entre módulos.
+
+## Preparação da identidade local de Listas — 08/11/2026
+**IMPLEMENTADO:** `x/listas/servico.js` v2 gera `recordUid` UUID seguro ao criar uma lista nova, sem substituir `id` (identificador interno legado). Listas anteriores continuam legíveis sem migração obrigatória: `ensureRecordUid(listId)` é ação explícita, idempotente, que grava apenas o novo campo preservando itens, etapas e ID. Gravação continua via repositório local já existente, com erro sem mutação de estado em caso de falha. A chave `tereon-x-lab-v1` não mudou, tampouco os dados anteriores são regravados na leitura.
+
+**Adaptador:** `x/relacoes/origem-listas.js` fornece `reference(listId)` sem escrever e `prepare(listId)` para identificação explícita. As referências carregam `source: 'device'`, `synchronized: false`, `remoteLinkAllowed: false`. Não são identidade remota em `x_record_identities`. Esse adaptador é base de integração futura, não é ligação funcional entre Listas e Obras.
+
+**PENDENTE:** definição de sincronização/backup com identidade de conta, conflitos entre aparelhos, permissão de acesso a obras, opt-in para subida de lista e resolução remota. Nenhum dado de Listas foi enviado à nuvem. `x/compartilhar-usuarios` continua enviando snapshots informativos com campos selecionados, sem importar `recordUid` como identidade compartilhada.
