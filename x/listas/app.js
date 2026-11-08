@@ -17,8 +17,10 @@ function syncBanner(){
  if(!accountId)return '<div class="sync-line">Salvo neste aparelho · <a href="/x/identidade/lab.html">Entrar para usar a nuvem</a></div>';
  const status=syncController?.status();
  if(!status)return '<div class="sync-line">Conectando à conta...</div>';
- const text=status.conflicts?'Conflito de versões: alterações deste aparelho preservadas. '+esc(status.error||'Não foi possível mesclar automaticamente.'):
+ const text=!status.ready?'Nuvem indisponível · dados deste aparelho preservados':
+  status.conflicts?'Conflito de versões: alterações deste aparelho preservadas. '+esc(status.error||'Não foi possível mesclar automaticamente.'):
   status.pending?'Alterações salvas neste aparelho · aguardando nuvem'+(status.error?' · '+esc(status.error):''):
+  status.error?'Nuvem indisponível · cópia da conta neste aparelho · '+esc(status.error):
   status.working?'Sincronizando...':'Salvo na nuvem';
  return '<div class="sync-line">'+text+' <button type="button" class="sync-refresh" data-action="sync" aria-label="Atualizar listas da nuvem">↻ Atualizar</button></div>';
 }
@@ -42,6 +44,7 @@ async function activateAccount(userId,cloud){
   if(session!==accountSession)return;
   // Offline: cache fica legível, sem afirmar sincronização concluída.
   console.warn('TEREON X: nuvem indisponível; usando cache por conta',error);
+  integration.useCachedData(error);
  }
  if(session!==accountSession)return;
  ready=true;draw();openInitialCreate();
@@ -52,6 +55,7 @@ function openInitialCreate(){
  $('newName').value='';$('createDialog').showModal();$('newName').focus();
 }
 window.TereonXAppActivateAccount=activateAccount;
+window.TereonXAppRefreshCloud=()=>syncController?.refresh().then(refreshView);
 
 var initialView=(new URLSearchParams(window.location.search).get('view')||'');
 var page=(initialView==='lists'||initialView==='create')?'lists':'home',activeId=null,values={},focus=0,editId=null;
