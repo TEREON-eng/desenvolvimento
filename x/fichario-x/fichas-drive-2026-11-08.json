@@ -371,10 +371,13 @@
           "ordem": 1,
           "nome": "Tipo",
           "valores": [
-            "Reto, Cônico, Múltiplo"
+            "Reto",
+            "Cônico",
+            "Múltiplo"
           ],
           "condicao": "Sempre",
-          "classificacao": "Obrigatório"
+          "classificacao": "Obrigatório",
+          "observacao": "Na planilha, os três valores aparecem separados por vírgula."
         },
         {
           "id": "DET-002",
