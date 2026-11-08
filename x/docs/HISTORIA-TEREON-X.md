@@ -30,3 +30,8 @@ Consolidada a diferença: **Compartilhar** comunica ou envia uma cópia; **Solic
 - "O nome desenvolvimento era produção: a importância de não inferir ambientes pelo domínio."
 - "A história do primeiro login do TEREON X."
 Cada publicação deve separar relato, registro comprovado e hipótese. Não inventar depoimentos literais, métricas de uso, vendas ou horas.
+
+## 07/11, noite — O Universo que estava congelado
+O fundador recordou que a primeira versão do ambiente de Obras já buscava acompanhar a aplicação de materiais, manter Diário de Obras, registrar visitas com relatórios e emitir alertas. As listas poderiam ser vinculadas às obras. Esse ambiente foi congelado quando a necessidade de especificação técnica e listas confiáveis passou à frente, com objetivo de testar o núcleo até 17/11.
+A retomada não será uma reescrita do Canivete: Juliano poderá colaborar no abastecimento de fichas e o fundador volta a desenhar os motores de gestão de obras. A ambição é que essa próxima fase produza um **produto comercial real**, mais completo, e não apenas mais telas de protótipo. Preço, pacote final e data de lançamento da nova fase não foram fixados.
+**Aprendizado:** a gestão de obras precisa ir além de "cadastrar uma obra": precisa responder o que foi executado, o que falta aplicar, quais visitas ocorreram e o que exige atenção. Essa lembrança corrige e aprofunda a proposta inicial simplificada do Universo X.
