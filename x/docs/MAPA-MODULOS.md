@@ -70,3 +70,6 @@ Não confundir Compartilhar texto/PDF, Compartilhar entre contas, e Solicitar ma
 
 ## Novo motor independente — Obras (Universo v1)
 `x/universo/obras/motor.js`: contrato `TereonXWorks.create(client)`, métodos `spaces/createSpace/list/createWork/updateWork/archive`, sem DOM, sem referências às Listas. `x/universo/obras/lab.html` é a apresentação de laboratório. `x_works` pertence a `x_workspaces`; só proprietário do espaço administra na primeira versão. RLS existente e grants por coluna aplicados ao Supabase; acesso como colaborador será outra etapa. `x/tests/obras.test.cjs` incorporado ao CI. Não implementa Solicitações, Diário nem acesso de equipes.
+
+## Central de Laboratórios — acesso mobile (08/11/2026)
+`x/laboratorios/index.html`: ponto de entrada simples, responsivo, somente links para Canivete X, Motor de Obras, Identidade e Compartilhamento entre Usuários. Não importa serviços entre si, não migra dados e não altera o app principal. Motor de Obras v3 ganhou `listAll()` (espacos próprios) e datas previstas por obra; segue sem dependência de outros motores.
