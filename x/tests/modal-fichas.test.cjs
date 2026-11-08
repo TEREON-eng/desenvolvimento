@@ -11,6 +11,8 @@ function element(id){
  if(!elements.has(id))elements.set(id,{
   id,innerHTML:'',textContent:'',value:'',disabled:false,open:false,listeners:{},
   nextElementSibling:{textContent:''},
+  classList:{toggle(name,enabled){this[name]=enabled}},
+  insertAdjacentHTML(position,html){this.innerHTML+=html},
   addEventListener(event,handler){this.listeners[event]=handler},
   querySelectorAll(){return []},
   showModal(){this.open=true},close(){this.open=false;this.listeners.close?.()},focus(){}
@@ -72,6 +74,8 @@ function choice(v){
  assert.equal(element('saveItem').disabled,true,'sem escolher ficha não pode salvar');
  click('[data-ficha]',{ficha:'FT_INFRA-001'});
  assert.equal(element('fieldLabel').textContent,'Tipo');
+ assert.ok(element('fieldLabel').innerHTML.includes('data-ficha-back="1"'),'Trocar material é tag junto ao detalhe Tipo');
+ assert.ok(!element('choices').innerHTML.includes('data-ficha-back'),'Trocar material não ocupa espaço nas opções');
  choice('Rígido');
  assert.equal(element('fieldLabel').textContent,'Material');
  choice('PVC');
@@ -105,5 +109,14 @@ function choice(v){
  click('[data-edit]',{edit:'legado-1'});
  assert.ok(element('addDialog').open,'registro anterior continua abrindo');
  assert.equal(element('fieldLabel').textContent,'Formação','registro sem ficha conserva seus campos existentes');
+ element('addDialog').close();
+ click('[data-action]',{action:'add'});
+ await new Promise(resolve=>setImmediate(resolve));
+ click('[data-ficha]',{ficha:'FT_INFRA-001'});
+ assert.ok(element('fieldLabel').innerHTML.includes('data-ficha-back="1"'));
+ click('[data-ficha-back]',{fichaBack:'1'});
+ assert.equal(element('fieldLabel').textContent,'Escolher material','remover tag retorna à escolha de ficha');
+ assert.equal(element('addDialog').classList['is-choosing'],true,'modo de seleção usa área ampliada');
+ assert.equal(element('saveItem').disabled,true,'trocar ficha impede salvamento sem nova confirmação');
  console.log('TEREON X: 6 fichas reais → modal aprovado → condição → tags → salvar → editar e legado OK');
 })().catch(error=>{console.error(error);process.exitCode=1});
