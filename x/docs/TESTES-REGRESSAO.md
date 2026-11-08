@@ -60,3 +60,11 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 5. Com segunda conta (quando SMTP liberar), garantir que obra de outro espaço não é lida nem alterada, inclusive por acesso direto com UUID.
 6. Testar mobile/desktop e confirmar que Canivete, Listas e sua chave local não foram alterados.
 7. `node x/tests/obras.test.cjs` no workflow GitHub Actions — execução ainda precisa ser verificada.
+
+## Revisão v2 do laboratório de Obras
+- Conferir tema claro no celular e desktop, alinhamento de modais e funcionamento de abertura, cancelamento e salvamento.
+- Criar espaço pessoal e espaço de organização; editar o **nome**; tentar alternar de espaço e confirmar dados isolados.
+- Criar/editar obra; usar **Excluir**; conferir desaparecimento da lista normal, presença na Lixeira e restauração; arquivamento continua diferente de exclusão.
+- Excluir espaço e restaurar; obras anteriormente vinculadas devem reaparecer; nenhuma gravação de Listas deve sofrer alteração.
+- Validar que conta estranha não consegue alterar `deleted_at` nem nome/descrição da obra fora de seu espaço; teste cruzado ainda pendente.
+- Validar o fluxo em Preview e o GitHub Actions antes de promover à main. Não declarar homologado por apenas passar teste simulado.
