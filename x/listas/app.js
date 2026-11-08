@@ -28,7 +28,7 @@ function refreshView(){if(ready)draw()}
 async function activateAccount(userId,cloud){
  const session=++accountSession;
  if(syncController)syncController.stop();
- syncController=null;ready=false;page=initialView==='home'?'home':page;activeId=null;
+ syncController=null;ready=false;if($('listDialog')?.open)$('listDialog').close();page=initialView==='home'?'home':'lists';activeId=null;
  if(!userId||!cloud){
   accountId=null;lists=window.TereonXLists.create(guestRepository);ready=true;draw();openInitialCreate();return;
  }
@@ -72,7 +72,22 @@ var $=function(id){return document.getElementById(id);};
 var esc=function(x){return String(x==null?'':x).replace(/[&<>"']/g,function(k){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[k];});};
 function list(){return lists.get(activeId);}
 function safe(op){try{return op();}catch(e){alert('TEREON X: '+e.message);return null;}}
-function navigate(target){page=target;draw();}
+function navigate(target){
+ if(target==='list'){
+  if(page!=='lists'){page='lists';draw();}
+  page='list';draw();
+  return;
+ }
+ if($('listDialog').open)$('listDialog').close();
+ activeId=null;page=target;draw();
+}
+function exitList(){
+ if($('listDialog').open)$('listDialog').close();
+ activeId=null;page='lists';draw();
+}
+$('listDialog').addEventListener('close',function(){
+ if(page==='list'){activeId=null;page='lists';draw();}
+});
 function draw(){
  if(!ready){$('screen').innerHTML='<p class="muted">Carregando suas listas...</p>';return;}
  var data=lists.snapshot();
@@ -89,8 +104,8 @@ function draw(){
   data.lists.forEach(function(x){html+='<button class="listrow" data-open="'+esc(x.id)+'"><span><strong>'+esc(x.name)+'</strong><br><small class="muted">'+x.items.length+' lançamento(s)</small></span><span>›</span></button>';});
   html+='</div>';
  }else if(page==='list'){
-  var l=list();if(!l){page='lists';draw();return;}
-  html='<div class="row"><div class="row"><button class="btn ghost small" data-action="lists" aria-label="Voltar">←</button><div><h1>'+esc(l.name)+'</h1><span class="tiny muted">'+l.items.length+' lançamento(s)</span></div></div></div>'+
+  var l=list();if(!l){exitList();return;}
+  html='<div class="row list-detail-header"><div><button class="btn ghost small list-return" data-action="lists" aria-label="Voltar para Minhas listas">← Minhas listas</button><h1>'+esc(l.name)+'</h1><span class="tiny muted">'+l.items.length+' lançamento(s)</span></div><button class="btn ghost small" data-action="lists" aria-label="Fechar lista">✕</button></div>'+
    '<div style="margin-top:20px"><button class="btn primary full" data-action="add">＋ Adicionar item</button></div>'+ 
    '<div style="margin-top:10px"><button class="btn full" data-action="share">↗ Compartilhar lista</button></div>'+ 
    '<div style="margin-top:10px;text-align:right"><a href="/x/contribuir.html" style="color:#4f6f59;font-size:12px">Não encontrou o material? Envie seu item para nós ›</a></div>'+
@@ -110,7 +125,12 @@ function draw(){
    if(!already)html+='<button class="btn small" style="margin-top:14px" type="button" data-action="import">Trazer listas deste aparelho para minha conta</button>';
   }
  }
- $('screen').innerHTML=html;
+ if(page==='list'){
+  $('listContent').innerHTML=html;
+  if(!$('listDialog').open)$('listDialog').showModal();
+ }else{
+  $('screen').innerHTML=html;
+ }
 }
 function name(){
  return 'Condutor elétrico'+(values.formacao?' '+values.formacao.toLowerCase():'')+
@@ -160,7 +180,7 @@ function openCatalogAdd(item){
 }
 function close(id){$(id).close();}
 // Retorno global agora é o link HTML do cabeçalho; navegação de Listas preservada nos controles internos.
-$('screen').addEventListener('click',function(e){
+document.addEventListener('click',function(e){
  if(!ready)return;
  var a=e.target.closest('[data-action]');if(a){
   if(a.dataset.action==='sync'&&syncController){
@@ -178,7 +198,7 @@ $('screen').addEventListener('click',function(e){
   }
 
   if(a.dataset.action==='create'){$('newName').value='';$('createDialog').showModal();$('newName').focus();}
-  if(a.dataset.action==='lists')navigate('lists');
+  if(a.dataset.action==='lists'){exitList();return;}
   if(a.dataset.action==='share'&&list())window.TereonXShare?.open(lists.exportList(activeId));
   if(a.dataset.action==='add')openCatalogAdd();
  }
@@ -199,7 +219,7 @@ document.querySelectorAll('[data-close]').forEach(function(el){el.addEventListen
 $('createForm').addEventListener('submit',function(e){
  e.preventDefault();var name=$('newName').value.trim();if(!name)return;
  var id=safe(function(){return lists.createList(name);});
- if(!id)return;activeId=id;close('createDialog');navigate('list');
+ if(!id)return;close('createDialog');activeId=id;navigate('list');
 });
 $('tags').addEventListener('click',function(e){
  var b=e.target.closest('[data-remove]');if(!b)return;
