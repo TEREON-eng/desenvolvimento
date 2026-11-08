@@ -75,3 +75,20 @@ Este documento define **o padrão obrigatório**, não declara que todo código 
 
 ### Próxima refatoração permitida
 Priorizar `listas/store.js` e `listas/servico.js`, com extração gradual e testes antes de substituir código inline. Essa prioridade não autoriza alterar fluxos da interface já aprovados sem validação do usuário.
+
+## 9. Identidade, espaços e permissões — fundação de 07/11/2026
+
+- **Identidade e Acessos** é um motor independente do Catálogo, Especificação, Listas, Obras e Solicitações.
+- Conta TEREON única; um usuário pode ser dono de espaço pessoal e atuar em espaços de outras empresas.
+- Cada obra pertence a um espaço; concessões de acesso por obra são explícitas. Participar de um espaço não concede automaticamente acesso a todas as obras.
+- **Compartilhar** comunica uma lista; **Solicitar** inicia um processo e gera registro próprio, preservando a lista original.
+- O armazenamento é infraestrutura, não a fonte de regras de autorização da interface. Regras de segurança devem existir no banco.
+- Governança de fichas técnicas continua nas planilhas do Drive; não confundir com gestão de acessos.
+
+### Implementado (somente desenvolvimento)
+
+Supabase, projeto **TEREON X** da organização **TEREON-app**: tabelas `x_profiles`, `x_workspaces`, `x_workspace_members`, `x_works` e `x_work_access`, com RLS e permissões restritivas. Fonte SQL versionada em `x/identidade/sql/001_fundacao.sql`. Não conecta o aplicativo nem modifica a persistência local de Listas.
+
+**Ainda não implementado:** tela de login, cadastro automático de perfil, emissão/aceitação/revogação de convites, gestão de participantes, papéis detalhados por ação, banco de Listas/Solicitações, sincronização offline, testes reais entre dois usuários. Não conceder inserção de membros/atribuições diretamente ao frontend: criar fluxo controlado, validado e auditável.
+
+**Segurança:** não expor chave privilegiada no navegador; políticas RLS devem ser testadas com usuários autenticados diferentes antes da integração. O verificador de segurança Supabase não apontou alertas após a criação, mas isso não substitui testes de autorização.
