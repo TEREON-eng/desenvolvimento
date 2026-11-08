@@ -1,8 +1,8 @@
 /* TEREON X · SW exclusivo do escopo /x/; nunca tocar nos caches do legado. */
 'use strict';
-const CACHE='tereon-x-lab-0.3.7';
+const CACHE='tereon-x-lab-0.3.8';
 const START='/x/';
-const OFFLINE=[START,'/x/index.html','/x/styles.css','/x/listas/store.js','/x/listas/servico.js','/x/listas/app.js','/x/pwa.js','/x/motor-compartilhar.js','/x/manifest.webmanifest','/x/catalogo/motor.js','/x/catalogo/seletor.js','/x/fichario-x/simulacao-24.json','/x/biblioteca/'];
+const OFFLINE=[START,'/x/laboratorios/','/x/index.html','/x/styles.css','/x/listas/store.js','/x/listas/servico.js','/x/listas/app.js','/x/listas/integracao.js','/x/listas/nuvem/motor.js','/x/listas/auth.js','/x/pwa.js','/x/motor-compartilhar.js','/x/manifest.webmanifest','/x/catalogo/motor.js','/x/catalogo/seletor.js','/x/fichario-x/simulacao-24.json','/x/biblioteca/'];
 self.addEventListener('install',event=>{
  event.waitUntil((async()=>{
   const cache=await caches.open(CACHE);
@@ -29,13 +29,18 @@ self.addEventListener('fetch',event=>{
     const response=await fetch(new Request(request,{cache:'no-store'}));
     if(response.ok){
      const cache=await caches.open(CACHE);
-     cache.put(START,response.clone());
+     if(url.pathname===START||url.pathname==='/x/index.html')await cache.put(START,response.clone());
     }
     return response;
    }catch(e){
-    return await caches.match(START) || await caches.match('/x/index.html') ||
+    return await caches.match(request,{ignoreSearch:true}) || await caches.match('/x/laboratorios/') || await caches.match(START) || await caches.match('/x/index.html') ||
       new Response('TEREON X temporariamente indisponível.',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}});
    }
+  })());
+ }else if(/\\.(?:js|css|json|webmanifest)$/.test(url.pathname)){
+  event.respondWith((async()=>{
+   try{return await fetch(request)}
+   catch(e){return await caches.match(request,{ignoreSearch:true}) || new Response('Recurso indisponível offline.',{status:503});}
   })());
  }
 });
