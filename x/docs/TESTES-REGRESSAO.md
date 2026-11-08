@@ -150,3 +150,10 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 6. Com login, repetir no PC e no celular e conferir sincronização sem substituição da interface.
 7. Confirmar que modal de lista e modal de catálogo não bloqueiam os botões um do outro nem causam rolagem inesperada.
 **Executado:** regressão estática de Listas, persistência e rotas passou. **Pendente:** validação visual/tátil em navegador real.
+
+## Bloqueio obrigatório — modal de adicionar materiais X.0.3.4 (08/11/2026)
+- Referência congelada: histórico `jhcolba-del/tereon` commit `9e762fa`, `x/index.html`; snapshot `x/tests/fixtures/modal-adicionar-aprovado-x034.html`.
+- **Contrato CI:** o `addDialog` atual deve corresponder integralmente ao HTML aprovado; o botão **Adicionar item** deve invocar `openAdd()`, abrir `addDialog.showModal()`, utilizar o Motor Único `lists.upsertItem` e manter sequência `pickFirstMissing()`.
+- No PC e no celular, abrir **Minhas listas → lista (modal) → Adicionar item (modal)**; verificar nome técnico, tags e botões com as mesmas dimensões/posições previstas. Selecionar características na sequência, remover duas tags e conferir retomada da primeira obrigatória pendente.
+- Preencher quantidade/unidade/etapa; confirmar que botão Adicionar fica desabilitado até todas obrigatórias. Salvar, verificar na lista e na nuvem, fechar e reabrir.
+- **Status:** comparação de código e testes de contrato aprovados. Teste visual e ponta a ponta em dois aparelhos pendentes. Teste de estrutura não substitui teste de comportamento no navegador.
