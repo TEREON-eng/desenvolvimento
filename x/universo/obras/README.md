@@ -32,3 +32,12 @@ A primeira versão de Centro de Controle possui apenas contagem de obras totais 
 
 ## Próximos motores
 Centro de Controle será o agregador de dados da Obra e das consultas. Prestadores e Equipes, Alocação, Solicitações, Diário, Visitas, Alertas e Relatórios alimentam informação própria ligada à obra, sem mudar o Motor de Obras. **Nenhum destes está implementado por este laboratório.**
+
+## Revisão de experiência v2 — 07/11/2026 à noite
+- Interface do laboratório agora usa **tema claro**, cards discretos e **modais** para criar/editar espaços e obras, preservando a separação `motor.js` ↔ `lab.js` ↔ `lab.css`.
+- Conceito corrigido: **espaço de trabalho** é o agrupamento das obras sob gestão, não a profissão. `personal` significa uso próprio; `organization` significa negócio/empresa, inclusive pequeno empreiteiro. "Meu trabalho" era apenas um exemplo, não categoria obrigatória.
+- Edição posterior do **nome do espaço** e dos **dados da obra**. Tipo do espaço permanece fixo após criação nesta versão para não arriscar migração de dados ou direitos.
+- **Excluir** obra/espaço significa mover para **Lixeira** por `deleted_at`, recuperável; sem `DELETE` e sem cascata. Ao excluir espaço, suas obras permanecem associadas e reaparecem ao restaurar espaço. Arquivar obra continua estado distinto de excluir.
+- Migração `sql/002_exclusao_recuperavel.sql` aplicada. Permissões SQL garantem que usuários autenticados podem alterar apenas campos previstos; RLS ainda restringe alterações ao proprietário do espaço. Consulta de espaços/obras ativas filtra `deleted_at is null`; Lixeira usa consulta específica.
+- Teste unitário ampliado para `updateSpace/removeWork/removeSpace/trash/restore`, modais e tema claro. Sintaxe verificada e simulação do motor executada; **navegador e CI atual ainda dependem de confirmação**.
+- Futuro: se dados vinculados passarem a existir (solicitações/diários), definir política de retenção, restrições de edição e ações em lote antes de permitir exclusão definitiva.
