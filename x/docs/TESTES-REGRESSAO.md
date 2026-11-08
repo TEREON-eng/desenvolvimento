@@ -76,3 +76,10 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 - Incluir datas previstas de início/término, salvar, reabrir edição e confirmar persistência; testar término anterior ao início (deve falhar).
 - Filtrar individualmente cada espaço, depois voltar a Todos; arquivar/excluir/restaurar uma obra sem interferir nas outras.
 - Validar responsividade e fluxo com conta autenticada; CI e navegador ainda requerem confirmação.
+
+## Pente-fino da Central — 08/11/2026
+- Na Central, há três cards (Canivete, Universo, Compartilhar) e Perfil como ícone no canto.
+- Em Canivete, Universo, Compartilhar e Conta há retorno visível à Central; o botão Início interno do Canivete mantém seu comportamento original.
+- Conta e Compartilhar usam fundo claro e controles consistentes; identidade, compartilhamento, formulários, IDs e callbacks permanecem intactos.
+- Conferir no celular a legibilidade dos cabeçalhos e a capacidade de navegar de ida e volta sem perder sessão ou listas locais.
+- O arquivo de testes de Obras agora faz validações estáticas desses links/temas; foi simulado com sucesso, execução do CI e navegador pendentes.
