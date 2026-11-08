@@ -2,6 +2,12 @@
 'use strict';
 const assert=require('node:assert/strict');
 const identity=require('../identidade/auth.js');
+const fs=require('node:fs');
+const html=fs.readFileSync(require('node:path').join(__dirname,'../identidade/lab.html'),'utf8');
+const script=fs.readFileSync(require('node:path').join(__dirname,'../identidade/lab.js'),'utf8');
+for(const id of ['account','confirmed','created','last-access','profile-title','avatar','change-password','recovery-panel','recovery-form','recovery-title'])assert.ok(html.includes('id="'+id+'"'),'controle ausente: '+id);
+assert.ok(script.includes("event==='PASSWORD_RECOVERY'"),'evento de recuperação deve ser observado');
+assert.ok(html.includes('class="panel hidden" aria-labelledby="auth-title"'),'não mostrar login antes de consultar sessão');
 const calls=[];
 let current={id:'user-1',email:'profissional@example.com'};
 const client={
