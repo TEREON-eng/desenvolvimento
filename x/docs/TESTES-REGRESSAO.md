@@ -68,3 +68,11 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 - Excluir espaço e restaurar; obras anteriormente vinculadas devem reaparecer; nenhuma gravação de Listas deve sofrer alteração.
 - Validar que conta estranha não consegue alterar `deleted_at` nem nome/descrição da obra fora de seu espaço; teste cruzado ainda pendente.
 - Validar o fluxo em Preview e o GitHub Actions antes de promover à main. Não declarar homologado por apenas passar teste simulado.
+
+## Central mobile e filtro Todos — 08/11/2026
+- Abrir `/x/laboratorios/` no Preview verdadeiro de desenvolvimento no celular; verificar links para Canivete X, Obras, Minha Conta e Compartilhar Listas.
+- No Universo, escolher `Todos os espaços`: conferir contagens e obras somadas; cada cartão indica seu espaço; tentar editar/excluir espaço com `Todos` e verificar ações desabilitadas.
+- Criar obra no filtro Todos escolhendo destino no modal; verificar que somente o espaço escolhido recebe a obra.
+- Incluir datas previstas de início/término, salvar, reabrir edição e confirmar persistência; testar término anterior ao início (deve falhar).
+- Filtrar individualmente cada espaço, depois voltar a Todos; arquivar/excluir/restaurar uma obra sem interferir nas outras.
+- Validar responsividade e fluxo com conta autenticada; CI e navegador ainda requerem confirmação.
