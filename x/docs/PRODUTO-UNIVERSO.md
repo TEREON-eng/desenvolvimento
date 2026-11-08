@@ -104,3 +104,13 @@ O fundador definiu que o primeiro esboço **não deve controlar aplicação deta
 
 ## 12. Múltiplos registros por profissional ao longo do dia — confirmado
 O fundador confirmou explicitamente que cada profissional pode fazer **vários registros de execução no mesmo dia e obra**. O modelo não impõe um diário único por eletricista/dia. Cada registro é uma ocorrência independente, com identidade, autoria, obra, data/hora, descrição, fotografias opcionais e referência opcional à etapa/atividade. O Diário de Obras apresenta a **consolidação por obra e data**, preservando a origem individual e a ordem cronológica. Prestador, encarregado ou gestor podem visualizar e complementar conforme autorização. Registros de impedimentos também entram no fluxo; lançamento não equivale a aprovação ou a material efetivamente aplicado. **Decisão de produto, ainda não implementada.**
+
+## 13. Diário consolidado por obra, inclusive entre empreiteiros — correção do fundador
+**DECIDIDO:** o Diário de Obras consolida os registros **de toda a obra e de todos os profissionais autorizados**, não apenas os de um funcionário, equipe ou empreiteiro. Uma mesma obra pode reunir simultaneamente atividades de equipes de prestadores diferentes. Cada registro de execução preserva autor, data/hora, prestador, equipe e vínculo à obra quando existentes; o diário é uma visão agregada por **obra + data**, não substitui as fontes.
+- A gestão da construtora pode consultar o conjunto permitido de registros daquela obra.
+- Cada empreiteiro acompanha apenas suas equipes/registros e demais informações expressamente autorizadas.
+- Cada eletricista acompanha seus lançamentos e informações que tiver permissão de consultar.
+- Permissões são impostas no banco; não basta filtrar elementos na interface.
+- Um relatório diário consolidado pode acrescentar observações gerais e validação por responsável, sem apagar autoria ou transformar simples registro em aprovação.
+- Consolidar não significa replicar dados nem dar acesso irrestrito a registros privados de outras organizações.
+**Status:** regra de produto confirmada, motor de Execução/Diário ainda não implementado.
