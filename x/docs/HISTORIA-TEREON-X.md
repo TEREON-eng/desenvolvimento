@@ -39,3 +39,6 @@ A retomada não será uma reescrita do Canivete: Juliano poderá colaborar no ab
 ## 07/11, noite — O Diário começa com quem executa
 Ao discutir o crescimento do Universo, o fundador ampliou a concepção de gestão: construtora com vários empreiteiros em várias obras, empreiteiro que também põe a mão na massa e coordena outras equipes, e cada eletricista com sua conta TEREON. A ideia central: o profissional registra diariamente o serviço e fotos; a organização e consolidação por obra/equipe/empreiteiro vêm dos motores, não de repetição burocrática.
 O princípio reforça a origem do produto: coletar informações no momento real do trabalho, sem pedir organização prévia ao usuário. Mecanismo e interfaces ainda não implementados.
+
+## 07/11, noite — Diário formado por vários registros
+Confirmado pelo fundador: o eletricista poderá registrar várias atividades ao longo de um mesmo dia, com fotos e observações, e o sistema reunirá os eventos no Diário da obra. A intenção é reduzir burocracia para quem executa, preservar autoria e permitir visão consolidada ao empreiteiro e à construtora. A decisão é conceitual; não houve implementação.
