@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TEREON X · Laboratório do Universo</title><link rel="stylesheet" href="./lab.css"></head>
+<body><main class="shell">
+<header><div class="brand">TEREON <span>X</span></div><p class="eyebrow">LABORATÓRIO INDEPENDENTE · UNIVERSO</p>
+<h1>Centro de Controle</h1><p>Primeiro motor: cadastrar e administrar obras. Os indicadores e outros motores serão ligados depois.</p></header>
+<section id="logged-out" class="panel hidden">
+<h2>Conta necessária</h2><p>Entre com a conta TEREON X que você já testou.</p><a href="../../identidade/lab.html">Abrir minha conta</a></section>
+<div id="app" class="hidden">
+<section class="panel"><h2>Meu espaço de trabalho</h2><label for="space">Espaço</label>
+<select id="space"></select><p id="space-tip" class="hint">Uma conta pode administrar seu espaço pessoal e, depois, participar dos espaços autorizados de outras empresas.</p>
+<button type="button" class="quiet" id="show-space-form">Criar outro espaço</button>
+<form id="space-form" class="hidden"><label for="space-name">Nome do espaço</label><input id="space-name" maxlength="120" required placeholder="Ex.: Meu trabalho">
+<label for="space-kind">Tipo</label><select id="space-kind"><option value="personal">Pessoal</option><option value="organization">Empresa / empreiteiro</option></select>
+<button type="submit" class="primary">Salvar espaço</button></form></section>
+<section class="panel"><div class="head"><h2>Obras</h2><button type="button" class="quiet" id="new-work">Nova obra</button></div>
+<div class="stats"><div><span>Obras ativas</span><strong id="stat-active">—</strong></div><div><span>Total cadastrado</span><strong id="stat-total">—</strong></div></div>
+<div id="works" class="stack"></div></section>
+<section class="panel hidden" id="editor"><h2 id="editor-title">Nova obra</h2>
+<form id="work-form"><label for="work-name">Nome da obra</label><input id="work-name" maxlength="160" required placeholder="Ex.: Reforma da Escola A">
+<label for="work-description">Descrição (opcional)</label><textarea id="work-description" maxlength="2000" rows="3" placeholder="Local, referência, observações gerais..."></textarea>
+<label for="work-status">Situação</label><select id="work-status"><option value="planning">Planejamento</option><option value="active">Em andamento</option><option value="paused">Pausada</option><option value="completed">Concluída</option><option value="archived">Arquivada</option></select>
+<div class="actions"><button type="submit" class="primary">Salvar obra</button><button type="button" class="quiet" id="cancel-work">Cancelar</button></div>
+</form></section></div>
+<p id="notice" role="status" aria-live="polite">Verificando sessão...</p>
+<footer>Motor de Obras separado de Listas, Catálogo, Diário e Solicitações. Não é a produção.</footer>
+</main><script src="./motor.js"></script><script type="module" src="./lab.js"></script></body></html>
