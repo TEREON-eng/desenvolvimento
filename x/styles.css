@@ -65,9 +65,19 @@ dialog::backdrop{background:#14281d77;backdrop-filter:blur(2px)}
 @media(max-width:420px){#listDialog{width:calc(100vw - 12px);height:calc(100dvh - 12px);max-height:calc(100dvh - 12px);border-radius:15px}#listDialog .list-detail-content{padding:14px 12px}#listDialog .list-detail-header h1{font-size:20px}}
 
 /* Seletor de fichas dentro do modal aprovado; não cria outra tela nem outro dialog. */
-#addDialog .ficha-search{width:100%;flex:0 0 100%;position:sticky;top:0;background:#fff;z-index:1}
-#addDialog .ficha-option{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:4px;width:100%;padding:10px 12px;border:1px solid #d9e3db;border-radius:10px;background:#fff;color:#273a2c;cursor:pointer}
+#addDialog .ficha-search{width:100%;flex:0 0 100%;position:static;background:#fff;z-index:auto}
+#addDialog .ficha-option{flex:0 0 100%;display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:4px;width:100%;padding:10px 12px;border:1px solid #d9e3db;border-radius:10px;background:#fff;color:#273a2c;cursor:pointer}
 #addDialog .ficha-option small{font-size:10px;color:#788778}
 #addDialog .ficha-option[hidden]{display:none!important}
 #addDialog .ficha-option:hover,#addDialog .ficha-option:focus-visible{border-color:#79957d;background:#f2f6f2}
-#addDialog .ficha-voltar{align-self:flex-start;flex:0 0 auto;margin-bottom:4px}
+/* Ficha ativa aparece como uma tag removível ao lado do detalhe atual. */
+#addDialog #fieldLabel{display:inline-flex;align-items:center;flex-wrap:wrap;gap:7px;min-width:0}
+#addDialog .ficha-trocar{font-size:10px;font-weight:500;max-width:100%;white-space:normal;overflow-wrap:anywhere;padding:4px 7px;border-color:#b9c9bc;background:#f4f7f3;color:#425e4a;cursor:pointer}
+#addDialog .ficha-trocar:hover,#addDialog .ficha-trocar:focus-visible{border-color:#718e76;background:#e7f0e9}
+#addDialog.is-choosing .review{display:none}
+#addDialog.is-choosing .choice-area{flex:1;min-height:0}
+#addDialog.is-choosing .choices{gap:8px;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;align-content:flex-start}
+#addDialog.is-choosing .ficha-search{position:static;flex-shrink:0}
+#addDialog.is-choosing .ficha-option{flex-shrink:0}
+#addDialog{height:min(760px,calc(100dvh - 20px))}
+@media(max-width:380px){#addDialog{height:calc(100dvh - 16px)}}
