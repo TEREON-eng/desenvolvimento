@@ -9,8 +9,8 @@ const norm=x=>clean(x).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCa
 function isOfficial(f){return f?.publicacao?.homologada===true && ['aprovada','publicada','oficial'].includes(norm(f.status)) && f.tipo!=='hipotetica';}
 function normalize(f){
  if(!f||!clean(f.codigo)||!clean(f.nome))throw Error('Ficha sem identificação');
- const details=(f.detalhes||[]).map((d,i)=>({
-   id:clean(d.id)||'DET-'+(i+1),name:clean(d.nome)||'[Detalhe sem nome]',
+ const details=(f.detalhes||[]).filter(d=>clean(d.nome)||Array.isArray(d.valores)&&d.valores.length).map((d,i)=>({
+   id:clean(d.id)||'DET-'+(i+1),name:clean(d.nome)||'[Detalhe sem nome]',order:Number(d.ordem)||i+1,
    options:Array.isArray(d.valores)?d.valores.map(clean).filter(Boolean):clean(d.valores).split(';').map(clean).filter(Boolean),
    condition:clean(d.condicao),required:norm(d.classificacao).includes('obrigat'),
    classification:clean(d.classificacao)
@@ -19,7 +19,7 @@ function normalize(f){
  return {id:clean(f.codigo),name:clean(f.nome),reference:clean(f.referencia)||clean(f.codigo),
    status:clean(f.status),kind:sourceType,collection:'catalogo-oficial',homologada:isOfficial(f),
    pendencias:[...(sourceType==='simulacao'?['Ficha ainda não criada: opções fictícias']:[]),...details.filter(d=>!d.condition||!d.classification||d.name==='[Detalhe sem nome]'||!d.options.length).map(d=>'Revisar: '+d.name)],
-   details,source:'fichario-x/simulacao-24.json'};
+   details:details.sort((a,b)=>a.order-b.order),source:'fichario-x/fichas-drive-2026-11-08.json',sourceName:clean(f.nomeNaPlanilha),sourcePendencias:Array.isArray(f.pendencias)?f.pendencias:[]};
 }
 function applyRule(rule,values,details){
  const r=clean(rule);if(!r||norm(r)==='sempre')return {visible:true,verified:!!r};
@@ -41,7 +41,7 @@ function technicalName(f,values){
 }
 async function load(){
  if(cache)return cache;
- if(!loading)loading=fetch('/x/fichario-x/simulacao-24.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Catálogo indisponível ('+r.status+')');return r.json()}).then(d=>{
+ if(!loading)loading=fetch('/x/fichario-x/fichas-drive-2026-11-08.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Catálogo indisponível ('+r.status+')');return r.json()}).then(d=>{
   if(d.schema!==1||!Array.isArray(d.fichas))throw Error('Esquema de catálogo incompatível');
   const all=d.fichas.map(normalize);const ids=new Set();
   all.forEach((f,i)=>{if(ids.has(f.id)){f.pendencias.push('Código do fichário duplicado: '+f.id);f.id=f.id+'-SIM-'+String(i+1).padStart(2,'0');}ids.add(f.id)});
@@ -51,5 +51,5 @@ async function load(){
 }
 function list(){return cache||[]}
 function get(id){return list().find(f=>f.id===id)||null}
-root.TereonXCatalog=Object.freeze({version:1,load,list,get,isOfficial,normalize,visibleDetails,missing,technicalName,applyRule});
+root.TereonXCatalog=Object.freeze({version:2,load,list,get,isOfficial,normalize,visibleDetails,missing,technicalName,applyRule});
 })(window);
