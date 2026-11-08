@@ -7,8 +7,10 @@ let spaces=[],current=[],editingWork=null,editingSpace=null,busy=false,showTrash
 function say(msg,error=false){$('notice').textContent=msg;$('notice').classList.toggle('error',error);}
 function el(tag,content,cls){const e=document.createElement(tag);if(content!==undefined)e.textContent=String(content);if(cls)e.className=cls;return e;}
 function makeButton(label,click,cls='btn small'){const b=el('button',label,cls);b.type='button';b.onclick=click;return b;}
-function toggleBusy(value){busy=value;document.querySelectorAll('button').forEach(b=>b.disabled=value);if(!value){const disabled=!spaces.length;for(const id of ['new-work','edit-space','remove-space'])$(id).disabled=disabled;}}
+function toggleBusy(value){busy=value;document.querySelectorAll('button').forEach(b=>b.disabled=value);if(!value){const disabled=!spaces.length;$('new-work').disabled=disabled;for(const id of ['edit-space','remove-space'])$(id).disabled=disabled||$('space').value==='all';}}
 function activeSpace(){return spaces.find(s=>s.id===$('space').value);}
+function spaceName(id){return spaces.find(s=>s.id===id)?.name||'Espaço não identificado';}
+function fmt(date){if(!date)return '';const [y,m,d]=date.split('-');return d+'/'+m+'/'+y;}
 function close(id){const d=$(id);if(d.open)d.close();}
 function open(id){$(id).showModal();}
 function openSpace(space=null){
@@ -23,6 +25,12 @@ function openWork(work=null){
  editingWork=work?.id||null;
  $('work-dialog-title').textContent=work?'Editar obra':'Nova obra';
  $('work-name').value=work?.name||'';$('work-description').value=work?.description||'';
+ const picker=$('work-workspace');picker.replaceChildren();
+ for(const s of spaces){const opt=el('option',s.name);opt.value=s.id;picker.append(opt);}
+ picker.value=work?.workspace_id||($('space').value==='all'?spaces[0]?.id:$('space').value);
+ picker.disabled=!!work;
+ $('work-start').value=work?.planned_start||'';
+ $('work-end').value=work?.planned_end||'';
  $('work-status').value=work?.status||'planning';
  open('work-dialog');$('work-name').focus();
 }
@@ -47,7 +55,8 @@ function render(){
  if(!current.length){$('works').append(el('p','Nenhuma obra neste espaço.','empty'));return;}
  for(const work of current){
   const card=el('article',undefined,'work');
-  card.append(el('h3',work.name),el('small',labels[work.status]||work.status));
+  card.append(el('h3',work.name),el('small',spaceName(work.workspace_id)+' · '+(labels[work.status]||work.status)));
+  if(work.planned_start||work.planned_end)card.append(el('p','Previsto: '+(work.planned_start?fmt(work.planned_start):'—')+' a '+(work.planned_end?fmt(work.planned_end):'—')));
   if(work.description)card.append(el('p',work.description));
   const bar=el('div',undefined,'actions');
   bar.append(makeButton('Editar',()=>openWork(work)));
@@ -55,31 +64,33 @@ function render(){
   card.append(bar);$('works').append(card);
  }
 }
-async function refreshWorks(){current=$('space').value?await works.list($('space').value):[];render();}
+async function refreshWorks(){const id=$('space').value;current=!spaces.length?[]:id==='all'?await works.listAll():await works.list(id);render();}
 async function refreshSpaces(preferId){
  spaces=await works.spaces();
  const previous=preferId||$('space').value;
  $('space').replaceChildren();
+ if(spaces.length){const all=el('option','Todos os espaços');all.value='all';$('space').append(all);}
  for(const s of spaces){
   const opt=el('option',s.name+(s.kind==='personal'?' · Pessoal':' · Organização'));opt.value=s.id;$('space').append(opt);
  }
- if(previous&&spaces.some(s=>s.id===previous))$('space').value=previous;
+ if(previous&&(previous==='all'||spaces.some(s=>s.id===previous)))$('space').value=previous;
+ else if(spaces.length)$('space').value='all';
  const enabled=!!spaces.length;
  $('new-work').disabled=!enabled;
- $('edit-space').disabled=!enabled;
- $('remove-space').disabled=!enabled;
+ $('edit-space').disabled=!enabled||$('space').value==='all';
+ $('remove-space').disabled=!enabled||$('space').value==='all';
  if(!enabled){current=[];render();say('Crie um espaço de trabalho para começar.');}
  else await refreshWorks();
 }
 async function loadTrash(){
  const [deletedSpaces,deletedWorks]=await Promise.all([
-  works.trash('spaces'),$('space').value?works.trash('works',$('space').value):Promise.resolve([])
+  works.trash('spaces'),$('space').value==='all'?Promise.all(spaces.map(s=>works.trash('works',s.id))).then(x=>x.flat()):$('space').value?works.trash('works',$('space').value):Promise.resolve([])
  ]);
  function paint(target,items,type){
   $(target).replaceChildren();
   if(!items.length){$(target).append(el('p','Nenhum registro excluído.','empty'));return;}
   for(const item of items){
-   const row=el('div',undefined,'trash-row');row.append(el('span',item.name));
+   const row=el('div',undefined,'trash-row');row.append(el('span',item.name+(type==='works'?' · '+spaceName(item.workspace_id):'')));
    row.append(makeButton('Restaurar',()=>transaction(async()=>{
     await works.restore(type,item.id);
     await refreshSpaces(type==='spaces'?item.id:undefined);
@@ -101,7 +112,7 @@ $('remove-space').onclick=()=>{
   if(showTrash)await loadTrash();
  });
 };
-$('space').onchange=()=>transaction(async()=>{await refreshWorks();if(showTrash)await loadTrash();},'Espaço carregado.');
+$('space').onchange=()=>transaction(async()=>{await refreshWorks();if(showTrash)await loadTrash();},'Filtro de espaços aplicado.');
 $('new-work').onclick=()=>openWork();
 $('space-form').onsubmit=e=>{
  e.preventDefault();const editing=editingSpace;
@@ -114,10 +125,10 @@ $('space-form').onsubmit=e=>{
 };
 $('work-form').onsubmit=e=>{
  e.preventDefault();const editing=editingWork;
- const record={name:$('work-name').value,description:$('work-description').value,status:$('work-status').value};
+ const record={name:$('work-name').value,description:$('work-description').value,status:$('work-status').value,planned_start:$('work-start').value||null,planned_end:$('work-end').value||null};
  transaction(async()=>{
   if(editing)await works.updateWork(editing,record);
-  else await works.createWork($('space').value,record);
+  else await works.createWork($('work-workspace').value,record);
   close('work-dialog');await refreshWorks();
  },editing?'Obra atualizada.':'Obra cadastrada.');
 };
