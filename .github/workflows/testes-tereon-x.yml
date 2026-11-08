@@ -18,3 +18,5 @@ jobs:
         run: node x/tests/modulos.test.cjs
       - name: Validar motor independente de identidade
         run: node x/tests/identidade.test.cjs
+      - name: Validar compartilhamento independente entre usuários
+        run: node x/tests/compartilhar-usuarios.test.cjs
