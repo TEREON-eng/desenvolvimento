@@ -1,8 +1,58 @@
 /* TEREON X — apresentação de Listas. Persistência delegada a servico.js */
 (function(){
 'use strict';
-const repository=window.TereonXListStore.create();
-const lists=window.TereonXLists.create(repository);
+const guestRepository=window.TereonXListStore.create();
+let lists=window.TereonXLists.create(guestRepository);
+let accountId=null, syncController=null, ready=false, accountSession=0;
+const storageKey=id=>'tereon-x-cloud-cache-'+id;
+const uuid=()=>{
+ const api=globalThis.crypto;
+ if(api?.randomUUID)return api.randomUUID();
+ if(!api?.getRandomValues)throw Error('Identificação segura indisponível.');
+ const bytes=api.getRandomValues(new Uint8Array(16));bytes[6]=(bytes[6]&15)|64;bytes[8]=(bytes[8]&63)|128;
+ const h=Array.from(bytes,n=>n.toString(16).padStart(2,'0')).join('');
+ return h.slice(0,8)+'-'+h.slice(8,12)+'-'+h.slice(12,16)+'-'+h.slice(16,20)+'-'+h.slice(20);
+};
+function syncBanner(){
+ if(!accountId)return '<div class="sync-line">Salvo neste aparelho · <a href="/x/identidade/lab.html">Entrar para usar a nuvem</a></div>';
+ const status=syncController?.status();
+ if(!status)return '<div class="sync-line">Conectando à conta...</div>';
+ const text=status.conflicts?'Conflito de versões: alterações deste aparelho preservadas. '+esc(status.error||'Não foi possível mesclar automaticamente.'):
+  status.pending?'Alterações salvas neste aparelho · aguardando nuvem'+(status.error?' · '+esc(status.error):''):
+  status.working?'Sincronizando...':'Salvo na nuvem';
+ return '<div class="sync-line">'+text+' <button type="button" class="sync-refresh" data-action="sync" aria-label="Atualizar listas da nuvem">↻ Atualizar</button></div>';
+}
+function refreshView(){if(ready)draw()}
+async function activateAccount(userId,cloud){
+ const session=++accountSession;
+ if(syncController)syncController.stop();
+ syncController=null;ready=false;page=initialView==='home'?'home':page;activeId=null;
+ if(!userId||!cloud){
+  accountId=null;lists=window.TereonXLists.create(guestRepository);ready=true;draw();openInitialCreate();return;
+ }
+ accountId=userId;
+ const base=window.TereonXListStore.create({key:storageKey(userId)});
+ const integration=window.TereonXListIntegration.create({store:base,cloud,onStatus:refreshView});
+ syncController=integration;
+ lists=window.TereonXLists.create(integration.repository);
+ draw();
+ try{
+  await integration.refresh();
+ }catch(error){
+  if(session!==accountSession)return;
+  // Offline: cache fica legível, sem afirmar sincronização concluída.
+  console.warn('TEREON X: nuvem indisponível; usando cache por conta',error);
+ }
+ if(session!==accountSession)return;
+ ready=true;draw();openInitialCreate();
+}
+function openInitialCreate(){
+ if(initialView!=='create')return;
+ initialView='lists';
+ $('newName').value='';$('createDialog').showModal();$('newName').focus();
+}
+window.TereonXAppActivateAccount=activateAccount;
+
 var initialView=(new URLSearchParams(window.location.search).get('view')||'');
 var page=(initialView==='lists'||initialView==='create')?'lists':'home',activeId=null,values={},focus=0,editId=null;
 var fields=[
@@ -20,6 +70,7 @@ function list(){return lists.get(activeId);}
 function safe(op){try{return op();}catch(e){alert('TEREON X: '+e.message);return null;}}
 function navigate(target){page=target;draw();}
 function draw(){
+ if(!ready){$('screen').innerHTML='<p class="muted">Carregando suas listas...</p>';return;}
  var data=lists.snapshot();
  var html='';
  if(page==='home'){
@@ -47,6 +98,13 @@ function draw(){
  '<button class="item-icon remove" type="button" data-delete="'+esc(it.id)+'" aria-label="Remover item" title="Remover"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>'+
  '</div></aside></div>';});
   html+='</div>';
+ }
+ if(page==='home'||page==='lists'||page==='list'){
+  html=syncBanner()+html;
+  if(page==='lists'&&accountId&&guestRepository.snapshot().lists.length){
+   const already=localStorage.getItem('tereon-x-imported-'+accountId);
+   if(!already)html+='<button class="btn small" style="margin-top:14px" type="button" data-action="import">Trazer listas deste aparelho para minha conta</button>';
+  }
  }
  $('screen').innerHTML=html;
 }
@@ -99,7 +157,22 @@ function openCatalogAdd(item){
 function close(id){$(id).close();}
 // Retorno global agora é o link HTML do cabeçalho; navegação de Listas preservada nos controles internos.
 $('screen').addEventListener('click',function(e){
+ if(!ready)return;
  var a=e.target.closest('[data-action]');if(a){
+  if(a.dataset.action==='sync'&&syncController){
+   syncController.refresh().then(draw).catch(e=>alert('Não foi possível atualizar: '+e.message));return;
+  }
+  if(a.dataset.action==='import'&&accountId){
+   const incoming=guestRepository.snapshot().lists;
+   if(!incoming.length)return;
+   if(!confirm('Copiar '+incoming.length+' lista(s) deste aparelho para sua conta? As originais serão mantidas no aparelho.'))return;
+   const state=syncController.repository.snapshot();
+   for(const old of incoming)state.lists.push({id:uuid(),recordUid:uuid(),name:old.name,items:JSON.parse(JSON.stringify(old.items)),stages:JSON.parse(JSON.stringify(old.stages))});
+   try{syncController.repository.save(state);localStorage.setItem('tereon-x-imported-'+accountId,'1');draw();}
+   catch(e){alert('Não foi possível copiar: '+e.message)}
+   return;
+  }
+
   if(a.dataset.action==='create'){$('newName').value='';$('createDialog').showModal();$('newName').focus();}
   if(a.dataset.action==='lists')navigate('lists');
   if(a.dataset.action==='share'&&list())window.TereonXShare?.open(lists.exportList(activeId));
@@ -145,9 +218,4 @@ $('saveItem').addEventListener('click',function(){
 });
 $('addDialog').addEventListener('cancel',function(){values={};});
 draw();
-if(initialView==='create'){
- $('newName').value='';
- $('createDialog').showModal();
- $('newName').focus();
-}
 })();
