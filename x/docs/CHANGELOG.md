@@ -146,3 +146,10 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Teste de navegação com DOM simulado `x/tests/home-navigation.test.cjs` passou. Teste de modal técnico `x/tests/modal-fichas.test.cjs` passou. **Validação real de duas contas/dispositivos ainda pendente.**
 
 - Auditoria adicional: corrigida expressão de detecção de arquivos JS/CSS/JSON do service worker, que antes impedia o fallback offline desses recursos por um escape incorreto. Sintaxe e correspondência da extensão verificadas; teste offline real ainda pendente.
+
+## 08/11/2026 — x.0.3.15 · Auditoria de independência
+- Auditoria da separação entre shell, Motor de Listas, catálogo, armazenamento, Obras, Escola, autenticação e Relações em `x/docs/AUDITORIA-INDEPENDENCIA-2026-11-08.md`.
+- Confirmadas nove tabelas x_% com RLS ativada, sem grants diretos para anon na consulta; teste negativo de A/B em sessão real ainda pendente.
+- Criado e executado teste estático de fronteiras `x/tests/independencia.test.cjs`, incluído no CI, preservando o snapshot do modal técnico aprovado.
+- No celular, modal **Criar lista** alinhado perto do topo para não ficar coberto pelo teclado e com altura máxima dinâmica/rolagem. O modal de Adicionar material não foi alterado.
+- Backlog de bloqueadores técnicos priorizado antes de novos módulos. Não declarar independência completa ou homologação sem browser e testes reais.
