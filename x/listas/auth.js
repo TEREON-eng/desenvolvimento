@@ -1,8 +1,14 @@
 /* TEREON X · sessão para armazenamento do Motor Único de Listas.
  * A camada de autenticação não manipula listas nem catálogo.
  */
-import {createClient} from 'https://esm.sh/@supabase/supabase-js@2.80.0?bundle';
-const client=createClient('https://kjikzdpqejhsgutakigw.supabase.co','sb_publishable_sDnGg8LHSitHRRBEgtny4A_zmFvpcx1');
+let client;
+try{
+ const {createClient}=await import('https://esm.sh/@supabase/supabase-js@2.80.0?bundle');
+ client=createClient('https://kjikzdpqejhsgutakigw.supabase.co','sb_publishable_sDnGg8LHSitHRRBEgtny4A_zmFvpcx1');
+}catch(error){
+ console.warn('TEREON X: autenticação indisponível; modo local ativo',error);
+ window.TereonXAppActivateAccount(null,null);
+}
 let active='initial',revision=0;
 async function resolveSession(){
  const current=++revision;
@@ -26,10 +32,10 @@ async function resolveSession(){
   await window.TereonXAppActivateAccount(uid,uid?window.TereonXCloudLists.create(client):null);
  }
 }
-client.auth.onAuthStateChange(event=>{
+if(client)client.auth.onAuthStateChange(event=>{
  if(event==='INITIAL_SESSION')return;
  queueMicrotask(()=>{resolveSession().catch(e=>console.warn('TEREON X: autenticação',e))});
 });
-window.addEventListener('online',()=>{resolveSession().catch(()=>{})});
-window.addEventListener('pageshow',()=>{resolveSession().catch(()=>{})});
-resolveSession().catch(e=>console.warn('TEREON X: sessão',e));
+if(client)window.addEventListener('online',()=>{resolveSession().catch(()=>{})});
+if(client)window.addEventListener('pageshow',()=>{resolveSession().catch(()=>{})});
+if(client)resolveSession().catch(e=>{console.warn('TEREON X: sessão',e);window.TereonXAppActivateAccount(null,null)});
