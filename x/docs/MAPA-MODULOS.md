@@ -76,3 +76,7 @@ Não confundir Compartilhar texto/PDF, Compartilhar entre contas, e Solicitar ma
 
 ## Identidade persistente de Listas (08/11/2026)
 `x/listas/servico.js` v2 adiciona `recordUid` UUID seguro a novas listas e `ensureRecordUid` explícito para legadas. Chave do repositório `tereon-x-lab-v1` inalterada. `x/relacoes/origem-listas.js` liga o contrato local de Listas ao formato do Motor de Relações, sem conexão remota; `remoteLinkAllowed:false` até resolver sincronização, identidade do usuário e permissões por obra. Não existe vínculo funcional Lista–Obra ainda.
+
+## x.0.3.8 — uma interface com dois adaptadores de persistência
+`x/listas/app.js` continua única interface e recebe `TereonXLists.create(repository)`, usando `x/listas/store.js` local quando sem login ou `x/listas/integracao.js` (cache por conta + `x/listas/nuvem/motor.js`) quando autenticado. O Motor de Especificação e o Catálogo permanecem separados e não sabem se o dado foi salvo local ou remoto. O `recordUid` é o UUID de origem da lista na nuvem; `id` local é preservado e não precisa ser igual. A troca de conta interrompe integração anterior, não transfere dados sem autorização. A interface indica sincronização pendente/conflito.
+Ainda não há regras de planos, sincronização de equipes, associação de obras, motor de permissões comerciais, resolução automática de conflitos ou teste real multiusuário. Laboratório online separado permanece apenas diagnóstico.
