@@ -15,6 +15,18 @@ if (returningFromReset) recovering = true;
 const shortDate = value => value ? new Intl.DateTimeFormat('pt-BR',{day:'2-digit',month:'short',year:'numeric'}).format(new Date(value)) : 'Não informado';
 
 const redirectTo = new URL('./lab.html', location.href).href;
+const RESET_COOLDOWN_MS = 60 * 1000;
+const RESET_KEY = 'tereon-x-password-reset-last-request';
+function remainingResetSeconds() {
+  try {
+    const last = Number(localStorage.getItem(RESET_KEY) || 0);
+    return Math.max(0, Math.ceil((last + RESET_COOLDOWN_MS - Date.now()) / 1000));
+  } catch (_) { return 0; }
+}
+function markResetRequest() {
+  try { localStorage.setItem(RESET_KEY, String(Date.now())); } catch (_) {}
+}
+
 function notice(message, error=false){$('message').textContent=message;$('message').classList.toggle('error',error)}
 function renderRecovery(){
   $('recovery-panel').classList.toggle('hidden', !(user && recovering));
@@ -38,7 +50,7 @@ function errorMessage(err){
   if (/invalid login credentials/i.test(text)) return 'E-mail ou senha incorretos.';
   if (/email not confirmed/i.test(text)) return 'Confirme seu e-mail antes de entrar.';
   if (/already registered/i.test(text)) return 'Não foi possível criar a conta com estes dados.';
-  if (/rate limit|too many requests/i.test(text)) return 'Muitas tentativas. Tente novamente mais tarde.';
+  if (/rate limit|too many requests|over_email_send_rate_limit|email rate limit/i.test(text)) return 'Limite de envio de e-mails atingido. O Supabase gratuito permite poucos e-mails por hora; aguarde a liberação antes de tentar novamente.';
   return text;
 }
 async function refresh(){
@@ -64,7 +76,13 @@ $('auth-form').addEventListener('submit',async event=>{
     const email=$('email').value,password=$('password').value;
     if(mode==='login'){await auth.login(email,password);await refresh();notice('Acesso autorizado.');}
     else if(mode==='register'){const data=await auth.register(email,password,redirectTo);notice(data.session?'Conta criada e autenticada.':'Se permitido, você receberá um e-mail para confirmar a conta.');await refresh();}
-    else {await auth.sendReset(email,redirectTo);notice('Se o endereço estiver cadastrado, enviaremos instruções de recuperação.');}
+    else {
+      const seconds = remainingResetSeconds();
+      if (seconds) { notice('Você já solicitou um e-mail recentemente. Aguarde '+seconds+' segundos antes de tentar novamente.',true); return; }
+      await auth.sendReset(email,redirectTo);
+      markResetRequest();
+      notice('Se o endereço estiver cadastrado e houver disponibilidade de envio, você receberá instruções. Evite solicitar vários e-mails em sequência.');
+    }
   }catch(err){notice(errorMessage(err),true)}finally{toggleBusy(false)}
 });
 $('profile-form').addEventListener('submit',async event=>{
