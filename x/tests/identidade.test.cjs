@@ -38,6 +38,8 @@ const client={
  assert.equal(calls.find(c=>c[0]==='login')[1].email,'user@example.com');
  assert.equal((await service.session()).user.id,current.id);
  assert.equal((await service.currentUser()).id,current.id);
+ const noSession=identity.create({auth:{getSession:async()=>({data:{session:null},error:null}),getUser:async()=>{throw Error('getUser não pode ser chamado sem sessão')}}});
+ assert.equal(await noSession.currentUser(),null,'sem sessão deve mostrar login normalmente');
  assert.equal(await service.getProfile(current.id),null);
  const profile=await service.saveProfile(current.id,' Eletricista ');
  assert.equal(profile.display_name,'Eletricista');
