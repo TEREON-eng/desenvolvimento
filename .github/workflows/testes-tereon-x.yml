@@ -28,3 +28,5 @@ jobs:
         run: node x/tests/listas-nuvem.test.cjs
       - name: Validar Motor único de Listas e sincronização
         run: node x/tests/listas-integracao.test.cjs
+      - name: Validar modal aprovado com fichas atuais
+        run: node x/tests/modal-fichas.test.cjs
