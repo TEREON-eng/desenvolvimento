@@ -30,7 +30,10 @@ const client={auth:{getUser:async()=>({data:{user:{id:owner}},error:null})},from
  assert.equal(calls[2].insert.owner_id,owner);
  assert.equal(calls[2].insert.record_type,'work');
  assert.equal(calls[2].insert.origin_id,work);
- await assert.rejects(service.register('list',work),/Tipo sem integração/);
+ const cloudIdentity=await service.register('list',work2);
+ assert.equal(cloudIdentity.record_type,'list');
+ assert.equal(cloudIdentity.origin_id,work2);
+ await assert.rejects(service.register('diary',work),/Tipo sem integração/);
  await assert.rejects(service.register('work','bad'),/inválido/);
  await assert.rejects(service.relate(identity,identity),/consigo mesmo/);
  await assert.rejects(service.relate(identity,identity2,'unknown'),/Tipo de relação inválido/);
