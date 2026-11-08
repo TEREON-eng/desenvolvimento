@@ -157,3 +157,12 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 - No PC e no celular, abrir **Minhas listas → lista (modal) → Adicionar item (modal)**; verificar nome técnico, tags e botões com as mesmas dimensões/posições previstas. Selecionar características na sequência, remover duas tags e conferir retomada da primeira obrigatória pendente.
 - Preencher quantidade/unidade/etapa; confirmar que botão Adicionar fica desabilitado até todas obrigatórias. Salvar, verificar na lista e na nuvem, fechar e reabrir.
 - **Status:** comparação de código e testes de contrato aprovados. Teste visual e ponta a ponta em dois aparelhos pendentes. Teste de estrutura não substitui teste de comportamento no navegador.
+
+## Aceite — fichas do Drive no modal de adicionar (x.0.3.11)
+1. Na Preview de desenvolvimento, abrir **Minhas listas → uma lista → Adicionar item**. O mesmo modal aprovado deve listar as seis fichas reais e oferecer busca, sem abrir outra tela ou seletor antigo.
+2. Escolher **Eletroduto → Rígido → PVC**: selecionar detalhes do PVC de acordo com a condição da ficha; não mostrar opções condicionais de Aço. Remover a tag PVC; o fluxo deve voltar à característica obrigatória pendente, e Adicionar deve bloquear até revalidar.
+3. Escolher Condutor elétrico; confirmar Tipo e Material, observar os detalhes opcionais da ficha atual. Não assumir como homologada ficha `Em revisão`.
+4. Escolher Curva para eletroduto, Conectores, Abraçadeiras e Caixa de passagem; conferir nomes/códigos e opções contra planilha. A ficha Abraçadeiras tem nome B5 divergente, pendência expressa.
+5. Salvar item: lista deve guardar `catalogId`, tags `values`, quantidade, unidade, etapa e nome técnico. Fechar e reabrir; editar o mesmo item. Materiais antigos sem catalogId ainda devem abrir seu fluxo de edição pré-existente.
+6. Testar com conta e sem conta, no celular e no PC; verificar sincronia somente após estado **Salvo na nuvem**. Conferir abertura de dois modais sobrepostos, rolagem e teclado.
+7. **Execução automatizada:** `x/tests/modal-fichas.test.cjs` cobre escolha, condição, tags, bloqueio, gravar, editar e legado; `x/tests/catalogo.test.cjs` verifica seis fichas, condições e aviso de revisão. **Teste real de navegador pendente.**
