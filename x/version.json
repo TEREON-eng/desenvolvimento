@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.7",
-  "build": "2026-11-07",
-  "notes": "Refatoração modular do shell, motor de listas e persistência com testes de regressão"
+  "version": "x.0.3.8",
+  "build": "2026-11-08",
+  "notes": "Motor único de Listas com cache por conta, sincronização e conflitos"
 }
