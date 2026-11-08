@@ -283,6 +283,7 @@ document.addEventListener('click',function(e){
    return;
   }
 
+  if(a.dataset.action==='home'){navigate('home');return;}
   if(a.dataset.action==='create'){$('newName').value='';$('createDialog').showModal();$('newName').focus();}
   if(a.dataset.action==='lists'){exitList();return;}
   if(a.dataset.action==='share'&&list())window.TereonXShare?.open(lists.exportList(activeId));
