@@ -27,3 +27,6 @@ Não inventar sincronização offline, backup local ou migração de Listas nest
 
 ## Próximas etapas
 Integração direta com o Motor de Listas e sua especificação técnica, transferência opcional da lista local para a nuvem, sinalização de estado de sincronização, integração do tipo `list` com o Motor de Relações e vínculo explícito com Obras. A simples existência de lista online não vincula nenhuma obra.
+
+## Evolução de produto — x.0.3.8
+A aplicação principal `/x/` passou a usar `x_cloud_lists` por meio de `x/listas/integracao.js` com a **mesma interface e modal técnico de Listas**. Este laboratório anterior continua como ferramenta de diagnóstico e não é uma segunda área de trabalho oferecida na Central. Nenhum dado local é transferido automaticamente entre contas. Consulte `x/docs/MESTRE-TEREON-X.md` seção 20.
