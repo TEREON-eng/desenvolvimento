@@ -1,7 +1,7 @@
 /* TEREON X · instalação e atualização PWA independentes da UI de listas. */
 (function(){
  'use strict';
- const VERSION='x.0.3.11';
+ const VERSION='x.0.3.12';
  let installPrompt=null;
  let refreshPending=false;
  const button=document.getElementById('installButton');
