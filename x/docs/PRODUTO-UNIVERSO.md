@@ -134,3 +134,6 @@ Identidade do registro não se confunde com empresa, login ou local de trabalho.
 
 ## 19. Identidade de Listas preparada, relação remota ainda bloqueada — 08/11/2026
 O identificador `recordUid` foi introduzido de forma aditiva no serviço local de Listas, com adoção explícita e segura nas listas antigas. O adaptador de origem em `x/relacoes/origem-listas.js` descreve referência local com sinalizador de não sincronizado. Nenhuma relação com `x_works` é criada até existir fonte remota verificável, autorização por usuário/obra e estratégia para sincronizar/corrigir conflitos. Prioridade futura: vínculo de obra por escolha do usuário, mantendo a possibilidade `Avulsa`.
+
+## 20. Listas na nuvem habilitam identidade verificável (08/11/2026)
+O motor transversal poderá registrar identidade de `list` de origem `x_cloud_lists`, desde que ela exista e pertença ao usuário. Este recorte prepara vínculo sem criar um. Um laboratório isolado já salva/recupera listas online mediante conta TEREON; as listas anteriores do motor local continuam sem sincronização. Próximo passo UX é conectar o fluxo real de especificação ao armazenamento online com controle de permissão e tratamento de conflitos; só então oferecer o seletor de Obra ou `Avulsa`.
