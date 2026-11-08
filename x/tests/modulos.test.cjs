@@ -95,6 +95,12 @@ assert.ok(listApp.includes("TereonXCatalogUI.open({item:item||null,onSave:"),'ad
 assert.ok(actualPicker.includes("showModal()")&&actualPicker.includes("TereonXCatalog.visibleDetails"),'modal técnico mantém características condicionais');
 assert.ok(actualPicker.includes("TereonXCatalog.missing")&&actualPicker.includes("TereonXCatalog.technicalName"),'validação e formação do nome técnico preservadas');
 assert.ok(legacyCloudPage.includes("location.replace('/x/?view=lists')"),'laboratório legado direciona para Minhas listas com modal técnico');
+assert.ok(html.includes('id="listDialog"')&&html.includes('id="listContent"'),'detalhes abrem em dialog independente');
+assert.ok(listApp.includes("if(!$('listDialog').open)$('listDialog').showModal()"),'lista abre como modal');
+assert.ok(listApp.includes("data-action=\\\"lists\\\"")&&listApp.includes('← Minhas listas'),'retorno de lista ao conjunto');
+assert.ok(listApp.includes("$('listDialog').addEventListener('close'"),'fechamento por ESC ou botão retorna à relação');
+assert.ok(listApp.includes("document.addEventListener('click'"),'controles dentro do modal usam delegação do documento');
+assert.ok(listApp.includes("if(a.dataset.action==='add')openCatalogAdd()"),'modal técnico preservado dentro do modal de lista');
 assert.ok(html.includes('/x/styles.css'));
 assert.ok(html.includes('type="module" src="/x/listas/auth.js'),'Auth começa após aplicação de Listas');
 assert.ok(src('x/listas/app.js').includes('TereonXAppActivateAccount'),'uma interface serve à conta e ao modo local');
