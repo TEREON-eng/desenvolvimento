@@ -127,3 +127,10 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Pendências da origem: aba `FT_INFRA-004 - Abraçadeiras` contém `B5='Conectores para eletroduto'`, divergente do código e da aba; outros detalhes possuem campos, obrigatoriedades ou valores incompletos. Exibido como revisão, sem preenchimento por inferência.
 - Testes `x/tests/catalogo.test.cjs`, `x/tests/modal-fichas.test.cjs` e regressão de Listas adaptados; CI inclui teste de fluxo do modal. PWA x.0.3.11 carrega o snapshot para offline após instalação/cache.
 - **Limites:** snapshot não sincroniza automaticamente edições futuras do Drive; revisões requerem nova importação/verificação. Testes de código e DOM simulado executados; falta homologação visual em dois aparelhos. `main` inalterada.
+
+## 08/11/2026 — x.0.3.12 · Ajustes aprovados no modal de adicionar
+- Busca de fichas deixa de ser sticky: a barra acompanha a rolagem do conteúdo, sem fichas passando visualmente por trás.
+- Na etapa **Escolher material**, rodapé de lançamento (tags, quantidade, unidade e etapa) é recolhido temporariamente, liberando altura útil para a pesquisa e resultados. Ele reaparece assim que uma ficha é selecionada.
+- A ação **Trocar material** sai do grupo de opções de características e vira uma tag discreta com nome da ficha e ×, ao lado do título da característica em edição (por exemplo, **Tipo**). Ao remover, volta para a busca das fichas; não grava nem presume novas seleções.
+- O modal HTML aprovado, fichário de seis fichas, Motor Único de Listas, gravação e regras de obrigatoriedade foram preservados.
+- Teste de DOM simulado ampliado para verificar a tag e retorno à escolha; passou. Validação visual em celular ainda pendente. Branch `main` inalterada.
