@@ -68,23 +68,37 @@ async function loadAll(){
  $('inbox').replaceChildren(...(incoming.length?incoming.map(row=>entry(row,false)):[node('p','Nenhuma lista recebida.','muted')]));
  $('outbox').replaceChildren(...(outgoing.length?outgoing.map(row=>entry(row,true)):[node('p','Nenhuma lista enviada.','muted')]));
 }
+function showLoggedOut(){
+ $('logged-out').classList.remove('hidden');
+ $('workspace').classList.add('hidden');
+ message('Você ainda não está conectado neste endereço. Entre na sua conta TEREON e volte a esta página.');
+}
 async function start(){
  try{
-  const user=await db.auth.getUser();
-  if(user.error)throw user.error;
-  if(!user.data?.user){
-   $('logged-out').classList.remove('hidden');
-   $('workspace').classList.add('hidden');
-   message('Entre na sua conta para acessar listas compartilhadas.');
-   return;
+  // getUser() sozinho devolve AuthSessionMissingError quando não há login.
+  // A ausência de sessão é situação normal, não uma falha do compartilhamento.
+  const sessionResult=await db.auth.getSession();
+  if(sessionResult.error)throw sessionResult.error;
+  if(!sessionResult.data?.session){showLoggedOut();return;}
+  const result=await db.auth.getUser();
+  if(result.error){
+   if(result.error.name==='AuthSessionMissingError'||/auth session missing/i.test(result.error.message||'')){
+    showLoggedOut();return;
+   }
+   throw result.error;
   }
-  $('user-email').textContent=user.data.user.email||'Conta TEREON';
-  $('my-code').value=user.data.user.id;
+  if(!result.data?.user){showLoggedOut();return;}
+  $('user-email').textContent=result.data.user.email||'Conta TEREON';
+  $('my-code').value=result.data.user.id;
   $('logged-out').classList.add('hidden');$('workspace').classList.remove('hidden');
   loadLocalLists();
   await loadAll();
   message('Compartilhamento entre contas disponível para teste.');
- }catch(error){message('Falha ao carregar os compartilhamentos: '+(error.message||'erro desconhecido'),true)}
+ }catch(error){
+  $('logged-out').classList.remove('hidden');
+  $('workspace').classList.add('hidden');
+  message('Não foi possível consultar a conta: '+(error.message||'erro desconhecido'),true);
+ }
 }
 $('copy-code').addEventListener('click',async()=>{
  try{await navigator.clipboard.writeText($('my-code').value);message('Identificador copiado.');}
