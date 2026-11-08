@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.10",
+  "version": "x.0.3.11",
   "build": "2026-11-08",
-  "notes": "Restaurar fluxo original aprovado do modal de Adicionar item e proteção contra regressão"
+  "notes": "Modal aprovado conectado às seis fichas atuais do Fichario.xlsm"
 }
