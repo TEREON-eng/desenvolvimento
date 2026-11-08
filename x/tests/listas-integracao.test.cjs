@@ -56,5 +56,17 @@ const wait=()=>new Promise(resolve=>setImmediate(resolve));
  const guest=makeStore({lists:[{id:'avulsa',name:'Só neste aparelho',items:[],stages:[]}]});
  assert.equal(guest.snapshot().lists[0].name,'Só neste aparelho');
  assert.equal(cache.snapshot().lists.some(l=>l.name==='Só neste aparelho'),false,'dados avulsos não entram na conta automaticamente');
+ const offlineStore=makeStore(),offlineCloud=makeCloud();
+ offlineCloud.createList=async()=>{throw Error('Sem internet')};
+ const offline=integration.create({store:offlineStore,cloud:offlineCloud});
+ await offline.refresh(); // nuvem vazia: serviço pronto
+ const offlineList=offline.repository.snapshot();
+ offlineList.lists.push({id:'offline-1',recordUid:'eaf3d241-419b-4c2e-a188-f793eec2a060',name:'Teste sem rede',items:[],stages:[]});
+ offline.repository.save(offlineList);
+ await wait();await offline.flush();
+ assert.equal(offlineStore.snapshot().lists[0].cloudPending,true,'falha de rede preserva pendência local');
+ assert.equal(offlineStore.snapshot().lists[0].name,'Teste sem rede');
+ assert.equal(offline.status().error,'Sem internet');
+ offline.stop();
  console.log('TEREON X: interface única, gravação na nuvem e conflito de versões OK');
 })().catch(e=>{console.error(e);process.exitCode=1});
