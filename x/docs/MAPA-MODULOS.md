@@ -55,3 +55,15 @@ Atualizado em 07/11/2026. Estado observado na branch `desenvolvimento`.
 **Preservação de dados:** nome da chave no navegador é `tereon-x-lab-v1`. Sem migração destrutiva; leitura inválida bloqueia gravações e exibe erro em vez de sobrescrever listas.
 
 **Limitação:** a apresentação e navegação ainda estão juntas em `app.js`; a ficha histórica de condutor continua nesse adaptador apenas para editar registros antigos. Não removê-la antes de migrar esses registros. Esta estrutura é evolução modular parcial, não independência absoluta de todas as telas.
+
+## Complemento atual — laboratórios 07/11/2026
+| Motor | API/dados | Estado |
+|---|---|---|
+| Identidade `x/identidade/auth.js` | cadastro, login, sessão, perfil, senha | testado nos fluxos básicos pelo fundador; reset e-mail pendente |
+| Compartilhar usuário `x/compartilhar-usuarios/motor.js` | snapshot, envio, recebimento, aceite, recusa, revogação | implementado, ainda sem teste entre duas contas |
+| Supabase `x_profiles`, `x_workspaces`, `x_workspace_members`, `x_works`, `x_work_access`, `x_list_shares` | RLS, dados separados | criado, obras/equipes sem fluxo funcional |
+| Universo / Obras | gestão de obras e vínculos | conceito; não implementado |
+| Solicitações | aprovação, compra, recebimento | conceito; não implementado |
+| Plano comercial/cobrança | direitos de módulos pagos | conceito; não implementado |
+
+Não confundir Compartilhar texto/PDF, Compartilhar entre contas, e Solicitar materiais. Redesenho visual não modifica motores nem contratos. Consulte o Mestre e Universo no índice.
