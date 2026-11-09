@@ -1,5 +1,14 @@
 # TEREON X — Histórico técnico consolidado
 
+## 09/11/2026 — Fechamento documental e revisão de contratos da X.0.3.29
+- Confirmado código de referência X.0.3.29 na branch desenvolvimento; o fundador considerou o **layout** de Minhas listas bom. O HTML `#addDialog` permanece igual à fixture aprovada X.0.3.4.
+- Criados [auditoria de 09/11](REVISAO-GERAL-CONTRATOS-2026-11-09.md), [roteiro de retomada](RETOMADA-2026-11-09.md) e teste de invariantes `x/tests/contratos-fechamento-2026-11-09.test.cjs`; teste incluído no workflow do GitHub Actions.
+- Documento Mestre, índice, arquitetura, mapa, guia visual, matriz de regressão, README e história revisados para distinguir estado vigente de narrativas antigas.
+- Conferida por consulta read-only a existência de políticas RLS por proprietário em `x_cloud_lists` (SELECT/INSERT/UPDATE/DELETE). **Nenhuma lista real foi excluída ou regravada** nesta revisão.
+- Registradas lacunas: CI atual/Preview não verificados, validação móvel e multiusuário, diferença entre contrato-alvo e formatos atuais do Compartilhar, fichas em revisão e futura modelagem de Solicitações/etapas.
+- Sem mudança do HTML do modal aprovado, motores de dados, catálogo, registros de usuário ou `main`. Esta revisão documental/testes **não cria outra versão funcional**: permanece X.0.3.29.
+
+
 ## 09/11/2026 — x.0.3.29 · Seleção na altura do título
 - O checkbox de cada lista foi deslocado para o topo direito, **alinhado verticalmente ao título**, e as quatro ações Editar, Duplicar, Compartilhar e Excluir ficam **na mesma linha abaixo** dele.
 - Mantida seleção individual, ações e persistência anteriores. Sem alterar dados, motores, sincronização, fichas, exclusão segura ou modais técnicos. Tema claro/escuro/TEREON segue os mesmos critérios visuais.
