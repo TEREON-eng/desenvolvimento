@@ -17,12 +17,16 @@ function syncBanner(){
  if(!accountId)return '<div class="sync-line">Salvo neste aparelho · <a href="/x/identidade/lab.html">Entrar para usar a nuvem</a></div>';
  const status=syncController?.status();
  if(!status)return '<div class="sync-line">Conectando à conta...</div>';
- const text=!status.ready?'Nuvem indisponível · dados deste aparelho preservados':
-  status.conflicts?'Conflito de versões: alterações deste aparelho preservadas. '+esc(status.error||'Não foi possível mesclar automaticamente.'):
-  status.pending?'Alterações salvas neste aparelho · aguardando nuvem'+(status.error?' · '+esc(status.error):''):
-  status.error?'Nuvem indisponível · cópia da conta neste aparelho · '+esc(status.error):
-  status.working?'Sincronizando...':'Salvo na nuvem';
- return '<div class="sync-line">'+text+' <button type="button" class="sync-refresh" data-action="sync" aria-label="Atualizar listas da nuvem">↻ Atualizar</button></div>';
+ const count=Number(status.pending)||0;
+ const text=!status.ready?'Não foi possível confirmar acesso à nuvem · cópia local preservada'+(status.error?' · '+esc(status.error):''):
+  status.conflicts?'Conflito de versões · alterações locais preservadas · '+esc(status.error||'Necessária revisão antes de enviar'):
+  status.error?'Falha na sincronização · '+(count?count+' lista(s) aguardando envio · ':'')+esc(status.error):
+  status.working?'Sincronizando listas com a nuvem...':
+  count?count+' lista(s) salva(s) neste aparelho · envio à nuvem ainda não confirmado':
+  'Listas sincronizadas com a nuvem';
+ const pending=!!count||!!status.conflicts;
+ const caption=status.working?'Sincronizando...':pending||status.error?'↻ Tentar sincronizar':'↻ Conferir nuvem';
+ return '<div class="sync-line" role="status" aria-live="polite">'+text+' <button type="button" class="sync-refresh" data-action="sync" aria-label="'+(pending?'Tentar sincronizar listas pendentes':'Conferir sincronização das listas')+'"'+(status.working?' disabled':'')+'>'+caption+'</button></div>';
 }
 function refreshView(){if(ready)draw()}
 async function activateAccount(userId,cloud){
@@ -273,7 +277,14 @@ document.addEventListener('click',function(e){
  if(!ready)return;
  var a=e.target.closest('[data-action]');if(a){
   if(a.dataset.action==='sync'&&syncController){
-   syncController.refresh().then(draw).catch(e=>alert('Não foi possível atualizar: '+e.message));return;
+   e.preventDefault();
+   const controller=syncController;
+   controller.refresh().then(()=>{if(controller===syncController)draw()}).catch(error=>{
+    if(controller!==syncController)return;
+    controller.useCachedData(error);
+    draw();
+   });
+   return;
   }
   if(a.dataset.action==='import'&&accountId){
    const incoming=guestRepository.snapshot().lists;
