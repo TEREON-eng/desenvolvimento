@@ -12,7 +12,9 @@ function apply(value,save){
  if(!THEMES.includes(value))return;
  theme=value;
  const rootElement=root.document?.documentElement;
- if(rootElement)rootElement.dataset.txAppearance=value;
+ if(rootElement){rootElement.dataset.txAppearance=value;rootElement.style&&(rootElement.style.colorScheme=value==='light'?'light':'dark');}
+ const browserTheme=root.document?.querySelector?.('meta[name="theme-color"]');
+ if(browserTheme)browserTheme.setAttribute('content',value==='light'?'#F3F5F4':value==='dark'?'#171C1A':'#10231C');
  const home=root.document?.getElementById('homeScreen');
  if(home)home.dataset.appearance=value;
  root.document?.querySelectorAll('[data-appearance-choice]').forEach(button=>{
