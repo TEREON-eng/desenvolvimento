@@ -1,5 +1,14 @@
 # TEREON X — Histórico técnico consolidado
 
+## 09/11/2026 — x.0.3.22 · Caminho da tela e temas nos modais
+- Substituído o retorno de cabeçalho por uma trilha de navegação posicionada **abaixo da linha divisória**, com links de antecessores e último nível identificado como página atual. Ex.: Ferramentas › Listas de materiais; Ferramentas › Escola › Biblioteca. A primeira palavra é clicável nas telas internas.
+- O estado de Listas atualiza a trilha com `TereonXHeader.setPath`; a ação de retorno existente (`data-action="home"`) é preservada. A marca TEREON X continua retornando à Home.
+- Removida a regra que forçava o tema claro nos modais. Adicionadas **somente regras CSS de apresentação** para fundo, bordas, campos, textos, chips, opções de fichas, botões e cartões internos nos três temas. Nenhuma alteração de HTML dos diálogos ou de serviços técnicos.
+- Ref do cabeçalho v6, CSS do cabeçalho v5, CSS de aparência v5 e Listas UI v12; versão/cache PWA x.0.3.22.
+- Teste de trilha acrescentado ao CI; asserts dos testes existentes ajustados. Critérios pendentes: execução de CI comprovada e avaliação visual dos modais no celular, especialmente contraste das tags e sobreposição de modais.
+- Trabalho limitado à branch `desenvolvimento`; arquivos de armazenamento, banco, catálogo, modais aprovados e `main` preservados.
+
+
 ## 09/11/2026 — x.0.3.21 · Temas em Minha conta e navegação mais limpa
 - O seletor Claro, Escuro e TEREON foi retirado da Home e colocado na página **Minha conta**, em painel acessível a visitantes ou usuários registrados. A chave de preferência e os comportamentos continuam idênticos.
 - A marca **TEREON X** do cabeçalho tornou-se link para as Ferramentas. Nas páginas com destino direto a `/x/`, foi removido o botão Início redundante.
