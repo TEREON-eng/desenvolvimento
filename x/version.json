@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.17",
+  "version": "x.0.3.18",
   "build": "2026-11-09",
-  "notes": "Conta e status no canto direito; Início contextual; status inicial de sessão; instalação PWA condicional"
+  "notes": "Cabeçalho compartilhado em todas as páginas; navegação separada dos indicadores de conta"
 }
