@@ -112,3 +112,21 @@ html[data-tx-appearance] .list-storage--pending{color:#D7A84F;border-color:#A780
 html[data-tx-appearance="light"] .list-storage--pending{color:#856023;border-color:#E7D5A8}
 html[data-tx-appearance] .list-storage--error,html[data-tx-appearance] .list-storage--conflict{color:#D47B75;border-color:#A0524E}
 html[data-tx-appearance="light"] .list-storage--error,html[data-tx-appearance="light"] .list-storage--conflict{color:#933D38;border-color:#E9B9B5}
+
+/* Refino visual — superfícies translúcidas e hierarquia de ações; apenas apresentação. */
+html[data-tx-appearance="light"]{--tx-panel-soft:rgba(228,234,230,.68);--tx-panel-border:#CDD9D0;--tx-action-soft:rgba(255,255,255,.54)}
+html[data-tx-appearance="dark"]{--tx-panel-soft:rgba(55,66,59,.68);--tx-panel-border:#4A5A4F;--tx-action-soft:rgba(255,255,255,.055)}
+html[data-tx-appearance="tereon"]{--tx-panel-soft:rgba(43,78,57,.74);--tx-panel-border:#557860;--tx-action-soft:rgba(255,255,255,.055)}
+html[data-tx-appearance] .list-entry .listrow,
+html[data-tx-appearance] .shell .panel{background:var(--tx-panel-soft);border-color:var(--tx-panel-border)}
+html[data-tx-appearance] .list-entry .listrow{transition:border-color .15s ease,background-color .15s ease}
+html[data-tx-appearance] .list-entry .listrow:hover{border-color:var(--tx-app-slate)}
+html[data-tx-appearance] .list-head-actions .btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:8px 11px;border-radius:10px;font:650 12px system-ui,sans-serif;white-space:nowrap}
+html[data-tx-appearance] .list-head-actions .list-action-primary{background:var(--tx-app-accent);border:1px solid var(--tx-app-accent);color:var(--tx-app-accent-ink)}
+html[data-tx-appearance] .list-head-actions .list-action-secondary{background:var(--tx-action-soft);border:1px solid var(--tx-app-border);color:var(--tx-app-text)}
+html[data-tx-appearance] .list-entry .list-delete{min-height:38px;align-self:center;background:var(--tx-action-soft);border:1px solid var(--tx-app-border);border-radius:10px;font:650 11px system-ui,sans-serif}
+html[data-tx-appearance] .list-entry .list-delete:hover{border-color:currentColor}
+html[data-tx-appearance] .list-head-actions .btn:focus-visible,
+html[data-tx-appearance] .list-entry .list-delete:focus-visible{outline:2px solid var(--tx-app-accent);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){html[data-tx-appearance] .list-entry .listrow{transition:none}}
+@media(max-width:380px){html[data-tx-appearance] .list-head-actions .btn{font-size:11px;padding:7px 8px;min-height:36px}}
