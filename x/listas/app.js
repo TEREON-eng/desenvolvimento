@@ -28,6 +28,22 @@ function syncBanner(){
  const caption=status.working?'Sincronizando...':pending||status.error?'↻ Tentar sincronizar':'↻ Conferir nuvem';
  return '<div class="sync-line" role="status" aria-live="polite">'+text+' <button type="button" class="sync-refresh" data-action="sync" aria-label="'+(pending?'Tentar sincronizar listas pendentes':'Conferir sincronização das listas')+'"'+(status.working?' disabled':'')+'>'+caption+'</button></div>';
 }
+function listStorageStatus(entry){
+ if(!accountId)return {label:'Local',state:'local',hint:'Lista armazenada somente neste aparelho'};
+ const sync=syncController?.status();
+ if(entry.cloudConflict)return {label:'Conflito',state:'conflict',hint:'Versões diferentes: alteração local preservada'};
+ if(entry.cloudPending){
+  if(sync?.error)return {label:'Falha no envio',state:'error',hint:sync.error};
+  return {label:sync?.working?'Sincronizando':'Aguardando nuvem',state:'pending',hint:'Alterações locais ainda não confirmadas pelo servidor'};
+ }
+ if(entry.cloudVersion&&sync?.ready&&!sync?.error)return {label:'Sincronizada',state:'synced',hint:'Última versão desta lista confirmada na nuvem'};
+ if(entry.cloudVersion)return {label:'Cópia local',state:'local',hint:'Lista foi sincronizada anteriormente, mas a nuvem não pôde ser verificada'};
+ return {label:'Local',state:'local',hint:'Esta lista ainda não possui confirmação da nuvem'};
+}
+function listStorageBadge(entry){
+ const status=listStorageStatus(entry);
+ return '<span class="list-storage list-storage--'+status.state+'" title="'+esc(status.hint)+'">'+esc(status.label)+'</span>';
+}
 function refreshView(){if(ready)draw()}
 async function activateAccount(userId,cloud){
  const session=++accountSession;
@@ -113,13 +129,13 @@ function draw(){
   $('homeListCount').textContent=data.lists.length+' lista(s)';
   return;
  }else if(page==='lists'){
-  html='<div class="row"><h1>Minhas listas</h1><button class="btn small" data-action="create">＋ Nova</button></div><div class="stack">';
+  html='<div class="row"><h1>Minhas listas</h1><span class="list-head-actions"><button class="btn small" data-action="create">＋ Nova</button>'+(accountId?'<button class="btn small" data-action="sync" type="button">↻ Conferir nuvem</button>':'')+'</span></div><div class="stack">';
   if(!data.lists.length)html+='<div class="empty">Nenhuma lista criada ainda.</div>';
-  data.lists.forEach(function(x){html+='<button class="listrow" data-open="'+esc(x.id)+'"><span><strong>'+esc(x.name)+'</strong><br><small class="muted">'+x.items.length+' lançamento(s)</small></span><span>›</span></button>';});
+  data.lists.forEach(function(x){html+='<div class="list-entry"><button type="button" class="listrow" data-open="'+esc(x.id)+'"><span><strong>'+esc(x.name)+'</strong><br><small class="muted">'+x.items.length+' lançamento(s)</small><span class="list-status-wrap">'+listStorageBadge(x)+'</span></span><span aria-hidden="true">›</span></button><button type="button" class="list-delete" data-delete-list="'+esc(x.id)+'" aria-label="Excluir lista '+esc(x.name)+'" title="Excluir esta lista">Excluir</button></div>';});
   html+='</div>';
  }else if(page==='list'){
   var l=list();if(!l){exitList();return;}
-  html='<div class="row list-detail-header"><div><button class="btn ghost small list-return" data-action="lists" aria-label="Voltar para a tela anterior">'+(listBackdrop==='home'?'← Início':'← Minhas listas')+'</button><h1>'+esc(l.name)+'</h1><span class="tiny muted">'+l.items.length+' lançamento(s)</span></div><button class="btn ghost small" data-action="lists" aria-label="Fechar lista">✕</button></div>'+
+  html='<div class="row list-detail-header"><div><button class="btn ghost small list-return" data-action="lists" aria-label="Voltar para a tela anterior">'+(listBackdrop==='home'?'← Início':'← Minhas listas')+'</button><h1>'+esc(l.name)+'</h1><span class="tiny muted">'+l.items.length+' lançamento(s)</span> '+listStorageBadge(l)+'</div><button class="btn ghost small" data-action="lists" aria-label="Fechar lista">✕</button></div>'+
    '<div style="margin-top:20px"><button class="btn primary full" data-action="add">＋ Adicionar item</button></div>'+ 
    '<div style="margin-top:10px"><button class="btn full" data-action="share">↗ Compartilhar lista</button></div>'+ 
    '<div style="margin-top:10px;text-align:right"><a href="/x/contribuir.html" style="color:#4f6f59;font-size:12px">Não encontrou o material? Envie seu item para nós ›</a></div>'+
@@ -133,7 +149,7 @@ function draw(){
   html+='</div>';
  }
  if(page==='home'||page==='lists'||page==='list'){
-  html=syncBanner()+html;
+  // Estado de armazenamento agora é individual em cada lista, não um aviso geral.
   if(page==='lists'&&accountId&&guestRepository.snapshot().lists.length){
    const already=syncController?.guestImported();
    if(!already)html+='<button class="btn small" style="margin-top:14px" type="button" data-action="import">Trazer listas deste aparelho para minha conta</button>';
@@ -310,6 +326,29 @@ document.addEventListener('click',function(e){
  }
  if(e.target.closest('[data-ficha-back]')){
   selectedFicha=null;choosingFicha=true;values={};fields=legacyFields;focus=0;fichaSearch='';redrawAdd();return;
+ }
+ var removeList=e.target.closest('[data-delete-list]');
+ if(removeList){
+  e.preventDefault();
+  const target=lists.get(removeList.dataset.deleteList);
+  if(!target)return;
+  const ownerLabel=accountId?'da conta e da nuvem':'deste aparelho';
+  if(!confirm('Excluir a lista "'+target.name+'" e seus '+target.items.length+' lançamento(s) '+ownerLabel+'? Esta ação não poderá ser desfeita.'))return;
+  removeList.disabled=true;
+  (async()=>{
+   try{
+    if(accountId){
+     if(!syncController)throw Error('Sincronização indisponível. Nenhum dado foi excluído.');
+     await syncController.deleteList(target.id);
+    }else lists.removeList(target.id);
+    if(page==='list'&&activeId===target.id)exitList();
+    draw();
+   }catch(error){
+    alert('Não foi possível excluir: '+(error.message||String(error))+'. A lista foi preservada quando a exclusão não pôde ser confirmada.');
+    draw();
+   }
+  })();
+  return;
  }
  var open=e.target.closest('[data-open]');if(open){activeId=open.dataset.open;navigate('list');}
  var edit=e.target.closest('[data-edit]');if(edit&&list()){
