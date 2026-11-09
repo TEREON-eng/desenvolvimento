@@ -51,10 +51,12 @@ function scenario(search){
  const ui=scenario('');
  await ui.activate();
  assert.equal(ui.el('homeScreen').hidden,false,'sem view abre Início');
+ assert.equal(ui.el('homeNavButton').hidden,true,'Início não mostra botão Início redundante');
  assert.equal(ui.el('listsScreen').hidden,true);
  assert.equal(ui.el('homeListCount').textContent,'0 lista(s)');
  ui.click('lists');
  assert.equal(ui.el('listsScreen').hidden,false,'acesso à ferramenta abre Minhas listas');
+ assert.equal(ui.el('homeNavButton').hidden,false,'ferramenta permite voltar ao Início');
  const e=ui.click('create');
  assert.ok(e.defaultPrevented,'Criar não navega para outra página');
  assert.ok(ui.el('createDialog').open,'Criar abre modal dentro da ferramenta Listas');
@@ -66,6 +68,7 @@ function scenario(search){
  ui.el('listDialog').close();
  assert.equal(ui.el('listsScreen').hidden,false,'fechar lista retorna a Minhas listas');
  ui.click('home');
+ assert.equal(ui.el('homeNavButton').hidden,true,'voltar esconde o botão Início');
  assert.equal(ui.el('homeListCount').textContent,'1 lista(s)','contagem atualiza ao retornar ao Início');
  ui.click('lists');
  assert.equal(ui.el('homeScreen').hidden,true,'Minhas listas é outro estado, sem outra página');
