@@ -82,7 +82,7 @@ assert.equal(map.get(key),beforePrepare,'preparo repetido não regrava lista exi
 
 const html=src('x/index.html');
 const scripts=[...html.matchAll(/<script src="([^"]+)"/g)].map(x=>x[1].split('?')[0]);
-const expected=['/x/listas/store.js','/x/listas/servico.js','/x/motor-compartilhar.js','/x/catalogo/motor.js','/x/catalogo/seletor.js','/x/listas/nuvem/motor.js','/x/listas/integracao.js','/x/listas/app.js','/x/pwa.js'];
+const expected=['/x/listas/store.js','/x/listas/servico.js','/x/motor-compartilhar.js','/x/catalogo/motor.js','/x/catalogo/seletor.js','/x/listas/nuvem/motor.js','/x/listas/integracao.js','/x/listas/app.js','/x/status.js','/x/pwa.js'];
 assert.deepEqual(scripts,expected,'ordem explícita de dependências');
 assert.equal(/<script>/.test(html),false,'shell não deve conter lógica inline');
 for(const url of scripts)new vm.Script(src(url.slice(1)),{filename:url});
@@ -122,7 +122,7 @@ const listUi=src('x/listas/app.js');
 assert.ok(html.includes('id="homeScreen"')&&html.includes('id="listsScreen"'),'Início independente tem container próprio');
 assert.ok(listUi.includes("$('homeScreen').hidden=")&&listUi.includes("$('listsScreen').hidden="),'Listas alterna containers sem reconstruir a Central');
 assert.ok(listUi.includes('data.lists.length')&&listUi.includes("$('homeListCount')"),'contagem se atualiza na Central');
-assert.ok(html.includes('data-action="create"')&&listUi.includes("$('createDialog').showModal()"),'Criar lista abre modal na mesma página');
+assert.ok(listUi.includes('data-action="create"')&&listUi.includes("$('createDialog').showModal()"),'Criar lista abre modal na mesma página');
 assert.ok(listUi.includes("page=initialView==='lists'?'lists':'home'"),'padrão do aplicativo é Início');
 assert.ok(listUi.includes('listBackdrop=page'),'modal de lista preserva tela anterior');
 const homeStart=html.indexOf('id="homeScreen"');
