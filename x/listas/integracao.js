@@ -14,7 +14,7 @@
  });
  function create({store,cloud,accountId,onStatus=()=>{}}){
   if(!store?.snapshot||!store?.save||!cloud?.list||!cloud?.createList||!cloud?.updateList)throw Error('Integração de listas inválida.');
-  let started=false,working=null,disposed=false,failed='',deleting=false;
+  let started=false,working=null,disposed=false,failed='',deleting=false,epoch=0;
   const report=()=>{
    if(disposed)return;
    const data=store.snapshot(),pending=data.lists.filter(x=>x.cloudPending).length;
@@ -43,8 +43,9 @@
   async function refresh(){
    if(disposed)return;
    if(deleting)throw Error('Exclusão em andamento. Tente novamente após a confirmação.');
+   const startedAt=epoch;
    const remote=await cloud.list();
-   if(disposed)return;
+   if(disposed||deleting||startedAt!==epoch)return;
    const state=store.snapshot(),byUid=new Map(state.lists.map(x=>[x.recordUid,x]));
    for(const r of remote){
     const before=byUid.get(r.id);
@@ -116,6 +117,7 @@
    if(!initial.recordUid)throw Error('Esta lista não possui identificação técnica para exclusão segura.');
    if(!cloud.deleteList)throw Error('Exclusão na nuvem indisponível. Nenhum dado foi apagado.');
    deleting=true;
+   epoch++;
    report();
    try{
     // Não deletar apenas o cache: consultar a nuvem para evitar reaparição na próxima atualização.
