@@ -13,21 +13,6 @@ const uuid=()=>{
  const h=Array.from(bytes,n=>n.toString(16).padStart(2,'0')).join('');
  return h.slice(0,8)+'-'+h.slice(8,12)+'-'+h.slice(12,16)+'-'+h.slice(16,20)+'-'+h.slice(20);
 };
-function syncBanner(){
- if(!accountId)return '<div class="sync-line">Salvo neste aparelho · <a href="/x/identidade/lab.html">Entrar para usar a nuvem</a></div>';
- const status=syncController?.status();
- if(!status)return '<div class="sync-line">Conectando à conta...</div>';
- const count=Number(status.pending)||0;
- const text=!status.ready?'Não foi possível confirmar acesso à nuvem · cópia local preservada'+(status.error?' · '+esc(status.error):''):
-  status.conflicts?'Conflito de versões · alterações locais preservadas · '+esc(status.error||'Necessária revisão antes de enviar'):
-  status.working?'Sincronizando listas com a nuvem...':
-  status.error?'Falha na sincronização · '+(count?count+' lista(s) aguardando envio · ':'')+esc(status.error):
-  count?count+' lista(s) salva(s) neste aparelho · envio à nuvem ainda não confirmado':
-  'Listas sincronizadas com a nuvem';
- const pending=!!count||!!status.conflicts;
- const caption=status.working?'Sincronizando...':pending||status.error?'↻ Tentar sincronizar':'↻ Conferir nuvem';
- return '<div class="sync-line" role="status" aria-live="polite">'+text+' <button type="button" class="sync-refresh" data-action="sync" aria-label="'+(pending?'Tentar sincronizar listas pendentes':'Conferir sincronização das listas')+'"'+(status.working?' disabled':'')+'>'+caption+'</button></div>';
-}
 function listStorageStatus(entry){
  if(!accountId)return {label:'Local',state:'local',hint:'Lista armazenada somente neste aparelho'};
  const sync=syncController?.status();
