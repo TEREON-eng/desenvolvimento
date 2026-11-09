@@ -62,3 +62,7 @@ html[data-tx-appearance] .shell a:focus-visible,html[data-tx-appearance] .shell 
 @media(prefers-reduced-motion:reduce){html[data-tx-appearance] *{scroll-behavior:auto!important}}
 
 #homeScreen .appearance-version{font-size:10px;color:var(--tx-muted);margin:-10px 2px 14px;text-align:right}
+
+/* Modais técnicos aprovados mantêm a paleta clara e legibilidade original.
+   Apenas impede herança da cor escura do documento. */
+html[data-tx-appearance] dialog{color:#18221e;color-scheme:light}
