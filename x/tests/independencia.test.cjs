@@ -35,7 +35,7 @@ assert.ok(ui.includes('window.TereonXLists.create(')&&ui.includes('window.Tereon
  'UI compõe motores, não redefine suas responsabilidades');
 assert.ok(shell.includes('id="homeScreen"')&&shell.includes('id="listsScreen"'),
  'Início independente de tela de Listas');
-assert.ok(shell.includes('data-action="create"')&&ui.includes("$('createDialog').showModal()"),
+assert.ok(ui.includes('data-action="create"')&&ui.includes("$('createDialog').showModal()"),
  'criação de lista abre modal sem outra página');
 assert.ok(css.includes('#createDialog[open]')&&css.includes('inset:max(12px, env(safe-area-inset-top))'),
  'Criar lista fica alto no celular, distante do teclado virtual');
