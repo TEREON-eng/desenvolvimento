@@ -36,8 +36,7 @@ function listStorageStatus(entry){
   if(sync?.error)return {label:'Falha no envio',state:'error',hint:sync.error};
   return {label:sync?.working?'Sincronizando':'Aguardando nuvem',state:'pending',hint:'Alterações locais ainda não confirmadas pelo servidor'};
  }
- if(entry.cloudVersion&&sync?.ready&&!sync?.error)return {label:'Sincronizada',state:'synced',hint:'Última versão desta lista confirmada na nuvem'};
- if(entry.cloudVersion)return {label:'Cópia local',state:'local',hint:'Lista foi sincronizada anteriormente, mas a nuvem não pôde ser verificada'};
+ if(entry.cloudVersion)return {label:'Sincronizada',state:'synced',hint:'Última versão desta lista confirmada anteriormente na nuvem; não significa conexão ativa agora'};
  return {label:'Local',state:'local',hint:'Esta lista ainda não possui confirmação da nuvem'};
 }
 function listStorageBadge(entry){
