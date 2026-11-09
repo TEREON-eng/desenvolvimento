@@ -65,7 +65,8 @@ function scenario(search){
  assert.equal(ui.state().lists.length,1);
  ui.el('listDialog').close();
  assert.equal(ui.el('listsScreen').hidden,false,'fechar lista retorna a Minhas listas');
- assert.equal(ui.el('homeListCount').textContent,'1 lista(s)','contagem atualiza');
+ ui.click('home');
+ assert.equal(ui.el('homeListCount').textContent,'1 lista(s)','contagem atualiza ao retornar ao Início');
  ui.click('lists');
  assert.equal(ui.el('homeScreen').hidden,true,'Minhas listas é outro estado, sem outra página');
  assert.equal(ui.el('listsScreen').hidden,false);
