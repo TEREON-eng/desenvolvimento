@@ -22,11 +22,13 @@ assert.ok(style.includes('.tx-global-header .tx-header-row')&&style.includes('.t
 for(const [page,kind] of Object.entries(pages)){
  const html=read(page);
  assert.ok(html.includes('data-tx-header="'+kind+'"'),'incluir componente de cabeçalho em '+page);
- assert.ok(html.includes('/x/components/header.js?v=2')&&html.includes('/x/components/header.css?v=2'),'mesma versão de cabeçalho em '+page);
+ assert.ok(html.includes('/x/components/header.js?v=3')&&html.includes('/x/components/header.css?v=2'),'mesma versão de cabeçalho em '+page);
+ assert.ok(html.includes('/x/appearance.css?v=2'),'tema compartilhado em '+page);
  assert.equal((html.match(/data-tx-header=/g)||[]).length,1,'um único cabeçalho em '+page);
  if(kind==='module'){
   assert.ok(html.includes('data-back-href='),'retorno próprio do módulo em '+page);
-  assert.ok(html.includes('/x/status.js')&&html.includes('/x/components/header-session.js'),'indicadores comuns em '+page);
+  assert.ok(html.includes('/x/status.js')&&html.includes('/x/components/header-session.js?v=4'),'indicadores comuns em '+page);
+  assert.ok(html.includes('/x/appearance.js?v=2'),'preferência de aparência aplicada também no módulo '+page);
  }
 }
 const shell=read('x/index.html');
