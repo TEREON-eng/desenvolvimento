@@ -17,6 +17,13 @@ function makeCloud(initial=[]){
    const r={...copy(p),version:1,id:p.id};
    records.set(r.id,r);return copy(r);
   },
+  async deleteList(id,version){
+   calls.push('delete');
+   const previous=records.get(id);
+   if(!previous||previous.version!==version)throw Error('Lista alterada em outro aparelho. Nenhum dado foi excluído.');
+   records.delete(id);
+   return true;
+  },
   async updateList(id,version,p){
    calls.push('update');
    const old=records.get(id);
@@ -44,6 +51,12 @@ const wait=()=>new Promise(resolve=>setImmediate(resolve));
  sync.repository.save(add);await wait();await sync.flush();
  assert.equal(cloud.records.get(id2).name,'Nova lista');
  assert.equal(cache.snapshot().lists.find(x=>x.recordUid===id2).cloudPending,false);
+ await sync.deleteList('local-1');
+ assert.equal(cache.snapshot().lists.some(x=>x.recordUid===id2),false,'exclusão confirmada remove cache da conta');
+ assert.equal(cloud.records.has(id2),false,'lista excluída do servidor');
+ await sync.refresh();
+ assert.equal(cache.snapshot().lists.some(x=>x.recordUid===id2),false,'excluída não reaparece após atualizar');
+
  const stale=sync.repository.snapshot();
  stale.lists[0].name='Mudança no celular';
  cloud.records.get(uid).version=10;
@@ -51,6 +64,9 @@ const wait=()=>new Promise(resolve=>setImmediate(resolve));
  assert.equal(cloud.records.get(uid).name,'Lista editada','conflito não sobrescreve nuvem');
  assert.equal(cache.snapshot().lists[0].name,'Mudança no celular','edição local permanece intacta');
  assert.equal(cache.snapshot().lists[0].cloudConflict,true,'conflito fica visível');
+ await assert.rejects(sync.deleteList(uid),/conflito/);
+ assert.equal(cache.snapshot().lists.some(x=>x.recordUid===uid),true,'conflito impede exclusão e preserva dados');
+
  sync.stop();
  assert.throws(()=>sync.repository.save({lists:[]}),/Conta alterada/);
  const guest=makeStore({lists:[{id:'avulsa',name:'Só neste aparelho',items:[],stages:[]}]});
