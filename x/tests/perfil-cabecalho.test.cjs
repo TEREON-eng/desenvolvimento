@@ -10,6 +10,7 @@ const stored=new Map(),root={
 const context=vm.createContext({window:root,globalThis:root,Promise,console});
 new vm.Script(read('x/components/header.js')).runInContext(context);
 assert.ok(holder.innerHTML.includes('id="txProfileName"')&&holder.innerHTML.includes('href="/x/identidade/lab.html"'));
+assert.ok(holder.innerHTML.includes('id="txNetwork"'),'rede junto ao nome do perfil');
 root.TereonXHeader.setIdentity(null,null);assert.equal(label.textContent,'Visitante');
 const user={id:'test-user'};
 root.TereonXHeader.setIdentity(user,null);assert.equal(label.textContent,'Registrado');
