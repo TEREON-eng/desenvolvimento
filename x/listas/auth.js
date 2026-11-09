@@ -7,6 +7,7 @@ try{
  client=createClient('https://kjikzdpqejhsgutakigw.supabase.co','sb_publishable_sDnGg8LHSitHRRBEgtny4A_zmFvpcx1');
 }catch(error){
  console.warn('TEREON X: autenticação indisponível; modo local ativo',error);
+ window.TereonXStatus?.setAccount('unavailable');
  window.TereonXAppActivateAccount(null,null);
 }
 let active='initial',revision=0;
@@ -17,6 +18,7 @@ async function resolveSession(){
   if(current!==revision)return;
   if(result.error)throw result.error;
   const uid=result.data?.user?.id||null;
+  window.TereonXStatus?.setAccount(uid?'registered':'visitor');
   if(uid===active){if(uid)window.TereonXAppRefreshCloud?.()?.catch(e=>console.warn('TEREON X: atualização da nuvem',e));return;}
   active=uid;
   await window.TereonXAppActivateAccount(uid,uid?window.TereonXCloudLists.create(client):null);
@@ -26,6 +28,7 @@ async function resolveSession(){
   if(current!==revision)return;
   const user= session.data?.session?.user;
   const uid=user?.id||null;
+  window.TereonXStatus?.setAccount(uid?'registered':'unavailable',{unverified:!!uid});
   if(uid===active)return;
   active=uid;
   console.warn('TEREON X: sessão sem validação remota; sincronização aguardará rede',error);
@@ -38,4 +41,4 @@ if(client)client.auth.onAuthStateChange(event=>{
 });
 if(client)window.addEventListener('online',()=>{resolveSession().catch(()=>{})});
 if(client)window.addEventListener('pageshow',()=>{resolveSession().catch(()=>{})});
-if(client)resolveSession().catch(e=>{console.warn('TEREON X: sessão',e);window.TereonXAppActivateAccount(null,null)});
+if(client)resolveSession().catch(e=>{console.warn('TEREON X: sessão',e);window.TereonXStatus?.setAccount('unavailable');window.TereonXAppActivateAccount(null,null)});
