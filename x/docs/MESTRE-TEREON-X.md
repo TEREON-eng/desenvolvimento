@@ -1,5 +1,9 @@
 # TEREON X — Documento Mestre vivo
-**Consolidação: 07/11/2026 (noite) · Fonte canônica de produto do laboratório X · Situação: desenho em evolução**
+**Base 07/11/2026 · Atualização de situação em 09/11/2026 · Fonte canônica do laboratório X**
+
+## Situação vigente — 09/11/2026
+A versão de referência na branch `desenvolvimento` é **X.0.3.29**. O fundador considerou **bom o layout atual de Minhas listas**: seleção discreta alinhada ao título no canto direito; Editar, Duplicar, Compartilhar e Excluir em linha inferior; cartão translúcido com status técnico individual. Isso é **aceite visual parcial**, não homologação integral. A navegação atual parte de `/x/`; marca e breadcrumb retornam às Ferramentas. Aparência Claro/Escuro/TEREON se escolhe em Minha conta e se aplica também aos modais. O HTML do modal técnico aprovado X.0.3.4 continua preservado.
+**Ponto de retomada:** [RETOMADA-2026-11-09.md](RETOMADA-2026-11-09.md). **Revisão de contratos e riscos:** [REVISAO-GERAL-CONTRATOS-2026-11-09.md](REVISAO-GERAL-CONTRATOS-2026-11-09.md). Seções abaixo escritas em 07–08/11 são **históricas** e podem descrever versões anteriores como se fossem atuais.
 
 ## 0. Como ler
 - **DECIDIDO**: princípio ou separação aprovada pelo fundador.
@@ -39,7 +43,7 @@ Princípios DECIDIDOS: o grátis deve ser útil de verdade e nunca tecnicamente 
 **Separar CSS/HTML de serviços/contratos:** qualquer futura renovação visual não deve reimplementar nem quebrar funcionalidades já aprovadas; testes de regressão são porta obrigatória.
 
 ## 4. Estado técnico confirmado nesta consolidação
-Repositório `TEREON-eng/desenvolvimento`. Trabalhar somente em `desenvolvimento`; `main` depende de aprovação explícita. Cloudflare Worker de nome `desenvolvimento` aponta para produção/main; Preview tem URL distinta. App principal no X versão **x.0.3.7** (não alterar número por apenas acrescentar laboratórios isolados).
+Repositório `TEREON-eng/desenvolvimento`. Trabalhar somente em `desenvolvimento`; `main` depende de aprovação explícita. Cloudflare Worker de nome `desenvolvimento` aponta para produção/main; Preview tem URL distinta. **Registro histórico de 07/11:** X era versão **x.0.3.7**. Situação vigente em 09/11 é **x.0.3.29**, descrita na abertura e no fechamento desta página.
 - **IMPLEMENTADO:** `x/listas/store.js` chave `tereon-x-lab-v1`, `servico.js`, `app.js`; Catálogo e seletor; Biblioteca; motor de exportação; PWA; CI; 24 fichas de demonstração (2 reais em revisão, 22 hipóteses; nenhuma homologada).
 - **IMPLEMENTADO e TESTADO pelo usuário:** laboratório de identidade `x/identidade/`: cadastro, confirmação, login, persistência, logout/reentrada, troca de senha autenticada e edição de perfil. Recuperação via link de e-mail **não homologada** (retorno inicialmente ao localhost/limites SMTP); layout exibido pelo usuário; tremulação inicial corrigida.
 - **IMPLEMENTADO em banco:** Supabase organização `TEREON-app`, projeto `TEREON X` (`kjikzdpqejhsgutakigw`, us-east-1), tabelas `x_profiles`, `x_workspaces`, `x_workspace_members`, `x_works`, `x_work_access`, `x_list_shares`; RLS. Quase todas vazias; uma conta criada/confirmada e um perfil no último diagnóstico; ausência de testes de políticas com duas contas.
@@ -145,3 +149,14 @@ Refinamento solicitado em 08/11/2026: busca do seletor de fichas rola com os res
 
 ## 27. Auditoria de independência e teclado — x.0.3.15 (08/11/2026)
 Antes de ampliar Dimensionamento e Canivete, decisão: auditar e fechar invariantes de autonomia. Ver `x/docs/AUDITORIA-INDEPENDENCIA-2026-11-08.md`, com evidências, riscos P0/P1/P2 e critérios de aceite. Banco: nove tabelas x_% com RLS ativa, sem privilégios diretos anon na consulta; 2 proprietários de listas identificados. Separação de módulos parcialmente confirmada, mas falhas de autenticação offline, conflitos e testes negativos multiusuário permanecem pendentes. Criado teste `x/tests/independencia.test.cjs`, incluído no CI. CSS `#createDialog[open]` ajustado para posicionar modal mais alto no celular, sem modificar `addDialog` aprovado. `main` inalterada.
+
+## 28. Fechamento X.0.3.29: regras vigentes, pendências e próxima prioridade — 09/11/2026
+**DECIDIDO:** manter a funcionalidade aprovada sem regressões. Catálogo e fichas são fonte de condições, opções, obrigatoriedade e nome técnico; extrações da busca são sugestões até confirmação humana. Juliano propõe; aprovação e publicação somente pelo fundador. Não promover fichas `Em revisão` a oficiais. Uma lista não inicia uma Solicitação; compartilhar exporta snapshot sem alterar original.
+
+**IMPLEMENTADO:** interface única de Listas em modo visitante (armazenamento local) ou autenticado (cache por conta + `x_cloud_lists`), estado individual de sincronização, criação, renomeação, duplicação com UID novo, exclusão confirmada, exportação de texto/e-mail/PDF, seleção individual sem ações em lote, compartilhamento individual. Perfil e ON/OFF da rede no cabeçalho, breadcrumb, três temas em Minha conta e estrutura intacta do modal `#addDialog`. A política RLS de exclusão restrita ao proprietário foi conferida em Supabase.
+
+**NÃO IMPLEMENTADO:** `Pendente → Aprovada → Em compras → Comprado → Recebido` como fluxo de Solicitações; aprovações/envios de múltiplas listas; compras/recebimentos parciais; motor de permissões de aprovação; vínculo funcional lista–obra. Não introduzir esses estados no serviço de Listas: são outra responsabilidade.
+
+**NÃO COMPROVADO:** resultado atual do GitHub Actions, publicação exata da Preview, operação de PWA em mais de um dispositivo, clique real de edição/duplicação/compartilhamento/exclusão, fluxos offline/conflito e autorização multiusuário, qualidade final das seis fichas reais em revisão. Aceite do visual de Minhas listas não é aceite geral do produto.
+
+**PRÓXIMO PASSO RECOMENDADO:** validar CI/Preview, ensaio em celular com listas descartáveis, autenticação/offline/sincronização/erro, e sanear as fichas da planilha antes dos testes com empreiteiros (meta anterior de 17/11/2026). O desenho do processo de Solicitações pode avançar separadamente no papel. Ver [auditoria](REVISAO-GERAL-CONTRATOS-2026-11-09.md).
