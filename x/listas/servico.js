@@ -50,6 +50,30 @@ function create(repository,options){
   const title=clean(name);if(!title)throw Error('Informe um nome para a lista.');
   return change(data=>{const id=String(ids());if(data.lists.some(l=>l.id===id))throw Error('ID de lista repetido.');const recordUid=allocateRecordUid(data);data.lists.push({id,recordUid,name:title,items:[],stages:[]});return id;});
  }
+ function renameList(listId,name){
+  const title=clean(name);
+  if(!title)throw Error('Informe um nome para a lista.');
+  if(title.length>160)throw Error('O nome da lista deve ter até 160 caracteres.');
+  const current=get(listId);
+  if(!current)throw Error('Lista não encontrada.');
+  if(current.name===title)return true;
+  return change(data=>{find(data,listId).name=title;return true;});
+ }
+ function duplicateList(listId){
+  const original=get(listId);
+  if(!original)throw Error('Lista não encontrada.');
+  return change(data=>{
+   const source=find(data,listId);
+   const id=String(ids());
+   if(data.lists.some(l=>String(l.id)===id))throw Error('ID de lista repetido.');
+   const recordUid=allocateRecordUid(data);
+   const copy=clone(source);
+   copy.id=id;copy.recordUid=recordUid;copy.name=(source.name+' (cópia)').slice(0,160);
+   delete copy.cloudVersion;delete copy.cloudPending;delete copy.cloudConflict;
+   data.lists.push(copy);
+   return id;
+  });
+ }
  function upsertItem(listId,entry,itemId){
   if(!entry||!clean(entry.name)||!(Number(entry.qty)>0)||!clean(entry.unit)||!clean(entry.stage))throw Error('Preencha material, quantidade, unidade e etapa.');
   return change(data=>{
@@ -93,7 +117,7 @@ function create(repository,options){
   });
  }
  function exportList(listId){const l=get(listId);if(!l)throw Error('Lista não encontrada.');return clone(l);}
- return Object.freeze({version:2,snapshot,get,createList,ensureRecordUid,upsertItem,duplicateItem,removeItem,removeList,exportList});
+ return Object.freeze({version:2,snapshot,get,createList,renameList,duplicateList,ensureRecordUid,upsertItem,duplicateItem,removeItem,removeList,exportList});
 }
 root.TereonXLists=Object.freeze({version:2,create});
 })(typeof window!=='undefined'?window:globalThis);
