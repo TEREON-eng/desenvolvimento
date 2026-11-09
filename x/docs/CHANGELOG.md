@@ -7,7 +7,8 @@
 - `TereonXCloudLists.deleteList(id,version)` restringe a exclusão a `owner_id`, ID e versão da lista; alterações concorrentes não são apagadas.
 - Bloqueio de corrida entre consultas, envios e exclusões. Ação de exclusão não apaga outras listas nem altera as fichas ou o HTML do modal técnico aprovado.
 - Testes de exclusão local, falha remota, conflito e não reaparecimento após atualização acrescentados aos contratos; sem alteração na `main`.
-- **Atenção:** não foi confirmada ainda a política de exclusão (RLS) do Supabase, a execução do CI nem o resultado no celular. Se o backend negar a exclusão, os dados devem permanecer preservados e um erro ser informado.
+- **Segurança verificada em Supabase (09/11/2026):** aplicada a migração `x_cloud_lists_owner_delete`. A role `authenticated` recebeu privilégio DELETE na tabela `public.x_cloud_lists` com RLS `x_cloud_lists_delete_owner` exigindo `owner_id = auth.uid()`. Conferido: `authenticated_can_delete=true`, `anon_can_delete=false`, `rls_enabled=true` e uma política DELETE restrita ao proprietário. A migração não removeu nenhuma lista existente.
+- **Pendências de validação:** execução comprovada de CI, exclusão de teste com sessão autenticada e avaliação visual no celular. Se o backend negar uma exclusão, os dados locais devem permanecer preservados e um erro ser informado.
 
 
 ## 09/11/2026 — x.0.3.23 · Estado de rede simplificado e diagnóstico de sincronização
