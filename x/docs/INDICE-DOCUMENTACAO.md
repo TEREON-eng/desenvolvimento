@@ -1,5 +1,10 @@
 # TEREON X — Índice oficial e situação documental
-**Consolidação em 07/11/2026 (noite)**
+**Base: 07/11/2026 · Situação revisada: 09/11/2026**
+
+## Leia primeiro para continuar em nova conversa
+- **[Retomada 09/11](RETOMADA-2026-11-09.md):** versão X.0.3.29, decisões aceitas, pendências e sequência de trabalho.
+- **[Revisão geral de contratos 09/11](REVISAO-GERAL-CONTRATOS-2026-11-09.md):** evidências verificadas, divergências, riscos P0–P2 e checklist de aceite.
+- **[Guia visual atualizado](GUIA-VISUAL-TEREON-X.md):** tema global, cabeçalho, seleção/ações de listas, componentes e modais.
 
 ## Documentação viva no repositório X (branch `desenvolvimento`)
 1. [Mestre TEREON X](MESTRE-TEREON-X.md) — visão, decisões, estado implementado e pendências.
@@ -21,7 +26,7 @@
 Esses registros existem na Biblioteca histórica do usuário. Não são páginas técnicas atuais do X e não foram sobrescritos; este índice serve de ponte para a evolução.
 
 ## O que é decisão, não implementação
-- Motor Universo/Obras e Solicitações: desenho conceitual, **ainda não entregues**.
+- Universo/Obras: **motor e laboratório implementados, sem homologação completa**. Solicitações: **apenas concepção, não implementado**.
 - Pacotes comerciais e preço: **hipóteses**.
 - Controle de direitos de assinatura e cobrança: **não implementado**.
 - Compartilhamento real com duas contas: **não homologado**.
@@ -29,3 +34,6 @@ Esses registros existem na Biblioteca histórica do usuário. Não são páginas
 
 ## Regra para documentação futura
 Uma mudança relevante deve: (i) entrar no changelog técnico com branch e evidência; (ii) atualizar mestre/arquitetura quando alterar contratos; (iii) entrar no diário com data, contexto e aprendizado; (iv) ajustar matriz de produto/negócio se impactar planos. Nenhum documento antigo é apagado para dar impressão de continuidade.
+
+## Fechamento documental de 09/11/2026
+Referência visual atual: **X.0.3.29**, considerada boa pelo fundador em Minhas listas. O aceite é parcial. CI atual, deploy, PWA, segurança real entre contas e fichas homologadas estão pendentes. Manter o histórico 07–08/11 sem apresentá-lo como situação vigente.
