@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.23",
+  "version": "x.0.3.24",
   "build": "2026-11-09",
-  "notes": "Cabeçalho nome + ON/OFF; sincronização de Listas informa erro ou pendência real e permite nova tentativa sem apagar dados"
+  "notes": "Status Local/Sincronizada por lista; exclusão confirmada local ou nuvem com proteção contra conflitos"
 }
