@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.25",
+  "version": "x.0.3.26",
   "build": "2026-11-09",
-  "notes": "Refino visual de Minhas listas: Nova destacado em verde; cartões cinza suave translúcidos e ações padronizadas"
+  "notes": "Cartão único por lista; ícones Editar Duplicar Excluir, compartilhar externo, selecionar listas e espaçamento no cabeçalho"
 }
