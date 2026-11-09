@@ -1,0 +1,16 @@
+/* TEREON X - cabeçalho compartilhado. Visual isolado dos módulos. */
+.tx-global-header{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;width:100%;padding:0 0 15px;margin:0 0 18px;border-bottom:1px solid #e1e6e2;background:transparent;min-height:54px}
+.tx-global-header .tx-brand{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.tx-global-header .tx-brand-name{font-size:16px;font-weight:750;letter-spacing:.045em;color:#18281e}
+.tx-global-header .tx-brand-sub{font-size:11px;font-weight:400;color:#718078;line-height:1.2}
+.tx-global-header .tx-header-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex:0 0 auto;min-width:0}
+.tx-global-header .tx-account-link{display:flex;align-items:center;gap:6px;border-radius:999px;border:1px solid #dbe6dd;background:#fff;color:#294b35;font:600 12px system-ui,sans-serif;text-decoration:none;padding:6px 10px;white-space:nowrap}
+.tx-global-header .tx-account-link:focus-visible,.tx-global-header .tx-back-link:focus-visible{outline:2px solid #317a57;outline-offset:2px}
+.tx-global-header .tx-badges{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:4px}
+.tx-global-header .tx-status-part{font:600 10px/1.2 system-ui,sans-serif;color:#53665a;border:1px solid #dce4dd;background:#f1f4f1;border-radius:999px;padding:4px 7px;white-space:nowrap}
+.tx-global-header #xConnection[data-state="offline"],.tx-global-header #xAccount[data-state="unavailable"]{color:#91622b;border-color:#e4d4bd;background:#fcf7ee}
+.tx-global-header #xConnection[data-state="online"],.tx-global-header #xAccount[data-state="registered"]{color:#285b40;border-color:#cce1d2;background:#f0f6f1}
+.tx-global-header .tx-nav{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:5px}
+.tx-global-header .tx-back-link,.tx-global-header #installButton{font:550 11px system-ui,sans-serif;min-height:29px;border:1px solid #d3ded6;border-radius:8px;padding:5px 8px;text-decoration:none;background:#fff;color:#24342b;cursor:pointer}
+.tx-global-header [hidden]{display:none!important}
+@media(max-width:430px){.tx-global-header{gap:6px}.tx-global-header .tx-brand-name{font-size:15px}.tx-global-header .tx-brand-sub{max-width:145px}.tx-global-header .tx-account-link{font-size:11px;padding:5px 8px}.tx-global-header .tx-status-part{font-size:9px;padding:3px 6px}}
