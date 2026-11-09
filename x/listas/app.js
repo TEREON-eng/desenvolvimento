@@ -4,6 +4,7 @@
 const guestRepository=window.TereonXListStore.create();
 let lists=window.TereonXLists.create(guestRepository);
 let accountId=null, syncController=null, ready=false, accountSession=0;
+const selectedLists=new Set();
 const storageKey=id=>'tereon-x-cloud-cache-'+id;
 const uuid=()=>{
  const api=globalThis.crypto;
@@ -32,7 +33,7 @@ function refreshView(){if(ready)draw()}
 async function activateAccount(userId,cloud){
  const session=++accountSession;
  if(syncController)syncController.stop();
- syncController=null;ready=false;if($('listDialog')?.open)$('listDialog').close();page=initialView==='lists'?'lists':'home';listBackdrop=page;activeId=null;
+ syncController=null;selectedLists.clear();ready=false;if($('listDialog')?.open)$('listDialog').close();page=initialView==='lists'?'lists':'home';listBackdrop=page;activeId=null;
  if(!userId||!cloud){
   accountId=null;lists=window.TereonXLists.create(guestRepository);ready=true;draw();openInitialCreate();return;
  }
@@ -113,9 +114,20 @@ function draw(){
   $('homeListCount').textContent=data.lists.length+' lista(s)';
   return;
  }else if(page==='lists'){
-  html='<div class="row"><h1>Minhas listas</h1><span class="list-head-actions"><button class="btn small primary list-action-primary" data-action="create">＋ Nova</button>'+(accountId?'<button class="btn small list-action-secondary" data-action="sync" type="button">↻ Conferir nuvem</button>':'')+'</span></div><div class="stack">';
+  html='<div class="row list-page-heading"><h1>Minhas listas</h1><span class="list-head-actions"><button class="btn small primary list-action-primary" data-action="create">＋ Nova</button>'+(accountId?'<button class="btn small list-action-secondary" data-action="sync" type="button">↻ Conferir nuvem</button>':'')+'</span></div>';
+  const countSelected=data.lists.filter(x=>selectedLists.has(String(x.id))).length;
+  html+='<div class="list-select-bar"><label class="list-select-all"><input type="checkbox" data-select-all aria-label="Selecionar todas as listas"'+(data.lists.length&&countSelected===data.lists.length?' checked':'')+'> Selecionar todas</label><span class="list-select-count" role="status">'+countSelected+' selecionada(s)</span><button type="button" class="btn small" data-action="share-selected"'+(countSelected!==1?' disabled title="Selecione exatamente uma lista para compartilhar"':'')+'>Compartilhar seleção</button></div><div class="stack list-cards">';
   if(!data.lists.length)html+='<div class="empty">Nenhuma lista criada ainda.</div>';
-  data.lists.forEach(function(x){html+='<div class="list-entry"><button type="button" class="listrow" data-open="'+esc(x.id)+'"><span><strong>'+esc(x.name)+'</strong><br><small class="muted">'+x.items.length+' lançamento(s)</small><span class="list-status-wrap">'+listStorageBadge(x)+'</span></span><span aria-hidden="true">›</span></button><button type="button" class="list-delete" data-delete-list="'+esc(x.id)+'" aria-label="Excluir lista '+esc(x.name)+'" title="Excluir esta lista">Excluir</button></div>';});
+  data.lists.forEach(function(x){
+   const id=esc(x.id),name=esc(x.name);
+   html+='<div class="list-entry"><label class="list-select-one" title="Selecionar '+name+'"><input type="checkbox" data-select-list="'+id+'" aria-label="Selecionar lista '+name+'"'+(selectedLists.has(String(x.id))?' checked':'')+'></label>'+
+    '<div class="list-card"><button type="button" class="listrow" data-open="'+id+'"><span><strong>'+name+'</strong><br><small class="muted">'+x.items.length+' lançamento(s)</small><span class="list-status-wrap">'+listStorageBadge(x)+'</span></span></button>'+
+    '<div class="list-card-actions">'+
+    '<button type="button" class="list-icon" data-rename-list="'+id+'" aria-label="Editar nome da lista '+name+'" title="Editar nome">'+"<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 20h9\"/><path d=\"M16.5 3.5a2.1 2.1 0 0 1 3 3L9 17l-4 1 1-4z\"/></svg>"+'</button>'+
+    '<button type="button" class="list-icon" data-duplicate-list="'+id+'" aria-label="Duplicar lista '+name+'" title="Duplicar">'+"<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect x=\"8\" y=\"8\" width=\"12\" height=\"12\" rx=\"2\"/><path d=\"M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2\"/></svg>"+'</button>'+
+    '<button type="button" class="list-icon danger" data-delete-list="'+id+'" aria-label="Excluir lista '+name+'" title="Excluir">'+"<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 7h16M10 7V4h4v3m-8 0 1 13h10l1-13M10 11v6m4-6v6\"/></svg>"+'</button></div></div>'+
+    '<button type="button" class="list-share" data-share-list="'+id+'" aria-label="Compartilhar lista '+name+'" title="Compartilhar">'+"<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 16V3m0 0L7 8m5-5 5 5M5 14v6h14v-6\"/></svg>"+'</button></div>';
+  });
   html+='</div>';
  }else if(page==='list'){
   var l=list();if(!l){exitList();return;}
@@ -306,10 +318,52 @@ document.addEventListener('click',function(e){
    return;
   }
   if(a.dataset.action==='share'&&list())window.TereonXShare?.open(lists.exportList(activeId));
+  if(a.dataset.action==='share-selected'){
+   e.preventDefault();
+   if(selectedLists.size!==1)return;
+   const target=lists.get([...selectedLists][0]);
+   if(target)window.TereonXShare?.open(lists.exportList(target.id));
+   return;
+  }
   if(a.dataset.action==='add')openAdd();
  }
  if(e.target.closest('[data-ficha-back]')){
   selectedFicha=null;choosingFicha=true;values={};fields=legacyFields;focus=0;fichaSearch='';redrawAdd();return;
+ }
+ const selectOne=e.target.closest('[data-select-list]');
+ if(selectOne){
+  const id=String(selectOne.dataset.selectList);
+  if(selectOne.checked)selectedLists.add(id);else selectedLists.delete(id);
+  draw();return;
+ }
+ const selectAll=e.target.closest('[data-select-all]');
+ if(selectAll){
+  selectedLists.clear();
+  if(selectAll.checked)lists.snapshot().lists.forEach(x=>selectedLists.add(String(x.id)));
+  draw();return;
+ }
+ const shareOne=e.target.closest('[data-share-list]');
+ if(shareOne){
+  e.preventDefault();
+  const target=lists.get(shareOne.dataset.shareList);
+  if(target)window.TereonXShare?.open(lists.exportList(target.id));
+  return;
+ }
+ const rename=e.target.closest('[data-rename-list]');
+ if(rename){
+  e.preventDefault();
+  const target=lists.get(rename.dataset.renameList);
+  if(!target)return;
+  const title=prompt('Novo nome da lista:',target.name);
+  if(title===null||title.trim()===target.name)return;
+  safe(()=>{lists.renameList(target.id,title);draw()});
+  return;
+ }
+ const duplicateList=e.target.closest('[data-duplicate-list]');
+ if(duplicateList){
+  e.preventDefault();
+  safe(()=>{lists.duplicateList(duplicateList.dataset.duplicateList);draw()});
+  return;
  }
  var removeList=e.target.closest('[data-delete-list]');
  if(removeList){
@@ -325,6 +379,7 @@ document.addEventListener('click',function(e){
      if(!syncController)throw Error('Sincronização indisponível. Nenhum dado foi excluído.');
      await syncController.deleteList(target.id);
     }else lists.removeList(target.id);
+    selectedLists.delete(String(target.id));
     if(page==='list'&&activeId===target.id)exitList();
     draw();
    }catch(error){
