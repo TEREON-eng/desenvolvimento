@@ -145,3 +145,8 @@ html[data-tx-appearance] .list-select-bar .btn{background:var(--tx-action-soft);
 html[data-tx-appearance] .list-select-one input,html[data-tx-appearance] .list-select-all input{accent-color:var(--tx-app-accent)}
 
 html[data-tx-appearance] .list-select-all input,html[data-tx-appearance] .list-select-one input{width:17px;min-width:17px;height:17px;min-height:17px;margin:0;padding:0}
+
+/* Checkbox tipo e-mail integrado à coluna de ações. */
+html[data-tx-appearance] .list-entry .list-end-actions .list-select-one input{border-color:var(--tx-app-slate);background:transparent}
+html[data-tx-appearance] .list-entry .list-end-actions .list-select-one input:checked{background:var(--tx-app-accent);border-color:var(--tx-app-accent);box-shadow:inset 0 0 0 3px var(--tx-panel-soft)}
+html[data-tx-appearance] .list-entry .list-end-actions .list-select-one input:focus-visible{outline-color:var(--tx-app-accent)}
