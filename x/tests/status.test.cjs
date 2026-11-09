@@ -39,7 +39,7 @@ assert.ok(header.includes('id="txNetwork"')&&header.includes('tx-status-hidden')
 assert.ok(auth.includes("event==='INITIAL_SESSION'")&&auth.includes("session?.user?'registered':'visitor'"),'sessão inicial informa identidade antes de esperar validação remota');
 assert.ok(header.includes('tx-header-right')&&header.includes('id="txNetwork"'),'conta e rede agrupadas; retorno na trilha do cabeçalho');
 const pwa=read('x/pwa.js');
-assert.ok(pwa.includes("const VERSION='x.0.3.27'"),'versão do script PWA coincide com a versão publicada');
+assert.ok(pwa.includes("const VERSION='x.0.3.28'"),'versão do script PWA coincide com a versão publicada');
 assert.ok(pwa.includes('updateInstallVisibility')&&pwa.includes('standalone()'),'Instalar é ocultado quando PWA está instalado');
 assert.ok(pwa.includes('(!installPrompt&&!iosSafari())'),'Instalar não fica visível por padrão sem opção de instalação');
 console.log('TEREON X: Online/Offline e Visitante/Registrado/Indisponível sem confusão OK');
