@@ -36,7 +36,7 @@ assert.ok(header.includes('id="xStatus"')&&header.includes('tx-account-link'));
 assert.ok(auth.includes("event==='INITIAL_SESSION'")&&auth.includes("session?.user?'registered':'visitor'"),'sessão inicial informa identidade antes de esperar validação remota');
 assert.ok(header.includes('tx-header-right')&&header.includes('id="homeNavButton"'),'conta e indicadores agrupados; retorno separado do cabeçalho');
 const pwa=read('x/pwa.js');
-assert.ok(pwa.includes("const VERSION='x.0.3.19'"),'versão do script PWA coincide com a versão publicada');
+assert.ok(pwa.includes("const VERSION='x.0.3.20'"),'versão do script PWA coincide com a versão publicada');
 assert.ok(pwa.includes('updateInstallVisibility')&&pwa.includes('standalone()'),'Instalar é ocultado quando PWA está instalado');
 assert.ok(pwa.includes('(!installPrompt&&!iosSafari())'),'Instalar não fica visível por padrão sem opção de instalação');
 console.log('TEREON X: Online/Offline e Visitante/Registrado/Indisponível sem confusão OK');
