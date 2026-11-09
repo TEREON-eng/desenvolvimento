@@ -148,5 +148,10 @@ assert.equal(service.get(toRemove),null,'lista local não aparece após exclusã
 assert.throws(()=>service.removeList(toRemove),/Lista não encontrada/,'segunda exclusão não altera outras listas');
 assert.ok(service.get(listId),'exclusão não afeta outras listas');
 assert.ok(listUi.includes('data-delete-list')&&listUi.includes('listStorageBadge'),'cada lista mostra estado e ação própria');
+assert.ok(listUi.includes('btn small primary list-action-primary')&&listUi.includes('list-action-secondary'),'ações Nova e Conferir nuvem seguem hierarquia visual');
+const appearance=src('x/appearance.css');
+assert.ok(appearance.includes('--tx-panel-soft')&&appearance.includes('.list-head-actions .list-action-primary'),'superfícies translúcidas e botão principal por tema');
+assert.ok(appearance.includes('.list-entry .listrow')&&appearance.includes('.list-entry .list-delete'),'cartão e excluir com estilo sem mudar comportamento');
+
 assert.ok(!listUi.includes('html=syncBanner()+html'),'aviso geral não ocupa mais Minhas listas');
 console.log('TEREON X: contratos de Listas, persistência e separação do shell OK');
