@@ -96,6 +96,7 @@ $('listDialog').addEventListener('close',function(){
 });
 function draw(){
  const background=page==='list'?listBackdrop:page;
+ const homeNav=$('homeNavButton');if(homeNav)homeNav.hidden=background==='home';
  $('homeScreen').hidden=background!=='home';
  $('listsScreen').hidden=background==='home';
  if(!ready){
