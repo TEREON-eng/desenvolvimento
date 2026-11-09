@@ -116,17 +116,17 @@ function draw(){
  }else if(page==='lists'){
   html='<div class="row list-page-heading"><h1>Minhas listas</h1><span class="list-head-actions"><button class="btn small primary list-action-primary" data-action="create">＋ Nova</button>'+(accountId?'<button class="btn small list-action-secondary" data-action="sync" type="button">↻ Conferir nuvem</button>':'')+'</span></div>';
   const countSelected=data.lists.filter(x=>selectedLists.has(String(x.id))).length;
-  html+='<div class="list-select-bar"><label class="list-select-all"><input type="checkbox" data-select-all aria-label="Selecionar todas as listas"'+(data.lists.length&&countSelected===data.lists.length?' checked':'')+'> Selecionar todas</label><span class="list-select-count" role="status">'+countSelected+' selecionada(s)</span><button type="button" class="btn small" data-action="share-selected"'+(countSelected!==1?' disabled title="Selecione exatamente uma lista para compartilhar"':'')+'>Compartilhar seleção</button></div><div class="stack list-cards">';
+  html+=(countSelected?'<div class="list-select-bar"><span class="list-select-count" role="status">'+countSelected+' selecionada(s)</span><button type="button" class="btn small" data-action="clear-selection">Limpar seleção</button><button type="button" class="btn small" data-action="share-selected"'+(countSelected!==1?' disabled title="Selecione uma lista para compartilhar"':'')+'>Compartilhar selecionada</button></div>':'')+'<div class="stack list-cards">';
   if(!data.lists.length)html+='<div class="empty">Nenhuma lista criada ainda.</div>';
   data.lists.forEach(function(x){
    const id=esc(x.id),name=esc(x.name);
-   html+='<div class="list-entry"><label class="list-select-one" title="Selecionar '+name+'"><input type="checkbox" data-select-list="'+id+'" aria-label="Selecionar lista '+name+'"'+(selectedLists.has(String(x.id))?' checked':'')+'></label>'+
-    '<div class="list-card"><button type="button" class="listrow" data-open="'+id+'"><span><strong>'+name+'</strong><br><small class="muted">'+x.items.length+' lançamento(s)</small><span class="list-status-wrap">'+listStorageBadge(x)+'</span></span></button>'+
+   html+='<div class="list-entry"><div class="list-card"><label class="list-select-one" title="Selecionar '+name+'"><input type="checkbox" data-select-list="'+id+'" aria-label="Selecionar lista '+name+'"'+(selectedLists.has(String(x.id))?' checked':'')+'></label>'+
+    '<button type="button" class="listrow" data-open="'+id+'"><span><strong>'+name+'</strong><br><small class="muted">'+x.items.length+' lançamento(s)</small><span class="list-status-wrap">'+listStorageBadge(x)+'</span></span></button>'+
     '<div class="list-card-actions">'+
-    '<button type="button" class="list-icon" data-rename-list="'+id+'" aria-label="Editar nome da lista '+name+'" title="Editar nome">'+"<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 20h9\"/><path d=\"M16.5 3.5a2.1 2.1 0 0 1 3 3L9 17l-4 1 1-4z\"/></svg>"+'</button>'+
-    '<button type="button" class="list-icon" data-duplicate-list="'+id+'" aria-label="Duplicar lista '+name+'" title="Duplicar">'+"<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect x=\"8\" y=\"8\" width=\"12\" height=\"12\" rx=\"2\"/><path d=\"M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2\"/></svg>"+'</button>'+
-    '<button type="button" class="list-icon danger" data-delete-list="'+id+'" aria-label="Excluir lista '+name+'" title="Excluir">'+"<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 7h16M10 7V4h4v3m-8 0 1 13h10l1-13M10 11v6m4-6v6\"/></svg>"+'</button></div></div>'+
-    '<button type="button" class="list-share" data-share-list="'+id+'" aria-label="Compartilhar lista '+name+'" title="Compartilhar">'+"<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 16V3m0 0L7 8m5-5 5 5M5 14v6h14v-6\"/></svg>"+'</button></div>';
+    '<button type="button" class="list-icon" data-rename-list="'+id+'" aria-label="Editar nome da lista '+name+'" title="Editar nome"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L9 17l-4 1 1-4z"/></svg></button>'+
+    '<button type="button" class="list-icon" data-duplicate-list="'+id+'" aria-label="Duplicar lista '+name+'" title="Duplicar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2h2"/></svg></button>'+
+    '<button type="button" class="list-icon" data-share-list="'+id+'" aria-label="Compartilhar lista '+name+'" title="Compartilhar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V3m0 0L7 8m5-5 5 5M5 14v6h14v-6"/></svg></button>'+
+    '<button type="button" class="list-icon danger" data-delete-list="'+id+'" aria-label="Excluir lista '+name+'" title="Excluir"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 7V4h4v3m-8 0 1 13h10l1-13M10 11v6m4-6v6"/></svg></button></div></div></div>';
   });
   html+='</div>';
  }else if(page==='list'){
@@ -318,6 +318,7 @@ document.addEventListener('click',function(e){
    return;
   }
   if(a.dataset.action==='share'&&list())window.TereonXShare?.open(lists.exportList(activeId));
+  if(a.dataset.action==='clear-selection'){e.preventDefault();selectedLists.clear();draw();return;}
   if(a.dataset.action==='share-selected'){
    e.preventDefault();
    if(selectedLists.size!==1)return;
@@ -334,12 +335,6 @@ document.addEventListener('click',function(e){
  if(selectOne){
   const id=String(selectOne.dataset.selectList);
   if(selectOne.checked)selectedLists.add(id);else selectedLists.delete(id);
-  draw();return;
- }
- const selectAll=e.target.closest('[data-select-all]');
- if(selectAll){
-  selectedLists.clear();
-  if(selectAll.checked)lists.snapshot().lists.forEach(x=>selectedLists.add(String(x.id)));
   draw();return;
  }
  const shareOne=e.target.closest('[data-share-list]');
