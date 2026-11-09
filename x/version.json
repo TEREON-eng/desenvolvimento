@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.21",
+  "version": "x.0.3.22",
   "build": "2026-11-09",
-  "notes": "Seletor de aparência em Minha conta; marca TEREON X retorna ao Início e remoção de botão Início redundante"
+  "notes": "Trilha de navegação abaixo do cabeçalho e temas aplicados também aos modais; estrutura dos modais preservada"
 }
