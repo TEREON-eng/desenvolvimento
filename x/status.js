@@ -12,7 +12,7 @@ function render(){
  const online=root.navigator?.onLine!==false;
  if(connection){connection.textContent=online?'Online':'Offline';connection.dataset.state=online?'online':'offline';connection.title=online?'Dispositivo conectado à rede (servidor não verificado)':'Sem conexão de rede';}
  if(account){
-  account.textContent=(names[identity]||names.checking)+(identity==='registered'&&sessionUnverified?' · sessão offline':'');
+  account.textContent=(names[identity]||names.checking)+(identity==='registered'&&sessionUnverified?(online?' · verificando':' · sessão offline'):'');
   account.dataset.state=identity;
   account.title=identity==='registered'&&sessionUnverified?'Sessão armazenada neste aparelho; validação remota pendente':identity==='unavailable'?'Não foi possível validar a conta. O aplicativo pode oferecer modo local, sem sincronização.':'Situação da conta';
  }
