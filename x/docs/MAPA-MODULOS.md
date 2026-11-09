@@ -1,9 +1,9 @@
 # TEREON X — Mapa de módulos e contratos
-Atualizado em 07/11/2026. Estado observado na branch `desenvolvimento`.
+Base histórica de 07/11/2026; **situação atual de 09/11/2026 no adendo final**. Branch `desenvolvimento`.
 
 | Componente | Responsabilidade | Entrada/saída | Independência atual |
 |---|---|---|---|
-| Shell/listas `x/index.html` | navegação, listas, etapas, gravação | localStorage `tereon-x-lab-v1` | **Baixa**: mistura tela, estado, dados e protótipo fixo de condutor |
+| Shell/listas `x/index.html` | estrutura de navegação e ordem de scripts | `x/listas/app.js` e módulos injetados | **Parcial**: extrações feitas; `app.js` ainda concentra UI/navegação e edição legada |
 | Catálogo `x/catalogo/motor.js` | carregar/normalizar fichas e avaliar regras | `load/list/get/visibleDetails/missing/technicalName` | **Boa**, porém usa URL JSON fixa e contrato global |
 | Seletor `x/catalogo/seletor.js` | modal de especificação | `TereonXCatalogUI.open({item,onSave})` | **Parcial**: depende de DOM próprio + motor global |
 | Biblioteca `x/biblioteca/index.html` | consultar fichas | `TereonXCatalog.load()` | **Parcial**: lógica de apresentação inline |
@@ -83,3 +83,20 @@ Ainda não há regras de planos, sincronização de equipes, associação de obr
 
 ## x.0.3.11 · Fichário conecta o modal existente
 `x/listas/app.js` mantém `addDialog` como única UI de entrada e edição. Dentro desse modal ele usa `TereonXCatalog.load/list/get/visibleDetails/missing/technicalName/applyRule` de `x/catalogo/motor.js`, agora alimentado por `x/fichario-x/fichas-drive-2026-11-08.json` (snapshot das seis abas reais do Fichario.xlsm). Ao salvar, `lists.upsertItem` recebe o mesmo lançamento com `catalogId` e características confirmadas. `x/listas/integracao.js` continua responsável pela persistência local/nuvem, sem acesso ao catálogo. O antigo `x/catalogo/seletor.js` ainda está no repositório como laboratório, mas não é o fluxo principal. Nenhuma sincronização automática com o Drive: atualizar o snapshot e executar testes sempre que a fonte for revista.
+
+## Estado vigente x.0.3.29 — revisão 09/11/2026
+| Componente | Responsabilidade real e contrato | Limites |
+| --- | --- | --- |
+| `x/index.html`, `x/components/header.js`, `x/appearance.js` | Shell, caminhos e temas globais; cabeçalho com nome e ON/OFF da rede | Não atestam sincronização; páginas auxiliares podem ter CSS próprio |
+| `x/listas/store.js` | Repositório `snapshot/save`; chave guest `tereon-x-lab-v1`; cache da conta por chave injetada | Nenhum acesso a catálogo/DOM; nunca limpar dados sem migração |
+| `x/listas/servico.js` | `createList/renameList/duplicateList/removeList/get/exportList/ensureRecordUid/upsertItem/duplicateItem/removeItem/snapshot` | Só opera repositório; duplicação gera `id`/`recordUid` novos, não replica versão na nuvem |
+| `x/listas/integracao.js` + `nuvem/motor.js` | Repositório único para conta autenticada; `refresh/flush/status/deleteList`, versão/conflitos e checagem de proprietário/versão | Falha de comunicação mantém cache. Teste entre aparelhos e autorização A/B ainda pendente |
+| `x/listas/app.js` | Apresentação de Listas, modais, seleção individual, ações editar/duplicar/compartilhar/excluir, status individual | Seleção em lote NÃO tem operação real; parte do legado de condutor ainda vive aqui |
+| `x/catalogo/motor.js` + snapshot de seis fichas reais | Fonte técnica, condicionais, tags e composição de nomes | Todas em revisão; não homologadas. Snapshot exige atualização explícita ao mudar o Drive |
+| `x/motor-compartilhar.js` | Snapshot para WhatsApp/texto/e-mail/PDF | Divergência conhecida do contrato-alvo de formatos/perfis; não altera a origem |
+| `x/universo/obras/`, `x/compartilhar-usuarios/` | Laboratórios isolados de Obras e cópia entre contas | Não são ciclo de compra ou aprovação; testes multiusuário pendentes |
+| `x/sw.js`, `x/pwa.js`, `x/version.json` | Cache e versão do PWA | X.0.3.29 alinhada no código; deploy e SW real não comprovados |
+
+**Estados:** Local/Sincronizada/Pendente de envio/Conflito pertencem à persistência; aprovação, compra, recebimento e parciais serão do **Motor de Solicitações**, não do serviço de Listas. Não transformar seleção de múltiplas listas em aprovação silenciosa.
+
+**Não regressão:** `#addDialog` congelado na fixture X.0.3.4. CI inclui `x/tests/contratos-fechamento-2026-11-09.test.cjs` para proteger estrutura, ações e versões; resultado de execução atual ainda precisa ser coletado. Ver [Revisão geral](REVISAO-GERAL-CONTRATOS-2026-11-09.md).
