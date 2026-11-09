@@ -3,7 +3,7 @@
 **Ambiente ativo:** TEREON X, sob `/x/`. A branch `desenvolvimento` recebe experimentos e testes; `main` recebe somente versões aprovadas. O endereço do Worker chamado `desenvolvimento` pode ser a **produção** do Cloudflare; não inferir ambiente pelo nome do hostname.
 
 ## Estrutura do código
-- `x/index.html`: shell, telas de listas, persistência local e código de condutor legado de protótipo (a extrair gradualmente).
+- `x/index.html`: shell HTML de entrada; UI de listas em `x/listas/app.js`, serviço em `x/listas/servico.js`, persistência local em `store.js` e integração de conta/nuvem em `integracao.js`. O legado de edição de condutor permanece apenas na UI.
 - `x/catalogo/motor.js`: leitura e normalização de fichas, condições, obrigatoriedade e nome técnico; sem DOM/armazenamento de listas.
 - `x/catalogo/seletor.js`: interface do modal; salva exclusivamente por callback da Lista.
 - `x/biblioteca/index.html`: apresentação de fichas; apenas consulta.
@@ -16,6 +16,13 @@
 
 ## Catálogo e homologação
 O rótulo **Catálogo Oficial** indica a coleção/candidatos em estudo, **não uma certificação**. O catálogo de testes possui 24 entradas: 2 fichas reais em revisão e 22 hipotéticas. Nenhuma está homologada. Pendências permanecem visíveis; aprovação/publicação exige decisão explícita do responsável e mecanismo próprio (ainda não implementado). Não usar opções fictícias como especificações técnicas válidas.
+
+## Estado atual de referência — 09/11/2026
+- **X.0.3.29 na branch `desenvolvimento`**: layout de Minhas listas considerado bom pelo fundador; não significa homologação geral do aplicativo. `main` segue separada; nome do Worker não prova qual branch está publicada.
+- **[Retomada para próxima conversa](x/docs/RETOMADA-2026-11-09.md)** — ponto de continuidade e próxima prioridade.
+- **[Auditoria geral de regras e contratos](x/docs/REVISAO-GERAL-CONTRATOS-2026-11-09.md)** — evidências, divergências, riscos e porta de aceite.
+- **[Guia visual X.0.3.29](x/docs/GUIA-VISUAL-TEREON-X.md)** — temas, cabeçalhos e cartões.
+- CI atual, preview real, sincronização em dois aparelhos/contas, PDF e testes móveis ainda precisam de confirmação. Não declarar como homologado.
 
 ## Documentação de referência
 - [Arquitetura e contratos](x/ARQUITETURA-MODULAR.md)
