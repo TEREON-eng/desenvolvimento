@@ -12,8 +12,9 @@ for(const theme of ['dark','tereon'])assert.ok(css.includes('[data-appearance="'
 assert.ok(css.includes('#homeScreen')&&css.includes('prefers-reduced-motion'));
 assert.ok(!css.includes('#addDialog')&&!css.includes('#listDialog'),'tema inicial não pode alterar modais aprovados');
 const listeners={},memory=new Map(),choices=variants.map(theme=>({dataset:{appearanceChoice:theme},attributes:{},setAttribute(key,value){this.attributes[key]=value}}));
-const homeNode={dataset:{}};
+const homeNode={dataset:{}};const rootElement={dataset:{}};
 const document={
+ documentElement:rootElement,
  getElementById:id=>id==='homeScreen'?homeNode:null,
  querySelectorAll:q=>q==='[data-appearance-choice]'?choices:[],
  addEventListener:(type,callback)=>listeners[type]=callback,
@@ -22,7 +23,9 @@ const localStorage={getItem:key=>memory.get(key)||null,setItem:(key,val)=>memory
 const root={document,localStorage};const context=vm.createContext({window:root,globalThis:root,document,localStorage});
 new vm.Script(read('x/appearance.js')).runInContext(context);
 assert.equal(homeNode.dataset.appearance,'light');
+assert.equal(rootElement.dataset.txAppearance,'light','tema inicial no documento');
 root.TereonXAppearance.set('dark');assert.equal(homeNode.dataset.appearance,'dark');
+assert.equal(rootElement.dataset.txAppearance,'dark','tema também aplicado fora da Home');
 root.TereonXAppearance.set('tereon');assert.equal(memory.get('tereon-x-appearance-v1'),'tereon');
 assert.equal(choices[2].attributes['aria-pressed'],'true');
 root.TereonXAppearance.set('invalid');assert.equal(homeNode.dataset.appearance,'tereon','entrada desconhecida ignorada');
