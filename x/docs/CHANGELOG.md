@@ -1,5 +1,14 @@
 # TEREON X — Histórico técnico consolidado
 
+## 09/11/2026 — x.0.3.16 · Início como acesso às ferramentas e status da conta/rede
+- Início passa a exibir apenas os acessos a Listas de materiais, Dimensionamento, Canivete, Universo e Escola. Criar lista permanece dentro de Minhas listas; o atalho antigo `?view=create` continua compatível.
+- O cabeçalho passa a exibir dois estados independentes: Online/Offline (conectividade detectada pelo navegador, não garantia de serviço) e Visitante/Registrado, com estados Verificando conta e Conta indisponível quando não foi possível validar a sessão.
+- Se há sessão salva mas falta conexão, o indicador mantém Registrado e informa sessão offline; não confunde ausência de rede com logout. Se a biblioteca de autenticação falhar, avisa Conta indisponível mesmo que o modo local continue disponível.
+- Novo `x/status.js` independente dos motores técnicos e do Supabase. Adicionado ao precache PWA; versão de cache x.0.3.16.
+- Regressões de Home e ordem de scripts atualizadas; novo teste `x/tests/status.test.cjs` integrado ao workflow.
+- Preservados byte a byte o modal `addDialog` e a lógica de especificação, as listas existentes, os serviços, o banco e a branch `main`. Homologação visual em celular e CI ainda devem ser confirmados.
+
+
 ## 07/11/2026 — Auditoria modular (branch desenvolvimento)
 - Inventário de arquivos e contratos.
 - Mapeados acoplamentos entre shell, listas e formulário legado de condutor.
