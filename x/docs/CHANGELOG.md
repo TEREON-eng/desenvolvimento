@@ -1,5 +1,14 @@
 # TEREON X — Histórico técnico consolidado
 
+## 09/11/2026 — x.0.3.17 · Cabeçalho compacto e estados de conta
+- Removido botão Início redundante da página inicial; o botão só aparece ao acessar a ferramenta Listas, preservando retorno sem recarregar.
+- Minha conta e os indicadores de rede/identidade agrupados no canto superior direito, conforme padrão de navegação solicitado.
+- `INITIAL_SESSION` atualiza o indicador a partir da sessão já presente no navegador antes da verificação remota, identificando sessão registrada ainda não validada; a verificação `getUser()` continua a definir o estado confirmado.
+- Botão Instalar fica oculto por padrão e aparece apenas com evento de instalação disponível ou no Safari iOS fora do modo standalone; em janela do PWA instalado permanece oculto. Não é possível garantir detecção universal de aplicativo instalado em outra janela/perfil.
+- Corrigido `x/pwa.js` para versão x.0.3.17, consistente com `version.json` e service worker; anteriormente estava x.0.3.15 apesar da versão do sistema x.0.3.16.
+- Atualizados testes de status, navegação e regressão. Modais de lista e de adição técnica, dados e serviços de armazenamento preservados; alterações somente em `desenvolvimento`. Teste visual e CI ainda a verificar.
+
+
 ## 09/11/2026 — x.0.3.16 · Início como acesso às ferramentas e status da conta/rede
 - Início passa a exibir apenas os acessos a Listas de materiais, Dimensionamento, Canivete, Universo e Escola. Criar lista permanece dentro de Minhas listas; o atalho antigo `?view=create` continua compatível.
 - O cabeçalho passa a exibir dois estados independentes: Online/Offline (conectividade detectada pelo navegador, não garantia de serviço) e Visitante/Registrado, com estados Verificando conta e Conta indisponível quando não foi possível validar a sessão.
