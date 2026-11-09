@@ -10,7 +10,8 @@ for(const href of ['/x/?view=lists','/x/universo/obras/lab.html','/x/escola/'])a
 const css=read('x/appearance.css');
 for(const theme of ['dark','tereon'])assert.ok(css.includes('[data-appearance="'+theme+'"]'));
 assert.ok(css.includes('#homeScreen')&&css.includes('prefers-reduced-motion'));
-assert.ok(!css.includes('#addDialog')&&!css.includes('#listDialog'),'tema inicial não pode alterar modais aprovados');
+assert.ok(!css.includes('#addDialog')&&!css.includes('#listDialog'),'tema não altera seletivamente modais aprovados');
+assert.ok(css.includes('dialog{color:#18221e;color-scheme:light}'),'modais continuam legíveis no tema escuro');
 const listeners={},memory=new Map(),choices=variants.map(theme=>({dataset:{appearanceChoice:theme},attributes:{},setAttribute(key,value){this.attributes[key]=value}}));
 const homeNode={dataset:{}};const rootElement={dataset:{}};
 const document={
@@ -26,6 +27,7 @@ assert.equal(homeNode.dataset.appearance,'light');
 assert.equal(rootElement.dataset.txAppearance,'light','tema inicial no documento');
 root.TereonXAppearance.set('dark');assert.equal(homeNode.dataset.appearance,'dark');
 assert.equal(rootElement.dataset.txAppearance,'dark','tema também aplicado fora da Home');
+assert.ok(html.includes('Prévia visual X.0.3.20'),'versão visível permite conferir atualização no celular');
 root.TereonXAppearance.set('tereon');assert.equal(memory.get('tereon-x-appearance-v1'),'tereon');
 assert.equal(choices[2].attributes['aria-pressed'],'true');
 root.TereonXAppearance.set('invalid');assert.equal(homeNode.dataset.appearance,'tereon','entrada desconhecida ignorada');
