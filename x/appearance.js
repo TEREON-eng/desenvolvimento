@@ -11,6 +11,8 @@ try{
 function apply(value,save){
  if(!THEMES.includes(value))return;
  theme=value;
+ const rootElement=root.document?.documentElement;
+ if(rootElement)rootElement.dataset.txAppearance=value;
  const home=root.document?.getElementById('homeScreen');
  if(home)home.dataset.appearance=value;
  root.document?.querySelectorAll('[data-appearance-choice]').forEach(button=>{
