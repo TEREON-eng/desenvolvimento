@@ -111,3 +111,10 @@ dialog::backdrop{background:#14281d77;backdrop-filter:blur(2px)}
  }
  #createDialog .dialog-inner{padding:18px 16px;gap:14px}
 }
+
+/* Estado compacto da rede e identidade, sem depender do motor de Listas. */
+.top-actions .x-status{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:4px;max-width:155px;margin-right:4px}
+.x-status-part{font-size:10px;line-height:1.2;font-weight:600;color:#53665a;border:1px solid #dce4dd;background:#f1f4f1;border-radius:999px;padding:4px 7px;white-space:nowrap}
+#xConnection[data-state="offline"],#xAccount[data-state="unavailable"]{color:#91622b;border-color:#e4d4bd;background:#fcf7ee}
+#xConnection[data-state="online"],#xAccount[data-state="registered"]{color:#285b40;border-color:#cce1d2;background:#f0f6f1}
+@media(max-width:540px){.top{align-items:flex-start;flex-wrap:wrap}.top-actions{width:100%;justify-content:flex-start;gap:5px}.top-actions .x-status{order:5;width:100%;max-width:none;justify-content:flex-start;margin:2px 0 0}}
