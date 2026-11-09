@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.24",
+  "version": "x.0.3.25",
   "build": "2026-11-09",
-  "notes": "Status Local/Sincronizada por lista; exclusão confirmada local ou nuvem com proteção contra conflitos"
+  "notes": "Refino visual de Minhas listas: Nova destacado em verde; cartões cinza suave translúcidos e ações padronizadas"
 }
