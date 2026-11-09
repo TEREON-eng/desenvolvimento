@@ -35,6 +35,7 @@ assert.ok(auth.includes("setAccount('unavailable')"));
 assert.ok(html.includes('data-tx-header="main"')&&html.includes('/x/status.js'));
 const header=read('x/components/header.js');
 assert.ok(header.includes('id="xStatus"')&&header.includes('tx-account-link'));
+assert.ok(header.includes('id="txNetwork"')&&header.includes('tx-status-hidden'),'chips redundantes ocultos');
 assert.ok(auth.includes("event==='INITIAL_SESSION'")&&auth.includes("session?.user?'registered':'visitor'"),'sessão inicial informa identidade antes de esperar validação remota');
 assert.ok(header.includes('tx-header-right')&&header.includes('id="txNetwork"'),'conta e rede agrupadas; retorno na trilha do cabeçalho');
 const pwa=read('x/pwa.js');
