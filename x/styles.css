@@ -118,3 +118,24 @@ dialog::backdrop{background:#14281d77;backdrop-filter:blur(2px)}
 #xConnection[data-state="offline"],#xAccount[data-state="unavailable"]{color:#91622b;border-color:#e4d4bd;background:#fcf7ee}
 #xConnection[data-state="online"],#xAccount[data-state="registered"]{color:#285b40;border-color:#cce1d2;background:#f0f6f1}
 @media(max-width:540px){.top{align-items:flex-start;flex-wrap:wrap}.top-actions{width:100%;justify-content:flex-start;gap:5px}.top-actions .x-status{order:5;width:100%;max-width:none;justify-content:flex-start;margin:2px 0 0}}
+
+/* Cabeçalho: conta + indicadores reunidos no canto superior direito.
+   Não modifica Listas, modais ou estilos de especificação. */
+.top{align-items:flex-start;flex-wrap:nowrap}
+.top-brand{flex:1;min-width:0}
+.top-actions{flex:0 0 auto;width:auto;display:flex;align-items:flex-start;justify-content:flex-end;flex-wrap:wrap;gap:6px}
+.account-corner{display:flex;flex-direction:column;align-items:flex-end;gap:5px;order:0}
+.account-link{display:inline-flex;align-items:center;justify-content:center;gap:5px;text-decoration:none;font-weight:650;font-size:12px;color:#294b35;background:#fff;border:1px solid #dbe6dd;border-radius:999px;padding:6px 10px;white-space:nowrap}
+.account-link:focus-visible{outline:2px solid #317a57;outline-offset:2px}
+.top-actions .x-status{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:4px;max-width:205px;margin:0}
+#homeNavButton,#installButton{order:1}
+#homeNavButton[hidden],#installButton[hidden]{display:none!important}
+@media(max-width:540px){
+ .top{display:flex;flex-wrap:nowrap;align-items:flex-start}
+ .top-brand{flex:1;min-width:0}
+ .top-actions{width:auto;max-width:62%;justify-content:flex-end;gap:5px;align-items:flex-start}
+ .account-corner{align-items:flex-end;max-width:100%}
+ .top-actions .x-status{width:auto;max-width:175px;justify-content:flex-end}
+ .x-status-part{font-size:9px;padding:4px 6px}
+ #homeNavButton,#installButton{font-size:10px;padding:5px 7px}
+}
