@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.15",
-  "build": "2026-11-08",
-  "notes": "Auditoria de independência e modal Criar lista elevado sobre teclado móvel"
+  "version": "x.0.3.16",
+  "build": "2026-11-09",
+  "notes": "Início apenas ferramentas; status Online/Offline e Visitante/Registrado com aviso de sessão indisponível"
 }
