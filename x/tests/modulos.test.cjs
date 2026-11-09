@@ -141,4 +141,12 @@ assert.ok(listUi.includes("initialView==='create'")&&listUi.includes("initialVie
 assert.equal(src('x/listas/app.js').includes('localStorage'),false);
 assert.equal(src('x/listas/servico.js').includes('document.'),false);
 assert.equal(src('x/listas/store.js').includes('document.'),false);
+const toRemove=service.createList('Lista para excluir');
+assert.equal(service.get(toRemove).name,'Lista para excluir');
+assert.equal(service.removeList(toRemove),true,'exclusão local confirma ID escolhido');
+assert.equal(service.get(toRemove),null,'lista local não aparece após exclusão');
+assert.throws(()=>service.removeList(toRemove),/Lista não encontrada/,'segunda exclusão não altera outras listas');
+assert.ok(service.get(listId),'exclusão não afeta outras listas');
+assert.ok(listUi.includes('data-delete-list')&&listUi.includes('listStorageBadge'),'cada lista mostra estado e ação própria');
+assert.ok(!listUi.includes('html=syncBanner()+html'),'aviso geral não ocupa mais Minhas listas');
 console.log('TEREON X: contratos de Listas, persistência e separação do shell OK');
