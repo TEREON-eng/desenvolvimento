@@ -1,5 +1,14 @@
 # TEREON X — Histórico técnico consolidado
 
+## 09/11/2026 — x.0.3.26 · Cartão de lista unificado, ações e seleção
+- Corrigido o layout rejeitado com botão Excluir separado: cada lista possui **um cartão único**. A área principal abre a lista; à direita, **três botões compactos** com ícones e rótulos acessíveis: Editar nome, Duplicar, Excluir. Exclusão mantém confirmação e proteção local/nuvem já implementadas.
+- **Compartilhar** fica do lado de fora, à direita de cada cartão, usando o motor existente de texto/e-mail/PDF, sem precisar abrir o modal da lista.
+- Incluídas caixas de seleção à esquerda, `Selecionar todas`, contagem e `Compartilhar seleção` habilitado somente quando **uma** lista está selecionada. Seleção de múltiplas listas é visual nesta primeira etapa; não executa exclusões em lote nem inventa compartilhamento múltiplo.
+- Novo espaçamento vertical entre título/ações e primeiro cartão, mantendo cartões translúcidos, três temas e sem mudar a estrutura do modal técnico.
+- Motor de Listas ganhou `renameList` com validação e `duplicateList` com novos `id` e `recordUid`, cópia profunda dos lançamentos/etapas e sem herdar o estado `cloudVersion` do original. Assim a lista duplicada poderá ser sincronizada como registro novo, sem sobrescrever o original.
+- Testes estáticos e contratos ampliados; cache e versão PWA atualizados. Não há confirmação de execução do CI nem visualização no celular nesta etapa. Somente branch `desenvolvimento`.
+
+
 ## 09/11/2026 — x.0.3.25 · Refino visual de Minhas listas
 - Aprovação parcial do formato atual das listas; mantida a estrutura dos cartões e seus indicadores individuais de armazenamento.
 - Botão **＋ Nova** promovido a ação primária com verde-escuro no Claro e neon no Escuro/TEREON, preservando `data-action="create"`.
