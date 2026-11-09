@@ -1,0 +1,32 @@
+/* Experimento visual isolado na Home — mesmos links/ações para todos os temas. */
+#homeScreen{--tx-bg:#F3F5F4;--tx-card:#FCFDFC;--tx-ink:#1F2623;--tx-muted:#56675D;--tx-border:#D6E1D9;--tx-accent:#18372D;--tx-accent-text:#FFFFFF;--tx-slate:#4F6B62;--tx-decor:#DDE7DE;color:var(--tx-ink);background:var(--tx-bg);border-radius:20px;padding:18px 16px 22px;transition:background-color .16s,color .16s}
+#homeScreen[data-appearance="dark"]{--tx-bg:#171C1A;--tx-card:#242C28;--tx-ink:#EEF4F1;--tx-muted:#B1C1B6;--tx-border:#405047;--tx-accent:#C7FF46;--tx-accent-text:#142016;--tx-slate:#78958A;--tx-decor:#2E4236}
+#homeScreen[data-appearance="tereon"]{--tx-bg:#10231C;--tx-card:#193629;--tx-ink:#F1F9EF;--tx-muted:#C3D7C8;--tx-border:#42694E;--tx-accent:#C7FF46;--tx-accent-text:#142016;--tx-slate:#668B77;--tx-decor:#315742}
+#homeScreen .home-intro{margin:8px 0 16px}
+#homeScreen .home-intro h1{color:var(--tx-ink);font-size:25px}
+#homeScreen .home-intro p{color:var(--tx-muted);font-size:13px}
+#homeScreen .home-grid{gap:11px}
+#homeScreen .home-tile{position:relative;overflow:hidden;background:var(--tx-card);border:1px solid var(--tx-border);color:var(--tx-ink);min-height:146px;border-radius:15px;box-shadow:none;transition:transform .12s,border-color .12s}
+#homeScreen .home-tile strong{color:var(--tx-ink);font-size:15px}
+#homeScreen .home-tile span:not(.home-icon){color:var(--tx-muted)}
+#homeScreen .home-tile small{color:var(--tx-slate)}
+#homeScreen .home-tile .home-icon{color:var(--tx-slate)}
+#homeScreen .home-tile:not(.disabled):active{transform:scale(.985)}
+#homeScreen .home-tile:focus-visible{outline:3px solid var(--tx-accent);outline-offset:2px}
+#homeScreen .home-tile.disabled{opacity:.7;cursor:default}
+#homeScreen .theme-switch{display:flex;gap:5px;align-items:center;flex-wrap:wrap;background:var(--tx-card);border:1px solid var(--tx-border);border-radius:12px;padding:5px;margin:0 0 16px}
+#homeScreen .theme-switch-label{font-size:11px;color:var(--tx-muted);margin:0 6px 0 5px;flex-shrink:0;font-weight:650}
+#homeScreen .theme-option{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:5px;flex:1;min-width:78px;min-height:38px;padding:7px 9px;border:1px solid transparent;background:transparent;color:var(--tx-ink);border-radius:9px;font-size:12px;font-weight:650;cursor:pointer}
+#homeScreen .theme-option[aria-pressed="true"]{background:var(--tx-accent);color:var(--tx-accent-text)}
+#homeScreen .theme-option:focus-visible{outline:2px solid var(--tx-accent);outline-offset:2px}
+#homeScreen .home-tile[data-action="lists"]{border-color:var(--tx-slate)}
+#homeScreen[data-appearance="tereon"] .home-intro{position:relative;overflow:hidden;min-height:144px;border-radius:14px;background:radial-gradient(circle at 89% 24%,#3C7950 0,#244934 29%,transparent 53%),linear-gradient(115deg,#193E2C,#10231C);padding:19px 16px;margin:7px 0 15px}
+#homeScreen[data-appearance="tereon"] .home-intro::before{content:"";position:absolute;right:13px;top:17px;width:93px;height:93px;border:2px solid #C7FF4680;border-radius:20px;transform:rotate(23deg);pointer-events:none}
+#homeScreen[data-appearance="tereon"] .home-intro::after{content:"";position:absolute;right:44px;top:43px;width:55px;height:55px;border:2px solid #C7FF46;border-radius:50%;box-shadow:0 0 0 13px #C7FF4618;pointer-events:none}
+#homeScreen[data-appearance="tereon"] .home-intro h1{color:#F1F9EF;position:relative;z-index:1;max-width:65%}
+#homeScreen[data-appearance="tereon"] .home-intro p{color:#C3D7C8;position:relative;z-index:1;max-width:67%}
+#homeScreen[data-appearance="tereon"] .home-tile:not(.disabled){background:linear-gradient(143deg,var(--tx-card),#244C35)}
+#homeScreen[data-appearance="tereon"] .home-tile .home-icon{color:#C7FF46}
+#homeScreen[data-appearance="tereon"] .home-tile:not(.disabled)::after{content:"";position:absolute;right:-12px;bottom:-24px;width:84px;height:84px;border:1px solid #C7FF4645;border-radius:24px;transform:rotate(26deg);pointer-events:none}
+@media(max-width:390px){#homeScreen{padding:13px 10px 17px}#homeScreen .theme-option{min-width:65px;padding:6px 4px;font-size:11px}#homeScreen .theme-switch-label{flex-basis:100%;margin:3px 6px 0}#homeScreen .home-grid{gap:8px}}
+@media(prefers-reduced-motion:reduce){#homeScreen,#homeScreen .home-tile{transition:none!important}}
