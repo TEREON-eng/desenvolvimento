@@ -18,6 +18,9 @@ new vm.Script(head,{filename:'header.js'});
 new vm.Script(read('x/status.js'),{filename:'status.js'});
 assert.ok(head.includes('tx-header-row')&&head.includes('tx-nav'),'navegação separada da área de conta');
 assert.ok(head.includes('id="homeNavButton"')&&head.includes('id="installButton"'));
+assert.ok(head.includes('data-action="home"')&&head.includes('← Ferramentas'),'retorno à Home é contextual e discreto');
+assert.ok(head.includes('TEREON X — ir às Ferramentas'),'marca leva ao Início');
+assert.ok(head.includes("back==='/x/'?'':"),'não mostrar botão Início redundante nos módulos');
 assert.ok(style.includes('.tx-global-header .tx-header-row')&&style.includes('.tx-global-header .tx-nav'));
 for(const [page,kind] of Object.entries(pages)){
  const html=read(page);
