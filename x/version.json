@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.20",
+  "version": "x.0.3.21",
   "build": "2026-11-09",
-  "notes": "Temas compartilhados em todas as páginas; cabeçalho mostra Visitante ou nome do perfil; cache PWA renovado"
+  "notes": "Seletor de aparência em Minha conta; marca TEREON X retorna ao Início e remoção de botão Início redundante"
 }
