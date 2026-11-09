@@ -1,5 +1,15 @@
 # TEREON X — Histórico técnico consolidado
 
+## 09/11/2026 — x.0.3.18 · Cabeçalho único em todos os módulos
+- Inventário de oito páginas principais: Início/Listas, Escola, Biblioteca, Fichário, Universo/Obras, Minha conta, Compartilhamento e Contribuição.
+- Criados `x/components/header.js` e `header.css`, utilizados pelas oito páginas para estruturar a marca, o perfil e os indicadores de modo uniforme. Os retornos (Início/Escola/Biblioteca/Listas) ficam em uma linha separada do perfil. O Início não apresenta botão de retorno redundante.
+- `header-session.js` consulta sessão em páginas independentes, sem interferir com as operações dos respectivos módulos. Em falha de rede, a sessão apenas armazenada é identificada como não validada; essa leitura não concede nenhuma permissão.
+- Registrado contrato de evolução em `x/components/README.md` para evitar que futuras telas criem novos cabeçalhos individuais.
+- Teste `x/tests/cabecalho.test.cjs` adicionado ao CI e contratos históricos atualizados. PWA, service worker e versão unificados como x.0.3.18, com pré-cache dos componentes.
+- Preservado o HTML do modal `addDialog`, a lógica de fichas, as listas e as tabelas Supabase. Somente branch `desenvolvimento`; sem alteração em `main`.
+- **Pendente:** execução CI comprovadamente verde, conferência visual em celular e teste de navegação com rede lenta.
+
+
 ## 09/11/2026 — x.0.3.17 · Cabeçalho compacto e estados de conta
 - Removido botão Início redundante da página inicial; o botão só aparece ao acessar a ferramenta Listas, preservando retorno sem recarregar.
 - Minha conta e os indicadores de rede/identidade agrupados no canto superior direito, conforme padrão de navegação solicitado.
