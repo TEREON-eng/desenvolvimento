@@ -18,6 +18,7 @@ new vm.Script(head,{filename:'header.js'});
 new vm.Script(read('x/status.js'),{filename:'status.js'});
 assert.ok(head.includes('tx-header-row')&&head.includes('tx-nav'),'navegação separada da área de conta');
 assert.ok(head.includes('tx-breadcrumb')&&head.includes('id="installButton"'));
+assert.ok(head.includes('id="txNetwork"')&&head.includes('tx-status-hidden'),'rede compacta sem chips redundantes');
 assert.ok(head.includes("holder.insertAdjacentHTML('afterend'"),'trilha depois da linha do cabeçalho');
 assert.ok(head.includes('data-action="home"')&&head.includes('setPath'),'caminho atualiza sem recarregar a ferramenta');
 assert.ok(head.includes('TEREON X — ir às Ferramentas'),'marca leva ao Início');
