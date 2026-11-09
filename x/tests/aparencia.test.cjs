@@ -19,8 +19,8 @@ const document={
  addEventListener:(type,callback)=>listeners[type]=callback,
 };
 const localStorage={getItem:key=>memory.get(key)||null,setItem:(key,val)=>memory.set(key,val)};
-const root={document,localStorage};vm.createContext({window:root,globalThis:root});
-new vm.Script(read('x/appearance.js')).runInContext({window:root,globalThis:root,document,localStorage});
+const root={document,localStorage};const context=vm.createContext({window:root,globalThis:root,document,localStorage});
+new vm.Script(read('x/appearance.js')).runInContext(context);
 assert.equal(homeNode.dataset.appearance,'light');
 root.TereonXAppearance.set('dark');assert.equal(homeNode.dataset.appearance,'dark');
 root.TereonXAppearance.set('tereon');assert.equal(memory.get('tereon-x-appearance-v1'),'tereon');
