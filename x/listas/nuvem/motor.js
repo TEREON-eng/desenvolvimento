@@ -60,7 +60,14 @@
    if(!updated)throw Error('Esta lista foi modificada em outro aparelho. Atualize antes de salvar para não sobrescrever alterações.');
    return updated;
   }
-  return Object.freeze({list,get,createList,updateList,version:1});
+  async function deleteList(id,version){
+   const uid=await userId();
+   if(!UUID.test(id)||!Number.isSafeInteger(version)||version<1)throw Error('Referência ou versão de lista inválida.');
+   const deleted=unpack(await client.from('x_cloud_lists').delete().eq('id',id).eq('owner_id',uid).eq('version',version).select('id').maybeSingle());
+   if(!deleted)throw Error('A lista foi alterada ou excluída em outro aparelho. Nenhum dado local foi apagado.');
+   return true;
+  }
+  return Object.freeze({list,get,createList,updateList,deleteList,version:1});
  }
  return Object.freeze({create,validate,version:1});
 });
