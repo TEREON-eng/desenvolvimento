@@ -154,3 +154,25 @@ dialog::backdrop{background:#14281d77;backdrop-filter:blur(2px)}
 .list-storage--pending{border-color:#e7d5a8;background:#faf2df;color:#856023}
 .list-storage--conflict,.list-storage--error{border-color:#e9b9b5;background:#fff0ee;color:#933D38}
 @media(max-width:400px){.list-entry{gap:5px}.list-entry .listrow{padding:12px 10px}.list-delete{min-width:54px;padding:7px 6px;font-size:10px}}
+
+/* Minhas listas — um único cartão, três ações internas e seleção/compartilhamento externos. */
+.list-page-heading{margin-bottom:0}
+.list-select-bar{display:flex;align-items:center;flex-wrap:wrap;gap:7px 12px;min-height:34px;margin:12px 0 14px;font-size:11px}
+.list-select-all{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap}
+.list-select-one{display:flex;align-items:center;justify-content:center;flex:0 0 27px;min-width:27px;cursor:pointer}
+.list-select-all input,.list-select-one input{width:17px;min-width:17px;height:17px;min-height:17px;margin:0;accent-color:#18372D;cursor:pointer}
+.list-select-count{color:#65766C;font-size:11px}
+.list-select-bar>.btn{margin-left:auto;min-height:30px}
+.list-cards{gap:12px}
+.list-entry{display:flex;align-items:center;gap:7px;min-width:0}
+.list-entry .list-card{display:flex;align-items:center;gap:3px;min-width:0;flex:1;border:1px solid #CDD9D0;border-radius:13px;overflow:hidden;background:rgba(228,234,230,.68)}
+.list-entry .list-card .listrow{display:flex;flex:1;min-width:0;width:auto;align-self:stretch;align-items:center;padding:14px 9px 14px 12px;border:0;border-radius:0;box-shadow:none;background:transparent;text-align:left}
+.list-entry .list-card .listrow>span:first-child{min-width:0;overflow-wrap:anywhere}
+.list-card-actions{display:flex;align-items:center;justify-content:flex-end;gap:2px;flex:0 0 auto;padding-right:7px}
+.list-icon,.list-share{display:inline-flex;align-items:center;justify-content:center;width:31px;height:36px;min-width:31px;padding:0;border:1px solid transparent;background:transparent;border-radius:8px;color:#4F6B62;cursor:pointer}
+.list-icon svg,.list-share svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8}
+.list-icon.danger{color:#A15D57}
+.list-share{flex:0 0 34px;width:34px;height:40px;background:rgba(228,234,230,.38);border:1px solid #CDD9D0}
+.list-icon:hover,.list-share:hover,.list-icon:focus-visible,.list-share:focus-visible{background:rgba(110,138,117,.15);border-color:currentColor}
+.list-icon:focus-visible,.list-share:focus-visible,.list-select-one input:focus-visible{outline:2px solid #317a57;outline-offset:2px}
+@media(max-width:390px){.list-entry{gap:4px}.list-select-one{flex-basis:23px;min-width:23px}.list-entry .list-card .listrow{padding:11px 5px 11px 8px}.list-card-actions{gap:0;padding-right:3px}.list-icon{width:27px;min-width:27px;height:34px}.list-icon svg{width:14px;height:14px}.list-share{flex-basis:30px;width:30px;height:36px}.list-select-bar{gap:5px 9px}}
