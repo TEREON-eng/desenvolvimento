@@ -65,6 +65,7 @@ async function refresh(){
   const profile=await auth.getProfile(user.id);
   const name=profile?.display_name||'Profissional TEREON';
   $('profile-title').textContent=name;
+  window.TereonXHeader?.setDisplayName(user.id,profile?.display_name||'');
   $('avatar').textContent=(name==='Profissional TEREON'?'TX':name.split(/\s+/).slice(0,2).map(x=>x[0]).join('').toUpperCase());
   $('display-name').value=profile?.display_name||'';
   renderRecovery();
