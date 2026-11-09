@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.26",
+  "version": "x.0.3.27",
   "build": "2026-11-09",
-  "notes": "Cartão único por lista; ícones Editar Duplicar Excluir, compartilhar externo, selecionar listas e espaçamento no cabeçalho"
+  "notes": "Checkbox no canto superior esquerdo de cada cartão; Compartilhar agrupado com Editar Duplicar Excluir; seleção compacta"
 }
