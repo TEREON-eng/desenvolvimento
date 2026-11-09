@@ -34,6 +34,8 @@ jobs:
         run: node x/tests/home-navigation.test.cjs
       - name: Validar estados de conexão e conta
         run: node x/tests/status.test.cjs
+      - name: Validar aparências sem mudar comportamento
+        run: node x/tests/aparencia.test.cjs
       - name: Validar cabeçalho único em todos os módulos
         run: node x/tests/cabecalho.test.cjs
       - name: Auditar fronteiras de independência e modal aprovado
