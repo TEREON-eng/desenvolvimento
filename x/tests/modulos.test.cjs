@@ -168,7 +168,12 @@ const appearance=src('x/appearance.css');
 assert.ok(appearance.includes('--tx-panel-soft')&&appearance.includes('.list-head-actions .list-action-primary'),'superfícies translúcidas e botão principal por tema');
 assert.ok(appearance.includes('.list-entry .list-card')&&appearance.includes('.list-entry .list-icon'),'cartão único e três ações em todos os temas');
 assert.ok(listUi.includes('data-rename-list')&&listUi.includes('data-duplicate-list')&&listUi.includes('data-delete-list'),'três ações no cartão');
-assert.ok(listUi.includes('data-share-list')&&listUi.includes('data-select-list')&&listUi.includes('data-select-all'),'compartilhar fora e seleção individual ou total');
+assert.ok(listUi.includes('data-share-list')&&listUi.includes('data-select-list'),'compartilhar e seleção no mesmo cartão');
+assert.ok(!listUi.includes('data-select-all'),'sem seleção geral desnecessária');
+assert.ok(!listUi.includes('class="list-share"'),'sem botão Compartilhar solto fora do cartão');
+assert.ok(listUi.includes('data-action="clear-selection"'),'seleção pode ser desmarcada');
+assert.ok(src('x/styles.css').includes('.list-entry .list-select-one{position:absolute;top:7px;left:9px'),'checkbox no canto superior esquerdo');
+assert.ok(listUi.includes('data-rename-list')&&listUi.includes('data-duplicate-list')&&listUi.includes('data-share-list')&&listUi.includes('data-delete-list'),'quatro ações preservadas');
 assert.ok(src('x/styles.css').includes('.list-cards')&&src('x/styles.css').includes('margin:12px 0 14px'),'primeiro cartão separado do título e ações');
 
 assert.ok(!listUi.includes('html=syncBanner()+html'),'aviso geral não ocupa mais Minhas listas');
