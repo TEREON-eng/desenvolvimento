@@ -8,10 +8,10 @@ const back=holder.dataset.backHref||'/x/';
 const backLabel=holder.dataset.backLabel||'← Início';
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 holder.classList.add('tx-global-header');
-holder.innerHTML='<div class="tx-header-row"><div class="tx-brand"><span class="tx-brand-name">TEREON X</span><span class="tx-brand-sub">Tecnologia que faz a engenharia fluir.</span></div>'+
+holder.innerHTML='<div class="tx-header-row"><a class="tx-brand" href="/x/"'+(main?' data-action="home"':'')+' aria-label="TEREON X — ir às Ferramentas"><span class="tx-brand-name">TEREON X</span><span class="tx-brand-sub">Tecnologia que faz a engenharia fluir.</span></a>'+
  '<div class="tx-header-right"><a class="tx-account-link" href="/x/identidade/lab.html" aria-label="Minha conta">◉ <span id="txProfileName">Visitante</span></a>'+
  '<span id="xStatus" class="tx-badges" role="status" aria-live="polite" aria-label="Conexão e situação da conta"><span id="xConnection" class="tx-status-part">Verificando rede</span><span id="xAccount" class="tx-status-part">Verificando conta</span></span></div></div>'+
- '<nav class="tx-nav" aria-label="Navegação">'+(main?'<button id="homeNavButton" class="tx-back-link" data-action="home" type="button" hidden>← Início</button>':'<a class="tx-back-link" href="'+escape(back)+'">'+escape(backLabel)+'</a>')+
+ '<nav class="tx-nav" aria-label="Navegação">'+(main?'<a id="homeNavButton" class="tx-back-link" data-action="home" href="/x/" hidden>← Ferramentas</a>':back==='/x/'?'':'<a class="tx-back-link" href="'+escape(back)+'">'+escape(backLabel)+'</a>')+
  (main?'<button id="installButton" type="button" hidden>↓ Instalar</button>':'')+'</nav>';
 const label=holder.querySelector('#txProfileName');
 let sequence=0,currentUser=null;
