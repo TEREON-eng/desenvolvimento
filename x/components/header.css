@@ -28,3 +28,12 @@
 .tx-global-header .tx-nav .tx-back-link{display:inline-flex;align-items:center;min-height:34px;background:transparent;border:0;border-radius:4px;padding:4px 0;font-size:12px;font-weight:600;color:var(--tx-app-slate,#4F6B62);text-decoration:none}
 .tx-global-header .tx-nav .tx-back-link:hover{text-decoration:underline;text-underline-offset:3px}
 html[data-tx-appearance] .tx-global-header .tx-nav .tx-back-link{background:transparent;border:0;color:var(--tx-app-slate)}
+
+/* Caminho de navegação: abaixo da linha que fecha o cabeçalho, sempre visível. */
+.tx-global-header{margin-bottom:0}
+.tx-breadcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:7px;min-height:40px;padding:10px 0 12px;margin:0 0 10px;font:600 12px/1.4 system-ui,sans-serif;color:var(--tx-app-muted,#56675D)}
+.tx-breadcrumb a{color:var(--tx-app-slate,#4F6B62);text-decoration:none;min-height:24px;display:inline-flex;align-items:center}
+.tx-breadcrumb a:hover{text-decoration:underline;text-underline-offset:3px}
+.tx-breadcrumb a:focus-visible{outline:2px solid var(--tx-app-accent,#18372D);outline-offset:2px;border-radius:3px}
+.tx-breadcrumb .tx-path-current{color:var(--tx-app-text,#1F2623);font-weight:700}
+.tx-breadcrumb .tx-path-separator{color:var(--tx-app-muted,#56675D);opacity:.65}
