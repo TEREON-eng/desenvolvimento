@@ -113,7 +113,7 @@ assert.ok(html.includes('/x/styles.css'));
 assert.ok(html.includes('type="module" src="/x/listas/auth.js'),'Auth começa após aplicação de Listas');
 assert.ok(src('x/listas/app.js').includes('TereonXAppActivateAccount'),'uma interface serve à conta e ao modo local');
 assert.ok(src('x/listas/app.js').includes('TereonXListIntegration.create'),'armazenamento injetado no serviço de Listas');
-assert.ok(src('x/components/header.js').includes('id="homeNavButton"')&&src('x/components/header.js').includes('data-action="home"'),'Início contextual vem do componente compartilhado');
+assert.ok(src('x/components/header.js').includes('tx-breadcrumb')&&src('x/components/header.js').includes('data-action="home"'),'trilha de navegação contextual vem do componente compartilhado');
 assert.equal(html.includes('id="homeButton"'),false,'sem dois botões Início conflitantes');
 assert.equal(src('x/listas/app.js').includes("$('homeButton').addEventListener"),false,'sem listener órfão');
 const hub=src('x/laboratorios/index.html');
