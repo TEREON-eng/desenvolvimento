@@ -121,15 +121,12 @@
    report();
    try{
     // Não deletar apenas o cache: consultar a nuvem para evitar reaparição na próxima atualização.
-    let remote;
-    try{remote=await cloud.get(initial.recordUid)}
-    catch(error){
-     if(error?.code==='PGRST116'||/lista não encontrada ou sem permissão/i.test(error?.message||'')){
-      // Só uma lista nunca enviada pode ser removida sem registro remoto.
-      if(initial.cloudVersion)throw Error('Não foi possível confirmar a exclusão remota. Dados locais preservados.');
-      remote=null;
-     }else throw error;
-    }
+    // Uma consulta autenticada à coleção confirma se o ID existe remotamente.
+    // Ausência do ID só autoriza remoção local de lista nunca confirmada na nuvem.
+    const online=await cloud.list();
+    const remote=online.find(x=>x.id===initial.recordUid)||null;
+    if(!remote&&initial.cloudVersion)
+     throw Error('A lista já não consta na nuvem, mas havia uma versão confirmada. Confira antes de excluir o cache local.');
     if(remote){
      if(initial.cloudVersion&&remote.version!==initial.cloudVersion)
       throw Error('Lista alterada em outro aparelho. Nenhum dado foi excluído.');
