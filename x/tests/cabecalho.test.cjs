@@ -28,7 +28,7 @@ for(const [page,kind] of Object.entries(pages)){
  if(kind==='module'){
   assert.ok(html.includes('data-back-href='),'retorno próprio do módulo em '+page);
   assert.ok(html.includes('/x/status.js')&&html.includes('/x/components/header-session.js?v=4'),'indicadores comuns em '+page);
-  assert.ok(html.includes('/x/appearance.js?v=2'),'preferência de aparência aplicada também no módulo '+page);
+  assert.ok(html.includes('/x/appearance.js?v=3'),'preferência de aparência aplicada também no módulo '+page);
  }
 }
 const shell=read('x/index.html');
