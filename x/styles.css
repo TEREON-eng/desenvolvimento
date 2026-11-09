@@ -176,3 +176,17 @@ dialog::backdrop{background:#14281d77;backdrop-filter:blur(2px)}
 .list-icon:hover,.list-share:hover,.list-icon:focus-visible,.list-share:focus-visible{background:rgba(110,138,117,.15);border-color:currentColor}
 .list-icon:focus-visible,.list-share:focus-visible,.list-select-one input:focus-visible{outline:2px solid #317a57;outline-offset:2px}
 @media(max-width:390px){.list-entry{gap:4px}.list-select-one{flex-basis:23px;min-width:23px}.list-entry .list-card .listrow{padding:11px 5px 11px 8px}.list-card-actions{gap:0;padding-right:3px}.list-icon{width:27px;min-width:27px;height:34px}.list-icon svg{width:14px;height:14px}.list-share{flex-basis:30px;width:30px;height:36px}.list-select-bar{gap:5px 9px}}
+
+/* Revisão de cartões: seleção no canto do painel e ações unificadas. */
+.list-cards{margin-top:16px}
+.list-entry{display:block}
+.list-entry .list-card{width:100%;position:relative;overflow:hidden;padding-top:7px;min-height:92px}
+.list-entry .list-card .listrow{padding:23px 6px 12px 13px}
+.list-entry .list-select-one{position:absolute;top:7px;left:9px;z-index:1;display:flex;align-items:center;justify-content:center;width:25px;height:25px;min-width:25px;flex:0 0 25px;cursor:pointer}
+.list-entry .list-select-one input{width:16px;min-width:16px;height:16px;min-height:16px;margin:0;padding:0;cursor:pointer}
+.list-entry .list-card-actions{gap:1px;padding:16px 6px 3px 0}
+.list-entry .list-icon{width:28px;min-width:28px;height:36px}
+.list-entry .list-icon svg{width:15px;height:15px}
+.list-select-bar{justify-content:flex-end;margin:10px 0 -2px;min-height:28px}
+.list-select-bar .btn{margin-left:0}
+@media(max-width:390px){.list-entry .list-card .listrow{padding:23px 4px 11px 9px}.list-entry .list-card-actions{padding-right:3px;gap:0}.list-entry .list-icon{width:26px;min-width:26px;height:34px}.list-entry .list-icon svg{width:14px;height:14px}.list-entry .list-select-one{top:5px;left:7px}}
