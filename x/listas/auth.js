@@ -8,6 +8,7 @@ try{
 }catch(error){
  console.warn('TEREON X: autenticação indisponível; modo local ativo',error);
  window.TereonXStatus?.setAccount('unavailable');
+ // Sem biblioteca não presumir que uma sessão anterior foi encerrada.
  window.TereonXAppActivateAccount(null,null);
 }
 let active='initial',revision=0;
@@ -19,6 +20,7 @@ async function resolveSession(){
   if(result.error)throw result.error;
   const uid=result.data?.user?.id||null;
   window.TereonXStatus?.setAccount(uid?'registered':'visitor');
+  window.TereonXHeader?.setIdentity(result.data?.user||null,client);
   if(uid===active){if(uid)window.TereonXAppRefreshCloud?.()?.catch(e=>console.warn('TEREON X: atualização da nuvem',e));return;}
   active=uid;
   await window.TereonXAppActivateAccount(uid,uid?window.TereonXCloudLists.create(client):null);
@@ -29,6 +31,7 @@ async function resolveSession(){
   const user= session.data?.session?.user;
   const uid=user?.id||null;
   window.TereonXStatus?.setAccount(uid?'registered':'unavailable',{unverified:!!uid});
+  if(uid)window.TereonXHeader?.setIdentity(user,null);
   if(uid===active)return;
   active=uid;
   console.warn('TEREON X: sessão sem validação remota; sincronização aguardará rede',error);
@@ -40,10 +43,11 @@ if(client)client.auth.onAuthStateChange((event,session)=>{
  // Uma sessão local é indicada como pendente de validação remota.
  if(event==='INITIAL_SESSION'){
   window.TereonXStatus?.setAccount(session?.user?'registered':'visitor',{unverified:!!session?.user});
+  window.TereonXHeader?.setIdentity(session?.user||null,null);
   return;
  }
- if(event==='SIGNED_OUT')window.TereonXStatus?.setAccount('visitor');
- else if(session?.user)window.TereonXStatus?.setAccount('registered',{unverified:true});
+ if(event==='SIGNED_OUT'){window.TereonXStatus?.setAccount('visitor');window.TereonXHeader?.setIdentity(null,null)}
+ else if(session?.user){window.TereonXStatus?.setAccount('registered',{unverified:true});window.TereonXHeader?.setIdentity(session.user,null)}
  queueMicrotask(()=>{resolveSession().catch(e=>console.warn('TEREON X: autenticação',e))});
 });
 if(client)window.addEventListener('online',()=>{resolveSession().catch(()=>{})});
