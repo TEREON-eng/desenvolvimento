@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.28",
+  "version": "x.0.3.29",
   "build": "2026-11-09",
-  "notes": "Checkbox de seleção acima da lixeira, cartão compacto sem faixa superior; proposta de etapas de aprovação/compras separada da sincronização"
+  "notes": "Seleção alinhada ao título da lista; Editar Duplicar Compartilhar Excluir em linha abaixo"
 }
