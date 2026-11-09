@@ -1,5 +1,14 @@
 # TEREON X — Histórico técnico consolidado
 
+## 09/11/2026 — x.0.3.25 · Refino visual de Minhas listas
+- Aprovação parcial do formato atual das listas; mantida a estrutura dos cartões e seus indicadores individuais de armazenamento.
+- Botão **＋ Nova** promovido a ação primária com verde-escuro no Claro e neon no Escuro/TEREON, preservando `data-action="create"`.
+- **Conferir nuvem** padronizado como secundário; **Excluir** permanece uma ação separada, discreta e com confirmação.
+- Superfícies de listas e painéis passam de branco puro para tons de cinza/verde-lousa com leve transparência definida por tema, preservando contraste e foco de teclado.
+- Alteração estritamente de classes e CSS, sem editar motores de listas, sincronização, fichas, banco ou HTML do modal aprovado.
+- Teste de contrato visual adicionado; cache e script do PWA atualizados para x.0.3.25. Validação real em celular e resultado do CI ainda pendentes.
+
+
 ## 09/11/2026 — x.0.3.24 · Estado e exclusão por lista
 - `Minhas listas` mostra o estado de cada lista no próprio cartão: **Local**, **Aguardando nuvem**, **Sincronizando**, **Sincronizada**, **Falha no envio** ou **Conflito**. A mesma indicação é exibida nos detalhes da lista. O antigo aviso geral de sincronização foi removido; o comando discreto `Conferir nuvem` permanece para contas.
 - Cada cartão recebeu um botão separado `Excluir`, com confirmação explícita do nome e do número de lançamentos. O botão que abre a lista permanece independente.
