@@ -19,3 +19,12 @@
 /* Nome longo nunca expande o cabeçalho para fora da tela do celular. */
 .tx-global-header .tx-account-link{max-width:min(48vw,210px);min-width:0}
 .tx-global-header #txProfileName{min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* A marca é o acesso principal às Ferramentas; retorno contextual sem aparência de botão. */
+.tx-global-header .tx-brand{text-decoration:none;cursor:pointer}
+.tx-global-header .tx-brand:focus-visible{outline:2px solid #317a57;outline-offset:3px;border-radius:4px}
+.tx-global-header .tx-nav:empty{display:none}
+.tx-global-header .tx-nav:not(:has(:not([hidden]))){display:none}
+.tx-global-header .tx-nav .tx-back-link{display:inline-flex;align-items:center;min-height:34px;background:transparent;border:0;border-radius:4px;padding:4px 0;font-size:12px;font-weight:600;color:var(--tx-app-slate,#4F6B62);text-decoration:none}
+.tx-global-header .tx-nav .tx-back-link:hover{text-decoration:underline;text-underline-offset:3px}
+html[data-tx-appearance] .tx-global-header .tx-nav .tx-back-link{background:transparent;border:0;color:var(--tx-app-slate)}
