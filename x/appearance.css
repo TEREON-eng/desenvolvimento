@@ -130,3 +130,16 @@ html[data-tx-appearance] .list-head-actions .btn:focus-visible,
 html[data-tx-appearance] .list-entry .list-delete:focus-visible{outline:2px solid var(--tx-app-accent);outline-offset:2px}
 @media(prefers-reduced-motion:reduce){html[data-tx-appearance] .list-entry .listrow{transition:none}}
 @media(max-width:380px){html[data-tx-appearance] .list-head-actions .btn{font-size:11px;padding:7px 8px;min-height:36px}}
+
+/* Cartão unificado: a cor pertence ao painel, não ao botão que abre a lista. */
+html[data-tx-appearance] .list-entry .list-card{background:var(--tx-panel-soft);border-color:var(--tx-panel-border)}
+html[data-tx-appearance] .list-entry .list-card .listrow{background:transparent;border:0;color:var(--tx-app-text)}
+html[data-tx-appearance] .list-entry .list-card:hover{border-color:var(--tx-app-slate)}
+html[data-tx-appearance] .list-entry .list-icon{color:var(--tx-app-slate)}
+html[data-tx-appearance] .list-entry .list-icon.danger{color:#D47B75}
+html[data-tx-appearance="light"] .list-entry .list-icon.danger{color:#91524D}
+html[data-tx-appearance] .list-entry .list-share{background:var(--tx-action-soft);border-color:var(--tx-app-border);color:var(--tx-app-slate)}
+html[data-tx-appearance] .list-entry .list-share:hover,html[data-tx-appearance] .list-entry .list-icon:hover{background:var(--tx-app-border)}
+html[data-tx-appearance] .list-select-all,html[data-tx-appearance] .list-select-count{color:var(--tx-app-muted)}
+html[data-tx-appearance] .list-select-bar .btn{background:var(--tx-action-soft);border-color:var(--tx-app-border);color:var(--tx-app-text)}
+html[data-tx-appearance] .list-select-one input,html[data-tx-appearance] .list-select-all input{accent-color:var(--tx-app-accent)}
