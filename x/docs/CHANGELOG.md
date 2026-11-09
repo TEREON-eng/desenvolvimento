@@ -1,5 +1,13 @@
 # TEREON X — Histórico técnico consolidado
 
+## 09/11/2026 — x.0.3.27 · Seleção discreta e Compartilhar no cartão
+- O seletor de listas tinha função limitada: acionar compartilhamento de **uma lista** pela barra de seleção, redundante ao compartilhamento individual; não havia edição/exclusão em lote. Isso foi explicitado ao usuário.
+- Eliminada a barra `Selecionar todas`; o checkbox de cada lista está agora no **canto superior esquerdo dentro do cartão**. Quando há seleção, surgem apenas contador, Limpar seleção e Compartilhar selecionada (habilitado com exatamente uma lista).
+- Compartilhar passou para dentro do mesmo grupo de ações à direita: **Editar nome, Duplicar, Compartilhar, Excluir**. Nenhuma dessas operações foi removida. O botão externo de compartilhamento foi retirado.
+- Preservados motor, regras de segurança e confirmação da exclusão, estado de sincronização por lista, fichas e HTML do modal aprovado.
+- CSS refinado em telas estreitas. PWA/cache x.0.3.27; CI e visual real do celular ainda não comprovados.
+
+
 ## 09/11/2026 — x.0.3.26 · Cartão de lista unificado, ações e seleção
 - Corrigido o layout rejeitado com botão Excluir separado: cada lista possui **um cartão único**. A área principal abre a lista; à direita, **três botões compactos** com ícones e rótulos acessíveis: Editar nome, Duplicar, Excluir. Exclusão mantém confirmação e proteção local/nuvem já implementadas.
 - **Compartilhar** fica do lado de fora, à direita de cada cartão, usando o motor existente de texto/e-mail/PDF, sem precisar abrir o modal da lista.
