@@ -1,7 +1,7 @@
 # TEREON X — Matriz de testes e aceite
-Atualizado em 07/11/2026. Não marcar como aprovado sem evidência observada.
+Base de 07/11/2026 · complementada em 09/11/2026. Não marcar como aprovado sem evidência observada.
 
-## Automáticos (a implantar em CI)
+## Automáticos (lista histórica de cobertura; workflow atual indicado no fechamento)
 - Sintaxe de todos os scripts `.js` do X e dos scripts inline.
 - `catalogo.load()`: carrega 24 entradas de teste, preserva pendências, não homologa automaticamente, IDs internos únicos.
 - Condições: `Sempre`, `Rígido+Aço`, `Rígido+PVC`, casos incompletos e regras desconhecidas.
@@ -191,3 +191,19 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 - Abrir lista e modal de Adicionar: conferir que nome técnico, tags, seleção progressiva e botões continuam nas posições aprovadas.
 - Executar `node x/tests/independencia.test.cjs` no CI com demais testes e validar ao menos dois dispositivos/contas.
 - Casos de acesso negado A↔B e cache após troca de conta são **pendentes**, apesar de RLS habilitada.
+
+## Fechamento de regressão X.0.3.29 — roteiro de execução (09/11/2026)
+**Automação configurada:** workflow `.github/workflows/testes-tereon-x.yml` (push em `desenvolvimento`, PR para `main`) contém testes de catálogo, módulos, identidade, compartilhamento, obras, relações, nuvem/conflitos, modal/fichas, navegação, estados, aparência, perfil/cabeçalho, breadcrumb e independência. Adicionado teste `x/tests/contratos-fechamento-2026-11-09.test.cjs` para invariantes do cartão, modal, persistência e versão do PWA. **Status real da execução mais recente NÃO CONFIRMADO**; consulta ao status combinado retornou lista vazia; verificar a página Actions e logs antes de afirmar CI verde.
+
+**Sequência manual mínima, em uma lista de TESTE**:
+1. Confirmar URL de **Preview `desenvolvimento`** e versão mostrada, sem confundir Worker de nome desenvolvimento com origem real.
+2. Visitante: criar lista, abrir em modal, Adicionar item em `#addDialog`, selecionar ficha, confirmar obrigatórias, mudar e remover tags, salvar, editar/duplicar/remover item, fechar e reabrir. Confirmar preservação em armazenamento local.
+3. Validar `Minhas listas` X.0.3.29: cartão cinza translúcido, separação do título, Nova em verde, status técnico por cartão, checkbox alinhado ao nome no canto direito, botões Editar/Duplicar/Compartilhar/Excluir **em linha abaixo**, nenhum botão solto. Marcar 1 lista (Compartilhar selecionada); marcar 2 (não executar ação múltipla), Limpar seleção.
+4. Renomear lista sem alterar itens; duplicar com mesmo conteúdo, novo identificador e status correto. Compartilhar por botão individual: texto/e-mail/PDF; conferir dados gerados. Excluir **apenas lista descartável**, confirmar que não reaparece.
+5. Conta autenticada: alternar login/logout, verificar nome/Visitante e ON/OFF como **rede**, não sincronização. Criar/editar lista, verificar sincronização REAL no servidor e o novo acesso em outro aparelho com mesma conta.
+6. Cortar rede: editar cópia local, conferir pendência individual sem perder dados; voltar online, conferir envio. Simular conflito de dois aparelhos: segunda edição não pode sobrescrever silenciosamente a primeira. Conta B não vê listas de A; exclusão de A não apaga B.
+7. Nos modos Claro/Escuro/TEREON, navegar Ferramentas → Listas → modal técnico → Minha conta → Escola → Biblioteca; conferir cores e contraste do texto, foco, teclado, toque, scroll, modais sobrepostos e opção de voltar por breadcrumb.
+8. Verificar atualização SW sem desinstalar ou limpar dados; não considerar `statuses=[]` ou atualização do arquivo `version.json` evidência de deploy bem sucedido.
+9. Revalidar especificação com **fichas reais ainda Em revisão**; nenhuma regra/atributo não confirmado deve ser marcado como definitivo.
+
+**Classificação:** o fundador aprovou **visualmente** Minhas listas X.0.3.29. A inspeção de código confirmou equivalência do modal com fixture e alinhamento de versões. **Nenhum** teste E2E em duas contas, aprovação normativa de fichas, PDF real ou execução atual do CI foi comprovado nesta revisão. Ver [auditoria de 09/11](REVISAO-GERAL-CONTRATOS-2026-11-09.md).
