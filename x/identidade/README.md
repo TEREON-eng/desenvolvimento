@@ -21,7 +21,7 @@ Projeto: **TEREON X**, organização **TEREON-app**, ID `kjikzdpqejhsgutakigw`.
 
 ## Limites conhecidos
 
-- Não foi integrado ao aplicativo, não há tela de login no menu principal.
+- **Registro histórico do laboratório 07/11:** ainda não estava integrado. **Em 09/11**, a sessão autenticada já é consumida na interface principal de Listas (`x/listas/auth.js`), e o nome do perfil aparece no cabeçalho compartilhado. A página `/x/identidade/lab.html` continua sendo a interface de conta. Recuperação de senha e testes A/B seguem pendentes.
 - Não há ainda convites, papéis de equipe editáveis, seleção de espaço, cadastro de obras nem fluxo de solicitações.
 - Não há testes reais de confirmação de e-mail e recuperação por navegador; dependem da configuração dos Redirect URLs e do provedor de e-mail.
 - O teste automatizado é um contrato do motor com cliente simulado; não é um teste de ponta a ponta.
@@ -43,3 +43,6 @@ Validar o login e a persistência de perfil **no Preview**, depois testar dois u
 - Verifique se a página de destino do e-mail é o Preview e se o hash/query de retorno contém erro. **Nunca compartilhar tokens presentes no link de recuperação**, mesmo para diagnóstico.
 - Testar com o usuário desconectado em aba privada, receber novo e-mail e definir uma senha diferente. Depois validar saída e reentrada com a senha nova.
 - Proteger qualquer sessão já aberta: mudança direta de senha no perfil e recuperação por e-mail são fluxos diferentes; o primeiro depende de conta autenticada.
+
+## Atualização de integração — 09/11/2026
+A conta atualmente afeta o modo de armazenamento: visitante grava em `tereon-x-lab-v1`; sessão autenticada consulta `x_cloud_lists` e cache segregado por usuário. O cabeçalho apresenta nome de perfil (ou Minha conta sem nome), Visitante sem sessão e ON/OFF somente da rede; nenhum desses rótulos comprova sincronização. O seletor de temas foi movido para a página Minha conta, independentemente de login. Esta integração **não** homologa reset de senha, isolamento entre dois usuários reais ou permissões entre organizações. Ver [auditoria](../docs/REVISAO-GERAL-CONTRATOS-2026-11-09.md).
