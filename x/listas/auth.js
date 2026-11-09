@@ -35,8 +35,15 @@ async function resolveSession(){
   await window.TereonXAppActivateAccount(uid,uid?window.TereonXCloudLists.create(client):null);
  }
 }
-if(client)client.auth.onAuthStateChange(event=>{
- if(event==='INITIAL_SESSION')return;
+if(client)client.auth.onAuthStateChange((event,session)=>{
+ // O estado inicial vem da sessão reconhecida pelo Supabase, sem aguardar a rede.
+ // Uma sessão local é indicada como pendente de validação remota.
+ if(event==='INITIAL_SESSION'){
+  window.TereonXStatus?.setAccount(session?.user?'registered':'visitor',{unverified:!!session?.user});
+  return;
+ }
+ if(event==='SIGNED_OUT')window.TereonXStatus?.setAccount('visitor');
+ else if(session?.user)window.TereonXStatus?.setAccount('registered',{unverified:true});
  queueMicrotask(()=>{resolveSession().catch(e=>console.warn('TEREON X: autenticação',e))});
 });
 if(client)window.addEventListener('online',()=>{resolveSession().catch(()=>{})});
