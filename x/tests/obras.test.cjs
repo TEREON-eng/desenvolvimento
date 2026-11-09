@@ -88,10 +88,10 @@ const client={auth:{getUser:async()=>({data:{user:{id:uid}},error:null})},from};
  assert.ok(lab.includes('works.removeWork')&&lab.includes('works.restore'));
  const read=p=>fs.readFileSync(path.join(__dirname,'..',p),'utf8');
  const central=read('laboratorios/index.html');
- assert.ok(read('index.html').includes('href="/x/identidade/lab.html"'),'perfil no cabeçalho do Início único');
+ assert.ok(read('components/header.js').includes('href="/x/identidade/lab.html"'),'perfil no cabeçalho compartilhado');
  assert.ok(!central.includes('class="tile" href="../identidade/'),'perfil não é card');
- for(const [p,anchor] of [['identidade/lab.html','../laboratorios/'],['compartilhar-usuarios/lab.html','../laboratorios/'],['universo/obras/lab.html','../../laboratorios/']]){
-   assert.ok(read(p).includes('href="'+anchor+'"'),'retorno à central em '+p);
+ for(const p of ['identidade/lab.html','compartilhar-usuarios/lab.html','universo/obras/lab.html']){
+   assert.ok(read(p).includes('data-tx-header="module"')&&read(p).includes('data-back-href="/x/"'),'retorno padronizado ao Início em '+p);
  }
  for(const p of ['identidade/lab.css','compartilhar-usuarios/lab.css','universo/obras/lab.css']){
    assert.ok(read(p).includes('color-scheme:light'),'tema claro em '+p);
