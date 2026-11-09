@@ -30,3 +30,33 @@
 #homeScreen[data-appearance="tereon"] .home-tile:not(.disabled)::after{content:"";position:absolute;right:-12px;bottom:-24px;width:84px;height:84px;border:1px solid #C7FF4645;border-radius:24px;transform:rotate(26deg);pointer-events:none}
 @media(max-width:390px){#homeScreen{padding:13px 10px 17px}#homeScreen .theme-option{min-width:65px;padding:6px 4px;font-size:11px}#homeScreen .theme-switch-label{flex-basis:100%;margin:3px 6px 0}#homeScreen .home-grid{gap:8px}}
 @media(prefers-reduced-motion:reduce){#homeScreen,#homeScreen .home-tile{transition:none!important}}
+
+/* Paleta compartilhada. Não modifica conteúdo/estrutura dos modais operacionais. */
+html[data-tx-appearance="light"]{--tx-app-bg:#F3F5F4;--tx-app-surface:#FCFDFC;--tx-app-text:#1F2623;--tx-app-muted:#56675D;--tx-app-border:#D6E1D9;--tx-app-accent:#18372D;--tx-app-accent-ink:#FFFFFF;--tx-app-slate:#4F6B62}
+html[data-tx-appearance="dark"]{--tx-app-bg:#171C1A;--tx-app-surface:#242C28;--tx-app-text:#EEF4F1;--tx-app-muted:#B1C1B6;--tx-app-border:#405047;--tx-app-accent:#C7FF46;--tx-app-accent-ink:#142016;--tx-app-slate:#78958A;color-scheme:dark}
+html[data-tx-appearance="tereon"]{--tx-app-bg:#10231C;--tx-app-surface:#193629;--tx-app-text:#F1F9EF;--tx-app-muted:#C3D7C8;--tx-app-border:#42694E;--tx-app-accent:#C7FF46;--tx-app-accent-ink:#142016;--tx-app-slate:#668B77;color-scheme:dark}
+html[data-tx-appearance]{background:var(--tx-app-bg);color:var(--tx-app-text)}
+html[data-tx-appearance] body{background:var(--tx-app-bg);color:var(--tx-app-text);min-height:100dvh}
+html[data-tx-appearance] .tx-global-header{border-bottom-color:var(--tx-app-border)}
+html[data-tx-appearance] .tx-global-header .tx-brand-name{color:var(--tx-app-text)}
+html[data-tx-appearance] .tx-global-header .tx-brand-sub{color:var(--tx-app-muted)}
+html[data-tx-appearance] .tx-global-header .tx-account-link,html[data-tx-appearance] .tx-global-header .tx-back-link,html[data-tx-appearance] .tx-global-header #installButton{background:var(--tx-app-surface);color:var(--tx-app-text);border-color:var(--tx-app-border)}
+html[data-tx-appearance] .tx-global-header .tx-status-part{background:var(--tx-app-surface);border-color:var(--tx-app-border);color:var(--tx-app-muted)}
+html[data-tx-appearance] .tx-global-header #xConnection[data-state="online"],html[data-tx-appearance] .tx-global-header #xAccount[data-state="registered"]{color:var(--tx-app-slate)}
+html[data-tx-appearance] .tx-global-header #xConnection[data-state="offline"],html[data-tx-appearance] .tx-global-header #xAccount[data-state="unavailable"]{color:#C18B52}
+html[data-tx-appearance] .shell h1,html[data-tx-appearance] .shell h2{color:var(--tx-app-text)}
+html[data-tx-appearance] .shell p,html[data-tx-appearance] .shell .muted{color:var(--tx-app-muted)}
+html[data-tx-appearance] .shell .tile,html[data-tx-appearance] .shell .listrow,html[data-tx-appearance] .shell .home-tile,html[data-tx-appearance] .shell .panel{background:var(--tx-app-surface);border-color:var(--tx-app-border);color:var(--tx-app-text)}
+html[data-tx-appearance] .shell .tile strong,html[data-tx-appearance] .shell .tile .icon,html[data-tx-appearance] .shell .home-tile strong{color:var(--tx-app-text)}
+html[data-tx-appearance] .shell .tile span,html[data-tx-appearance] .shell .tile p,html[data-tx-appearance] .shell .section,html[data-tx-appearance] .shell .eyebrow{color:var(--tx-app-muted)}
+html[data-tx-appearance] .shell .btn:not(.primary),html[data-tx-appearance] .shell button.secondary{background:var(--tx-app-surface);border-color:var(--tx-app-border);color:var(--tx-app-text)}
+html[data-tx-appearance] .shell .btn.primary,html[data-tx-appearance] .shell button.primary{background:var(--tx-app-accent);color:var(--tx-app-accent-ink);border-color:var(--tx-app-accent)}
+html[data-tx-appearance] .shell .sync-line{background:var(--tx-app-surface);border-color:var(--tx-app-border);color:var(--tx-app-muted)}
+html[data-tx-appearance] .shell .sync-line a,html[data-tx-appearance] .shell .sync-refresh{color:var(--tx-app-slate)}
+html[data-tx-appearance] .shell .listrow{color:var(--tx-app-text)}
+html[data-tx-appearance] .shell .listrow small{color:var(--tx-app-muted)}
+html[data-tx-appearance] .shell .empty{color:var(--tx-app-muted)}
+html[data-tx-appearance] .shell input,html[data-tx-appearance] .shell select{color:var(--tx-app-text);background:var(--tx-app-surface);border-color:var(--tx-app-border)}
+html[data-tx-appearance] .shell label{color:var(--tx-app-muted)}
+html[data-tx-appearance] .shell a:focus-visible,html[data-tx-appearance] .shell button:focus-visible{outline:2px solid var(--tx-app-accent);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){html[data-tx-appearance] *{scroll-behavior:auto!important}}
