@@ -18,6 +18,7 @@ new vm.Script(head,{filename:'header.js'});
 new vm.Script(read('x/status.js'),{filename:'status.js'});
 assert.ok(head.includes('tx-header-row')&&head.includes('tx-nav'),'navegação separada da área de conta');
 assert.ok(head.includes('tx-breadcrumb')&&head.includes('id="installButton"'));
+assert.ok(head.includes('id="txNetwork"')&&head.includes('tx-status-hidden'),'rede compacta junto ao nome do perfil');
 assert.ok(head.includes('id="txNetwork"')&&head.includes('tx-status-hidden'),'rede compacta sem chips redundantes');
 assert.ok(head.includes("holder.insertAdjacentHTML('afterend'"),'trilha depois da linha do cabeçalho');
 assert.ok(head.includes('data-action="home"')&&head.includes('setPath'),'caminho atualiza sem recarregar a ferramenta');
@@ -27,7 +28,7 @@ assert.ok(style.includes('.tx-global-header .tx-header-row')&&style.includes('.t
 for(const [page,kind] of Object.entries(pages)){
  const html=read(page);
  assert.ok(html.includes('data-tx-header="'+kind+'"'),'incluir componente de cabeçalho em '+page);
- assert.ok(html.includes('/x/components/header.js?v=6')&&html.includes('/x/components/header.css?v=5'),'mesma versão de cabeçalho em '+page);
+ assert.ok(html.includes('/x/components/header.js?v=8')&&html.includes('/x/components/header.css?v=6'),'mesma versão de cabeçalho em '+page);
  assert.ok(html.includes('/x/appearance.css?v=5'),'tema compartilhado em '+page);
  assert.equal((html.match(/data-tx-header=/g)||[]).length,1,'um único cabeçalho em '+page);
  if(kind==='module'){
