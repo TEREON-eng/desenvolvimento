@@ -1,5 +1,14 @@
 # TEREON X — Histórico técnico consolidado
 
+## 09/11/2026 — x.0.3.19 · Guia visual e protótipo das três aparências
+- Criado o guia `x/docs/GUIA-VISUAL-TEREON-X.md`: cores semânticas, papéis do verde-lousa, contraste, navegação e regra fundamental de que temas **não alteram comportamentos**.
+- Criados `x/appearance.js` e `x/appearance.css`. O seletor Claro, Escuro e TEREON aparece **somente no Início**, com preferência salva localmente na chave `tereon-x-appearance-v1`. Não usa Supabase ou motores de Listas.
+- Claro: cinza claro + verde escuro; Escuro: grafite + verde neon; TEREON: fundo verde-escuro, neon e geometria visual leve em CSS. **Imagens próprias e experiências mais imersivas ainda não foram desenvolvidas**.
+- Cards, URLs, atributos funcionais, componentes de conta, listas e modal aprovado permanecem com o mesmo comportamento. As demais telas não recebem o novo tema até validação.
+- Teste `x/tests/aparencia.test.cjs` adicionado ao CI. Cache PWA e `version.json` atualizados para x.0.3.19.
+- Sem alterações em banco, Supabase, `main` ou motores técnicos. Aceite visual em celular e execução comprovada do CI ainda pendentes.
+
+
 ## 09/11/2026 — x.0.3.18 · Cabeçalho único em todos os módulos
 - Inventário de oito páginas principais: Início/Listas, Escola, Biblioteca, Fichário, Universo/Obras, Minha conta, Compartilhamento e Contribuição.
 - Criados `x/components/header.js` e `header.css`, utilizados pelas oito páginas para estruturar a marca, o perfil e os indicadores de modo uniforme. Os retornos (Início/Escola/Biblioteca/Listas) ficam em uma linha separada do perfil. O Início não apresenta botão de retorno redundante.
