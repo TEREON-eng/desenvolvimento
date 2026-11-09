@@ -60,3 +60,5 @@ html[data-tx-appearance] .shell input,html[data-tx-appearance] .shell select{col
 html[data-tx-appearance] .shell label{color:var(--tx-app-muted)}
 html[data-tx-appearance] .shell a:focus-visible,html[data-tx-appearance] .shell button:focus-visible{outline:2px solid var(--tx-app-accent);outline-offset:2px}
 @media(prefers-reduced-motion:reduce){html[data-tx-appearance] *{scroll-behavior:auto!important}}
+
+#homeScreen .appearance-version{font-size:10px;color:var(--tx-muted);margin:-10px 2px 14px;text-align:right}
