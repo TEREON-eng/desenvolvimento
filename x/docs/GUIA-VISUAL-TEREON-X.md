@@ -1,5 +1,5 @@
-# TEREON X — Guia visual v1 (proposta implementada no Início)
-Data: 09/11/2026 | Branch: desenvolvimento | Status: experimental, sem homologação visual.
+# TEREON X — Guia visual · revisão X.0.3.29 (09/11/2026)
+Data: 09/11/2026 | Branch: desenvolvimento | **Aceite visual parcial de Minhas listas**, sem homologação do restante.
 
 ## Princípio inviolável
 **Claro, Escuro e TEREON são apenas apresentações.** Mesma estrutura de dados, mesmas regras técnicas, mesmos serviços e operações. Uma seleção de tema nunca pode modificar lista, ficha, obra, identidade, autorização ou sincronização. A configuração de aparência é local ao dispositivo e nunca é armazenada junto a uma lista.
@@ -30,8 +30,16 @@ Data: 09/11/2026 | Branch: desenvolvimento | Status: experimental, sem homologa�
 - Três escolhas: Claro, Escuro, TEREON; opção local independente de login, sem gravação no Supabase.
 - Chave de preferência: `tereon-x-appearance-v1` (valores: `light`, `dark`, `tereon`).
 - Seleção persistida entre recargas; em armazenamento indisponível usar Claro sem impedir navegação.
-- No experimento inicial, as diferenças visuais estão restritas ao **Início**; outros módulos permanecem inalterados até aprovação.
+- **Hoje:** `html[data-tx-appearance]` aplica os temas globalmente (também em modais). A escolha fica em **Minha conta**, inclusive para visitantes. O Início usa ainda `#homeScreen[data-appearance]` para decoração, sem regras de dados.
 - O modo TEREON inicial usa composição gráfica CSS leve, **sem imagens definitivas ainda**. As artes e interações imersivas deverão ser desenvolvidas separadamente.
+
+## Padrão atual aceito em Minhas listas
+- Cabeçalho único com nome de perfil, indicador ON/OFF **somente da rede**, marca TEREON X clicável e breadcrumb sob a linha divisória.
+- Cartões únicos cinza suave translúcidos (e equivalentes nos modos Escuro/TEREON), status técnico de armazenamento individual. Espaço entre título/ações e o primeiro cartão.
+- Botões `＋ Nova` verde (primário) e `Conferir nuvem` secundário. Ações Editar nome, Duplicar, Compartilhar, Excluir à direita **em linha inferior**; checkbox discreto no canto superior direito **alinhado verticalmente ao título**.
+- Seleção múltipla hoje não executa lote; compartilhar pela seleção funciona com exatamente uma lista. Não confundir status de armazenamento com os futuros estados de Solicitações.
+- Modal de lista acima da tela de listas; modal de adicionar material `#addDialog` preservado em HTML e lógica, com cores do tema. Não alterar estrutura/tags/condicionais para corrigir apenas o design.
+- Botões compactos requerem teste de toque/acessibilidade em celular; aceite visual do fundador não homologa todos os comportamentos ou os três temas.
 
 ## Governança
 1. Comparar as três interfaces na mesma Home.
