@@ -82,7 +82,7 @@ assert.equal(map.get(key),beforePrepare,'preparo repetido não regrava lista exi
 
 const html=src('x/index.html');
 const scripts=[...html.matchAll(/<script src="([^"]+)"/g)].map(x=>x[1].split('?')[0]);
-const expected=['/x/listas/store.js','/x/listas/servico.js','/x/motor-compartilhar.js','/x/catalogo/motor.js','/x/catalogo/seletor.js','/x/listas/nuvem/motor.js','/x/listas/integracao.js','/x/listas/app.js','/x/status.js','/x/pwa.js'];
+const expected=['/x/components/header.js','/x/listas/store.js','/x/listas/servico.js','/x/motor-compartilhar.js','/x/catalogo/motor.js','/x/catalogo/seletor.js','/x/listas/nuvem/motor.js','/x/listas/integracao.js','/x/listas/app.js','/x/status.js','/x/pwa.js'];
 assert.deepEqual(scripts,expected,'ordem explícita de dependências');
 assert.equal(/<script>/.test(html),false,'shell não deve conter lógica inline');
 for(const url of scripts)new vm.Script(src(url.slice(1)),{filename:url});
@@ -113,7 +113,7 @@ assert.ok(html.includes('/x/styles.css'));
 assert.ok(html.includes('type="module" src="/x/listas/auth.js'),'Auth começa após aplicação de Listas');
 assert.ok(src('x/listas/app.js').includes('TereonXAppActivateAccount'),'uma interface serve à conta e ao modo local');
 assert.ok(src('x/listas/app.js').includes('TereonXListIntegration.create'),'armazenamento injetado no serviço de Listas');
-assert.ok(html.includes('id="homeNavButton"')&&html.includes('data-action="home"'),'Início contextual retorna à página principal sem recarregar');
+assert.ok(src('x/components/header.js').includes('id="homeNavButton"')&&src('x/components/header.js').includes('data-action="home"'),'Início contextual vem do componente compartilhado');
 assert.equal(html.includes('id="homeButton"'),false,'sem dois botões Início conflitantes');
 assert.equal(src('x/listas/app.js').includes("$('homeButton').addEventListener"),false,'sem listener órfão');
 const hub=src('x/laboratorios/index.html');
@@ -136,7 +136,7 @@ assert.ok(home.includes('href="/x/escola/"'),'Escola é card independente');
 assert.ok(src('x/escola/index.html').includes('href="/x/biblioteca/"'),'Biblioteca é sala da Escola');
 assert.ok(src('x/biblioteca/index.html').includes('href="/x/biblioteca/fichario/"'),'Fichário é primeiro livro da Biblioteca');
 assert.ok(src('x/biblioteca/fichario/index.html').includes('TereonXCatalog.load()'),'leitor técnico original preservado');
-assert.ok(html.includes('href="/x/identidade/lab.html"'),'Perfil no cabeçalho');
+assert.ok(src('x/components/header.js').includes('href="/x/identidade/lab.html"'),'Perfil no cabeçalho compartilhado');
 assert.ok(listUi.includes("initialView==='create'")&&listUi.includes("initialView==='lists'"),'links de entrada antigos seguem válidos');
 assert.equal(src('x/listas/app.js').includes('localStorage'),false);
 assert.equal(src('x/listas/servico.js').includes('document.'),false);
