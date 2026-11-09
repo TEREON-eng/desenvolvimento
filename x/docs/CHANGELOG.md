@@ -1,5 +1,16 @@
 # TEREON X — Histórico técnico consolidado
 
+## 09/11/2026 — x.0.3.20 · Nome no perfil e temas visíveis no celular
+- Cabeçalho compartilhado mostra **Visitante** sem sessão, **Registrado** se há conta sem nome, ou `x_profiles.display_name` quando preenchido. Nome de exibição é consultado de maneira assíncrona, sem bloquear páginas, armazenado localmente por ID para uso offline. Logout não exibe nome de conta anterior.
+- Atualização de nome pela tela Minha conta reflete imediatamente no cabeçalho. Nome longo é abreviado visualmente no celular, preservando o texto no perfil.
+- `appearance.js` agora aplica a preferência local no documento inteiro (`data-tx-appearance`), mantendo `data-appearance` da Home e a mesma estrutura e ações nos três modos.
+- `appearance.css` introduz paleta de superfícies comum para páginas independentes e Listas e adapta a cor da barra de navegação móvel. Sem alteração nos motores ou estrutura dos modais.
+- **Proteção:** modais de trabalho seguem com paleta clara e contraste original nessa etapa; migração completa de seu visual ocorrerá separadamente após homologação.
+- Texto discreto **Prévia visual X.0.3.20** aparece no Início para diagnosticar PWA desatualizado no celular. Cache de serviço e versão do PWA atualizados.
+- Teste de nome do perfil adicionado ao workflow. Os testes existentes de aparência/cabeçalho ajustados. Sem alteração em `main`, dados das listas ou tabelas Supabase.
+- **Pendente:** CI comprovado e teste visual real em Android/iPhone. A presença da versão no código não comprova que o Worker Cloudflare tenha implantado o commit.
+
+
 ## 09/11/2026 — x.0.3.19 · Guia visual e protótipo das três aparências
 - Criado o guia `x/docs/GUIA-VISUAL-TEREON-X.md`: cores semânticas, papéis do verde-lousa, contraste, navegação e regra fundamental de que temas **não alteram comportamentos**.
 - Criados `x/appearance.js` e `x/appearance.css`. O seletor Claro, Escuro e TEREON aparece **somente no Início**, com preferência salva localmente na chave `tereon-x-appearance-v1`. Não usa Supabase ou motores de Listas.
