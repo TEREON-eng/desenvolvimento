@@ -1,5 +1,12 @@
 # TEREON X — Histórico técnico consolidado
 
+## 09/11/2026 — x.0.3.28 · Seleção compacta e proposta de andamento de listas
+- Checkbox de seleção **acima do botão Excluir**, na mesma coluna direita dos ícones. Estilo discreto semelhante aos checkboxes de e-mail; não acrescenta linha acima do título. Cartão retorna à altura compacta de aproximadamente 72px (altura mínima, expansão por conteúdo).
+- Permanecem os quatro ícones: Editar, Duplicar, Compartilhar e Excluir. O checkbox continua sem ação em lote destrutiva; marcação permite limpezas e compartilhar uma única selecionada como antes.
+- **Proposta pendente de aprovação funcional (não implementada):** distinguir dois tipos de estado no cartão: (a) técnico Local/Sincronizada/Aguardando/Falha/Conflito, já existente; (b) andamento da solicitação Pendente → Aprovada → Em compras → Comprado → Recebido. Definir permissões de aprovação, transições, histórico, revisão após aprovação e recebimento parcial antes de persistir. Não inferir andamento por sincronização.
+- Não alterados dados, Supabase, exclusão segura, fichas, modais aprovados, `main`. Versão/cache PWA x.0.3.28; CI e avaliação móvel ainda sem confirmação.
+
+
 ## 09/11/2026 — x.0.3.27 · Seleção discreta e Compartilhar no cartão
 - O seletor de listas tinha função limitada: acionar compartilhamento de **uma lista** pela barra de seleção, redundante ao compartilhamento individual; não havia edição/exclusão em lote. Isso foi explicitado ao usuário.
 - Eliminada a barra `Selecionar todas`; o checkbox de cada lista está agora no **canto superior esquerdo dentro do cartão**. Quando há seleção, surgem apenas contador, Limpar seleção e Compartilhar selecionada (habilitado com exatamente uma lista).
