@@ -42,6 +42,7 @@
   };
   async function refresh(){
    if(disposed)return;
+   if(deleting)throw Error('Exclusão em andamento. Tente novamente após a confirmação.');
    const remote=await cloud.list();
    if(disposed)return;
    const state=store.snapshot(),byUid=new Map(state.lists.map(x=>[x.recordUid,x]));
@@ -60,7 +61,7 @@
    await flush();
   }
   async function flush(){
-   if(disposed||!started)return;
+   if(disposed||!started||deleting)return;
    if(working)return working;
    working=(async()=>{
     while(!disposed){
