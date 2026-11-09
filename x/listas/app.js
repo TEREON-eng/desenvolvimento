@@ -20,8 +20,8 @@ function syncBanner(){
  const count=Number(status.pending)||0;
  const text=!status.ready?'Não foi possível confirmar acesso à nuvem · cópia local preservada'+(status.error?' · '+esc(status.error):''):
   status.conflicts?'Conflito de versões · alterações locais preservadas · '+esc(status.error||'Necessária revisão antes de enviar'):
-  status.error?'Falha na sincronização · '+(count?count+' lista(s) aguardando envio · ':'')+esc(status.error):
   status.working?'Sincronizando listas com a nuvem...':
+  status.error?'Falha na sincronização · '+(count?count+' lista(s) aguardando envio · ':'')+esc(status.error):
   count?count+' lista(s) salva(s) neste aparelho · envio à nuvem ainda não confirmado':
   'Listas sincronizadas com a nuvem';
  const pending=!!count||!!status.conflicts;
