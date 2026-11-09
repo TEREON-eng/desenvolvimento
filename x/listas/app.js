@@ -96,7 +96,7 @@ $('listDialog').addEventListener('close',function(){
 });
 function draw(){
  const background=page==='list'?listBackdrop:page;
- const homeNav=$('homeNavButton');if(homeNav)homeNav.hidden=background==='home';
+ window.TereonXHeader?.setPath(background==='home'?[['Ferramentas']]:[['Ferramentas','/x/'],['Listas de materiais']]);
  $('homeScreen').hidden=background!=='home';
  $('listsScreen').hidden=background==='home';
  if(!ready){
