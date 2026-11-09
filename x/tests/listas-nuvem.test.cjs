@@ -16,9 +16,11 @@ const from=table=>{
   order(){return Promise.resolve({data:[stored],error:null})},
   insert(payload){action.kind='insert';action.payload=payload;return q},
   update(payload){action.kind='update';action.payload=payload;return q},
+  delete(){action.kind='delete';return q},
   single(){return Promise.resolve({data:{...stored,...action.payload,version:1},error:null})},
   maybeSingle(){
-   if(action.kind==='update'&&failConflict)return Promise.resolve({data:null,error:null});
+   if((action.kind==='update'||action.kind==='delete')&&failConflict)return Promise.resolve({data:null,error:null});
+   if(action.kind==='delete'){const old=stored;stored=null;return Promise.resolve({data:{id:old.id},error:null})}
    if(action.kind==='update'){stored={...stored,...action.payload,version:stored.version+1};return Promise.resolve({data:stored,error:null})}
    return Promise.resolve({data:stored,error:null});
   }
@@ -50,6 +52,15 @@ const client={auth:{getUser:async()=>({data:{user:{id:uid}},error:null})},from};
  assert.equal(update.payload.version,undefined,'versão gerada apenas no banco');
  failConflict=true;
  await assert.rejects(service.updateList(id,1,{name:'Obra A',items:[],stages:[]}),/modificada em outro aparelho/);
+ await assert.rejects(service.deleteList(id,updated.version),/alterada ou excluída/);
+ failConflict=false;
+ await assert.rejects(service.deleteList(id,0),/Referência ou versão/);
+ const removed=await service.deleteList(id,updated.version);
+ assert.equal(removed,true);
+ const removal=logs.find(x=>x.kind==='delete');
+ assert.ok(removal.filters.some(([k,v])=>k==='owner_id'&&v===uid),'exclusão limitada ao proprietário');
+ assert.ok(removal.filters.some(([k,v])=>k==='version'&&v===updated.version),'exclusão exige mesma versão');
+
  const page=fs.readFileSync(path.join(__dirname,'../listas/nuvem/lab.html'),'utf8');
  const ui=fs.readFileSync(path.join(__dirname,'../listas/nuvem/lab.js'),'utf8');
  const central=fs.readFileSync(path.join(__dirname,'../laboratorios/index.html'),'utf8');
