@@ -84,8 +84,16 @@ function create(repository,options){
    return true;
   });
  }
+ function removeList(listId){
+  return change(data=>{
+   const before=data.lists.length;
+   data.lists=data.lists.filter(x=>String(x.id)!==String(listId));
+   if(data.lists.length===before)throw Error('Lista não encontrada.');
+   return true;
+  });
+ }
  function exportList(listId){const l=get(listId);if(!l)throw Error('Lista não encontrada.');return clone(l);}
- return Object.freeze({version:2,snapshot,get,createList,ensureRecordUid,upsertItem,duplicateItem,removeItem,exportList});
+ return Object.freeze({version:2,snapshot,get,createList,ensureRecordUid,upsertItem,duplicateItem,removeItem,removeList,exportList});
 }
 root.TereonXLists=Object.freeze({version:2,create});
 })(typeof window!=='undefined'?window:globalThis);
