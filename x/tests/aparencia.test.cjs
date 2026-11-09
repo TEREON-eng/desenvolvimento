@@ -12,8 +12,8 @@ for(const href of ['/x/?view=lists','/x/universo/obras/lab.html','/x/escola/'])a
 const css=read('x/appearance.css');
 for(const theme of ['dark','tereon'])assert.ok(css.includes('[data-appearance="'+theme+'"]'));
 assert.ok(css.includes('#homeScreen')&&css.includes('prefers-reduced-motion'));
-assert.ok(!css.includes('#addDialog')&&!css.includes('#listDialog'),'tema não altera seletivamente modais aprovados');
-assert.ok(css.includes('dialog{color:#18221e;color-scheme:light}'),'modais continuam legíveis no tema escuro');
+assert.ok(css.includes('dialog{background:var(--tx-app-surface)'),'modais recebem superfícies do tema');
+assert.ok(css.includes('#addDialog .ficha-option')&&css.includes('#listDialog .items'),'fichas e itens de listas seguem paleta');
 const listeners={},memory=new Map(),choices=variants.map(theme=>({dataset:{appearanceChoice:theme},attributes:{},setAttribute(key,value){this.attributes[key]=value}}));
 const homeNode={dataset:{}};const rootElement={dataset:{}};
 const document={
