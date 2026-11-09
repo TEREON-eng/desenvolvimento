@@ -143,3 +143,5 @@ html[data-tx-appearance] .list-entry .list-share:hover,html[data-tx-appearance] 
 html[data-tx-appearance] .list-select-all,html[data-tx-appearance] .list-select-count{color:var(--tx-app-muted)}
 html[data-tx-appearance] .list-select-bar .btn{background:var(--tx-action-soft);border-color:var(--tx-app-border);color:var(--tx-app-text)}
 html[data-tx-appearance] .list-select-one input,html[data-tx-appearance] .list-select-all input{accent-color:var(--tx-app-accent)}
+
+html[data-tx-appearance] .list-select-all input,html[data-tx-appearance] .list-select-one input{width:17px;min-width:17px;height:17px;min-height:17px;margin:0;padding:0}
