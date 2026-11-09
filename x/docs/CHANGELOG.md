@@ -1,5 +1,15 @@
 # TEREON X — Histórico técnico consolidado
 
+## 09/11/2026 — x.0.3.24 · Estado e exclusão por lista
+- `Minhas listas` mostra o estado de cada lista no próprio cartão: **Local**, **Aguardando nuvem**, **Sincronizando**, **Sincronizada**, **Falha no envio** ou **Conflito**. A mesma indicação é exibida nos detalhes da lista. O antigo aviso geral de sincronização foi removido; o comando discreto `Conferir nuvem` permanece para contas.
+- Cada cartão recebeu um botão separado `Excluir`, com confirmação explícita do nome e do número de lançamentos. O botão que abre a lista permanece independente.
+- Para visitantes: `TereonXLists.removeList(id)` exclui apenas do repositório local. Para usuários autenticados: `TereonXListIntegration.deleteList(id)` consulta o estado remoto, verifica conflitos e sincronizações em andamento e só remove a cópia local **depois** de obter confirmação da exclusão no backend; se houver falha, preserva a cópia local.
+- `TereonXCloudLists.deleteList(id,version)` restringe a exclusão a `owner_id`, ID e versão da lista; alterações concorrentes não são apagadas.
+- Bloqueio de corrida entre consultas, envios e exclusões. Ação de exclusão não apaga outras listas nem altera as fichas ou o HTML do modal técnico aprovado.
+- Testes de exclusão local, falha remota, conflito e não reaparecimento após atualização acrescentados aos contratos; sem alteração na `main`.
+- **Atenção:** não foi confirmada ainda a política de exclusão (RLS) do Supabase, a execução do CI nem o resultado no celular. Se o backend negar a exclusão, os dados devem permanecer preservados e um erro ser informado.
+
+
 ## 09/11/2026 — x.0.3.23 · Estado de rede simplificado e diagnóstico de sincronização
 - Cabeçalho: nome do perfil acompanhado de ON/OFF antes do nome. Os chips separados Online/Offline e Registrado/Visitante ficam ocultos visualmente, mantendo os dados de estado para integração. ON/OFF reflete **apenas conectividade do dispositivo** (navigator.onLine), jamais confirmação da nuvem.
 - Sem sessão, o nome exibido é Visitante; com conta autenticada e nome de exibição, aparece o nome. Conta autenticada sem nome usa Minha conta (e não Visitante, porque isso seria incorreto).
