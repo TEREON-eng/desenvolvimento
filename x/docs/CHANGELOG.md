@@ -1,5 +1,14 @@
 # TEREON X — Histórico técnico consolidado
 
+## 09/11/2026 — x.0.3.23 · Estado de rede simplificado e diagnóstico de sincronização
+- Cabeçalho: nome do perfil acompanhado de ON/OFF antes do nome. Os chips separados Online/Offline e Registrado/Visitante ficam ocultos visualmente, mantendo os dados de estado para integração. ON/OFF reflete **apenas conectividade do dispositivo** (navigator.onLine), jamais confirmação da nuvem.
+- Sem sessão, o nome exibido é Visitante; com conta autenticada e nome de exibição, aparece o nome. Conta autenticada sem nome usa Minha conta (e não Visitante, porque isso seria incorreto).
+- Motor de Listas **não alterado**; nenhuma flag `cloudPending` foi apagada. Mensagem de sincronização dá prioridade a falhas com motivo, quantidade de listas pendentes, conflitos e trabalho em andamento. Após retorno da nuvem, somente confirmação remota pode liberar pendência.
+- O comando Atualizar foi renomeado conforme o estado para Conferir nuvem / Tentar sincronizar e exibe falhas sem apagar cópias locais. No momento de erro de consulta à nuvem, mantém cache e registra motivo informativo.
+- Teste expandido: pendência é mantida em falha e limpa apenas após resposta do backend de demonstração. PWA e cache x.0.3.23; mudanças na branch desenvolvimento.
+- Diagnóstico real do usuário ainda depende do erro retornado pelo backend e de teste no dispositivo. **Não** presumir que ter rede e sessão implica sincronização concluída.
+
+
 ## 09/11/2026 — x.0.3.22 · Caminho da tela e temas nos modais
 - Substituído o retorno de cabeçalho por uma trilha de navegação posicionada **abaixo da linha divisória**, com links de antecessores e último nível identificado como página atual. Ex.: Ferramentas › Listas de materiais; Ferramentas › Escola › Biblioteca. A primeira palavra é clicável nas telas internas.
 - O estado de Listas atualiza a trilha com `TereonXHeader.setPath`; a ação de retorno existente (`data-action="home"`) é preservada. A marca TEREON X continua retornando à Home.
