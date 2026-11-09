@@ -101,3 +101,14 @@ html[data-tx-appearance] .profile-appearance .theme-option{display:flex;align-it
 html[data-tx-appearance] .profile-appearance .theme-option[aria-pressed="true"]{border-color:var(--tx-app-accent);background:var(--tx-app-accent);color:var(--tx-app-accent-ink)}
 html[data-tx-appearance] .profile-appearance .theme-option:focus-visible{outline:2px solid var(--tx-app-accent);outline-offset:2px}
 @media(max-width:350px){html[data-tx-appearance] .profile-appearance .theme-option{font-size:11px;padding:7px 4px}}
+
+/* Indicadores por lista — os três temas compartilham estados, alteram apenas cores. */
+html[data-tx-appearance] .list-entry .listrow{background:var(--tx-app-surface);color:var(--tx-app-text);border-color:var(--tx-app-border)}
+html[data-tx-appearance] .list-delete{background:var(--tx-app-surface);border-color:var(--tx-app-border);color:#C66D66}
+html[data-tx-appearance="light"] .list-delete{color:#91524D}
+html[data-tx-appearance] .list-storage{background:var(--tx-app-surface);color:var(--tx-app-muted);border-color:var(--tx-app-border)}
+html[data-tx-appearance] .list-storage--synced{color:var(--tx-app-slate);border-color:var(--tx-app-slate)}
+html[data-tx-appearance] .list-storage--pending{color:#D7A84F;border-color:#A78035}
+html[data-tx-appearance="light"] .list-storage--pending{color:#856023;border-color:#E7D5A8}
+html[data-tx-appearance] .list-storage--error,html[data-tx-appearance] .list-storage--conflict{color:#D47B75;border-color:#A0524E}
+html[data-tx-appearance="light"] .list-storage--error,html[data-tx-appearance="light"] .list-storage--conflict{color:#933D38;border-color:#E9B9B5}
