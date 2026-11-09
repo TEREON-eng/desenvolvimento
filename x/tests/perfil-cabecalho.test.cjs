@@ -13,8 +13,8 @@ assert.ok(holder.innerHTML.includes('id="txProfileName"')&&holder.innerHTML.incl
 assert.ok(holder.innerHTML.includes('id="txNetwork"'),'rede junto ao nome do perfil');
 root.TereonXHeader.setIdentity(null,null);assert.equal(label.textContent,'Visitante');
 const user={id:'test-user'};
-root.TereonXHeader.setIdentity(user,null);assert.equal(label.textContent,'Registrado');
-root.TereonXHeader.setDisplayName('other-user','Outro');assert.equal(label.textContent,'Registrado','não usar nome de outra conta');
+root.TereonXHeader.setIdentity(user,null);assert.equal(label.textContent,'Minha conta');
+root.TereonXHeader.setDisplayName('other-user','Outro');assert.equal(label.textContent,'Minha conta','não usar nome de outra conta');
 root.TereonXHeader.setDisplayName(user.id,' Ana Silva ');assert.equal(label.textContent,'Ana Silva');
 root.TereonXHeader.setIdentity(user,null);assert.equal(label.textContent,'Ana Silva','nome salvo reaparece offline');
 const client={from:table=>{
