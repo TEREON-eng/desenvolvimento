@@ -6,11 +6,13 @@
 const doc=root.document;
 const connection=doc?.getElementById('xConnection');
 const account=doc?.getElementById('xAccount');
+const networkPill=doc?.getElementById('txNetwork');
 let identity='checking',sessionUnverified=false;
 const names={checking:'Verificando conta',visitor:'Visitante',registered:'Registrado',unavailable:'Conta indisponível'};
 function render(){
  const online=root.navigator?.onLine!==false;
  if(connection){connection.textContent=online?'Online':'Offline';connection.dataset.state=online?'online':'offline';connection.title=online?'Dispositivo conectado à rede (servidor não verificado)':'Sem conexão de rede';}
+ if(networkPill){networkPill.textContent=online?'ON':'OFF';networkPill.dataset.state=online?'online':'offline';networkPill.title=online?'Dispositivo conectado à rede; sincronização não confirmada':'Dispositivo sem conexão de rede';networkPill.setAttribute('aria-label',online?'Rede disponível, sincronização não confirmada':'Sem conexão de rede');}
  if(account){
   account.textContent=(names[identity]||names.checking)+(identity==='registered'&&sessionUnverified?(online?' · verificando':' · sessão offline'):'');
   account.dataset.state=identity;
