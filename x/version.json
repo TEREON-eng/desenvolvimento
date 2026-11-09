@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.27",
+  "version": "x.0.3.28",
   "build": "2026-11-09",
-  "notes": "Checkbox no canto superior esquerdo de cada cartão; Compartilhar agrupado com Editar Duplicar Excluir; seleção compacta"
+  "notes": "Checkbox de seleção acima da lixeira, cartão compacto sem faixa superior; proposta de etapas de aprovação/compras separada da sincronização"
 }
