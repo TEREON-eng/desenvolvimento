@@ -17,11 +17,12 @@ const head=read('x/components/header.js'),style=read('x/components/header.css');
 new vm.Script(head,{filename:'header.js'});
 new vm.Script(read('x/status.js'),{filename:'status.js'});
 assert.ok(head.includes('tx-header-row')&&head.includes('tx-nav'),'navegação separada da área de conta');
-assert.ok(head.includes('id="homeNavButton"')&&head.includes('id="installButton"'));
-assert.ok(head.includes('data-action="home"')&&head.includes('← Ferramentas'),'retorno à Home é contextual e discreto');
+assert.ok(head.includes('tx-breadcrumb')&&head.includes('id="installButton"'));
+assert.ok(head.includes("holder.insertAdjacentHTML('afterend'"),'trilha depois da linha do cabeçalho');
+assert.ok(head.includes('data-action="home"')&&head.includes('setPath'),'caminho atualiza sem recarregar a ferramenta');
 assert.ok(head.includes('TEREON X — ir às Ferramentas'),'marca leva ao Início');
-assert.ok(head.includes("back==='/x/'?'':"),'não mostrar botão Início redundante nos módulos');
-assert.ok(style.includes('.tx-global-header .tx-header-row')&&style.includes('.tx-global-header .tx-nav'));
+assert.ok(!head.includes('← Início</a>'),'não mostrar botão Início redundante');
+assert.ok(style.includes('.tx-global-header .tx-header-row')&&style.includes('.tx-breadcrumb'));
 for(const [page,kind] of Object.entries(pages)){
  const html=read(page);
  assert.ok(html.includes('data-tx-header="'+kind+'"'),'incluir componente de cabeçalho em '+page);
@@ -37,7 +38,7 @@ for(const [page,kind] of Object.entries(pages)){
 const shell=read('x/index.html');
 assert.ok(shell.includes('id="homeScreen"')&&shell.includes('id="listsScreen"'));
 assert.ok(!shell.includes('class="account-corner"'),'header antigo foi removido da home');
-assert.ok(read('x/listas/app.js').includes("homeNav.hidden=background==='home'"),'botão Início permanece contextual');
+assert.ok(read('x/listas/app.js').includes('TereonXHeader?.setPath'),'caminho da Home e Listas atualizado por estado');
 const fixture=read('x/tests/fixtures/modal-adicionar-aprovado-x034.html');
 const start=shell.indexOf('<dialog id="addDialog"');
 assert.equal(shell.slice(start,shell.indexOf('</dialog>',start)+9),fixture,'modal de adicionar foi preservado integralmente');
