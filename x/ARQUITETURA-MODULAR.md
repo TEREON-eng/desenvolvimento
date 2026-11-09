@@ -43,8 +43,8 @@ Um módulo **não** deve abrir a tela interna de outro, conhecer IDs de elemento
 
 ## 6. Recorte atual do motor Compartilhar
 - É invocado pelo botão **Compartilhar** dentro da lista, por modal, sem menu ou tela independentes.
-- **WhatsApp/texto:** somente nomes, quantidades e unidades dos materiais.
-- **E-mail:** oferecer perfis *Vendedor* (lista para compra), *Equipe de obra* (por etapas), *Chefia/Engenharia* (completo).
+- **WhatsApp/texto (CONTRATO-ALVO histórico):** somente nomes, quantidades e unidades. **Implementação atual em 09/11:** inclui também detalhes e etapas; há divergência conhecida e ainda não homologada. Não eliminar dados sem decisão do fundador.
+- **E-mail (CONTRATO-ALVO):** perfis *Vendedor* (lista para compra), *Equipe de obra* (por etapas), *Chefia/Engenharia* (completo). **Implementação atual:** um formato único, a revisar com o fundador.
 - **PDF:** manter, por enquanto, a versão completa e simples atualmente aprovada no X.
 - Melhorias futuras são realizadas dentro do motor e dos modelos, sem reescrever a tela de listas.
 
@@ -103,3 +103,14 @@ Motor `x/compartilhar-usuarios/motor.js`, banco `public.x_list_shares` e interfa
 - **Acessos e autorização:** banco Supabase RLS com permissões por coluna; identificadores UUID somente como endereço de usuário no primeiro laboratório, sem expor um diretório de e-mails.
 - **Visual:** a interface pode ser redesenhada por CSS/HTML mantendo os contratos públicos do motor, os eventos documentados e testes. **É proibido alterar mecânicas de Listas ou registros no banco para corrigir aparência.** Antes de mudar visual, registrar comportamento de referência e executar regressão.
 - **Status:** esquema e código criados em desenvolvimento; não testado com dois usuários reais, não integrado ao aplicativo principal e não homologado.
+
+## 11. Revisão de contratos — 09/11/2026 / X.0.3.29
+**Vigente:** `x/index.html` é shell com arquivos separados; `x/listas/app.js` concentra a UI e parte da navegação, enquanto `servico.js`, `store.js` e `integracao.js` implementam a escrita e sincronização. Registro de 07/11 indicando listas ainda inline no HTML é histórico, não recomendação para refazer o shell.
+- `TereonXLists.create(repository)`: `createList/renameList/duplicateList/removeList/upsertItem/duplicateItem/removeItem/get/exportList/snapshot/ensureRecordUid`; UI não grava diretamente.
+- `TereonXListIntegration`: `repository/refresh/flush/status/deleteList/stop`; cache segregado por conta e nuvem restrita ao proprietário.
+- **Compartilhar:** `TereonXShare.open(lists.exportList(id))` recebe snapshot e não altera a lista. Envio a outro usuário TEREON continua motor independente e não é ação de compras.
+- **Seleção de listas:** controle visual individual com uma opção de compartilhar selecionada, habilitada somente quando exatamente **uma** lista marcada. O contrato de lote ainda não foi definido; não improvisar aprovação ou exclusão de várias listas.
+- **Estados:** sincronização é infraestrutura; andamento Pendente/Aprovada/Em compras/Comprado/Recebido deverá residir em Solicitações, com histórico, papéis, transições e tratamento de parciais.
+- **Regra irrevogável de não-regressão:** preservar o comportamento do `#addDialog` (fixture X.0.3.4), fichas e tags aprovadas; mudar CSS não autoriza trocar motor ou recriar modal. Matriz de regressão e aceite móvel obrigatório.
+- Branch `main` não deve receber mudanças sem aprovação, CI e teste real; não inferir Preview pelo nome do Worker.
+Consulta adicional: [revisão geral](docs/REVISAO-GERAL-CONTRATOS-2026-11-09.md).
