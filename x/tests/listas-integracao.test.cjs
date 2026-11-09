@@ -69,6 +69,14 @@ const wait=()=>new Promise(resolve=>setImmediate(resolve));
 
  sync.stop();
  assert.throws(()=>sync.repository.save({lists:[]}),/Conta alterada/);
+ const deniedCloud=makeCloud([initial]),deniedStore=makeStore();
+ deniedCloud.deleteList=async()=>{throw Error('Sem permissão no servidor')};
+ const denied=integration.create({store:deniedStore,cloud:deniedCloud});
+ await denied.refresh();
+ await assert.rejects(denied.deleteList(uid),/Sem permissão/);
+ assert.equal(deniedStore.snapshot().lists.length,1,'falha remota preserva lista e seus materiais');
+ assert.equal(deniedCloud.records.has(uid),true,'falha não altera nuvem');
+ denied.stop();
  const guest=makeStore({lists:[{id:'avulsa',name:'Só neste aparelho',items:[],stages:[]}]});
  assert.equal(guest.snapshot().lists[0].name,'Só neste aparelho');
  assert.equal(cache.snapshot().lists.some(l=>l.name==='Só neste aparelho'),false,'dados avulsos não entram na conta automaticamente');
