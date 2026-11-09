@@ -24,6 +24,8 @@ assert.equal(nodes.xAccount.textContent,'Conta indisponível');
 win.navigator.onLine=true;callbacks.online();
 assert.equal(nodes.xConnection.textContent,'Online');
 assert.equal(nodes.xAccount.textContent,'Conta indisponível','rede online não presume autenticação');
+win.TereonXStatus.setAccount('registered',{unverified:true});
+assert.equal(nodes.xAccount.textContent,'Registrado · verificando','sessão local visível enquanto validação remota aguarda');
 const auth=read('x/listas/auth.js'),html=read('x/index.html');
 assert.ok(auth.includes("setAccount(uid?'registered':'visitor')"));
 assert.ok(auth.includes("setAccount(uid?'registered':'unavailable'"));
