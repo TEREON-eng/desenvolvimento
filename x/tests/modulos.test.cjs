@@ -172,7 +172,9 @@ assert.ok(listUi.includes('data-share-list')&&listUi.includes('data-select-list'
 assert.ok(!listUi.includes('data-select-all'),'sem seleção geral desnecessária');
 assert.ok(!listUi.includes('class="list-share"'),'sem botão Compartilhar solto fora do cartão');
 assert.ok(listUi.includes('data-action="clear-selection"'),'seleção pode ser desmarcada');
-assert.ok(src('x/styles.css').includes('.list-entry .list-select-one{position:absolute;top:7px;left:9px'),'checkbox no canto superior esquerdo');
+assert.ok(listUi.includes('class="list-end-actions"'),'checkbox agrupado verticalmente à lixeira');
+assert.ok(src('x/styles.css').includes('.list-entry .list-end-actions .list-select-one{position:static'),'checkbox na coluna de ações sem faixa superior');
+assert.ok(src('x/styles.css').includes('.list-entry .list-card{padding-top:0;min-height:72px'),'cartão mais compacto');
 assert.ok(listUi.includes('data-rename-list')&&listUi.includes('data-duplicate-list')&&listUi.includes('data-share-list')&&listUi.includes('data-delete-list'),'quatro ações preservadas');
 assert.ok(src('x/styles.css').includes('.list-cards')&&src('x/styles.css').includes('margin:12px 0 14px'),'primeiro cartão separado do título e ações');
 
