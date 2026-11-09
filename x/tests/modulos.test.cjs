@@ -147,11 +147,29 @@ assert.equal(service.removeList(toRemove),true,'exclusão local confirma ID esco
 assert.equal(service.get(toRemove),null,'lista local não aparece após exclusão');
 assert.throws(()=>service.removeList(toRemove),/Lista não encontrada/,'segunda exclusão não altera outras listas');
 assert.ok(service.get(listId),'exclusão não afeta outras listas');
+const originalCopy=service.exportList(listId);
+const duplicatedListId=service.duplicateList(listId);
+const copied=service.get(duplicatedListId);
+assert.notEqual(copied.id,originalCopy.id,'duplicação cria outro ID local');
+assert.notEqual(copied.recordUid,originalCopy.recordUid,'duplicação cria outra identidade da nuvem');
+assert.deepEqual(copied.items,originalCopy.items,'duplicação mantém todos os materiais');
+assert.deepEqual(copied.stages,originalCopy.stages,'duplicação mantém etapas');
+assert.equal(copied.name,originalCopy.name+' (cópia)');
+assert.equal(copied.cloudVersion,undefined,'cópia não herda estado remoto');
+assert.equal(service.renameList(duplicatedListId,'Lista revisada'),true);
+assert.equal(service.get(duplicatedListId).name,'Lista revisada');
+assert.equal(service.get(listId).name,originalCopy.name,'editar nome da cópia não muda original');
+assert.throws(()=>service.renameList(duplicatedListId,'   '),/Informe um nome/);
+service.removeList(duplicatedListId);
+
 assert.ok(listUi.includes('data-delete-list')&&listUi.includes('listStorageBadge'),'cada lista mostra estado e ação própria');
 assert.ok(listUi.includes('btn small primary list-action-primary')&&listUi.includes('list-action-secondary'),'ações Nova e Conferir nuvem seguem hierarquia visual');
 const appearance=src('x/appearance.css');
 assert.ok(appearance.includes('--tx-panel-soft')&&appearance.includes('.list-head-actions .list-action-primary'),'superfícies translúcidas e botão principal por tema');
-assert.ok(appearance.includes('.list-entry .listrow')&&appearance.includes('.list-entry .list-delete'),'cartão e excluir com estilo sem mudar comportamento');
+assert.ok(appearance.includes('.list-entry .list-card')&&appearance.includes('.list-entry .list-icon'),'cartão único e três ações em todos os temas');
+assert.ok(listUi.includes('data-rename-list')&&listUi.includes('data-duplicate-list')&&listUi.includes('data-delete-list'),'três ações no cartão');
+assert.ok(listUi.includes('data-share-list')&&listUi.includes('data-select-list')&&listUi.includes('data-select-all'),'compartilhar fora e seleção individual ou total');
+assert.ok(src('x/styles.css').includes('.list-cards')&&src('x/styles.css').includes('margin:12px 0 14px'),'primeiro cartão separado do título e ações');
 
 assert.ok(!listUi.includes('html=syncBanner()+html'),'aviso geral não ocupa mais Minhas listas');
 console.log('TEREON X: contratos de Listas, persistência e separação do shell OK');
