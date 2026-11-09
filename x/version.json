@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.16",
+  "version": "x.0.3.17",
   "build": "2026-11-09",
-  "notes": "Início apenas ferramentas; status Online/Offline e Visitante/Registrado com aviso de sessão indisponível"
+  "notes": "Conta e status no canto direito; Início contextual; status inicial de sessão; instalação PWA condicional"
 }
