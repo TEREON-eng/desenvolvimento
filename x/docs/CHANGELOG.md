@@ -1,5 +1,14 @@
 # TEREON X — Histórico técnico consolidado
 
+## 09/11/2026 — x.0.3.21 · Temas em Minha conta e navegação mais limpa
+- O seletor Claro, Escuro e TEREON foi retirado da Home e colocado na página **Minha conta**, em painel acessível a visitantes ou usuários registrados. A chave de preferência e os comportamentos continuam idênticos.
+- A marca **TEREON X** do cabeçalho tornou-se link para as Ferramentas. Nas páginas com destino direto a `/x/`, foi removido o botão Início redundante.
+- Dentro de Listas, `homeNavButton` permanece com ID e ação original, mas passa a ser um link textual discreto **← Ferramentas**; o motor de navegação não foi alterado. Nas páginas aninhadas (Biblioteca/Fichário) permanecem retornos contextuais.
+- Atualizado contraste/estilo da seleção de temas dentro do painel de perfil, mantendo 44px de altura para toque.
+- Testes de aparência e cabeçalho adaptados; versão e cache PWA x.0.3.21. Modal aprovado, fichas, listas, armazenamento e `main` preservados.
+- Teste visual em dispositivo e resultado verde do CI ainda pendentes.
+
+
 ## 09/11/2026 — x.0.3.20 · Nome no perfil e temas visíveis no celular
 - Cabeçalho compartilhado mostra **Visitante** sem sessão, **Registrado** se há conta sem nome, ou `x_profiles.display_name` quando preenchido. Nome de exibição é consultado de maneira assíncrona, sem bloquear páginas, armazenado localmente por ID para uso offline. Logout não exibe nome de conta anterior.
 - Atualização de nome pela tela Minha conta reflete imediatamente no cabeçalho. Nome longo é abreviado visualmente no celular, preservando o texto no perfil.
