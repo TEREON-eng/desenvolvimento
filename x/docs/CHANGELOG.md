@@ -1,5 +1,11 @@
 # TEREON X — Histórico técnico consolidado
 
+## 09/11/2026 — x.0.3.29 · Seleção na altura do título
+- O checkbox de cada lista foi deslocado para o topo direito, **alinhado verticalmente ao título**, e as quatro ações Editar, Duplicar, Compartilhar e Excluir ficam **na mesma linha abaixo** dele.
+- Mantida seleção individual, ações e persistência anteriores. Sem alterar dados, motores, sincronização, fichas, exclusão segura ou modais técnicos. Tema claro/escuro/TEREON segue os mesmos critérios visuais.
+- Teste de estrutura atualizado. PWA/cache `x.0.3.29`; CI e inspeção visual no celular ainda não confirmados.
+
+
 ## 09/11/2026 — x.0.3.28 · Seleção compacta e proposta de andamento de listas
 - Checkbox de seleção **acima do botão Excluir**, na mesma coluna direita dos ícones. Estilo discreto semelhante aos checkboxes de e-mail; não acrescenta linha acima do título. Cartão retorna à altura compacta de aproximadamente 72px (altura mínima, expansão por conteúdo).
 - Permanecem os quatro ícones: Editar, Duplicar, Compartilhar e Excluir. O checkbox continua sem ação em lote destrutiva; marcação permite limpezas e compartilhar uma única selecionada como antes.
