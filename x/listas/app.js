@@ -286,7 +286,7 @@ document.addEventListener('click',function(e){
    return;
   }
 
-  if(a.dataset.action==='home'){navigate('home');return;}
+  if(a.dataset.action==='home'){e.preventDefault();navigate('home');return;}
   if(a.dataset.action==='create'){e.preventDefault();$('newName').value='';$('createDialog').showModal();$('newName').focus();}
   if(a.dataset.action==='lists'){
    e.preventDefault();
