@@ -63,9 +63,34 @@ html[data-tx-appearance] .shell a:focus-visible,html[data-tx-appearance] .shell 
 
 #homeScreen .appearance-version{font-size:10px;color:var(--tx-muted);margin:-10px 2px 14px;text-align:right}
 
-/* Modais técnicos aprovados mantêm a paleta clara e legibilidade original.
-   Apenas impede herança da cor escura do documento. */
-html[data-tx-appearance] dialog{color:#18221e;color-scheme:light}
+/* Modais herdam apenas cores do tema. Layout, alturas, controles e motor permanecem intactos. */
+html[data-tx-appearance] dialog{background:var(--tx-app-surface);color:var(--tx-app-text);border:1px solid var(--tx-app-border);color-scheme:normal}
+html[data-tx-appearance="light"] dialog{color-scheme:light}
+html[data-tx-appearance="dark"] dialog,html[data-tx-appearance="tereon"] dialog{color-scheme:dark}
+html[data-tx-appearance] dialog .dialog-inner,html[data-tx-appearance] dialog .list-detail-content{color:var(--tx-app-text)}
+html[data-tx-appearance] dialog h1,html[data-tx-appearance] dialog h2,html[data-tx-appearance] dialog strong,html[data-tx-appearance] dialog .name,html[data-tx-appearance] dialog .choice-head strong{color:var(--tx-app-text)}
+html[data-tx-appearance] dialog .heading,html[data-tx-appearance] dialog .note,html[data-tx-appearance] dialog .tiny,html[data-tx-appearance] dialog .muted,html[data-tx-appearance] dialog .list-return,html[data-tx-appearance] dialog label{color:var(--tx-app-muted)}
+html[data-tx-appearance] dialog .section{border-top-color:var(--tx-app-border)}
+html[data-tx-appearance] dialog .tag-fields-divider{background:var(--tx-app-border)}
+html[data-tx-appearance] dialog .progress .segment{background:var(--tx-app-border)}
+html[data-tx-appearance] dialog .progress .segment.done{background:var(--tx-app-slate)}
+html[data-tx-appearance] dialog input,html[data-tx-appearance] dialog select,html[data-tx-appearance] dialog textarea{background:var(--tx-app-surface);color:var(--tx-app-text);border-color:var(--tx-app-border)}
+html[data-tx-appearance] dialog .btn{background:var(--tx-app-surface);color:var(--tx-app-text);border-color:var(--tx-app-border)}
+html[data-tx-appearance] dialog .btn.primary{background:var(--tx-app-accent);color:var(--tx-app-accent-ink);border-color:var(--tx-app-accent)}
+html[data-tx-appearance] dialog .btn.ghost{background:transparent;border-color:transparent}
+html[data-tx-appearance] dialog .tag,html[data-tx-appearance] dialog .tag.option{background:var(--tx-app-surface);color:var(--tx-app-text);border-color:var(--tx-app-border)}
+html[data-tx-appearance] dialog .tag.required{outline-color:var(--tx-app-slate);border-color:var(--tx-app-slate)}
+html[data-tx-appearance] dialog .tag.option.on{background:var(--tx-app-border);border-color:var(--tx-app-slate)}
+html[data-tx-appearance] #addDialog .ficha-search{background:var(--tx-app-surface)}
+html[data-tx-appearance] #addDialog .ficha-option{background:var(--tx-app-surface);color:var(--tx-app-text);border-color:var(--tx-app-border)}
+html[data-tx-appearance] #addDialog .ficha-option small{color:var(--tx-app-muted)}
+html[data-tx-appearance] #addDialog .ficha-option:hover,html[data-tx-appearance] #addDialog .ficha-option:focus-visible{border-color:var(--tx-app-slate);background:var(--tx-app-border)}
+html[data-tx-appearance] #listDialog .items,html[data-tx-appearance] #listDialog .item{background:var(--tx-app-surface);color:var(--tx-app-text);border-color:var(--tx-app-border)}
+html[data-tx-appearance] dialog .item small,html[data-tx-appearance] dialog .empty{color:var(--tx-app-muted)}
+html[data-tx-appearance] dialog .item-icon{color:var(--tx-app-muted)}
+html[data-tx-appearance] dialog .item-icon:hover,html[data-tx-appearance] dialog .item-icon:focus-visible{background:var(--tx-app-border)}
+html[data-tx-appearance] dialog .notice{color:var(--tx-app-muted)}
+html[data-tx-appearance] dialog button:focus-visible,html[data-tx-appearance] dialog input:focus-visible{outline:2px solid var(--tx-app-accent);outline-offset:2px}
 
 /* Escolha de aparência em Minha conta (independente de cadastro). */
 html[data-tx-appearance] .profile-appearance{padding:17px;margin-top:14px}
