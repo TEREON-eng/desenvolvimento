@@ -113,7 +113,7 @@ function draw(){
   $('homeListCount').textContent=data.lists.length+' lista(s)';
   return;
  }else if(page==='lists'){
-  html='<div class="row"><h1>Minhas listas</h1><span class="list-head-actions"><button class="btn small" data-action="create">＋ Nova</button>'+(accountId?'<button class="btn small" data-action="sync" type="button">↻ Conferir nuvem</button>':'')+'</span></div><div class="stack">';
+  html='<div class="row"><h1>Minhas listas</h1><span class="list-head-actions"><button class="btn small primary list-action-primary" data-action="create">＋ Nova</button>'+(accountId?'<button class="btn small list-action-secondary" data-action="sync" type="button">↻ Conferir nuvem</button>':'')+'</span></div><div class="stack">';
   if(!data.lists.length)html+='<div class="empty">Nenhuma lista criada ainda.</div>';
   data.lists.forEach(function(x){html+='<div class="list-entry"><button type="button" class="listrow" data-open="'+esc(x.id)+'"><span><strong>'+esc(x.name)+'</strong><br><small class="muted">'+x.items.length+' lançamento(s)</small><span class="list-status-wrap">'+listStorageBadge(x)+'</span></span><span aria-hidden="true">›</span></button><button type="button" class="list-delete" data-delete-list="'+esc(x.id)+'" aria-label="Excluir lista '+esc(x.name)+'" title="Excluir esta lista">Excluir</button></div>';});
   html+='</div>';
