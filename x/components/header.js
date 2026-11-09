@@ -9,7 +9,7 @@ const backLabel=holder.dataset.backLabel||'← Início';
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 holder.classList.add('tx-global-header');
 holder.innerHTML='<div class="tx-header-row"><a class="tx-brand" href="/x/"'+(main?' data-action="home"':'')+' aria-label="TEREON X — ir às Ferramentas"><span class="tx-brand-name">TEREON X</span><span class="tx-brand-sub">Tecnologia que faz a engenharia fluir.</span></a>'+
- '<div class="tx-header-right"><a class="tx-account-link" href="/x/identidade/lab.html" aria-label="Minha conta">◉ <span id="txProfileName">Visitante</span><span id="txNetwork" class="tx-network" aria-label="Verificando rede">…</span></a>'+
+ '<div class="tx-header-right"><a class="tx-account-link" href="/x/identidade/lab.html" aria-label="Minha conta">◉ <span id="txNetwork" class="tx-network" aria-label="Verificando rede">…</span><span id="txProfileName">Visitante</span></a>'+
  '<span id="xStatus" class="tx-badges tx-status-hidden" role="status" aria-live="off" aria-label="Estado técnico da conexão e conta"><span id="xConnection" class="tx-status-part">Verificando rede</span><span id="xAccount" class="tx-status-part">Verificando conta</span></span></div></div>'+
  (main?'<div class="tx-nav"><button id="installButton" type="button" hidden>↓ Instalar</button></div>':'');
 /* Trilha de navegação fora do cabeçalho, logo abaixo da linha divisória. */
@@ -47,7 +47,7 @@ function validName(value){return typeof value==='string'?value.trim().replace(/\
 function setDisplayName(userId,value){
  if(!userId||userId!==currentUser)return;
  const name=validName(value);
- if(label)label.textContent=name||'Registrado';
+ if(label)label.textContent=name||'Minha conta';
  if(name)try{root.localStorage?.setItem(cacheKey(userId),name)}catch(error){}
 }
 function setIdentity(user,client){
@@ -56,7 +56,7 @@ function setIdentity(user,client){
  if(!currentUser){if(label)label.textContent='Visitante';return;}
  let cached='';
  try{cached=validName(root.localStorage?.getItem(cacheKey(currentUser)))}catch(error){}
- if(label)label.textContent=cached||'Registrado';
+ if(label)label.textContent=cached||'Minha conta';
  if(!client)return;
  Promise.resolve().then(async()=>{
   const response=await client.from('x_profiles').select('display_name').eq('user_id',user.id).maybeSingle();
