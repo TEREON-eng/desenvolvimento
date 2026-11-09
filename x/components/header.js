@@ -16,7 +16,7 @@ holder.innerHTML='<div class="tx-header-row"><div class="tx-brand"><span class="
 const label=holder.querySelector('#txProfileName');
 let sequence=0,currentUser=null;
 const cacheKey=id=>'tereon-x-profile-label-'+id;
-function validName(value){return typeof value==='string'?value.trim().replace(/\\s+/g,' ').slice(0,120):'';}
+function validName(value){return typeof value==='string'?value.trim().replace(/\s+/g,' ').slice(0,120):'';}
 function setDisplayName(userId,value){
  if(!userId||userId!==currentUser)return;
  const name=validName(value);
