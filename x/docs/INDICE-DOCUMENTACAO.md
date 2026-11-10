@@ -79,3 +79,7 @@ A estrutura vigente de **Obras** é **Escopo → Etapa → Subetapa**; não util
 
 ## Alteração no Cadastro Profissional — 10/11
 No laboratório de Empreiteiros, o núcleo atual passa a ser **Empreiteiro + Funcionários ativos/desligados**, com inclusão e edição em modais e histórico de status. Equipes anteriores permanecem como legado consultável, sem associação automática a funcionários. Todos os módulos de Obras usam agora cabeçalho e breadcrumb compartilhados. Ver [Mestre](MESTRE-TEREON-X.md), [Cadastro Profissional](PESSOAS-EQUIPES-ALOCACOES-2026-11-10.md) e [Guia Visual](GUIA-VISUAL-TEREON-X.md).
+
+
+## Superauditoria integral — 10/11/2026
+- [Superauditoria do TEREON X](SUPERAUDITORIA-TEREON-X-2026-11-10.md) — revisão de repositório e contratos, 20 achados P0–P2, matriz de maturidade, controles de RLS, testes, PWA, Listas, Catálogo, Obras/Diário/Pessoas e plano de release. **Não é CI verde nem homologação visual.**
