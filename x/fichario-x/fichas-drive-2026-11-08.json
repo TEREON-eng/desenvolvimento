@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "fonte": "Fichario.xlsm (Google Drive), leitura 2026-11-08; fonte da verdade: abas das fichas",
-  "aviso": "Todas as fichas estão em revisão, sem homologação técnica. Campos incompletos são exibidos como pendências; não preencher valores por inferência.",
+  "fonte": "Fichario.xlsm Google Drive, FT_COND-001 bloco ativo linhas 11–24, capturado 2026-11-10 20:15 BRT; demais 5 fichas preservadas de 2026-11-08",
+  "aviso": "LABORATÓRIO — fichas não homologadas; alterações de condutores têm exclusões experimentais e lacunas de produto. Não usar para compras sem revisão humana.",
   "fichas": [
     {
       "codigo": "FT_INFRA-001",
@@ -174,7 +174,7 @@
     },
     {
       "codigo": "FT_COND-001",
-      "nome": "Condutor elétrico",
+      "nome": "Condutores isolados",
       "categoria": "CONDUTORES",
       "status": "Em revisão",
       "tipo": "real",
@@ -184,11 +184,39 @@
           "ordem": 1,
           "nome": "Tipo",
           "valores": [
-            "Unipolar",
-            "Multipolar"
+            "Condutor isolado"
           ],
           "condicao": "Sempre",
-          "classificacao": "Obrigatório"
+          "exclusao": "Cobertura",
+          "classificacao": "Obrigatório",
+          "origemLinha": 11,
+          "status": "Aprovado"
+        },
+        {
+          "id": "DET-001",
+          "ordem": 1,
+          "nome": "Tipo",
+          "valores": [
+            "Cabo unipolar"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "",
+          "classificacao": "Obrigatório",
+          "origemLinha": 12,
+          "status": "Aprovado"
+        },
+        {
+          "id": "DET-001",
+          "ordem": 1,
+          "nome": "Tipo",
+          "valores": [
+            "Cabo multipolar"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "Cor",
+          "classificacao": "Obrigatório",
+          "origemLinha": 13,
+          "status": "Aprovado"
         },
         {
           "id": "DET-002",
@@ -199,11 +227,31 @@
             "Alumínio"
           ],
           "condicao": "Sempre",
-          "classificacao": "Obrigatório"
+          "exclusao": "",
+          "classificacao": "Obrigatório",
+          "origemLinha": 14,
+          "status": "Aprovado"
         },
         {
           "id": "DET-003",
           "ordem": 3,
+          "nome": "Qnt de vias",
+          "valores": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "condicao": "Cabo multipolar",
+          "exclusao": "",
+          "classificacao": "Obrigatório",
+          "origemLinha": 15,
+          "status": "Aprovado"
+        },
+        {
+          "id": "DET-004",
+          "ordem": 4,
           "nome": "Seção",
           "valores": [
             "1,5",
@@ -222,70 +270,135 @@
             "185,0",
             "240,0"
           ],
-          "condicao": "",
-          "classificacao": ""
-        },
-        {
-          "id": "DET-004",
-          "ordem": 4,
-          "nome": "Qnt de vias",
-          "valores": [
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
-          ],
-          "condicao": "",
-          "classificacao": ""
+          "condicao": "Sempre",
+          "exclusao": "",
+          "classificacao": "Obrigatório",
+          "origemLinha": 16,
+          "status": "Aprovado"
         },
         {
           "id": "DET-005",
           "ordem": 5,
-          "nome": "Temperatura de operação",
+          "nome": "Comport. ao fogo",
           "valores": [
-            "70 C",
-            "90 C"
+            "Comum"
           ],
-          "condicao": "",
-          "classificacao": ""
+          "condicao": "Sempre",
+          "exclusao": "",
+          "classificacao": "Opcional",
+          "origemLinha": 17,
+          "status": "Aprovado"
+        },
+        {
+          "id": "DET-005",
+          "ordem": 5,
+          "nome": "Comport. ao fogo",
+          "valores": [
+            "Não halogenado com baixa emissão de fumaça (LSZH)"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "PVC 70 °C",
+          "classificacao": "Opcional",
+          "origemLinha": 18,
+          "status": "Aprovado"
         },
         {
           "id": "DET-006",
           "ordem": 6,
-          "nome": "Tensão nominal",
+          "nome": "Isolação",
           "valores": [
-            "450/750 V",
-            "0,6/1,0 kV"
+            "PVC 70 °C"
           ],
-          "condicao": "",
-          "classificacao": ""
+          "condicao": "Sempre",
+          "exclusao": "",
+          "classificacao": "Obrigatório",
+          "origemLinha": 19,
+          "status": "Aprovado"
+        },
+        {
+          "id": "DET-006",
+          "ordem": 6,
+          "nome": "Isolação",
+          "valores": [
+            "HEPR ou XLPE 90 °C"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "450/750 V",
+          "classificacao": "Obrigatório",
+          "origemLinha": 20,
+          "status": "Aprovado"
         },
         {
           "id": "DET-007",
           "ordem": 7,
-          "nome": "Blindagem",
+          "nome": "Classe de tensão",
           "valores": [
-            "SEM blindagem",
-            "Malha",
-            "Fita"
+            "450/750 V",
+            "0,6/1,0 kV"
           ],
-          "condicao": "",
-          "classificacao": ""
+          "condicao": "Sempre",
+          "exclusao": "",
+          "classificacao": "Opcional",
+          "origemLinha": 21,
+          "status": "Aprovado"
         },
         {
           "id": "DET-008",
           "ordem": 8,
-          "nome": "Unidade compra",
+          "nome": "Cobertura",
           "valores": [
-            "m",
-            "rl50m",
-            "rl100m",
-            "rl200m"
+            "PVC 70 °C"
           ],
-          "condicao": "",
-          "classificacao": ""
+          "condicao": "Cabo unipolar//Cabo multipolar",
+          "exclusao": "",
+          "classificacao": "Opcional",
+          "origemLinha": 22,
+          "status": "Aprovado"
+        },
+        {
+          "id": "DET-009",
+          "ordem": 9,
+          "nome": "Cor",
+          "valores": [
+            "Preto",
+            "Azul",
+            "Verde",
+            "Vermelho",
+            "Amarelo",
+            "Cinza",
+            "Marrom"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "",
+          "classificacao": "Obrigatório",
+          "origemLinha": 23,
+          "status": "Aprovado"
+        },
+        {
+          "id": "DET-010",
+          "ordem": 10,
+          "nome": "Classe de encordoamento",
+          "valores": [
+            "Classe I (Sólido)",
+            "Classe II (Encordoado flexível)",
+            "Classe V (Flexivel)",
+            "Classe VI (Extraflexível)"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "",
+          "classificacao": "Opcional",
+          "origemLinha": 24,
+          "status": "Aprovado"
         }
+      ],
+      "pendencias": [
+        "IMPORTAÇÃO EXPERIMENTAL da aba FT_COND-001, linhas 11–24, 10/11/2026; status da ficha continua Em revisão.",
+        "LSZH selecionado exclui PVC 70 °C, mas a ficha ainda não dispõe de isolação termoplástica não halogenada como alternativa.",
+        "Cobertura cadastrada somente como PVC 70 °C; faltam compostos não halogenados, sem inventar opções.",
+        "Classe de tensão opcional na planilha; revisar se exigida para compra.",
+        "Classe II descrita como 'Encordoado flexível'; classificação IEC 60228 deve ser revisada antes da homologação.",
+        "Unidade de compra não figura no bloco ativo; quantidade/unidade continuam nos campos da Lista.",
+        "Construções comerciais, compatibilidades e separação entre isolação e cobertura ainda não homologadas."
       ]
     },
     {
