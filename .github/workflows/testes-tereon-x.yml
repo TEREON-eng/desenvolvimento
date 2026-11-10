@@ -14,6 +14,8 @@ jobs:
           node-version: '22'
       - name: Validar fluxo completo de Listas para o teste de 17/11
         run: node x/tests/fluxo-campo-17-11.test.cjs
+      - name: Estressar 648 combinações de Condutores no Fichário experimental
+        run: node x/tests/condutores-estresse.test.cjs
       - name: Validar contrato do catálogo
         run: node x/tests/catalogo.test.cjs
       - name: Validar módulos independentes, listas e persistência
