@@ -2,6 +2,7 @@
 'use strict';
 const assert=require('node:assert/strict');
 const integration=require('../listas/integracao.js');
+const cloudValidator=require('../listas/nuvem/motor.js').validate;
 const copy=x=>JSON.parse(JSON.stringify(x));
 const uid='eaf3d241-419b-4c2e-a188-f793eec2a050';
 function makeStore(initial){let state=copy(initial||{lists:[]});return {snapshot:()=>copy(state),save:next=>{state=copy(next);return copy(state)}}}
@@ -80,6 +81,18 @@ const wait=()=>new Promise(resolve=>setImmediate(resolve));
  const guest=makeStore({lists:[{id:'avulsa',name:'Só neste aparelho',items:[],stages:[]}]});
  assert.equal(guest.snapshot().lists[0].name,'Só neste aparelho');
  assert.equal(cache.snapshot().lists.some(l=>l.name==='Só neste aparelho'),false,'dados avulsos não entram na conta automaticamente');
+ const guardCloud=makeCloud(),guardStore=makeStore();
+ guardCloud.validate=cloudValidator;
+ const guard=integration.create({store:guardStore,cloud:guardCloud});
+ await guard.refresh();
+ const invalid=guard.repository.snapshot();
+ invalid.lists.push({id:'over-limit',recordUid:uid,name:'Acima do limite',items:Array.from({length:301},(_,n)=>({id:String(n),name:'Cabo',qty:1,unit:'m',stage:'Geral'})),stages:['Geral']});
+ assert.throws(()=>guard.repository.save(invalid),/300 materiais/);
+ assert.equal(guardStore.snapshot().lists.length,0,'validação remota impede falsa confirmação local');
+ const wrongQty={lists:[{id:'bad-qty',recordUid:uid,name:'Teste',items:[{name:'Cabo',qty:Infinity,unit:'m',stage:'Geral'}],stages:['Geral']}]};
+ assert.throws(()=>guard.repository.save(wrongQty),/material inválido/);
+ assert.equal(guardStore.snapshot().lists.length,0);
+ guard.stop();
  const offlineStore=makeStore(),offlineCloud=makeCloud();
  offlineCloud.createList=async()=>{throw Error('Sem internet')};
  const offline=integration.create({store:offlineStore,cloud:offlineCloud});
