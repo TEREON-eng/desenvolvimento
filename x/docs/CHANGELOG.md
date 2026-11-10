@@ -372,3 +372,10 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Motor independente de Empreiteiros/Equipes e tela mobile de CRUD fictício em `x/universo/empreiteiros/`, armazenamento local separado. Diário incorpora sugestões de prestadores e equipes locais após recarregar.
 - Botão **Gerar PDF do dia** no Diário monta relatório de programação e apontamento por obra/data e aciona **impressão A4** com opção “Salvar como PDF” no navegador. Sem assinatura, fotos, arquivo gerado por backend, ou nuvem.
 - `x/tests/obras-navegacao-pdf.test.cjs` adicionado ao workflow; smoke-test JS isolado de integridade das equipes e ligação dos módulos passou. **CI completo, impressão visual e ensaio no celular pendentes**. `main`, Listas, modal e banco preservados.
+
+
+## 10/11/2026 — Refinamento visual e auditoria preventiva de Obras (sem mudança de versão)
+- Criada camada compartilhada `x/universo/ui-refino.css` e aplicada a Obras, Diário, Empreiteiros e Visitas. Cores, superfícies, cartões, modais, tipografia e botões alinhados aos temas Claro/Escuro/TEREON do Guia Visual. Diário prioriza a Agenda do dia e recolhe o texto de ajuda.
+- Cadastro local de Equipes bloqueia exclusão quando equipe é referenciada em programação local do Diário; dados JSON locais incompatíveis bloqueiam novas escritas até tratamento seguro, em vez de permitir sobrescrita silenciosa.
+- Criado [relatório de auditoria preventiva](AUDITORIA-LAYOUT-OBRAS-2026-11-10.md) com riscos de isolamento entre contas, histórico de cancelamentos, snapshots, nomes de equipes, impressão, contraste e eventual CSS redundante. Teste estático `x/tests/obras-refino-visual.test.cjs` no workflow.
+- JS isolado compilou e referências verificadas. **Não houve renderização visual de celular, confirmação de CI completo, deploy, teste PDF real ou homologação.** Listas, SQL, fichas, `main`, fluxos de cadastro de obras Supabase e versão X.0.3.30 preservados.
