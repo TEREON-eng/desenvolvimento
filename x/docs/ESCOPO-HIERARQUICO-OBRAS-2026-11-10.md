@@ -51,3 +51,7 @@ Exemplo: `QD1` na lista → sugestão de `Quadros elétricos › QD1`; **não** 
 O nome visível **Obras** substitui o rótulo de navegação *Universo* em revisão futura, sem renomear pastas `x/universo/` agora. Primeiro desenvolver e testar **modelo de escopo** em laboratório separado; não alterar Listas/Modal aprovado para simular integração inexistente.
 
 Ver também `CONTRATO-ETAPAS-LISTAS-OBRAS-2026-11-10.md`.
+
+
+## 8. Laboratório de correspondências implementado — 10/11
+Criado `x/universo/obras/sugestoes-etapas.js`, motor **puro, de leitura e sem persistência** que lista caminhos de etapas pai/filho e retorna sugestões textuais com alternativas, sempre `confirmation_required`, `autoCreate:false` e `autoLink:false`. Se duas etapas chamadas QD1 pertencem a pais diferentes, retorna as duas para escolha; permite associação direta à etapa-mãe Quadros elétricos; rejeita ciclos e pai ausente. `x/tests/escopo-etapas.test.cjs` adicionado ao workflow. **Smoke-test isolado JS executado e aprovado**; CI GitHub ainda não comprovado. **Não foi criada tela, tabela, vínculo de lista, permissão ou etapa definitiva.**
