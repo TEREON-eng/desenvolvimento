@@ -170,6 +170,43 @@ function dayList(){
   actions.append(cancel);card.append(actions);$('entries').append(card);
  }
 }
+
+function printDay(){
+ const workId=$('filter-work').value,date=$('filter-date').value;
+ const work=ctx.works.find(x=>x.id===workId);
+ const records=engine.consolidate(entries,workId,date,ctx);
+ const report=$('print-report');
+ report.replaceChildren();
+ function append(tag,text,cls){
+  const x=document.createElement(tag);x.textContent=String(text);if(cls)x.className=cls;report.append(x);return x;
+ }
+ append('p','TEREON X · DIÁRIO DE OBRAS · RELATÓRIO DE DEMONSTRAÇÃO','print-eyebrow');
+ append('h1','Diário de Obras — '+(work?.name||'Obra'));
+ append('p','Data: '+fmt(date)+'  |  Situação: Simulação local (sem assinatura ou validação técnica)');
+ append('p','Registros de programação: '+records.length);
+ if(!records.length)append('p','Nenhuma programação registrada para este dia.');
+ for(const e of records){
+  const card=append('article','', 'print-entry');
+  const title=document.createElement('h2');title.textContent=e.teamName+' · '+e.contractorName;card.append(title);
+  const target=document.createElement('p');target.textContent='Frente: '+(labels[e.kind]||'Obra')+' — '+targetLabel(ctx.nodes.find(x=>x.id===e.nodeId)||{name:'Obra inteira'});card.append(target);
+  const original=document.createElement('p');original.textContent='Programação: '+fmt(e.startDate)+' a '+fmt(e.endDate);card.append(original);
+  const status=execution.latest(reports,e.id,date);
+  const result=document.createElement('p');
+  result.textContent=!status?'Resultado: não confirmado':status.status==='not_executed'?'Resultado: não realizada — '+reportReasonLabel(status.reason):status.completed?'Resultado: executada e declarada concluída':'Resultado: executada, ainda não concluída';
+  card.append(result);
+  if(e.note){const note=document.createElement('p');note.textContent='Planejamento: '+e.note;card.append(note);}
+  if(status?.note){const note=document.createElement('p');note.textContent='Apontamento: '+status.note;card.append(note);}
+ }
+ append('p','Gerado a partir dos registros deste navegador. Documento de simulação, não substitui validação de obra.','print-footer');
+ const titleBefore=document.title;
+ document.title='TEREON-X-Diario-'+(work?.name||'Obra').replace(/[^a-zA-Z0-9À-ÿ-]+/g,'-')+'-'+date;
+ report.hidden=false;
+ const restore=()=>{report.hidden=true;document.title=titleBefore;window.removeEventListener('afterprint',restore);};
+ window.addEventListener('afterprint',restore);
+ window.print();
+ // Em navegadores que não disparam afterprint, o relatório segue oculto na interface.
+}
+
 function newId(){return globalThis.crypto?.randomUUID?.()||'sim-'+Date.now()+'-'+Math.random().toString(36).slice(2);}
 function onSubmit(e){
  e.preventDefault();
@@ -199,6 +236,7 @@ function init(){
  $('filter-work').addEventListener('change',dayList);
  $('filter-date').addEventListener('change',dayList);
  $('entry-form').addEventListener('submit',onSubmit);
+ $('print-day').addEventListener('click',printDay);
  $('report-status').addEventListener('change',reportControls);
  $('report-form').addEventListener('submit',onReport);
  $('close-report').addEventListener('click',closeReport);
