@@ -55,3 +55,15 @@ Ver também `CONTRATO-ETAPAS-LISTAS-OBRAS-2026-11-10.md`.
 
 ## 8. Laboratório de correspondências implementado — 10/11
 Criado `x/universo/obras/sugestoes-etapas.js`, motor **puro, de leitura e sem persistência** que lista caminhos de etapas pai/filho e retorna sugestões textuais com alternativas, sempre `confirmation_required`, `autoCreate:false` e `autoLink:false`. Se duas etapas chamadas QD1 pertencem a pais diferentes, retorna as duas para escolha; permite associação direta à etapa-mãe Quadros elétricos; rejeita ciclos e pai ausente. `x/tests/escopo-etapas.test.cjs` adicionado ao workflow. **Smoke-test isolado JS executado e aprovado**; CI GitHub ainda não comprovado. **Não foi criada tela, tabela, vínculo de lista, permissão ou etapa definitiva.**
+
+
+## 9. Revisão de hierarquia — 10/11/2026, decisão mais recente
+**Este adendo prevalece sobre o desenho de dois níveis acima.** O fundador definiu uma estrutura **exata de três níveis sem obrigatoriedade de preencher todos**: `Obra → Escopo → Etapa → Subetapa`.
+Exemplos:
+- Escopo **Revisão elétrica** → Etapa **Quadros** → Subetapas **QD1**, **QD2**; Etapa **Iluminação salas de aula** → Subetapas **Sala 01**, **Sala 02**.
+- Escopo **SPDA** pode existir sem etapa/subetapa.
+- Escopo **Entrada de energia** → Etapas **Abrigo** e **Escavação**, sem subetapa obrigatória.
+
+**Contrato de ciclo de vida:** Escopo, Etapa e Subetapa **cadastrados** persistem vazios; edição/arquivamento explícito com história e permissão. Rótulo temporário surgido só da Lista desaparece da Lista quando não há mais material, sem apagar item de escopo cadastrado ou promovido. Lista vinculada sugere escopo autorizado, no nível apropriado, mas não vincula nomes coincidentes automaticamente. Materiais podem ficar diretamente num escopo ou etapa, sem subetapa fictícia.
+
+**Módulo independente criado:** `x/universo/obras/escopo-motor.js` com tipos `scope`, `stage`, `substage`, validação da relação pai-filho, obra de origem, caminhos, inserção, renomeação e arquivamento imutáveis. `x/tests/escopo-motor.test.cjs` incluído no workflow; smoke-test isolado executado. **Não está integrado à tela, ao banco ou ao modal.** `sugestoes-etapas.js` permanece um laboratório anterior de correspondência textual e **não representa o modelo de três níveis**; integração futura deverá exigir a nova hierarquia. Nenhuma mudança em Listas/Modal aprovado ou `main`.
