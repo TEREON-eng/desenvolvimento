@@ -9,6 +9,17 @@ function commit(next){localStorage.setItem(KEY,JSON.stringify(next));state=next;
 function elem(tag,text,className){const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(className)el.className=className;return el}
 function btn(text,fn,cls='secondary'){const b=elem('button',text,cls);b.type='button';b.addEventListener('click',fn);return b}
 function close(id){const d=$(id);if(d.open)d.close()}
+function hasDiaryReference(teamId){
+ // Guarda de simulação. A futura regra ficará no motor de Relações/Alocações,
+ // com histórico versionado e integridade no banco, não em chaves de navegador.
+ try{
+  const raw=localStorage.getItem('tereon-x-diary-simulation-v1');
+  if(!raw)return false;
+  const records=JSON.parse(raw);
+  if(!Array.isArray(records))throw Error('Programações locais inválidas.');
+  return records.some(p=>p?.teamId===teamId);
+ }catch(error){throw Error('Não foi possível verificar referências no Diário. Exclusão bloqueada para preservar histórico.');}
+}
 function render(){
  const target=$('contractors');target.replaceChildren();
  if(!state.contractors.length)target.append(elem('p','Nenhum empreiteiro cadastrado neste navegador.','empty'));
@@ -41,8 +52,11 @@ function render(){
    try{commit(engine.rename(state,'team',team.id,name));say('Equipe atualizada.')}catch(e){say(e.message,true)}
   }));
   actions.append(btn('Excluir',()=>{
-   if(!confirm('Excluir equipe nesta simulação?'))return;
-   try{commit(engine.removeTeam(state,team.id));say('Equipe excluída.')}catch(e){say(e.message,true)}
+   try{
+    if(hasDiaryReference(team.id))throw Error('Equipe usada no Diário. Preserve o histórico antes de remover; prefira renomear.');
+    if(!confirm('Excluir equipe nesta simulação?'))return;
+    commit(engine.removeTeam(state,team.id));say('Equipe excluída.');
+   }catch(e){say(e.message,true)}
   },'danger'));
   row.append(actions);teams.append(row);
  }
