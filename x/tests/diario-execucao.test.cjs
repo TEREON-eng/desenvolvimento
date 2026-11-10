@@ -19,6 +19,7 @@ assert.equal(history.length,2,'histórico de correções mantido');
 assert.throws(()=>execution.record(history,report({id:'r3',status:'not_executed',reason:''}),programs),/justificativa/);
 assert.throws(()=>execution.record(history,report({id:'r3',status:'not_executed',reason:'rain',completed:true}),programs),/concluída/);
 assert.throws(()=>execution.record(history,report({id:'r3',date:'2026-11-21'}),programs),/pertencente/);
+assert.throws(()=>execution.record(history,report({id:'r3',status:'not_executed',reason:'other',note:''}),programs),/Descreva/);
 history=execution.record(history,report({id:'r3',date:'2026-11-18',completed:true}),programs);
 assert.equal(execution.latest(history,'p1','2026-11-18').completed,true);
 assert.equal(execution.latest(history,'p1','2026-11-17').completed,false,'conclusão em um dia não reescreve os outros dias');
