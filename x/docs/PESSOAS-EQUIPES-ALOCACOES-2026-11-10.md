@@ -69,3 +69,7 @@ O **Diário de Obras** será a entrada do usuário para programar equipes. Exemp
 
 ## Laboratório de cadastro disponibilizado em 10/11
 `/x/universo/empreiteiros/lab.html` permite cadastrar, renomear e excluir empreiteiros e equipes no armazenamento local do navegador, sem autenticação nem RLS, separado de Obras. `x/universo/empreiteiros/motor.js` valida prestador existente para equipe e impede remover prestador que ainda tenha equipes. O Diário lê os cadastros locais para sugestões no mesmo navegador, mas não cria permissão/alocação real. **Limitação do ensaio:** exclusão/renomeação de equipe referenciada por programação anterior ainda exige política de histórico de nomes e vínculo persistente; não usar dados de produção neste ambiente.
+
+
+## Atualização de prioridade (10/11) — Funcionários antes de Equipes
+O fundador alterou a ordem de implantação: **cadastrar empreiteiros e seus funcionários primeiro**, cada funcionário com status `Ativo` ou `Desligado`, com datas de mudança. Equipes e associação temporal de pessoas a equipes permanecem previstas, **não** cadastro obrigatório inicial. Criado motor puro `addEmployee/updateEmployee` com `statusHistory` e interface modal para inclusão/edição em `x/universo/empreiteiros/lab.html`. O laboratório carrega dados antigos sem perder `teams`; equipe não é funcionário e não é inferida por nome. Futuro: vínculo pessoa-equipe com datas, histórico do prestador e perfis de acesso, antes de autorizar programações do Diário com pessoas reais. Sem Supabase novo nesta etapa.
