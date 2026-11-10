@@ -50,3 +50,7 @@ Data: 09/11/2026 | Branch: desenvolvimento | **Aceite visual parcial de Minhas l
 
 ## Aplicação em Obras (10/11/2026) — sem aceite visual
 Foi criada a camada **transitória** `x/universo/ui-refino.css`, aplicada aos laboratórios Obras, Diário, Empreiteiros e Visitas. Todos devem respeitar os três temas e os tokens deste guia, inclusive modais. A camada mantém temporariamente CSS local por módulo para minimizar risco de regressões; depois do aceite, consolidar especificidades repetidas. **Não alegar aprovação visual** sem abrir em celular, comparar contraste/teclado/scroll e PDF impresso. [Auditoria](AUDITORIA-LAYOUT-OBRAS-2026-11-10.md).
+
+
+## Cabeçalho padrão de Obras e cadastro por modal (10/11)
+Todas as páginas Obras, Empreiteiros, Diário e Visitas usam o componente único `x/components/header.js` e breadcrumb sob sua linha divisória: `Ferramentas › Obras › [módulo]`. Não substituir por cabeçalhos locais com marca pequena ou links próprios. Formulários Adicionar/Editar Empreiteiro e Funcionário ficam em `dialog` modais, mantendo página como consulta; não modificar `#addDialog` das Listas. Temas Claro/Escuro/TEREON continuam compartilhados e leitura de dados não depende do cabeçalho. Aceite móvel ainda pendente.
