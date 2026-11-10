@@ -49,3 +49,8 @@ A [validação técnica](VALIDACAO-TECNICA-2026-11-09.md) inclui leitura do cód
 ## Evolução de 10/11/2026
 - [Contrato de etapas entre Listas e Obras](CONTRATO-ETAPAS-LISTAS-OBRAS-2026-11-10.md) — diferencia rótulos derivados e etapas persistentes do escopo; integração futura sob confirmação.
 - A versão **X.0.3.30** em `desenvolvimento` implementa limpeza de etapas vazias **em Listas** e validação antecipada de payload para contas; CI e aceite real pendentes. `main` não atualizada nesta etapa.
+
+
+## Novas referências — 10/11/2026
+- [Capacidade e armazenamento Supabase](CAPACIDADE-ARMAZENAMENTO-2026-11-10.md): plano Free verificado, uso atual, limites reais versus limites do nosso aplicativo, política de monitoramento.
+- [Escopo hierárquico de Obras](ESCOPO-HIERARQUICO-OBRAS-2026-11-10.md): etapa mãe/subetapa, origem de rótulos, associação direta, sugestão progressiva e preservação de escopo.
