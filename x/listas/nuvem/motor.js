@@ -67,7 +67,7 @@
    if(!deleted)throw Error('A lista foi alterada ou excluída em outro aparelho. Nenhum dado local foi apagado.');
    return true;
   }
-  return Object.freeze({list,get,createList,updateList,deleteList,version:1});
+  return Object.freeze({list,get,createList,updateList,deleteList,validate,version:1});
  }
  return Object.freeze({create,validate,version:1});
 });
