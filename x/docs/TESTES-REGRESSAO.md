@@ -226,3 +226,7 @@ Ver [Validação técnica](VALIDACAO-TECNICA-2026-11-09.md) e [Contratos vigente
 
 ## Contrato de limites local/nuvem — casos pendentes (09/11/2026)
 **NÃO EXECUTADOS**; constatação por comparação de `servico.js`, `nuvem/motor.js`, HTML e SQL. Em lista descartável: (a) tentar criar 301º item no serviço; (b) tentar quantidade não finita via API, fora de campo HTML; (c) nome longo vindo de dado legado; (d) payload maior que 110.000 caracteres/limite em bytes. Em todos os cenários, verificar se o aplicativo **preserva a cópia local, explica falha da nuvem, não marca Sincronizada e não modifica outras listas**. Não aplicar truncamento ou deleção silenciosa como 'solução'. Referência: [Validação técnica](VALIDACAO-TECNICA-2026-11-09.md).
+
+
+## Teste de ciclo de vida das etapas (pendente; não executado)
+Criar lista descartável com dois itens na etapa `QD1`. Remover um: a etapa permanece. Remover o último: verificar se a etapa vazia desaparece das sugestões, conforme intenção da UX, sem apagar outras etapas ou itens. Repetir alterando a etapa do único item para `QD2`. **Código atual:** `removeItem` remove o item, mas não saneia `list.stages`; registrar como caso conhecido até definir regra de conservação de etapas cadastradas manualmente. Não aplicar limpeza destrutiva sem migração e aceite.
