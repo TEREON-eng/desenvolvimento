@@ -1,4 +1,7 @@
 # TEREON X — Validação técnica incremental (somente leitura)
+
+> **AUDITORIA HISTÓRICA — 09/11:** os achados permanecem evidência e pendências, mas a prioridade atual é o teste de **Listas em 17/11**. As funções de gestão avançada seguem laboratório e não são parte do primeiro ensaio. [Estado vigente](ESTADO-VIGENTE-10-11-2026.md).
+
 **09/11/2026 | Branch `desenvolvimento` | Referência do aplicativo `x.0.3.29` | Status: PARCIAL, NÃO HOMOLOGADO**
 
 ## Método e limites
