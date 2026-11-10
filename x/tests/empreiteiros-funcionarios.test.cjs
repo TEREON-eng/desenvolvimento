@@ -1,0 +1,35 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const engine=require('../universo/empreiteiros/motor.js');
+const read=p=>fs.readFileSync(path.resolve(__dirname,'..',p),'utf8');
+let data={contractors:[],teams:[{id:'legacy',name:'Equipe A',contractorId:'js'}]};
+data=engine.addContractor(data,{id:'js',name:'Empreiteiro JS'});
+data=engine.addEmployee(data,{id:'p1',name:'Eletricista A',contractorId:'js',role:'Eletricista'});
+assert.equal(data.employees[0].status,'active');
+assert.deepEqual(data.employees[0].statusHistory,[]);
+assert.equal(data.teams.length,1,'equipes legadas preservadas');
+assert.throws(()=>engine.addEmployee(data,{id:'p2',name:'Pessoa',contractorId:'inexistente'}),/Empreiteiro não encontrado/);
+let changed=engine.updateEmployee(data,'p1',{status:'terminated'},'2026-11-10');
+assert.equal(changed.employees[0].status,'terminated');
+assert.equal(changed.employees[0].statusHistory[0].date,'2026-11-10');
+assert.equal(data.employees[0].status,'active','operação imutável');
+changed=engine.updateEmployee(changed,'p1',{status:'active'},'2026-11-11');
+assert.equal(changed.employees[0].statusHistory.length,2,'reativação preserva histórico');
+assert.throws(()=>engine.updateEmployee(changed,'p1',{status:'terminated'},'2026-11-31'),/Data da alteração inválida/);
+assert.throws(()=>engine.removeContractor(changed,'js'),/funcionários/);
+const view=read('universo/empreiteiros/lab.html'),app=read('universo/empreiteiros/lab.js');
+assert.ok(view.includes('id="employee-form"')&&view.includes('id="employee-dialog"'));
+assert.ok(view.includes('id="employee-status"')&&view.includes('id="legacy-teams"'));
+assert.ok(!view.includes('id="team-form"'),'equipe não é cadastro principal');
+assert.ok(app.includes("employees:v.employees||[]"),'dados anteriores podem ser carregados sem exclusão');
+assert.ok(app.includes('openEmployee(e)')&&app.includes('engine.updateEmployee'),'edição em modal');
+assert.ok(app.includes('if(readError)throw Error'),'não sobrescrever JSON inválido');
+for(const page of ['obras','empreiteiros','diario','visitas']){
+ const html=read('universo/'+page+'/lab.html');
+ assert.ok(html.includes('data-tx-header="module"'),page+' cabeçalho X');
+ assert.ok(html.includes('header.js?v=9'),page+' script X');
+}
+const header=read('components/header.js');
+for(const label of ["['Obras','/x/universo/obras/lab.html']","['Empreiteiros']","['Diário de Obras']","['Relatórios de Visita']"])assert.ok(header.includes(label));
+new Function(app);
+console.log('TEREON X: funcionários, status histórico, modais, breadcrumb — OK (isolado)');
