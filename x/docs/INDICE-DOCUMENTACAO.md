@@ -7,6 +7,8 @@
 - **[Revisão geral de contratos 09/11](REVISAO-GERAL-CONTRATOS-2026-11-09.md):** evidências verificadas, divergências, riscos P0–P2 e checklist de aceite.
 - **[Guia visual atualizado](GUIA-VISUAL-TEREON-X.md):** tema global, cabeçalho, seleção/ações de listas, componentes e modais.
 
+- **[Validação técnica 09/11](VALIDACAO-TECNICA-2026-11-09.md):** inspeção de CI, Listas/nuvem, RLS, riscos e provas que ainda faltam.
+
 ## Documentação viva no repositório X (branch `desenvolvimento`)
 1. [Mestre TEREON X](MESTRE-TEREON-X.md) — visão, decisões, estado implementado e pendências.
 2. [Universo — desenho de produto](PRODUTO-UNIVERSO.md) — obra individual, múltiplas empresas, papéis e evolução.
