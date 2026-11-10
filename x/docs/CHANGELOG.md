@@ -404,3 +404,10 @@ O painel de Funcionários ganhou **filtro por empreiteiro**, e o modal de novo f
 - Criado [Estado vigente](ESTADO-VIGENTE-10-11-2026.md), distinguindo **VIGENTE / LABORATÓRIO / FUTURO / HISTÓRICO**. Arquivos de 07–09/11 foram sinalizados com orientação de precedência, sem apagar sua história.
 - Criado [Diário de Desenvolvimento Volume 03](HISTORIA-TEREON-X-VOLUME-03.md), com história humana do TEREON, episódios verificáveis, aprendizados e pautas editoriais para redes sociais. Volumes 01 e 02 preservados.
 - Atualizados Mestre, Contratos, Índice, Retomada histórica, Guia Visual, Mapa, Modelo de negócio e Superauditoria para apontar a prioridade real. **Não houve mudança em código operacional, fichas, Supabase, `main` ou deploy.**
+
+
+## 10/11/2026 — Auditoria direcionada do núcleo do teste de 17/11
+- Corrigidos **somente testes**: `x/tests/cabecalho.test.cjs` com versão v9 específica de Obras; `x/tests/modulos.test.cjs` com amostra válida para teste de exportação após esvaziamento.
+- Criado `x/tests/fluxo-campo-17-11.test.cjs`, adicionado ao workflow. **25 comandos configurados**, não há resultado de Actions completo confirmado.
+- Execução isolada de motores comprovou criação/edição/etapas/compartilhamento, além de **falha de prontidão do catálogo** (Condutor não exige seção/tensão; Eletroduto/Curva não exigem diâmetro) e **lista removida remotamente ainda parecendo sincronizada no dispositivo B**.
+- Criados [Auditoria de Listas](AUDITORIA-NUCLEO-LISTAS-17-11-2026.md) e [Matriz de fichas](MATRIZ-FICHAS-17-11-2026.md). Nenhuma ficha foi homologada por inferência, nenhum dado, interface, SQL, `main` ou deploy modificado.
