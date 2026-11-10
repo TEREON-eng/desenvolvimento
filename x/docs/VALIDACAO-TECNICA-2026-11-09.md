@@ -47,3 +47,13 @@ Inspeção direta via GitHub de workflow, `x/listas/servico.js`, `store.js`, `in
 **CI:** workflow de 17 comandos presente no GitHub. O conector disponível consulta runs de PR por commit; `workflow_runs: []` não permite concluir que não houve execução em `push`. Não declarar CI falho nem verde sem inspeção da página Actions e do job da branch.
 
 **Não foi alterado:** código aplicativo, banco, políticas, comportamento de exclusão, `main` ou versão X.0.3.29. Decisões de reconciliação, fluxos de conta, modo offline e eventual alteração de motor permanecem pendentes de teste/aceite.
+
+
+## Continuação — paridade das validações local / nuvem (09/11/2026)
+**Achado de código, não teste E2E:** `x/listas/servico.js` valida presença de nome na criação e `Number(qty)>0` em itens, mas não impõe na mesma camada o limite remoto de 160 caracteres do nome, 300 itens por lista ou o orçamento de payload. `x/listas/nuvem/motor.js` exige nome até 160, itens até 300, quantidade positiva **e finita** e soma dos JSONs até 110.000 caracteres; o SQL também limita itens a 300 e tamanho em bytes. É possível, portanto, aceitar/gravar localmente uma lista e descobrir apenas no envio que não atende ao contrato remoto. A interface de criação limita digitação normal a 100 caracteres, **mas isso não substitui contrato de serviço** nem elimina casos de dados legados/importados. Edição direta e automações também podem contornar o limite visual.
+
+**Consequência esperada:** `repository.save` confirma cópia local com `cloudPending`, e `flush()` retorna erro do validador remoto, preservando pendência. Não afirmar perda automática; a lacuna é **falta de coerência de validação e experiência de erro**. Requer ensaio com 301 itens, quantidade não finita via API, nomes longos de registros legados e payload que ultrapasse o limite.
+
+**Permissões por coluna verificadas em metadados Supabase:** `authenticated` pode INSERT de `id,owner_id,name,items,stages`, mas não de `version,created_at,updated_at`; UPDATE permitido somente em `name,items,stages`. Logo, **a hipótese de que criar com UUID explícito seria negado por falta de privilégio na coluna `id` foi descartada**. Não interpretar essa conferência de grant como operação real inserida com token.
+
+**Diretriz de correção ainda proposta:** adotar um validador comum para dados destinados à nuvem ou um relatório de incompatibilidade antes da tentativa, preservando o uso local e dados antigos; nenhuma limpeza ou corte automático. Não fixar limites comerciais a partir de restrições do laboratório sem decisão do fundador.
