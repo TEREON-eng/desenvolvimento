@@ -71,3 +71,7 @@ A estrutura vigente de **Obras** é **Escopo → Etapa → Subetapa**; não util
 ## Obras: navegação e PDF (10/11)
 - A navegação `x/universo/obras/lab.html` conduz a Empreiteiros, Diário e Visitas (esta última somente preparação). O Diário possui impressão de **um dia** para salvar como PDF pelo navegador; não gera arquivo/sincronização automaticamente.
 - Referências: [Diário](DIARIO-PROGRAMACAO-EQUIPES-2026-11-10.md), [Pessoas/Equipes](PESSOAS-EQUIPES-ALOCACOES-2026-11-10.md), [Contrato vigente](CONTRATOS-VIGENTES.md).
+
+
+## Auditoria preventiva do visual (10/11/2026)
+- [Auditoria do layout de Obras, Diário e Empreiteiros](AUDITORIA-LAYOUT-OBRAS-2026-11-10.md): incongruências de interface corrigidas, lista de riscos P0–P2, proteção de dados locais, roteiro de aceite e limites de homologação. Camada CSS compartilhada com temas Claro/Escuro/TEREON.
