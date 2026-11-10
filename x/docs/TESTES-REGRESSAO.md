@@ -222,3 +222,7 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 6. **Autorização real:** com tokens válidos de A e B, testar SELECT, UPDATE e DELETE de um registro descartável de A usando B; todas operações devem negar ou retornar zero linhas, sem afetar A. Não inferir isso apenas por RLS configurada.
 
 Ver [Validação técnica](VALIDACAO-TECNICA-2026-11-09.md) e [Contratos vigentes](CONTRATOS-VIGENTES.md).
+
+
+## Contrato de limites local/nuvem — casos pendentes (09/11/2026)
+**NÃO EXECUTADOS**; constatação por comparação de `servico.js`, `nuvem/motor.js`, HTML e SQL. Em lista descartável: (a) tentar criar 301º item no serviço; (b) tentar quantidade não finita via API, fora de campo HTML; (c) nome longo vindo de dado legado; (d) payload maior que 110.000 caracteres/limite em bytes. Em todos os cenários, verificar se o aplicativo **preserva a cópia local, explica falha da nuvem, não marca Sincronizada e não modifica outras listas**. Não aplicar truncamento ou deleção silenciosa como 'solução'. Referência: [Validação técnica](VALIDACAO-TECNICA-2026-11-09.md).
