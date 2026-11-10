@@ -379,3 +379,10 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Cadastro local de Equipes bloqueia exclusão quando equipe é referenciada em programação local do Diário; dados JSON locais incompatíveis bloqueiam novas escritas até tratamento seguro, em vez de permitir sobrescrita silenciosa.
 - Criado [relatório de auditoria preventiva](AUDITORIA-LAYOUT-OBRAS-2026-11-10.md) com riscos de isolamento entre contas, histórico de cancelamentos, snapshots, nomes de equipes, impressão, contraste e eventual CSS redundante. Teste estático `x/tests/obras-refino-visual.test.cjs` no workflow.
 - JS isolado compilou e referências verificadas. **Não houve renderização visual de celular, confirmação de CI completo, deploy, teste PDF real ou homologação.** Listas, SQL, fichas, `main`, fluxos de cadastro de obras Supabase e versão X.0.3.30 preservados.
+
+
+## 10/11/2026 — Cabeçalho unificado e funcionários por empreiteiro (laboratório)
+- Quatro páginas de Obras passaram a usar componente global de cabeçalho, indicador de rede/perfil e caminho `Ferramentas › Obras › …`; removido **Universo** da trilha visual de Obras no `header.js`.
+- Empreiteiros prioriza cadastro de **funcionários** (nome, função, vínculo a prestador), com situação `Ativo` / `Desligado`, mudanças datadas em `statusHistory` e formulário/modal de inclusão e edição. Cadastro e edição de empreiteiros também em modais.
+- Equipes legadas são mantidas na chave local original e exibidas apenas para consulta, sem migração ou exclusão silenciosa; Diário ainda não atribui funcionários a equipes, portanto não afirmar integração operacional.
+- Teste isolado do motor passou; novo `x/tests/empreiteiros-funcionarios.test.cjs` no workflow. **Sem teste visual/CI verde/deploy comprovado**. Listas `#addDialog`, Supabase, `main` e versão de referência X.0.3.30 não alterados.
