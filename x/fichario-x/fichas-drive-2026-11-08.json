@@ -284,7 +284,7 @@
             "Comum"
           ],
           "condicao": "Sempre",
-          "exclusao": "",
+          "exclusao": "Termoplástico não halogenado 70 °C",
           "classificacao": "Opcional",
           "origemLinha": 17,
           "status": "Aprovado"
@@ -413,7 +413,8 @@
         "Construções comerciais, compatibilidades e separação entre isolação e cobertura ainda não homologadas.",
         "Título B5 da origem é Condutores isolados, porém inclui Cabo multipolar; nome exibido provisoriamente Condutor elétrico para não afirmar construção incorreta.",
         "IMPORTAÇÃO RECONFERIDA com fonte de 20h29 BRT, linhas 11–25: isolação não halogenada na linha 21 e cobertura não halogenada na linha 23 estão presentes.",
-        "Rótulo da cobertura 'Termoplástico não halogenado 70 °C' reproduz a planilha, mas temperatura/classe de composto de cobertura deve ser validada por ficha de produto; SHF1 não é sinônimo técnico automático."
+        "Rótulo da cobertura 'Termoplástico não halogenado 70 °C' reproduz a planilha, mas temperatura/classe de composto de cobertura deve ser validada por ficha de produto; SHF1 não é sinônimo técnico automático.",
+        "REGRA EXPERIMENTAL solicitada 10/11: Comum exclui valor 'Termoplástico não halogenado 70 °C' tanto em Isolação como Cobertura. Esta regra AINDA NÃO foi escrita no Fichario.xlsm de origem; sincronizar G17 após teste."
       ],
       "nomeNaPlanilha": "Condutores isolados"
     },
