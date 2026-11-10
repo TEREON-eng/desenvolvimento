@@ -40,3 +40,7 @@ Uma mudança relevante deve: (i) entrar no changelog técnico com branch e evid�
 
 ## Fechamento documental de 09/11/2026
 Referência visual atual: **X.0.3.29**, considerada boa pelo fundador em Minhas listas. O aceite é parcial. CI atual, deploy, PWA, segurança real entre contas e fichas homologadas estão pendentes. Manter o histórico 07–08/11 sem apresentá-lo como situação vigente.
+
+
+## Situação da auditoria incremental em 09/11/2026
+A [validação técnica](VALIDACAO-TECNICA-2026-11-09.md) inclui leitura do código Listas/nuvem, conferência de quatro políticas RLS de `x_cloud_lists`, risco de cópia remota excluída permanecer em outro aparelho, testes não cobertos e alerta de segurança do Auth. **Sem execução confirmada de CI nem homologação E2E**. A execução prática e a reconciliação segura permanecem próximas prioridades. Nenhum documento histórico foi apagado.
