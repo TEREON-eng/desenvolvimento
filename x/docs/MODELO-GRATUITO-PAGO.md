@@ -65,3 +65,8 @@ Em 07/11, o fundador reafirmou o **Universo Individual** como acompanhamento de 
 - **Solicitações**: processo próprio e opcional com aprovações, aquisição e recebimento, inclusive parciais; não confundir com registro de aplicação.
 **Hipótese:** preço pode ter como fundamento a economia de tempo, continuidade histórica e redução de perda de informações; número de cadastros de obra, isoladamente, não justifica a oferta.
 **Nenhuma funcionalidade, pacote, preço, quantidade de obras/usuários ou data comercial foi aprovada nesta revisão.**
+
+
+## 9. Debate de 10/11/2026 — sincronização e número de listas
+**Pergunta do fundador:** cobrar o uso da nuvem ou limitar número de listas gratuitas? **Avaliação, ainda sem decisão de monetização:** recomendável deixar sincronização pessoal básica gratuita e evitar um teto arbitrário de listas antes de aferir uso real. A qualidade da especificação, segurança, integridade e exportação não são mecanismos aceitáveis de restrição. Candidatos pagos: histórico/restauração ampliados, arquivos/anexos grandes, escopo/gestão de Obras, equipes, aprovações/solicitações, relatórios e integração corporativa. Limites do Supabase (500 MB banco no plano Free, por projeto) **não equivalem** a número de listas por conta TEREON. A restrição técnica provisória de 300 lançamentos por lista no laboratório é separada de precificação.
+**Não implementar quota/cobrança nem decidir quantidade de listas por plano sem métricas de campo**, custos medidos, testes de retenção e contrato de acesso/exportação após downgrade. Referência [Capacidade](CAPACIDADE-ARMAZENAMENTO-2026-11-10.md).
