@@ -160,3 +160,15 @@ Antes de ampliar Dimensionamento e Canivete, decisão: auditar e fechar invarian
 **NÃO COMPROVADO:** resultado atual do GitHub Actions, publicação exata da Preview, operação de PWA em mais de um dispositivo, clique real de edição/duplicação/compartilhamento/exclusão, fluxos offline/conflito e autorização multiusuário, qualidade final das seis fichas reais em revisão. Aceite do visual de Minhas listas não é aceite geral do produto.
 
 **PRÓXIMO PASSO RECOMENDADO:** validar CI/Preview, ensaio em celular com listas descartáveis, autenticação/offline/sincronização/erro, e sanear as fichas da planilha antes dos testes com empreiteiros (meta anterior de 17/11/2026). O desenho do processo de Solicitações pode avançar separadamente no papel. Ver [auditoria](REVISAO-GERAL-CONTRATOS-2026-11-09.md).
+
+
+## 29. Auditoria continuada de sincronização e documentação — 09/11/2026, 22h
+**VIGENTE:** [Contratos vigentes](CONTRATOS-VIGENTES.md) e [Validação técnica incremental](VALIDACAO-TECNICA-2026-11-09.md) são as referências para retomada. A X.0.3.29 continua como versão de código e como aceite visual **parcial**, não homologação integral. Esta auditoria não introduz uma versão do app.
+
+**INSPECIONADO NO CÓDIGO:** interface autenticada de Listas aciona exclusão coordenada em `TereonXListIntegration.deleteList`; o serviço genérico ainda disponibiliza `removeList` local e precisa manter sua fronteira explícita para futuros consumidores. `refresh()` preserva cópia de lista que desapareceu na nuvem, podendo mantê-la exibida como sincronizada em outro aparelho. Isso protege dados contra exclusão silenciosa, mas **não é reconciliação concluída**. Testar e definir estados distintos de removida remotamente, alterações locais pendentes e conflito antes de corrigir.
+
+**BANCO (LEITURA DE METADADOS):** confirmadas quatro políticas RLS por proprietário para `x_cloud_lists` (SELECT/INSERT/UPDATE/DELETE), UPDATE com `USING` e `WITH CHECK` vinculados a `auth.uid()`; aviso de proteção de senhas vazadas desativada. Presença de políticas **não substitui ensaio A/B autenticado**.
+
+**CI:** 17 comandos de teste declarados no workflow, mas status consultado para commit recente não comprova execução do workflow de push; não declarar sucesso. **PENDENTE:** Preview real, testes de celular, duas contas/dois aparelhos, exclusão cruzada, offline, troca de sessão e PDFs.
+
+**PRIORIDADE:** P0 = comprovar CI/deploy, isolamento A/B e preservação de dados nos fluxos reais; P1 = desenhar reconciliação de exclusões entre aparelhos sem limpeza automática de cache; P1 = tratar alerta de proteção contra senhas vazadas antes da abertura pública. Consulte matriz de regressão atualizada. Nenhum JS/CSS, schema, ficha ou `main` alterado pela auditoria.
