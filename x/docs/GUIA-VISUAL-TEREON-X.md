@@ -1,4 +1,7 @@
 # TEREON X — Guia visual · revisão X.0.3.29 (09/11/2026)
+
+> **FOCO DE HOMOLOGAÇÃO — 10/11:** para 17/11, validar a experiência de **Listas** e o modal técnico aprovado em aparelho real; refinamentos de Obras/Diário continuam laboratório sem aceite visual definitivo. [Plano 17/11](FOCO-TESTE-CAMPO-17-11-2026.md).
+
 Data: 09/11/2026 | Branch: desenvolvimento | **Aceite visual parcial de Minhas listas**, sem homologação do restante.
 
 ## Princípio inviolável
