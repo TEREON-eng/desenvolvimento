@@ -230,3 +230,7 @@ Ver [Validação técnica](VALIDACAO-TECNICA-2026-11-09.md) e [Contratos vigente
 
 ## Teste de ciclo de vida das etapas (pendente; não executado)
 Criar lista descartável com dois itens na etapa `QD1`. Remover um: a etapa permanece. Remover o último: verificar se a etapa vazia desaparece das sugestões, conforme intenção da UX, sem apagar outras etapas ou itens. Repetir alterando a etapa do único item para `QD2`. **Código atual:** `removeItem` remove o item, mas não saneia `list.stages`; registrar como caso conhecido até definir regra de conservação de etapas cadastradas manualmente. Não aplicar limpeza destrutiva sem migração e aceite.
+
+
+## Aceite futuro — Diário de Obras programando equipes (10/11/2026)
+**Simulação local, não E2E real com Supabase.** Na Preview real da branch `desenvolvimento`, abrir `/x/universo/diario/lab.html` no celular. Selecionar Wilson Rachid, JS, Equipe A, Escopo Revisão elétrica e período de 17–20/11; conferir aparição nos quatro dias e ausência no dia 21. Selecionar Etapa Quadros ou Subetapa QD1: somente um dia, término bloqueado e igual ao início. Testar 2 equipes no mesmo dia, mudança de obra, cancelamento com histórico preservado no armazenamento local, recarga, teclado e rolagem em tela pequena; garantir que o laboratório não escreveu em `x_works` ou Listas reais. Concluir regressão de `#addDialog` em Listas e verificar CI `x/tests/diario-programacao.test.cjs` antes de considerar validado. **Ainda não executado no aparelho.**
