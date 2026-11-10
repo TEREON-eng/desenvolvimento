@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.31",
+  "version": "x.0.3.32",
   "build": "2026-11-10",
-  "notes": "Laboratório FT_COND-001: opções por linha, exclusões condicionais e testes de estresse; não homologado"
+  "notes": "Sequência: obrigatórios primeiro, opcional dependente antecipado e pular sem inferência"
 }
