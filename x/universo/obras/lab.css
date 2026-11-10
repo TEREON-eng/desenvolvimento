@@ -2,3 +2,8 @@
 .date-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.date-fields label{min-width:0}.mini-nav{margin:14px 0 0}.mini-nav a{font-size:12px;text-decoration:none;color:#2b6942}@media(max-width:370px){.date-fields{grid-template-columns:1fr}}
 
 .back-to-hub{font-size:12px;text-decoration:none;white-space:nowrap;background:#fff;border:1px solid #d3ded6;border-radius:10px;padding:8px 10px;color:#526b58}
+
+.module-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:18px 0}
+.module-link{display:flex;flex-direction:column;gap:7px;padding:14px 11px;border:1px solid #d5e1d7;border-radius:12px;background:#fff;color:#1e3928;text-decoration:none;min-height:84px}
+.module-link strong{font-size:13px}.module-link span{font-size:11px;color:#718273;line-height:1.35}.module-link:focus-visible{outline:2px solid #50865a}
+@media(max-width:520px){.module-nav{grid-template-columns:1fr}.module-link{min-height:60px;padding:12px}}
