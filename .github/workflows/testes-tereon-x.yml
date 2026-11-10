@@ -12,6 +12,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Validar fluxo completo de Listas para o teste de 17/11
+        run: node x/tests/fluxo-campo-17-11.test.cjs
       - name: Validar contrato do catálogo
         run: node x/tests/catalogo.test.cjs
       - name: Validar módulos independentes, listas e persistência
