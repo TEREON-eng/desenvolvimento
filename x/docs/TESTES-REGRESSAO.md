@@ -238,3 +238,11 @@ Criar lista descartável com dois itens na etapa `QD1`. Remover um: a etapa perm
 
 ## Diário — regressão de modais e execução por dia (10/11/2026)
 Na Preview e celular verificar: formulário de programação **não ocupa página principal**; consulta de programação por obra/data é entrada; **+ Adicionar atividade** abre `#entry-dialog`, herda obra/data e fecha ao salvar; nenhum dado do navegador é perdido ao fechar. Para programação de 17–20/11, **Registrar o dia** em 17/11: trabalhou, mas não concluiu; em 18/11: trabalhou e concluiu; em 19/11: não realizada por chuva/falta de material/outro. Motivo obrigatório se não realizada, conclusão impossível nessa condição. Conferir status específico em cada data, revisão preservando eventos anteriores, cancelamento sem apagar apontamentos, recarga, toque/scroll/ESC dos dois modais. Testar `node x/tests/diario-programacao.test.cjs` e `node x/tests/diario-execucao.test.cjs`. **Somente smoke-test JS isolado aprovado; CI, visual e E2E ainda pendentes.**
+
+
+## Novos testes pendentes — navegação Obras, Empreiteiros e PDF do Diário (10/11/2026)
+1. Abrir Obras no celular: painel de obras próprias existente + links para Empreiteiros, Diário e Relatórios de Visita. Confirmar que Visitas indica módulo não implementado e que login/obras reais continuam idênticos.
+2. No laboratório de Empreiteiros, cadastrar JS, Equipe A; renomear, recarregar; não excluir prestador com equipe ativa. Conferir dados apenas no mesmo navegador. Reabrir Diário: JS e Equipe A aparecem em seletores, sem alterar listas ou dados de obra.
+3. Diário de obra fictícia Wilson Rachid, data 17/11: criar programação, confirmar execução ou não realização por chuva. **Gerar PDF do dia**, selecionar “Salvar como PDF” no navegador; conferir que o documento mostra o status e justificativa corretos e não declara presença onde não há confirmação. Testar obra/data sem programação.
+4. Conferir impressão A4 no Android/desktop, leitura, cortes, acentos, texto longo, mais de uma página, e comportamento depois de fechar visualização de impressão.
+5. Confirmar que `#addDialog` das Listas e demais modais X não foram modificados. Rodar `node x/tests/obras-navegacao-pdf.test.cjs` e CI completo. **Apenas smoke-test JS isolado e inspeção estática feitos até aqui; PDF visual e toque não homologados.**
