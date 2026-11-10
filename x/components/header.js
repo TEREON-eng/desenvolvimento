@@ -17,7 +17,10 @@ const routes={
  '/x/escola/':[['Ferramentas','/x/'],['Escola']],
  '/x/biblioteca/':[['Ferramentas','/x/'],['Escola','/x/escola/'],['Biblioteca']],
  '/x/biblioteca/fichario/':[['Ferramentas','/x/'],['Escola','/x/escola/'],['Biblioteca','/x/biblioteca/'],['Fichário']],
- '/x/universo/obras/lab.html':[['Ferramentas','/x/'],['Universo'],['Obras']],
+ '/x/universo/obras/lab.html':[['Ferramentas','/x/'],['Obras']],
+ '/x/universo/empreiteiros/lab.html':[['Ferramentas','/x/'],['Obras','/x/universo/obras/lab.html'],['Empreiteiros']],
+ '/x/universo/diario/lab.html':[['Ferramentas','/x/'],['Obras','/x/universo/obras/lab.html'],['Diário de Obras']],
+ '/x/universo/visitas/lab.html':[['Ferramentas','/x/'],['Obras','/x/universo/obras/lab.html'],['Relatórios de Visita']],
  '/x/identidade/lab.html':[['Ferramentas','/x/'],['Minha conta']],
  '/x/compartilhar-usuarios/lab.html':[['Ferramentas','/x/'],['Listas compartilhadas']],
  '/x/contribuir.html':[['Ferramentas','/x/'],['Contribuir']]
