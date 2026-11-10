@@ -91,3 +91,6 @@ No laboratório de Empreiteiros, o núcleo atual passa a ser **Empreiteiro + Fun
 ## Teste de campo de Listas — evidências de 10/11
 - [Auditoria do núcleo Listas para 17/11](AUDITORIA-NUCLEO-LISTAS-17-11-2026.md): estados executado/inspecionado/pendente, regressões corrigidas, falha remota reproduzida e plano de aceite.
 - [Matriz das seis fichas técnicas para 17/11](MATRIZ-FICHAS-17-11-2026.md): Condutor, Eletroduto e Curva com atributos fundamentais não obrigatórios; sem homologação do catálogo. **Este é o principal bloqueio de especificação técnica.**
+
+## Retomada de Condutores BT — 10/11
+- [FT_COND-001: inventário preliminar de detalhes e decisão pendente](RETOMADA-FT-COND-001-2026-11-10.md). Sem validação técnica final; planilha oficial ainda não alterada em conteúdo.
