@@ -1,5 +1,12 @@
 # TEREON X — Histórico técnico consolidado
 
+## 09/11/2026 — Encerramento da conversa e conceito de CI
+- Explicado ao fundador: CI = Integração Contínua; GitHub Actions roda testes automáticos de contratos, regressão e código. Sucesso de testes não substitui testes reais no celular.
+- Proposto como critério de liberação: **CI comprovadamente verde + fluxo real validado no aparelho + aprovação expressa do fundador**.
+- Fundador solicitou registrar e abrir nova conversa. Continuidade concentrada em [Retomada 09/11](RETOMADA-2026-11-09.md) e [Revisão geral](REVISAO-GERAL-CONTRATOS-2026-11-09.md).
+- Não houve alteração funcional da aplicação. Versão permanece **X.0.3.29**; a execução efetiva do CI ainda não deve ser presumida.
+
+
 ## 09/11/2026 — Fechamento documental e revisão de contratos da X.0.3.29
 - Confirmado código de referência X.0.3.29 na branch desenvolvimento; o fundador considerou o **layout** de Minhas listas bom. O HTML `#addDialog` permanece igual à fixture aprovada X.0.3.4.
 - Criados [auditoria de 09/11](REVISAO-GERAL-CONTRATOS-2026-11-09.md), [roteiro de retomada](RETOMADA-2026-11-09.md) e teste de invariantes `x/tests/contratos-fechamento-2026-11-09.test.cjs`; teste incluído no workflow do GitHub Actions.
