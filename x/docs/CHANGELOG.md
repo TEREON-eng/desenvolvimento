@@ -358,3 +358,10 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Nova interface responsiva em `x/universo/diario/lab.html` + CSS/JS, com caso demonstrativo Wilson Rachid, Empreiteiro JS e Equipe A; armazenamento apenas local em chave segregada, sem autenticação ou gravação nos dados de Obras.
 - Acesso do laboratório de Obras para Diário. Teste `x/tests/diario-programacao.test.cjs` adicionado ao workflow. **Smoke-test JS isolado passou**; GitHub Actions, publicação real e teste no celular ainda não confirmados.
 - Não alterado o modal técnico, Listas, SQL, `main` ou versão X.0.3.30. Programação de equipe é previsão, **não** confirmação de presença ou execução.
+
+
+## 10/11/2026 — Diário: consulta, modais e apontamento diário (laboratório)
+- Diário reorganizado como página de consulta das programações; `+ Adicionar atividade` abre modal `#entry-dialog`, que herda a obra e a data do filtro.
+- Motor separado `x/universo/diario/execucao-motor.js` e modal `#report-dialog` com execução do dia, conclusão opcional, não realização com justificativa obrigatória e histórico por programação/data.
+- Motivos de impedimento: chuva, ausência de equipe, deslocamento, falta de material, ausência de liberação e outro. Apontamentos persistem somente no navegador, segregados da programação e sem banco real.
+- Acrescentado teste `x/tests/diario-execucao.test.cjs` ao workflow; smoke-test JS isolado passou, **CI e validação no celular ainda não comprovados**. Modais de Listas, `main`, SQL e versão do app X.0.3.30 preservados.
