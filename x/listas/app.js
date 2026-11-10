@@ -77,6 +77,7 @@ var fields=[
 ];
 const legacyFields=fields;
 let selectedFicha=null,choosingFicha=false,fichaSearch='',loadingFichas=false,fichaError='';
+const skippedOptional=new Set();
 var $=function(id){return document.getElementById(id);};
 var esc=function(x){return String(x==null?'':x).replace(/[&<>"']/g,function(k){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[k];});};
 function list(){return lists.get(activeId);}
@@ -173,6 +174,15 @@ function getFields(){
 }
 function count(){return fields.filter(f=>f.required&&values[f.id]).length}
 function pickFirstMissing(){
+ if(selectedFicha){
+  const id=window.TereonXCatalog.nextDetail(selectedFicha,values,[...skippedOptional]);
+  if(id){
+   const i=fields.findIndex(f=>f.id===id);
+   if(i>=0)return i;
+  }
+  // Não repetir opcionais pulados. Sem pendências, só manter a área atual.
+  return Math.max(0,Math.min(focus,fields.length-1));
+ }
  let i=fields.findIndex(f=>f.required&&!values[f.id]);
  if(i<0)i=fields.findIndex(f=>!values[f.id]);
  return i<0?Math.max(0,fields.length-1):i;
@@ -225,7 +235,8 @@ function redrawAdd(){
    $('fieldLabel').insertAdjacentHTML('beforeend',' <button type="button" class="tag ficha-trocar" data-ficha-back="1" aria-label="Trocar material '+esc(selectedFicha.name)+'" title="Trocar material">'+esc(selectedFicha.name)+' ×</button>');
   }
   $('fieldType').textContent=field?(field.required?'Obrigatório':'Opcional'):'Sem opções definidas';
-  $('choices').innerHTML=field?field.options.map(o=>'<button type="button" class="tag option'+(values[field.id]===o?' on':'')+'" data-pick="'+esc(o)+'">'+esc(o)+'</button>').join(''):'';
+  $('choices').innerHTML=field?field.options.map(o=>'<button type="button" class="tag option'+(values[field.id]===o?' on':'')+'" data-pick="'+esc(o)+'">'+esc(o)+'</button>').join('')+
+   (!field.required&&!values[field.id]&&!skippedOptional.has(field.id)?'<button type="button" class="tag" data-skip-optional="'+esc(field.id)+'">Pular · deixar em branco</button>':''):'';
   const incomplete=selectedFicha?.pendencias?.length||0;
   $('fieldHelp').textContent=selectedFicha?
    (incomplete?'Ficha em revisão: há '+incomplete+' pendência(s) cadastrais. ':'')+
@@ -243,6 +254,7 @@ function validate(){
 async function openAdd(item){
  if(!list())return;
  editId=item?String(item.id):null;
+ skippedOptional.clear();
  values=item&&item.values?Object.assign({},item.values):{};
  fichaSearch='';fichaError='';loadingFichas=!item;
  selectedFicha=null;choosingFicha=!item;
@@ -329,7 +341,7 @@ document.addEventListener('click',function(e){
   if(a.dataset.action==='add')openAdd();
  }
  if(e.target.closest('[data-ficha-back]')){
-  selectedFicha=null;choosingFicha=true;values={};fields=legacyFields;focus=0;fichaSearch='';redrawAdd();return;
+  selectedFicha=null;choosingFicha=true;values={};skippedOptional.clear();fields=legacyFields;focus=0;fichaSearch='';redrawAdd();return;
  }
  const selectOne=e.target.closest('[data-select-list]');
  if(selectOne){
@@ -423,9 +435,16 @@ $('choices').addEventListener('click',function(e){
  if(select){
   selectedFicha=window.TereonXCatalog.get(select.dataset.ficha);
   if(!selectedFicha)return;
-  choosingFicha=false;values={};fields=getFields();focus=pickFirstMissing();
+  choosingFicha=false;values={};skippedOptional.clear();fields=getFields();focus=pickFirstMissing();
   $('unit').value=selectedFicha.id==='FT_COND-001'?'m':'un';
   redrawAdd();return;
+ }
+ const skip=e.target.closest('[data-skip-optional]');
+ if(skip){
+  const field=fields[focus];
+  if(!field||field.required||field.id!==skip.dataset.skipOptional)return;
+  skippedOptional.add(field.id);
+  fields=getFields();focus=pickFirstMissing();redrawAdd();return;
  }
  const b=e.target.closest('[data-pick]');if(!b||!fields[focus])return;
  const field=fields[focus];
@@ -435,6 +454,7 @@ $('choices').addEventListener('click',function(e){
   if(problems.length){alert('Combinação não permitida pela ficha: '+problems.join('; ')+'. Remova a tag incompatível antes de continuar.');return;}
  }
  values=next; // Nunca apagar outra tag confirmada em decorrência de uma exclusão.
+ skippedOptional.delete(field.id);
  fields=getFields();focus=pickFirstMissing();redrawAdd();
 });
 $('stageTags').addEventListener('click',function(e){var b=e.target.closest('[data-stage]');if(b){$('stage').value=b.dataset.stage;validate();}});
