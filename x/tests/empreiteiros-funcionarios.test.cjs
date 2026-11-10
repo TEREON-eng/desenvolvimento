@@ -19,10 +19,11 @@ assert.throws(()=>engine.updateEmployee(changed,'p1',{status:'terminated'},'2026
 assert.throws(()=>engine.removeContractor(changed,'js'),/funcionários/);
 const view=read('universo/empreiteiros/lab.html'),app=read('universo/empreiteiros/lab.js');
 assert.ok(view.includes('id="employee-form"')&&view.includes('id="employee-dialog"'));
-assert.ok(view.includes('id="employee-status"')&&view.includes('id="legacy-teams"'));
+assert.ok(view.includes('id="employee-status"')&&view.includes('id="legacy-teams"')&&view.includes('id="employee-filter"'));
 assert.ok(!view.includes('id="team-form"'),'equipe não é cadastro principal');
 assert.ok(app.includes("employees:v.employees||[]"),'dados anteriores podem ser carregados sem exclusão');
 assert.ok(app.includes('openEmployee(e)')&&app.includes('engine.updateEmployee'),'edição em modal');
+assert.ok(app.includes("$('employee-filter').addEventListener('change',render)"),'filtro de funcionários');
 assert.ok(app.includes('if(readError)throw Error'),'não sobrescrever JSON inválido');
 for(const page of ['obras','empreiteiros','diario','visitas']){
  const html=read('universo/'+page+'/lab.html');
