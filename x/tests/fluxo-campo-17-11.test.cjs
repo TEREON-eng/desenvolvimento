@@ -1,0 +1,54 @@
+/* TEREON X — integração determinística do núcleo para teste 17/11.
+ * Roda em Node nativo, sem rede nem DOM. NÃO homologa o conteúdo técnico das fichas.
+ */
+'use strict';
+const assert=require('node:assert/strict');
+const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const root=path.resolve(__dirname,'../..');
+const read=file=>fs.readFileSync(path.join(root,file),'utf8');
+const source=JSON.parse(read('x/fichario-x/fichas-drive-2026-11-08.json'));
+const ctx={window:{},console,fetch:async()=>({ok:true,json:async()=>structuredClone(source)})};
+vm.createContext(ctx);
+for(const file of ['x/catalogo/motor.js','x/listas/servico.js','x/motor-compartilhar.js'])new vm.Script(read(file),{filename:file}).runInContext(ctx);
+const cat=ctx.window.TereonXCatalog,share=ctx.window.TereonXShare,listsApi=ctx.window.TereonXLists;
+const clone=x=>JSON.parse(JSON.stringify(x));
+let state={lists:[]},n=0;
+const repo={snapshot:()=>clone(state),save:v=>{state=clone(v)}};
+const list=listsApi.create(repo,{newId:()=>String(++n),newRecordUid:()=>('00000000-0000-4000-8000-'+String(++n).padStart(12,'0'))});
+(async()=>{
+ const all=await cat.load();
+ assert.ok(all.length>0,'catálogo carregável');
+ const fich=all.find(x=>x.id==='FT_INFRA-001');
+ assert.ok(fich,'eletroduto precisa estar disponível no teste');
+ assert.ok(cat.missing(fich,{}).length>0,'a ficha deve exigir confirmação antes de salvar');
+ const values={'DET-001':'Rígido','DET-002':'PVC'};
+ assert.equal(cat.missing(fich,values).length,0,'obrigatórios efetivamente marcados exigem clique');
+ assert.ok(cat.visibleDetails(fich,values).some(x=>x.name==='Diâmetro PVC'));
+ assert.ok(!cat.visibleDetails(fich,values).some(x=>x.name==='Diâmetro Aço'));
+ const name=cat.technicalName(fich,values);
+ const listId=list.createList('  Teste de materiais  ');
+ assert.equal(list.get(listId).name,'Teste de materiais');
+ const itemId=list.upsertItem(listId,{catalogId:fich.id,name,values,qty:'50',unit:'m',stage:'Quadros',fichaStatus:fich.status,simulacao:false});
+ assert.equal(list.get(listId).items.length,1);
+ const extra=list.duplicateItem(listId,itemId);
+ assert.notEqual(extra,itemId);
+ list.upsertItem(listId,{catalogId:fich.id,name,values,qty:'75',unit:'m',stage:'Infra',fichaStatus:fich.status},extra);
+ assert.deepEqual([...list.get(listId).stages],['Quadros','Infra']);
+ const exported=list.exportList(listId),formatted=share.model(exported),txt=share.text(formatted);
+ assert.equal(formatted.rows.length,2);
+ assert.ok(txt.includes('Etapa: Infra')&&txt.includes('75 m'));
+ assert.ok(txt.includes('Eletroduto'));
+ exported.items[0].name='ALTERAÇÃO EXTERNA';
+ assert.equal(list.get(listId).items[0].name,name,'exportação não modifica origem');
+ list.removeItem(listId,itemId);
+ assert.deepEqual([...list.get(listId).stages],['Infra'],'etapa esvaziada desaparece');
+ list.removeItem(listId,extra);
+ assert.equal(list.get(listId).stages.length,0);
+ assert.throws(()=>share.model({name:'Invalida',items:[{name:'a',qty:0,unit:'m'}]}),/quantidade inválida/);
+ assert.throws(()=>list.upsertItem(listId,{name:'Invalido',qty:Infinity,unit:'m',stage:'Geral'}),/Preencha/);
+ const fixture=read('x/tests/fixtures/modal-adicionar-aprovado-x034.html');
+ const shell=read('x/index.html'),start=shell.indexOf('<dialog id="addDialog"');
+ assert.ok(start>=0&&shell.slice(start,shell.indexOf('</dialog>',start)+9)===fixture,'modal aprovado não alterado');
+ assert.ok(all.every(f=>!f.homologada),'nenhuma ficha em revisão pode ser anunciada como homologada');
+ console.log('TEREON X: fluxo de Listas com ficha, etapas, edição, cópia, exportação e modal — PASSOU (sem homologar conteúdo técnico)');
+})().catch(e=>{console.error(e);process.exitCode=1});
