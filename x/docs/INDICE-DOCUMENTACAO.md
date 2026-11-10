@@ -86,3 +86,8 @@ No laboratório de Empreiteiros, o núcleo atual passa a ser **Empreiteiro + Fun
 
 ## Superauditoria integral — 10/11/2026
 - [Superauditoria do TEREON X](SUPERAUDITORIA-TEREON-X-2026-11-10.md) — revisão de repositório e contratos, 20 achados P0–P2, matriz de maturidade, controles de RLS, testes, PWA, Listas, Catálogo, Obras/Diário/Pessoas e plano de release. **Não é CI verde nem homologação visual.**
+
+
+## Teste de campo de Listas — evidências de 10/11
+- [Auditoria do núcleo Listas para 17/11](AUDITORIA-NUCLEO-LISTAS-17-11-2026.md): estados executado/inspecionado/pendente, regressões corrigidas, falha remota reproduzida e plano de aceite.
+- [Matriz das seis fichas técnicas para 17/11](MATRIZ-FICHAS-17-11-2026.md): Condutor, Eletroduto e Curva com atributos fundamentais não obrigatórios; sem homologação do catálogo. **Este é o principal bloqueio de especificação técnica.**
