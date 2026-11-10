@@ -42,6 +42,8 @@ jobs:
         run: node x/tests/trilha-navegacao.test.cjs
       - name: Validar cabeçalho único em todos os módulos
         run: node x/tests/cabecalho.test.cjs
+      - name: Validar cadastro de funcionários, situação e cabeçalho de Obras
+        run: node x/tests/empreiteiros-funcionarios.test.cjs
       - name: Validar refinamento visual e contratos de Obras
         run: node x/tests/obras-refino-visual.test.cjs
       - name: Validar painel de Obras, cadastro de empreiteiros e PDF do Diário
