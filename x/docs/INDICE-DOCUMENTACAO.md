@@ -98,3 +98,6 @@ No laboratório de Empreiteiros, o núcleo atual passa a ser **Empreiteiro + Fun
 ## Escola inaugural e arquitetura FT_COND-001 — 10/11
 - [Escola aberta desde o início e curso Como usar o TEREON](ESCOLA-INAUGURAL-2026-11-10.md): decisão e currículo mínimo, separado do código ainda não implementado.
 - FT_COND-001 com arquitetura **única** aprovada; atributos e compatibilidades continuam em revisão técnica.
+
+## FT_COND-001 experimental — 10/11
+- [Importação experimental da ficha de Condutores e estresse de 648 combinações](AUDITORIA-FT-COND-001-2026-11-10-LAB.md): código na branch desenvolvimento, sem edição da origem, sem homologação nem teste móvel comprovado.
