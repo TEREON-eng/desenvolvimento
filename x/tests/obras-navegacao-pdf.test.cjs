@@ -14,7 +14,7 @@ const base=path.resolve(__dirname,'..');
 const read=file=>fs.readFileSync(path.join(base,file),'utf8');
 const obras=read('universo/obras/lab.html'),contractors=read('universo/empreiteiros/lab.html'),diary=read('universo/diario/lab.html'),diaryJS=read('universo/diario/lab.js'),diaryCSS=read('universo/diario/lab.css'),visits=read('universo/visitas/lab.html');
 for(const href of ['../empreiteiros/lab.html','../diario/lab.html','../visitas/lab.html'])assert.ok(obras.includes(href),'navegação de Obras: '+href);
-assert.ok(contractors.includes('id="contractor-form"')&&contractors.includes('id="team-form"'),'cadastro por formulários');
+assert.ok(contractors.includes('id="contractor-form"')&&contractors.includes('id="employee-form"'),'cadastros em modais');
 assert.ok(visits.includes('Em preparação'),'não sugerir que Visitas foi implementado');
 assert.ok(diary.includes('id="print-day"')&&diary.includes('id="print-report"'),'impressão do Diário');
 assert.ok(diaryJS.includes('function printDay()')&&diaryJS.includes('window.print()'),'exportação por impressão do navegador');
