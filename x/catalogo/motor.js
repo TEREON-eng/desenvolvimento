@@ -88,6 +88,26 @@ function conflicts(f,values){
  }
  return out;
 }
+/* Sequência de seleção: obrigatórios primeiro, salvo opcional que afeta
+   diretamente um obrigatório pendente por condição ou exclusão.
+   Ignorar não é confirmar: skipped é apenas estado transitório do modal. */
+function nextDetail(f,values,skipped=[]){
+ const ignored=new Set(skipped||[]);
+ const present=visibleDetails(f,values||{});
+ const required=present.filter(d=>d.required&&!values?.[d.id]);
+ const pendingOptional=present.filter(d=>!d.required&&!values?.[d.id]&&!ignored.has(d.id));
+ for(const target of required){
+  const prerequisite=pendingOptional.find(source=>source.rows.some(row=>{
+   const terms=row.exclusion.split(';').map(x=>x.trim()).filter(Boolean);
+   if(terms.some(t=>eq(t,target.name)||target.options.some(o=>eq(t,o))))return true;
+   return target.rows.some(trow=>trow.condition.split('//').some(clause=>
+    clause.split('+').some(token=>row.options.some(o=>eq(o,token)))));
+  }));
+  if(prerequisite)return prerequisite.id;
+  return target.id;
+ }
+ return pendingOptional[0]?.id||null;
+}
 function missing(f,values){
  const out=[];
  for(const d of f.details){
@@ -124,5 +144,5 @@ async function load(){
 }
 function list(){return cache||[]}
 function get(id){return list().find(f=>f.id===id)||null}
-root.TereonXCatalog=Object.freeze({version:2,load,list,get,isOfficial,normalize,visibleDetails,missing,technicalName,applyRule,optionsFor,conflicts});
+root.TereonXCatalog=Object.freeze({version:2,load,list,get,isOfficial,normalize,visibleDetails,missing,technicalName,applyRule,optionsFor,conflicts,nextDetail});
 })(window);
