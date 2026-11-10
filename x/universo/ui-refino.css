@@ -71,3 +71,8 @@ footer{padding-top:10px}
 @media(max-width:350px){.two{grid-template-columns:1fr}.section-head{flex-wrap:wrap}.add-button{width:100%}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important}}
 @media print{body{background:#fff!important;color:#111!important}.shell,dialog{display:none!important}#print-report,#print-report[hidden]{display:block!important;color:#111!important;background:#fff!important}}
+
+.module-eyebrow{font-size:10px;letter-spacing:.13em;font-weight:750;color:var(--ux-muted);margin:18px 2px 7px}
+.help>summary{cursor:pointer;font-size:13px;font-weight:680;color:var(--ux-muted);padding:3px 0;min-height:33px}
+.help[open]>summary{margin-bottom:12px}
+.help:not([open]){margin-top:12px;padding:12px 15px}
