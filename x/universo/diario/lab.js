@@ -26,6 +26,15 @@ const ctx={
 const $=id=>document.getElementById(id);
 const labels={scope:'Escopo',stage:'Etapa',substage:'Subetapa'};
 let entries=[];
+function openEntry(){
+ $('work').value=$('filter-work').value;
+ targets();
+ $('start').value=$('filter-date').value;
+ $('end').value=$('filter-date').value;
+ updateDates();
+ $('entry-dialog').showModal();
+}
+function closeEntry(){if($('entry-dialog').open)$('entry-dialog').close();}
 function say(message,error=false){$('message').textContent=message;$('message').classList.toggle('error',error);}
 function fmt(date){const [y,m,d]=date.split('-');return d+'/'+m+'/'+y;}
 function opt(value,label){const o=document.createElement('option');o.value=value;o.textContent=label;return o;}
@@ -105,7 +114,7 @@ function onSubmit(e){
  try{
   persist(engine.add(entries,record,ctx,newId()));
   $('filter-work').value=record.workId;$('filter-date').value=record.startDate;
-  $('note').value='';dayList();say('Programação salva somente neste aparelho. Não confirma presença ou serviço executado.');
+  $('note').value='';closeEntry();dayList();say('Programação salva somente neste aparelho. Não confirma presença ou serviço executado.');
  }catch(error){say(error.message,true);}
 }
 function init(){
@@ -124,6 +133,9 @@ function init(){
  $('filter-work').addEventListener('change',dayList);
  $('filter-date').addEventListener('change',dayList);
  $('entry-form').addEventListener('submit',onSubmit);
+ $('open-entry').addEventListener('click',openEntry);
+ $('close-entry').addEventListener('click',closeEntry);
+ $('entry-dialog').addEventListener('click',e=>{if(e.target===$('entry-dialog'))closeEntry();});
  $('clear').addEventListener('click',()=>{$('note').value='';$('start').value='2026-11-17';$('end').value='2026-11-20';updateDates();say('Campos redefinidos. Programações existentes preservadas.');});
  $('reset').addEventListener('click',()=>{
   if(!confirm('Limpar apenas os registros fictícios deste laboratório neste navegador?'))return;
