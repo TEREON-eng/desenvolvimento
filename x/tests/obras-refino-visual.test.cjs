@@ -1,0 +1,32 @@
+'use strict';
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const root=path.resolve(__dirname,'..');
+const read=p=>fs.readFileSync(path.join(root,p),'utf8');
+const ui=read('universo/ui-refino.css');
+const appearance=read('appearance.js');
+const obras=read('universo/obras/lab.html');
+const diary=read('universo/diario/lab.html');
+const contractor=read('universo/empreiteiros/lab.html');
+const visits=read('universo/visitas/lab.html');
+const diaryJS=read('universo/diario/lab.js');
+const contractorJS=read('universo/empreiteiros/lab.js');
+for(const [name,doc] of [['obras',obras],['diario',diary],['empreiteiros',contractor],['visitas',visits]]){
+ assert.ok(doc.includes('ui-refino.css?v=1'),name+' usa camada visual comum');
+}
+for(const doc of [diary,contractor,visits])assert.ok(doc.includes('appearance.js?v=3'),'tema aplicado à página');
+for(const theme of ['light','dark','tereon'])assert.ok(ui.includes('data-tx-appearance='+theme)||theme==='light'&&ui.includes(':root{--ux-bg'),'tema '+theme);
+assert.ok(appearance.includes('tereon-x-appearance-v1'),'mesma preferência global');
+assert.ok(ui.includes('@media(max-width:520px)')&&ui.includes('min-height:44px'),'base responsiva e toque');
+assert.ok(obras.includes('Minhas obras')&&obras.includes('module-nav'),'painel e navegação');
+assert.ok(diary.includes('<details class="panel help">'),'ajuda recolhida');
+assert.ok(diary.includes('<dialog id="entry-dialog"')&&diary.includes('<dialog id="report-dialog"'),'modais separados');
+assert.ok(diary.includes('id="print-day"')&&diaryJS.includes('window.print()'),'exportação preservada');
+assert.ok(contractor.includes('id="contractor-form"')&&contractor.includes('id="team-form"'),'cadastro preservado');
+assert.ok(contractorJS.includes('hasDiaryReference(team.id)'),'não exclui equipe que aparece no Diário local');
+assert.ok(visits.includes('Em preparação'),'não anuncia Visitas pronta');
+for(const module of ['universo/diario/lab.js','universo/empreiteiros/lab.js'])new Function(read(module));
+const styleCount=(obras.match(/ui-refino.css/g)||[]).length;
+assert.equal(styleCount,1);
+console.log('TEREON X: auditoria de interface, três temas e proteção local do Diário — OK (estático)');
