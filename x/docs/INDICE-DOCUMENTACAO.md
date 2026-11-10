@@ -58,3 +58,7 @@ A [validação técnica](VALIDACAO-TECNICA-2026-11-09.md) inclui leitura do cód
 
 ## Correção de 10/11 — escopo de Obras em três níveis
 A estrutura vigente de **Obras** é **Escopo → Etapa → Subetapa**; não utilizar como modelo atual a árvore de dois níveis presente nos capítulos históricos. O motor independente `x/universo/obras/escopo-motor.js` é laboratório sem integração com banco/Lista/modal. A política de nuvem paga e número de listas grátis permanece **hipótese comercial**, não regra implementada.
+
+
+## Pessoas e equipes — proposta 10/11/2026
+- [Pessoas, Prestadores, Equipes e Alocações](PESSOAS-EQUIPES-ALOCACOES-2026-11-10.md) — desenho de entidades, vínculos temporais, permissões independentes e casos de trabalho na Escola X.
