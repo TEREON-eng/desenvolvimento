@@ -1,0 +1,17 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TEREON X · Empreiteiros</title><link rel="stylesheet" href="../diario/lab.css"><link rel="stylesheet" href="./lab.css"></head><body><main class="shell">
+<header class="header"><a href="../obras/lab.html" class="back">← Obras</a><span class="brand">TEREON <b>X</b></span><a href="/x/" class="back">Início</a></header>
+<div class="intro"><p class="eyebrow">OBRAS · CADASTRO PROFISSIONAL</p><h1>Empreiteiros</h1><p>Cadastre prestadores e organize suas equipes, sem exigir que todos tenham uma conta TEREON.</p></div>
+<section class="notice"><strong>Laboratório local</strong><span>Cadastros somente neste navegador. Não estão vinculados às obras, ao Diário ou a usuários reais.</span></section>
+<section class="panel"><div class="section-head"><h2>Prestadores cadastrados</h2><button type="button" class="primary add-button" id="add-contractor">+ Empreiteiro</button></div><div id="contractors" class="entries"></div></section>
+<section class="panel"><div class="section-head"><h2>Equipes</h2><button type="button" class="secondary" id="add-team">+ Equipe</button></div><div id="teams" class="entries"></div></section>
+<p id="message" class="message" role="status" aria-live="polite"></p>
+<footer>TEREON X · demonstração sem integração com banco ou alocação real</footer></main>
+<dialog id="contractor-dialog" aria-labelledby="contractor-title"><div class="modal-content">
+<div class="modal-head"><h2 id="contractor-title">Novo empreiteiro</h2><button type="button" class="close-button" data-close="contractor-dialog" aria-label="Fechar">✕</button></div>
+<form id="contractor-form"><label>Nome do prestador<input id="contractor-name" maxlength="120" required placeholder="Ex.: Empreiteiro JS"></label><label>Observação (opcional)<textarea id="contractor-note" rows="2" maxlength="500"></textarea></label><div class="form-actions"><button class="primary" type="submit">Salvar</button><button class="secondary" type="button" data-close="contractor-dialog">Cancelar</button></div></form>
+</div></dialog>
+<dialog id="team-dialog" aria-labelledby="team-title"><div class="modal-content">
+<div class="modal-head"><h2 id="team-title">Nova equipe</h2><button type="button" class="close-button" data-close="team-dialog" aria-label="Fechar">✕</button></div>
+<form id="team-form"><label>Prestador<select id="team-contractor" required></select></label><label>Nome da equipe<input id="team-name" maxlength="120" required placeholder="Ex.: Equipe A"></label><div class="form-actions"><button class="primary" type="submit">Salvar equipe</button><button class="secondary" type="button" data-close="team-dialog">Cancelar</button></div></form>
+</div></dialog>
+<script src="./motor.js"></script><script src="./lab.js"></script></body></html>
