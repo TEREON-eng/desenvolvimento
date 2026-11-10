@@ -415,3 +415,8 @@ O painel de Funcionários ganhou **filtro por empreiteiro**, e o modal de novo f
 ## 10/11/2026 — Revisão iniciada de Condutores BT (documentação)
 - Inventário inicial de características e relações técnicas para condutores isolados e cabos unipolares/multipolares registrado em [Retomada FT_COND-001](RETOMADA-FT-COND-001-2026-11-10.md).
 - **Em aberto:** ficha única com condicionais versus fichas separadas. Nenhuma regra foi homologada, nenhuma célula técnica, código, SQL ou dado real alterado.
+
+## 10/11/2026 — Decisão didática: ficha única e Escola inaugural (documental)
+- Fundador aprovou **uma ficha única de Condutor elétrico** para isolado/unipolar/multipolar com condicionais, visando simplicidade e reutilização didática.
+- Definiu Escola TEREON aberta desde o começo com curso inaugural **“Como usar o TEREON”**, gratuito e curto. Registrado plano [Escola Inaugural](ESCOLA-INAUGURAL-2026-11-10.md), **sem afirmar curso implementado**.
+- Inspecionada FT_COND-001 atual no Drive (8 detalhes). Não foram alteradas células, normas, código de Listas ou publicação.
