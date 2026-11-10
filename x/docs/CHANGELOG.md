@@ -345,3 +345,9 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Regra atual substitui árvore simplificada de dois níveis: `Revisão elétrica → Quadros → QD1`, `SPDA` e `Entrada de energia → Abrigo`. Nenhuma subdivisão é obrigatória.
 - Debate sobre cobrança pelo armazenamento: sincronização pessoal básica gratuita recomendada, teto de listas e precificação **não aprovados nem implementados**.
 - Não tocou a UI aprovada, fichas, banco, `main` ou versão X.0.3.30.
+
+
+## 10/11/2026 — desenho de Pessoas, Equipes e Alocações (documentação)
+- Registrada a diretriz social do produto: Listas e Escola com valor concreto no gratuito; receitas profissionais/colaborativas e Escola avançada como hipóteses a validar.
+- Criado [contrato de desenho](PESSOAS-EQUIPES-ALOCACOES-2026-11-10.md) para pessoa sem conta, prestador, equipe, integrante temporal, alocação a Obra/Escopo/Etapa/Subetapa e autorização digital separada.
+- Mestre, Universo, Contratos, Modelo Comercial e Índice atualizados. **Sem mudança no app, banco, login, convite, equipes ou `main`; versão X.0.3.30 permanece.**
