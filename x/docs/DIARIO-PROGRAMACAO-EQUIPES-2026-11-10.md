@@ -39,3 +39,15 @@
 - Regras para conflito de horário/equipes em duas obras; inicialmente informar e permitir decisão do gestor, sem bloqueio automático ainda.
 
 **Sem alteração na `main`, contas, Supabase, dados de Obras, Listas, PWA ou interface do modal.**
+
+
+## Evolução da experiência — consulta e apontamento do dia (10/11/2026)
+**Decisões do fundador:** a página principal do Diário deve ser **consulta/listagem das programações**; o botão **+ Adicionar atividade** abre o modal de programação, sem exibir formulário permanente. Em cada programação do dia, botão **Registrar o dia** abre um **segundo modal independente**, para confirmar:
+- **Equipe trabalhou nesta atividade:** registrar execução daquele dia, podendo marcar separadamente **tarefa concluída**; executar ≠ concluir;
+- **Atividade não realizada:** exige justificativa categorizada (chuva, equipe não compareceu, deslocamento para outro atendimento, falta de material, falta de acesso/liberação ou outro), com observação livre opcional.
+- Ao revisar informação do dia, **acrescentar novo evento e preservar o histórico anterior**. Dia 17/11 não confirma 18/11 automaticamente, nem uma tarefa concluída reescreve os outros dias da programação.
+- Cancelar uma programação não apaga os registros históricos de execução que já existirem.
+
+**IMPLEMENTADO NO LABORATÓRIO:** `lab.html` consulta primeiro; `#entry-dialog` para planejar, `#report-dialog` para apontar; `x/universo/diario/execucao-motor.js` puro e separado do `programacao-motor.js`; registro de execução em chave local independente `tereon-x-diary-execution-simulation-v1`, sem Supabase; controles nos cartões de programação diária. Testes `x/tests/diario-execucao.test.cjs` adicionados ao workflow. **Verificação isolada de JavaScript executada e aprovada**, CI completo e interação no celular ainda sem aceite.
+
+**Próximas lapidações (não implementadas):** divergência entre presença de equipe e execução de uma atividade, execução parcial/quantidades, motivo detalhado editável e registro fotográfico; assinatura/validação do responsável; tratamento explícito de atividade concluída que ainda aparece em datas futuras da mesma programação; critérios para programar outro dia sem conflitar com relatório anterior. O rótulo “tarefa concluída” significa declaração de conclusão da programação/tarefa daquele dia, ainda não aprovação técnica da obra.
