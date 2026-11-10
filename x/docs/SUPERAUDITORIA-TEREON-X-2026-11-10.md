@@ -1,4 +1,7 @@
 # TEREON X — Superauditoria de arquitetura, contratos e produto
+
+> **PRIORIZAÇÃO APÓS A AUDITORIA:** esta relação é ampla, mas **não exige resolver todos os achados antes de 17/11**. Priorizar riscos de Listas, ficha, modal, dados, compartilhamento e publicação; barreiras de gestão permanecem para sua integração real posterior. [Plano 17/11](FOCO-TESTE-CAMPO-17-11-2026.md).
+
 **Data da revisão: 10/11/2026 | Repositório: `TEREON-eng/desenvolvimento` | Branch: `desenvolvimento` | Escopo: somente TEREON X**
 
 > **Natureza do documento:** auditoria por inspeção do código e documentos, leitura de metadados RLS do banco e confrontação dos testes declarados. **Não é homologação visual, execução completa do GitHub Actions, prova de Preview publicada ou ensaio A/B no celular.** Não houve alteração do código operacional nesta rodada. Os registros TEREON antigos não foram adotados como normas.
