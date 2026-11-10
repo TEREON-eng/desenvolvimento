@@ -331,3 +331,9 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Plano da organização TEREON-app verificado como Supabase Free; uso real da base ~12 MB, 2 usuários, 6 listas e 5 obras. Limites oficiais separados de tetos de laboratório. Orientações de monitoramento, backup, egress e Storage registradas.
 - Definido conceitualmente escopo hierárquico: Quadros elétricos → QD1; etapa cadastrada da Obra persiste, rótulo temporário da Lista só vive enquanto tiver materiais. Lista vinculada sugere etapas existentes, sempre sob permissão. Nada foi implementado no banco/motor de Obras.
 - Documentos de [capacidade](CAPACIDADE-ARMAZENAMENTO-2026-11-10.md) e [escopo hierárquico](ESCOPO-HIERARQUICO-OBRAS-2026-11-10.md) adicionados ao Hub. Não houve alteração de plano, pagamento, dados, `main` ou versão do aplicativo.
+
+
+## 10/11/2026 — Prova isolada de sugestões de etapas em árvore
+- Novo laboratório puro `x/universo/obras/sugestoes-etapas.js`; testes `x/tests/escopo-etapas.test.cjs` e etapa correspondente no GitHub Actions. Caso QD1 ambíguo sob Quadros/Iluminação, escolha de etapa-mãe e rejeição de ciclos/parent inexistente incluídos.
+- Smoke-test JavaScript isolado sobre o código obtido do GitHub passou, mas a execução completa do Actions e o aceite no navegador seguem pendentes.
+- **Sem alterações de SQL, rotas, interface, modal aprovado, `main` ou versão X.0.3.30.**
