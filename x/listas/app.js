@@ -168,8 +168,8 @@ function name(){
 function getFields(){
  if(!selectedFicha)return legacyFields;
  return window.TereonXCatalog.visibleDetails(selectedFicha,values)
-  .filter(d=>d.options.length&&d.name!=='[Detalhe sem nome]')
-  .map(d=>({id:d.id,label:d.name,required:d.required,options:d.options}));
+  .filter(d=>d.name!=='[Detalhe sem nome]')
+  .map(d=>({id:d.id,label:d.name,required:d.required,options:window.TereonXCatalog.optionsFor(selectedFicha,values,d.id)}));
 }
 function count(){return fields.filter(f=>f.required&&values[f.id]).length}
 function pickFirstMissing(){
@@ -405,7 +405,7 @@ $('createForm').addEventListener('submit',function(e){
 });
 $('tags').addEventListener('click',function(e){
  var b=e.target.closest('[data-remove]');if(!b)return;
- delete values[b.dataset.remove];cleanHiddenValues();fields=getFields();
+ delete values[b.dataset.remove];fields=getFields();
  // Sempre retoma a primeira característica obrigatória ainda pendente,
  // mesmo quando várias tags são removidas em sequência.
  focus=pickFirstMissing();redrawAdd();
@@ -428,8 +428,14 @@ $('choices').addEventListener('click',function(e){
   redrawAdd();return;
  }
  const b=e.target.closest('[data-pick]');if(!b||!fields[focus])return;
- const field=fields[focus];values[field.id]=b.dataset.pick;
- cleanHiddenValues();fields=getFields();focus=pickFirstMissing();redrawAdd();
+ const field=fields[focus];
+ const next=Object.assign({},values,{[field.id]:b.dataset.pick});
+ if(selectedFicha){
+  const problems=window.TereonXCatalog.conflicts(selectedFicha,next);
+  if(problems.length){alert('Combinação não permitida pela ficha: '+problems.join('; ')+'. Remova a tag incompatível antes de continuar.');return;}
+ }
+ values=next; // Nunca apagar outra tag confirmada em decorrência de uma exclusão.
+ fields=getFields();focus=pickFirstMissing();redrawAdd();
 });
 $('stageTags').addEventListener('click',function(e){var b=e.target.closest('[data-stage]');if(b){$('stage').value=b.dataset.stage;validate();}});
 ['qty','stage'].forEach(function(x){$(x).addEventListener('input',validate);});
