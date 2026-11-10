@@ -1,4 +1,7 @@
 # TEREON X — Matriz de testes e aceite
+
+> **ORDEM DOS TESTES — 10/11:** primeiro eliminar riscos ao **uso do núcleo de Listas no campo em 17/11** (modal, fichas, persistência, compartilhamento, celular, CI/deploy). Registros de teste de gestão são laboratório, não pré-requisito do teste de Listas. [Plano operacional](FOCO-TESTE-CAMPO-17-11-2026.md).
+
 Base de 07/11/2026 · complementada em 09/11/2026. Não marcar como aprovado sem evidência observada.
 
 ## Automáticos (lista histórica de cobertura; workflow atual indicado no fechamento)
