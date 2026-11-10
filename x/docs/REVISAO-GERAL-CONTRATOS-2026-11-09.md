@@ -1,4 +1,7 @@
 # TEREON X — Revisão geral de regras, contratos e riscos
+
+> **REVISÃO HISTÓRICA — 09/11:** manter as conclusões na data original, sem considerá-las prova de CI/deploy no dia 10. Para o trabalho imediato vale a [prioridade de campo 17/11](FOCO-TESTE-CAMPO-17-11-2026.md), com Obras/Diário como laboratório paralelo. [Estado vigente](ESTADO-VIGENTE-10-11-2026.md).
+
 **Fechamento de 09/11/2026 · referência de código x.0.3.29 · branch `desenvolvimento`**
 
 > Documento de auditoria do estado **atual**. Não reescreve documentos históricos. **Inspeção de código e banco não equivale a homologação em navegador nem à aprovação do fundador de funções que não foram testadas.**
