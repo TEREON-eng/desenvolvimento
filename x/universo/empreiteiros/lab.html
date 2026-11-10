@@ -1,17 +1,22 @@
 <!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TEREON X · Empreiteiros</title><link rel="stylesheet" href="../diario/lab.css"><link rel="stylesheet" href="./lab.css"><link rel="stylesheet" href="../ui-refino.css?v=2"><link rel="stylesheet" href="/x/components/header.css?v=6"><link rel="stylesheet" href="/x/appearance.css?v=5"></head><body><main class="shell">
 <header class="top" data-tx-header="module" data-back-href="../obras/lab.html" data-back-label="← Obras"></header>
-<div class="intro"><p class="eyebrow">OBRAS · CADASTRO PROFISSIONAL</p><h1>Empreiteiros</h1><p>Cadastre prestadores e organize suas equipes, sem exigir que todos tenham uma conta TEREON.</p></div>
-<section class="notice"><strong>Laboratório local</strong><span>Cadastros somente neste navegador. Não estão vinculados às obras, ao Diário ou a usuários reais.</span></section>
+<div class="intro"><p class="eyebrow">OBRAS · CADASTRO PROFISSIONAL</p><h1>Empreiteiros</h1><p>Cadastre empreiteiros e seus funcionários. Equipes poderão ser organizadas depois.</p></div>
+<section class="notice"><strong>Laboratório local</strong><span>Dados de teste salvos neste navegador, sem vínculo com contas reais. Funcionários não são associados automaticamente a equipes ou ao Diário.</span></section>
 <section class="panel"><div class="section-head"><h2>Prestadores</h2><button type="button" class="primary add-button" id="add-contractor">+ Empreiteiro</button></div><div id="contractors" class="entries"></div></section>
-<section class="panel"><div class="section-head"><h2>Equipes</h2><button type="button" class="secondary" id="add-team">+ Equipe</button></div><div id="teams" class="entries"></div></section>
+<section class="panel"><div class="section-head"><h2>Funcionários</h2><button type="button" class="primary add-button" id="add-employee">+ Funcionário</button></div><div id="employees" class="entries"></div></section>
+<details class="panel help"><summary>Equipes de testes anteriores</summary><p class="hint">Os cadastros de equipes já usados na simulação foram preservados, mas não são convertidos automaticamente em funcionários.</p><div id="legacy-teams" class="entries"></div></details>
 <p id="message" class="message" role="status" aria-live="polite"></p>
 <footer>TEREON X · demonstração sem integração com banco ou alocação real</footer></main>
 <dialog id="contractor-dialog" aria-labelledby="contractor-title"><div class="modal-content">
 <div class="modal-head"><h2 id="contractor-title">Novo empreiteiro</h2><button type="button" class="close-button" data-close="contractor-dialog" aria-label="Fechar">✕</button></div>
 <form id="contractor-form"><label>Nome do prestador<input id="contractor-name" maxlength="120" required placeholder="Ex.: Empreiteiro JS"></label><label>Observação (opcional)<textarea id="contractor-note" rows="2" maxlength="500"></textarea></label><div class="form-actions"><button class="primary" type="submit">Salvar</button><button class="secondary" type="button" data-close="contractor-dialog">Cancelar</button></div></form>
 </div></dialog>
-<dialog id="team-dialog" aria-labelledby="team-title"><div class="modal-content">
-<div class="modal-head"><h2 id="team-title">Nova equipe</h2><button type="button" class="close-button" data-close="team-dialog" aria-label="Fechar">✕</button></div>
-<form id="team-form"><label>Prestador<select id="team-contractor" required></select></label><label>Nome da equipe<input id="team-name" maxlength="120" required placeholder="Ex.: Equipe A"></label><div class="form-actions"><button class="primary" type="submit">Salvar equipe</button><button class="secondary" type="button" data-close="team-dialog">Cancelar</button></div></form>
+<dialog id="employee-dialog" aria-labelledby="employee-title"><div class="modal-content">
+<div class="modal-head"><h2 id="employee-title">Novo funcionário</h2><button type="button" class="close-button" data-close="employee-dialog" aria-label="Fechar">✕</button></div>
+<form id="employee-form"><label>Empreiteiro<select id="employee-contractor" required></select></label>
+<label>Nome completo<input id="employee-name" maxlength="120" autocomplete="off" required placeholder="Nome do profissional"></label>
+<label>Função <span class="optional">(opcional)</span><input id="employee-role" maxlength="100" placeholder="Ex.: Eletricista"></label>
+<label id="employee-status-row" hidden>Situação<select id="employee-status"><option value="active">Ativo</option><option value="terminated">Desligado</option></select></label>
+<div class="form-actions"><button type="submit" class="primary">Salvar funcionário</button><button type="button" class="secondary" data-close="employee-dialog">Cancelar</button></div></form>
 </div></dialog>
 <script src="./motor.js"></script><script src="./lab.js"></script><script src="/x/components/header.js?v=9"></script><script src="/x/appearance.js?v=3"></script><script src="/x/status.js?v=4"></script><script type="module" src="/x/components/header-session.js?v=4"></script></body></html>
