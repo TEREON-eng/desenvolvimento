@@ -174,7 +174,7 @@
     },
     {
       "codigo": "FT_COND-001",
-      "nome": "Condutores isolados",
+      "nome": "Condutor elétrico",
       "categoria": "CONDUTORES",
       "status": "Em revisão",
       "tipo": "real",
@@ -398,8 +398,10 @@
         "Classe de tensão opcional na planilha; revisar se exigida para compra.",
         "Classe II descrita como 'Encordoado flexível'; classificação IEC 60228 deve ser revisada antes da homologação.",
         "Unidade de compra não figura no bloco ativo; quantidade/unidade continuam nos campos da Lista.",
-        "Construções comerciais, compatibilidades e separação entre isolação e cobertura ainda não homologadas."
-      ]
+        "Construções comerciais, compatibilidades e separação entre isolação e cobertura ainda não homologadas.",
+        "Título B5 da origem é Condutores isolados, porém inclui Cabo multipolar; nome exibido provisoriamente Condutor elétrico para não afirmar construção incorreta."
+      ],
+      "nomeNaPlanilha": "Condutores isolados"
     },
     {
       "codigo": "FT_INFRA-002",
