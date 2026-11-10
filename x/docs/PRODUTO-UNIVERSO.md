@@ -1,4 +1,7 @@
 # TEREON X — Universo | Desenho funcional do produto
+
+> **VISÃO E LABORATÓRIO — 10/11:** “Universo” é nome histórico/técnico; **Obras** é a denominação da interface em evolução. A hierarquia vigente de projeto é **Obra → Escopo → Etapa → Subetapa**. Este módulo não integra a entrega crítica de 17/11. [Estado vigente](ESTADO-VIGENTE-10-11-2026.md).
+
 **07/11/2026 · v0.1 para discussão — arquitetura aprovada em princípios; telas e comerciais ainda são PROPOSTAS**
 
 ## 1. O que é
