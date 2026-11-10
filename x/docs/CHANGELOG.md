@@ -294,3 +294,10 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Criado e executado teste estático de fronteiras `x/tests/independencia.test.cjs`, incluído no CI, preservando o snapshot do modal técnico aprovado.
 - No celular, modal **Criar lista** alinhado perto do topo para não ficar coberto pelo teclado e com altura máxima dinâmica/rolagem. O modal de Adicionar material não foi alterado.
 - Backlog de bloqueadores técnicos priorizado antes de novos módulos. Não declarar independência completa ou homologação sem browser e testes reais.
+
+
+## 09/11/2026 — saneamento documental de contratos (sem nova versão do aplicativo)
+- Criado `docs/CONTRATOS-VIGENTES.md` com 12 contratos vigentes, estados de evidência e matriz decisão → implementação → teste → aceite.
+- Introduzida precedência explícita: `#addDialog` X.0.3.4 é o fluxo principal; referência antiga a `txCatalogDialog` permanece apenas histórica.
+- Ligados índice, mestre, retomada e matriz de testes à fonte normativa. Nenhum JS, CSS, banco, PWA, fichário ou `main` foi alterado nesta etapa.
+- **Não homologado por esta documentação:** execução atual do CI, Preview, testes reais multiusuário/offline, PDF e conteúdo técnico das fichas.
