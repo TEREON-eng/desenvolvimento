@@ -54,3 +54,7 @@ A [validação técnica](VALIDACAO-TECNICA-2026-11-09.md) inclui leitura do cód
 ## Novas referências — 10/11/2026
 - [Capacidade e armazenamento Supabase](CAPACIDADE-ARMAZENAMENTO-2026-11-10.md): plano Free verificado, uso atual, limites reais versus limites do nosso aplicativo, política de monitoramento.
 - [Escopo hierárquico de Obras](ESCOPO-HIERARQUICO-OBRAS-2026-11-10.md): etapa mãe/subetapa, origem de rótulos, associação direta, sugestão progressiva e preservação de escopo.
+
+
+## Correção de 10/11 — escopo de Obras em três níveis
+A estrutura vigente de **Obras** é **Escopo → Etapa → Subetapa**; não utilizar como modelo atual a árvore de dois níveis presente nos capítulos históricos. O motor independente `x/universo/obras/escopo-motor.js` é laboratório sem integração com banco/Lista/modal. A política de nuvem paga e número de listas grátis permanece **hipótese comercial**, não regra implementada.
