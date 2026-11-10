@@ -69,3 +69,8 @@ Para cada alteração registrar:
 - **CT-06 Persistência:** no contexto autenticado, novas listas e mudanças passam pelo validador do adaptador remoto **antes** da gravação no cache; no visitante, limites específicos do laboratório remoto não são aplicados. Registros legados sem alteração permanecem legíveis. A homologação depende de CI e navegador.
 - **CT-10 Obras:** etapas do escopo são entidades independentes, persistentes e associadas à obra, podendo existir sem materiais. Etapas de Listas vinculadas geram sugestões que precisam de associação/criação explícita. **Contrato proposto, motor ainda não implementado**. [Desenho das etapas](CONTRATO-ETAPAS-LISTAS-OBRAS-2026-11-10.md).
 - **Navegação:** nome **Obras** proposto para substituir “Universo” na interface, sem alterar caminhos técnicos nesta etapa.
+
+
+## Adendo de 10/11 — limites reais e hierarquia de etapas
+**CT-05/CT-10:** a limpeza implementada em X.0.3.30 é só de rótulos temporários de etapa **da Lista**. Etapas **cadastradas no escopo da Obra**, inclusive etapa-mãe, têm identidade própria, `parent_id` e sobrevivem a mudanças das Listas. É permitido associar materiais diretamente a uma etapa-mãe (sem inventar subetapa). Promover QD1 observado em Lista a subetapa de Quadros exige aceite explícito e permissão, não correlação textual automática. **Motor de escopo hierárquico ainda não implementado.** Ver [hierarquia](ESCOPO-HIERARQUICO-OBRAS-2026-11-10.md).
+**CT-06:** plano Supabase **Free** confirmado, 500 MB de banco incluídos e 50.000 MAU de franquia, sem limite fixo de número de listas. O limite de 300 materiais por lista é uma restrição do laboratório, não do plano nem uma regra de cobrança. Ver [capacidade](CAPACIDADE-ARMAZENAMENTO-2026-11-10.md).
