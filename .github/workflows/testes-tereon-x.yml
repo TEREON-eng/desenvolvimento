@@ -42,6 +42,8 @@ jobs:
         run: node x/tests/trilha-navegacao.test.cjs
       - name: Validar cabeçalho único em todos os módulos
         run: node x/tests/cabecalho.test.cjs
+      - name: Validar execução diária, conclusão e justificativas
+        run: node x/tests/diario-execucao.test.cjs
       - name: Validar programação independente de equipes no Diário
         run: node x/tests/diario-programacao.test.cjs
       - name: Validar motor independente Escopo Etapa Subetapa
