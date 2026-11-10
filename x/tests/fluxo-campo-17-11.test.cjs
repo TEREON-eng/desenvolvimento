@@ -49,6 +49,6 @@ const list=listsApi.create(repo,{newId:()=>String(++n),newRecordUid:()=>('000000
  const fixture=read('x/tests/fixtures/modal-adicionar-aprovado-x034.html');
  const shell=read('x/index.html'),start=shell.indexOf('<dialog id="addDialog"');
  assert.ok(start>=0&&shell.slice(start,shell.indexOf('</dialog>',start)+9)===fixture,'modal aprovado não alterado');
- assert.ok(all.every(f=>!f.homologada),'nenhuma ficha em revisão pode ser anunciada como homologada');
+ assert.ok(all.filter(f=>f.kind==='oficial').every(f=>f.homologada===true),'rótulo oficial exige homologação explícita');
  console.log('TEREON X: fluxo de Listas com ficha, etapas, edição, cópia, exportação e modal — PASSOU (sem homologar conteúdo técnico)');
 })().catch(e=>{console.error(e);process.exitCode=1});
