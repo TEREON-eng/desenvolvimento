@@ -365,3 +365,10 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Motor separado `x/universo/diario/execucao-motor.js` e modal `#report-dialog` com execução do dia, conclusão opcional, não realização com justificativa obrigatória e histórico por programação/data.
 - Motivos de impedimento: chuva, ausência de equipe, deslocamento, falta de material, ausência de liberação e outro. Apontamentos persistem somente no navegador, segregados da programação e sem banco real.
 - Acrescentado teste `x/tests/diario-execucao.test.cjs` ao workflow; smoke-test JS isolado passou, **CI e validação no celular ainda não comprovados**. Modais de Listas, `main`, SQL e versão do app X.0.3.30 preservados.
+
+
+## 10/11/2026 — Navegação de Obras, cadastro experimental de empreiteiros e PDF do Diário
+- Entrada de Obras reestruturada como painel das próprias obras + links para **Empreiteiros**, **Diário de Obras** e **Relatórios de Visita**; a última é uma rota de preparação, sem cadastro.
+- Motor independente de Empreiteiros/Equipes e tela mobile de CRUD fictício em `x/universo/empreiteiros/`, armazenamento local separado. Diário incorpora sugestões de prestadores e equipes locais após recarregar.
+- Botão **Gerar PDF do dia** no Diário monta relatório de programação e apontamento por obra/data e aciona **impressão A4** com opção “Salvar como PDF” no navegador. Sem assinatura, fotos, arquivo gerado por backend, ou nuvem.
+- `x/tests/obras-navegacao-pdf.test.cjs` adicionado ao workflow; smoke-test JS isolado de integridade das equipes e ligação dos módulos passou. **CI completo, impressão visual e ensaio no celular pendentes**. `main`, Listas, modal e banco preservados.
