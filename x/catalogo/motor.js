@@ -7,36 +7,105 @@ let cache=null,loading=null;
 const clean=x=>String(x??'').trim();
 const norm=x=>clean(x).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 function isOfficial(f){return f?.publicacao?.homologada===true && ['aprovada','publicada','oficial'].includes(norm(f.status)) && f.tipo!=='hipotetica';}
+/* Um grupo (DET-xxx) representa UMA pergunta. Linhas com o mesmo ID representam
+   opções com condições/exclusões locais; fichas antigas de várias opções por linha
+   continuam suportadas. Sem qualquer inferência de produto ou homologação. */
 function normalize(f){
  if(!f||!clean(f.codigo)||!clean(f.nome))throw Error('Ficha sem identificação');
- const details=(f.detalhes||[]).filter(d=>clean(d.nome)||Array.isArray(d.valores)&&d.valores.length).map((d,i)=>({
-   id:clean(d.id)||'DET-'+(i+1),name:clean(d.nome)||'[Detalhe sem nome]',order:Number(d.ordem)||i+1,
-   options:Array.isArray(d.valores)?d.valores.map(clean).filter(Boolean):clean(d.valores).split(';').map(clean).filter(Boolean),
-   condition:clean(d.condicao),required:norm(d.classificacao).includes('obrigat'),
-   classification:clean(d.classificacao)
- }));
+ const groups=new Map();
+ (f.detalhes||[]).forEach((d,i)=>{
+  const name=clean(d.nome),options=Array.isArray(d.valores)?d.valores.map(clean).filter(Boolean):clean(d.valores).split(';').map(clean).filter(Boolean);
+  if(!name&&!options.length)return;
+  const id=clean(d.id)||'DET-'+(i+1),order=Number(d.ordem)||i+1;
+  if(groups.has(id)&&groups.get(id).name!==name)throw Error('ID de detalhe duplicado com nomes diferentes: '+id);
+  if(!groups.has(id))groups.set(id,{id,name:name||'[Detalhe sem nome]',order,options:[],rows:[],condition:'',required:false,classification:''});
+  const g=groups.get(id);
+  if(g.order!==order)throw Error('Ordens diferentes para o mesmo detalhe: '+id);
+  g.required=g.required||norm(d.classificacao).includes('obrigat');
+  g.classification=g.required?'Obrigatório':(clean(d.classificacao)||g.classification);
+  options.forEach(o=>{if(!g.options.some(x=>norm(x)===norm(o)))g.options.push(o)});
+  g.rows.push({options,condition:clean(d.condicao),exclusion:clean(d.exclusao),originLine:d.origemLinha||null});
+ });
+ const details=[...groups.values()].sort((a,b)=>a.order-b.order);
+ for(const d of details)d.condition=d.rows.length===1?d.rows[0].condition:'';
  const sourceType=f.tipo==='hipotetica'?'simulacao':isOfficial(f)?'oficial':'revisao';
+ const pendencias=[...(Array.isArray(f.pendencias)?f.pendencias:[]),...(sourceType==='simulacao'?['Ficha ainda não criada: opções fictícias']:[])];
+ details.forEach(d=>{
+  if(d.name==='[Detalhe sem nome]'||!d.options.length)pendencias.push('Revisar: '+d.name);
+  d.rows.forEach(row=>{if(!row.condition)pendencias.push('Condição não informada: '+d.name)});
+ });
  return {id:clean(f.codigo),name:clean(f.nome),reference:clean(f.referencia)||clean(f.codigo),
    status:clean(f.status),kind:sourceType,collection:'catalogo-oficial',homologada:isOfficial(f),
-   pendencias:[...(Array.isArray(f.pendencias)?f.pendencias:[]),...(sourceType==='simulacao'?['Ficha ainda não criada: opções fictícias']:[]),...details.filter(d=>!d.condition||!d.classification||d.name==='[Detalhe sem nome]'||!d.options.length).map(d=>'Revisar: '+d.name)],
-   details:details.sort((a,b)=>a.order-b.order),source:'fichario-x/fichas-drive-2026-11-08.json',sourceName:clean(f.nomeNaPlanilha),sourcePendencias:Array.isArray(f.pendencias)?f.pendencias:[]};
+   pendencias,details,source:'fichario-x/fichas-drive-2026-11-08.json',sourceName:clean(f.nomeNaPlanilha),sourcePendencias:Array.isArray(f.pendencias)?f.pendencias:[]};
 }
+const eq=(a,b)=>norm(a)===norm(b);
 function applyRule(rule,values,details){
  const r=clean(rule);if(!r||norm(r)==='sempre')return {visible:true,verified:!!r};
- const parts=r.split('+').map(norm).filter(Boolean);
- const all=Object.values(values||{}).map(norm);
- const known=parts.every(x=>details.some(d=>d.options.some(o=>norm(o)===x)));
- if(!known)return {visible:true,verified:false};
- return {visible:parts.every(x=>all.includes(x)),verified:true};
+ // // significa OU, + significa E, ambos com correspondência exata e não por substring.
+ const clauses=r.split('//').map(x=>x.trim()).filter(Boolean);
+ const known=clauses.every(clause=>clause.split('+').map(x=>x.trim()).filter(Boolean).every(x=>details.some(d=>d.options.some(o=>eq(o,x)))));
+ if(!known)return {visible:false,verified:false};
+ const all=Object.values(values||{});
+ return {visible:clauses.some(clause=>clause.split('+').map(x=>x.trim()).filter(Boolean).every(x=>all.some(v=>eq(v,x)))),verified:true};
+}
+function excludedTargets(f,values){
+ const tokens=[];
+ for(const d of f.details){
+  const chosen=values?.[d.id];
+  if(!chosen)continue;
+  const row=d.rows.find(r=>r.options.some(o=>eq(o,chosen)));
+  if(row?.exclusion)tokens.push(...row.exclusion.split(';').map(x=>x.trim()).filter(Boolean));
+ }
+ return tokens;
+}
+function blocked(f,values,d,option){
+ const targets=excludedTargets(f,values);
+ const byOthers=targets.some(t=>(eq(t,d.name)||eq(t,option))&&!(eq(values?.[d.id],option)));
+ if(byOthers)return true;
+ // Exclusion must work both ways regardless of confirmation order.
+ const targetRows=d.rows.filter(r=>r.options.some(x=>eq(x,option)));
+ return targetRows.some(r=>r.exclusion.split(';').map(x=>x.trim()).filter(Boolean).some(t=>{
+   return f.details.some(other=>other.id!==d.id&&values?.[other.id]&&(eq(t,other.name)||eq(t,values[other.id])));
+ }));
+}
+function optionsFor(f,values,id){
+ const d=f.details.find(x=>x.id===id);if(!d)return [];
+ return d.rows.flatMap(row=>{
+  const rule=applyRule(row.condition,values,f.details);
+  if(!rule.visible)return [];
+  return row.options.filter(o=>!blocked(f,values,d,o));
+ }).filter((o,i,a)=>a.findIndex(x=>eq(x,o))===i);
 }
 function visibleDetails(f,values){
- return f.details.filter(d=>applyRule(d.condition,values||{},f.details).visible);
+ return f.details.filter(d=>optionsFor(f,values||{},d.id).length>0);
+}
+function conflicts(f,values){
+ const out=[];
+ for(const d of f.details){
+  const chosen=values?.[d.id];if(!chosen)continue;
+  if(!d.options.some(x=>eq(x,chosen)))out.push('Opção inexistente em '+d.name+': '+chosen);
+  else if(!optionsFor(f,{...values,[d.id]:undefined},d.id).some(o=>eq(o,chosen)))out.push('Combinação incompatível: '+d.name+' = '+chosen);
+ }
+ return out;
 }
 function missing(f,values){
- return visibleDetails(f,values).filter(d=>d.required&&!values[d.id]).map(d=>d.id);
+ const out=[];
+ for(const d of f.details){
+  if(!d.required)continue;
+  const opts=optionsFor(f,values||{},d.id);
+  if(!opts.length){
+   // Grupo escondido por exclusão de DETALHE não é obrigatório; por condição
+   // ou exclusão total de opções, só deixar passar com confirmação humana.
+   const hidden=excludedTargets(f,values).some(t=>eq(t,d.name));
+   if(!hidden)out.push(d.id);
+   continue;
+  }
+  if(!values?.[d.id]||!opts.some(o=>eq(o,values[d.id])))out.push(d.id);
+ }
+ return [...new Set([...out,...(conflicts(f,values).length?['__CONFLITO__']:[])])];
 }
 function technicalName(f,values){
- let picks=visibleDetails(f,values).filter(d=>values[d.id]).map(d=>values[d.id]);
+ const picks=visibleDetails(f,values).filter(d=>values?.[d.id]).map(d=>values[d.id]);
  return f.name+(picks.length?' · '+picks.join(' · '):'');
 }
 async function load(){
@@ -51,5 +120,5 @@ async function load(){
 }
 function list(){return cache||[]}
 function get(id){return list().find(f=>f.id===id)||null}
-root.TereonXCatalog=Object.freeze({version:2,load,list,get,isOfficial,normalize,visibleDetails,missing,technicalName,applyRule});
+root.TereonXCatalog=Object.freeze({version:2,load,list,get,isOfficial,normalize,visibleDetails,missing,technicalName,applyRule,optionsFor,conflicts});
 })(window);
