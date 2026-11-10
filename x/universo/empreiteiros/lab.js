@@ -34,7 +34,7 @@ function openEmployee(record=null){
  $('employee-title').textContent=record?'Editar funcionário':'Novo funcionário';
  const sel=$('employee-contractor');sel.replaceChildren();
  for(const c of state.contractors){const option=elem('option',c.name);option.value=c.id;sel.append(option);}
- sel.value=record?.contractorId||state.contractors[0].id;
+ sel.value=record?.contractorId||($('employee-filter').value!=='all'?$('employee-filter').value:state.contractors[0].id);
  sel.disabled=!!record;
  $('employee-name').value=record?.name||'';
  $('employee-role').value=record?.role||'';
@@ -59,9 +59,15 @@ function render(){
   },'danger'));
   row.append(actions);out.append(row);
  }
+ const filter=$('employee-filter'),before=filter.value;
+ filter.replaceChildren();
+ const all=elem('option','Todos os empreiteiros');all.value='all';filter.append(all);
+ for(const c of state.contractors){const option=elem('option',c.name);option.value=c.id;filter.append(option);}
+ filter.value=before&&[...filter.options].some(x=>x.value===before)?before:'all';
  const list=$('employees');list.replaceChildren();
  if(!state.employees.length)list.append(elem('p','Nenhum funcionário cadastrado.','empty'));
- const ordered=state.employees.slice().sort((a,b)=>(a.status==='terminated')-(b.status==='terminated')||a.name.localeCompare(b.name,'pt-BR'));
+ const ordered=state.employees.filter(x=>filter.value==='all'||x.contractorId===filter.value).sort((a,b)=>(a.status==='terminated')-(b.status==='terminated')||a.name.localeCompare(b.name,'pt-BR'));
+ if(!ordered.length&&state.employees.length)list.append(elem('p','Nenhum funcionário deste empreiteiro.','empty'));
  for(const e of ordered){
   const row=elem('article',undefined,'entry');
   const head=elem('div',undefined,'employee-head');
@@ -83,6 +89,7 @@ function render(){
 document.querySelectorAll('[data-close]').forEach(x=>x.addEventListener('click',()=>close(x.dataset.close)));
 $('add-contractor').addEventListener('click',()=>openContractor());
 $('add-employee').addEventListener('click',()=>openEmployee());
+$('employee-filter').addEventListener('change',render);
 $('contractor-form').addEventListener('submit',event=>{
  event.preventDefault();
  try{
