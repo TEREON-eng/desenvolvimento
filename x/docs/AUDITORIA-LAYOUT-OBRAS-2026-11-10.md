@@ -57,3 +57,6 @@ A navegação estava funcional no código, mas visualmente **incoerente**: Obras
 - Cadastro remodelado em **Empreiteiro → Funcionários** (nome, função opcional, Ativo/Desligado com histórico de alteração). Cadastro e edição por modal; filtro de funcionários por empreiteiro. Antigas equipes de simulação ficam visíveis como legado somente leitura, **não convertidas em pessoas**.
 - Bloqueio de exclusão de empreiteiro com funcionários; funcionários permanecem cadastrados ao desligar, sem deleção destrutiva. A conexão do Diário **ainda é por equipe**, não há vinculação funcionário→Diário nem associação funcionário→equipe.
 - Proteções e testes estáticos adicionados ao workflow. **Pendente:** browser real, visual, tema, teclado/touch, validação da data local e CI. Foco em evitar a regressão de cabeçalho e a migração indevida dos cadastros históricos.
+
+## Repriorização documental — 10/11
+Os riscos de layout, histórico de equipes e integração de gestão continuam válidos como bloqueios à operação corporativa real. **Não fazem parte obrigatória do teste de Listas em 17/11**. Priorizar primeiro regressões que afetem modal, catálogo, listas, gravação, exportação, conexão e uso em celular. [Plano do dia 17](FOCO-TESTE-CAMPO-17-11-2026.md) · [Estado vigente](ESTADO-VIGENTE-10-11-2026.md).
