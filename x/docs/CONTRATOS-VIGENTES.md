@@ -78,3 +78,7 @@ Para cada alteração registrar:
 
 ## Adendo CT-10 — estrutura vigente de Obras (10/11/2026)
 A estrutura de dados correta é **Obra → Escopo → Etapa → Subetapa**; subníveis são opcionais. Escopo é entidade de primeira classe, não sinônimo de etapa. Uma revisão elétrica pode conter Quadros → QD1/QD2 e Iluminação salas de aula → Sala 01/Sala 02; SPDA pode ser apenas escopo; Entrada de energia pode conter etapas Abrigo/Escavação. Todas as entidades **cadastradas** persistem mesmo sem materiais. Somente rótulos temporários derivados de lançamentos na Lista somem ao ficar sem materiais. O novo `x/universo/obras/escopo-motor.js` é independente e isolado; **integração com banco/Lista/UX ainda pendente**. O desenho de dois níveis dos capítulos anteriores é histórico e não deve orientar implementação nova.
+
+
+## Proposta de novos contratos — pessoas, equipe e alocação (10/11/2026)
+**Ainda PROPOSTA:** motor de Cadastro Profissional é dono de pessoas (inclusive sem conta), prestadores, equipes e composição temporal; motor de Alocações registra referências entre equipes/pessoas e obras/nós do escopo com períodos e autoria; motor de Acessos concede permissões digitais separadas, verificadas no banco. Não gravar funcionários dentro da entidade Escopo, nem inferir que alocação autoriza ver ou editar dados. Escopo permanece `Obra → Escopo → Etapa → Subetapa`. Ver [contrato de desenho](PESSOAS-EQUIPES-ALOCACOES-2026-11-10.md). Não considerar funcionalidade implementada ou homologada.
