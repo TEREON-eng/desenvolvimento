@@ -82,3 +82,7 @@ A estrutura de dados correta é **Obra → Escopo → Etapa → Subetapa**; subn
 
 ## Proposta de novos contratos — pessoas, equipe e alocação (10/11/2026)
 **Ainda PROPOSTA:** motor de Cadastro Profissional é dono de pessoas (inclusive sem conta), prestadores, equipes e composição temporal; motor de Alocações registra referências entre equipes/pessoas e obras/nós do escopo com períodos e autoria; motor de Acessos concede permissões digitais separadas, verificadas no banco. Não gravar funcionários dentro da entidade Escopo, nem inferir que alocação autoriza ver ou editar dados. Escopo permanece `Obra → Escopo → Etapa → Subetapa`. Ver [contrato de desenho](PESSOAS-EQUIPES-ALOCACOES-2026-11-10.md). Não considerar funcionalidade implementada ou homologada.
+
+
+## CT-10 / Novo contrato de Diário programado — 10/11
+A **experiência do Diário de Obras** é a porta para programar a equipe: `Obra → Escopo (período)` ou `Obra → Escopo → Etapa/Subetapa (um dia)`. O calendário apresenta programação **prevista**, sem declarar presença, execução, aplicação de materiais ou acesso digital. O Diário verdadeiro consolida execuções independentes por **obra/data**, mantendo múltiplos registros por pessoa/dia com autoria. Programação é motor próprio; Cadastro e Acessos são separados. Implementado somente laboratório local de simulação, sem Supabase, UI principal ou vínculo com Obras reais. [Contrato do Diário](DIARIO-PROGRAMACAO-EQUIPES-2026-11-10.md). **Contrato de um dia em etapa está sob teste de campo, não deve ser extrapolado para duração de atividade de execução.**
