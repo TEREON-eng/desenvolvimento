@@ -25,4 +25,18 @@
   </form>
  </div>
 </dialog>
-<script src="./programacao-motor.js"></script><script src="./lab.js"></script></body></html>
+<dialog id="report-dialog" aria-labelledby="report-title">
+ <div class="modal-content">
+  <div class="modal-head"><div><p class="eyebrow">DIÁRIO · APONTAMENTO DO DIA</p><h2 id="report-title">Registrar execução</h2></div><button type="button" id="close-report" class="close-button" aria-label="Fechar registro">✕</button></div>
+  <p class="hint" id="report-context">Selecione se a programação foi executada na data consultada.</p>
+  <form id="report-form">
+   <label>Resultado do dia<select id="report-status" required><option value="executed">Equipe trabalhou nesta atividade</option><option value="not_executed">Atividade não realizada</option></select></label>
+   <label id="completed-row" class="check-field"><input id="report-completed" type="checkbox"><span>Programação / tarefa concluída neste dia</span></label>
+   <label id="reason-row" hidden>Motivo da não realização<select id="report-reason"></select></label>
+   <label>Observações <span class="optional">(opcional)</span><textarea id="report-note" rows="3" maxlength="500" placeholder="Descreva o serviço realizado ou o impedimento"></textarea></label>
+   <p class="hint">Este apontamento é independente da programação. Uma correção cria novo evento e preserva o registro anterior.</p>
+   <div class="form-actions"><button type="submit" class="primary">Confirmar dia</button><button type="button" class="secondary" id="cancel-report">Cancelar</button></div>
+  </form>
+ </div>
+</dialog>
+<script src="./programacao-motor.js"></script><script src="./execucao-motor.js"></script><script src="./lab.js"></script></body></html>
