@@ -1,0 +1,24 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#1a1f1e"><title>TEREON X · Diário de Obras — laboratório</title><link rel="stylesheet" href="./lab.css"></head><body>
+<main class="shell">
+ <header class="header"><a href="/x/universo/obras/lab.html" class="back">← Obras</a><span class="brand">TEREON <b>X</b></span><a href="/x/" class="back">Início</a></header>
+ <div class="intro"><p class="eyebrow">OBRAS · LABORATÓRIO ISOLADO</p><h1>Diário de Obras</h1><p>Programe equipes por obra e escopo. A programação <strong>não confirma presença nem serviço executado</strong>.</p></div>
+ <section class="notice"><strong>Simulação no aparelho</strong><span>Dados fictícios. Salvos somente neste navegador; não são enviados ao Supabase e não alteram as obras reais.</span></section>
+ <section class="panel"><div class="section-head"><h2>Programar equipe</h2><span class="step">01</span></div>
+  <form id="entry-form">
+   <label>Obra<select id="work" required></select></label>
+   <div class="two"><label>Empreiteiro<select id="contractor" required></select></label><label>Equipe<select id="team" required></select></label></div>
+   <label>Alocar em<select id="target" required></select></label>
+   <p id="target-hint" class="hint">Escopo: pode abranger vários dias. Etapa e subetapa: um dia por lançamento.</p>
+   <div class="two"><label>Início<input id="start" type="date" required></label><label>Fim<input id="end" type="date" required></label></div>
+   <label>Observação <span class="optional">(opcional)</span><textarea id="note" rows="2" maxlength="500" placeholder="Ex.: Passagem de eletrodutos na área dos quadros"></textarea></label>
+   <div class="form-actions"><button type="submit" class="primary" id="save">Adicionar programação</button><button type="button" class="secondary" id="clear">Limpar</button></div>
+  </form>
+ </section>
+ <section class="panel"><div class="section-head"><h2>Programação por dia</h2><span class="step">02</span></div>
+  <div class="two"><label>Obra<select id="filter-work"></select></label><label>Data<input id="filter-date" type="date"></label></div>
+  <p class="hint" id="day-label"></p><div id="entries" class="entries"></div>
+ </section>
+ <section class="panel help"><h2>Como testar</h2><p>Experimente alocar a <strong>Equipe A do JS</strong> à obra <strong>Wilson Rachid</strong>, em <strong>Revisão elétrica</strong> de 17 a 20/11. Depois selecione a etapa <strong>Quadros</strong>: ela aceita somente uma data.</p><button class="secondary" id="reset" type="button">Restaurar dados de demonstração</button></section>
+ <div id="message" class="message" role="status" aria-live="polite"></div>
+ <footer>TEREON X · ambiente de ensaio · sem cadastro de pessoas, presença ou permissões reais</footer>
+</main><script src="./programacao-motor.js"></script><script src="./lab.js"></script></body></html>
