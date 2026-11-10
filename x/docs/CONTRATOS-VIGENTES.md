@@ -1,4 +1,7 @@
 # TEREON X — Contratos vigentes e rastreabilidade
+
+> **PRECEDÊNCIA ATUAL — 10/11/2026:** o contrato prioritário do teste em 17/11 é **Listas + Fichas/Catálogo + Especificação + Compartilhamento**. Os contratos de gestão registram regras de laboratório e visão futura, não uma entrega de gestão completa para essa data. [Estado vigente](ESTADO-VIGENTE-10-11-2026.md) · [Foco 17/11](FOCO-TESTE-CAMPO-17-11-2026.md).
+
 **Consolidação documental: 09/11/2026 | Referência funcional X.0.3.29 | Branch `desenvolvimento`**
 
 > **Escopo:** referência normativa para mudanças futuras; não é declaração de homologação. Este documento consolida decisões previamente registradas, sem criar uma funcionalidade, preço ou regra técnica nova. Quando houver conflito com capítulos históricos, prevalece a decisão mais recente **expressamente aprovada**, documentada aqui, até revisão do fundador.
