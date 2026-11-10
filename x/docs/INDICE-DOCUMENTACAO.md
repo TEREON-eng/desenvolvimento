@@ -94,3 +94,7 @@ No laboratório de Empreiteiros, o núcleo atual passa a ser **Empreiteiro + Fun
 
 ## Retomada de Condutores BT — 10/11
 - [FT_COND-001: inventário preliminar de detalhes e decisão pendente](RETOMADA-FT-COND-001-2026-11-10.md). Sem validação técnica final; planilha oficial ainda não alterada em conteúdo.
+
+## Escola inaugural e arquitetura FT_COND-001 — 10/11
+- [Escola aberta desde o início e curso Como usar o TEREON](ESCOLA-INAUGURAL-2026-11-10.md): decisão e currículo mínimo, separado do código ainda não implementado.
+- FT_COND-001 com arquitetura **única** aprovada; atributos e compatibilidades continuam em revisão técnica.
