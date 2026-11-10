@@ -12,3 +12,16 @@
 .close-button{min-width:44px;min-height:44px;padding:7px;font-size:18px;flex:0 0 auto}
 #entry-dialog form{padding-bottom:max(3px,env(safe-area-inset-bottom))}
 @media(max-width:390px){.overview .section-head h2{font-size:16px}.add-button{font-size:12px;padding:9px 10px}.modal-content{padding:14px}}
+
+
+/* Apontamento diário: feedback no cartão, modal separado da programação. */
+[hidden]{display:none!important}
+.day-state{font-size:12px;color:#d2dfd2;background:#26372b;padding:8px 10px;border-radius:8px;border-left:3px solid #849486}
+.day-state--executed{border-left-color:#c7ff46;color:#ddf8cb}
+.day-state--not_executed{border-left-color:#e8af64;color:#ffe0b5}
+.entry-actions{justify-content:space-between;align-items:center;flex-wrap:wrap}
+.entry-actions .confirm-day{background:#c7ff46;color:#122012;border-color:#c7ff46}
+#report-dialog{position:fixed;inset:0;margin:auto;width:min(94vw,560px);max-height:90dvh;overflow:auto;background:#1a2822;color:#ecf1eb;border:1px solid #506857;border-radius:16px;padding:0;box-shadow:0 24px 70px #000a}
+#report-dialog::backdrop{background:rgba(2,10,5,.76)}
+.check-field{display:flex;align-items:center;gap:10px;padding:12px;background:#24362b;border-radius:10px;line-height:1.4}
+.check-field input{width:20px;height:20px;min-height:20px;flex:0 0 20px;accent-color:#c7ff46}
