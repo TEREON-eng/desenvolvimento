@@ -308,3 +308,9 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Confirmação de quatro políticas RLS por proprietário em `x_cloud_lists`; permanência de teste de segurança A/B como pendência.
 - Adicionados cenários à matriz de regressão: exclusão cruzada A→B, falha de escrita após DELETE, troca de conta durante sync, abertura offline e autorização real.
 - Atualizados [Mestre](MESTRE-TEREON-X.md), [Retomada](RETOMADA-2026-11-09.md), [Índice](INDICE-DOCUMENTACAO.md) e [Validação técnica](VALIDACAO-TECNICA-2026-11-09.md). **Nenhum motor, PWA, schema ou `main` alterado**; versão do aplicativo permanece X.0.3.29.
+
+
+## 09/11/2026 — auditoria adicional da fronteira local/nuvem (documentação)
+- Identificada divergência de validação de nome, quantidade finita, teto de 300 itens e tamanho de dados entre serviço local e motor de nuvem, com risco de lista salva localmente mas sem aceitação remota.
+- Conferido o grant efetivo por coluna em `x_cloud_lists`: INSERT autenticado em `id` permitido, UPDATE de `version` bloqueado. Hipótese de falta de INSERT no ID descartada.
+- Complementados Validação Técnica, Mestre e Plano de Regressão com cenários reproduzíveis. **Nenhum código ou dado modificado; versão X.0.3.29 preservada.**
