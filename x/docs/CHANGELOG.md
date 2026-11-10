@@ -390,3 +390,11 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 
 ### Ajuste complementar do cadastro (10/11)
 O painel de Funcionários ganhou **filtro por empreiteiro**, e o modal de novo funcionário usa o empreiteiro filtrado como contexto inicial. Nenhuma associação a equipes, obra ou Diário ocorre automaticamente.
+
+
+## 10/11/2026 — Superauditoria do TEREON X (documentação, sem alteração operacional)
+- Criado relatório [SUPERAUDITORIA-TEREON-X-2026-11-10.md](SUPERAUDITORIA-TEREON-X-2026-11-10.md) com 20 achados priorizados, matriz de maturidade e roteiro de saneamento/release.
+- **Constatado descompasso de teste:** cabeçalho exige `v=8`, Obras usa `v=9`; a suíte completa não pode ser declarada aprovada.
+- Verificados 24 comandos configurados no workflow, 838 commits à frente da `main`, versão/cache ainda X.0.3.30 e ausência de pré-cache dos novos laboratórios.
+- Conferidos por leitura de metadata Supabase os estados RLS das nove tabelas públicas `x_*` (RLS ativo, `anon SELECT` negado); sem ensaios JWT A/B.
+- Nenhuma mudança em código, schemas, usuários, dados, `main` ou release; investigação continua aberta para CI real, mobile, PDF e autorização.
