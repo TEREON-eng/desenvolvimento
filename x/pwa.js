@@ -1,7 +1,7 @@
 /* TEREON X · instalação e atualização PWA independentes da UI de listas. */
 (function(){
  'use strict';
- const VERSION='x.0.3.30';
+ const VERSION='x.0.3.32';
  let installPrompt=null;
  let refreshPending=false;
  const button=document.getElementById('installButton');
@@ -24,8 +24,13 @@
    if(!response.ok)return;
    const v=await response.json();
    if(typeof v.version==='string'&&v.version!==VERSION){
-    refreshPending=true;
-    maybeRefresh();
+    // Evita ciclo infinito se HTML, JavaScript e manifesto de versão
+    // forem publicados em momentos diferentes ou se houver cache antigo.
+    const marker='tereon-x-refreshed-for-version';
+    let already=false;
+    try{already=sessionStorage.getItem(marker)===v.version;
+      if(!already)sessionStorage.setItem(marker,v.version);}catch(e){already=true;}
+    if(!already){refreshPending=true;maybeRefresh();}
    }
   }catch(e){/* Sem rede: mantém o último protótipo funcional. */}
  }
