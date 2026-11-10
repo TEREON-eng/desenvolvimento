@@ -2,6 +2,7 @@
 **Base: 07/11/2026 · Situação revisada: 09/11/2026**
 
 ## Leia primeiro para continuar em nova conversa
+- **[Contratos vigentes e rastreabilidade](CONTRATOS-VIGENTES.md):** fonte normativa das decisões atuais, responsabilidades, evidências e precedência sobre trechos históricos.
 - **[Retomada 09/11](RETOMADA-2026-11-09.md):** versão X.0.3.29, decisões aceitas, pendências e sequência de trabalho.
 - **[Revisão geral de contratos 09/11](REVISAO-GERAL-CONTRATOS-2026-11-09.md):** evidências verificadas, divergências, riscos P0–P2 e checklist de aceite.
 - **[Guia visual atualizado](GUIA-VISUAL-TEREON-X.md):** tema global, cabeçalho, seleção/ações de listas, componentes e modais.
