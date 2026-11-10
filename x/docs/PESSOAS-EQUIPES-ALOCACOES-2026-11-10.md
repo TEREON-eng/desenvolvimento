@@ -65,3 +65,7 @@ A nuvem pessoal básica pode permanecer gratuita; número de listas e preços de
 
 ## Nova decisão de UX em 10/11 — programação pelo Diário
 O **Diário de Obras** será a entrada do usuário para programar equipes. Exemplo: Equipe A do Empreiteiro JS, Wilson Rachid, 17/11/2026. O motor Cadastro continua dono de pessoas/equipes; o motor Programação guarda vínculo previsto e datas; o motor Acessos autoriza; o motor Diário consolida a visão por obra/data e execuções posteriormente confirmadas. **Escopo** pode durar vários dias, enquanto **Etapa/Subetapa** é pontual de um dia na regra do laboratório; isso não limita a duração de uma atividade real em múltiplos Diários. Simulação mobile independente disponível em `/x/universo/diario/lab.html`, sem banco real. Ver [Contrato](DIARIO-PROGRAMACAO-EQUIPES-2026-11-10.md).
+
+
+## Laboratório de cadastro disponibilizado em 10/11
+`/x/universo/empreiteiros/lab.html` permite cadastrar, renomear e excluir empreiteiros e equipes no armazenamento local do navegador, sem autenticação nem RLS, separado de Obras. `x/universo/empreiteiros/motor.js` valida prestador existente para equipe e impede remover prestador que ainda tenha equipes. O Diário lê os cadastros locais para sugestões no mesmo navegador, mas não cria permissão/alocação real. **Limitação do ensaio:** exclusão/renomeação de equipe referenciada por programação anterior ainda exige política de histórico de nomes e vínculo persistente; não usar dados de produção neste ambiente.
