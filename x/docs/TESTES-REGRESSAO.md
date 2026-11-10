@@ -259,3 +259,8 @@ Na Preview e celular verificar: formulário de programação **não ocupa págin
 - Bloquear exclusão de empreiteiro que possua funcionários; conferir que ausência de cadastro corporativo real e identidade compartilhada é informada na interface.
 - Diário deve continuar consultando equipes de demonstração sem atribuir automaticamente funcionários cadastrados. Os dois modais Diário e os modais de Listas devem continuar intactos.
 - Verificar tema claro/escuro/TEREON, alvos de toque e comportamento de teclado e rolagem de modais. `node x/tests/empreiteiros-funcionarios.test.cjs` incluído no CI; execução de Actions e teste visual reais não confirmados.
+
+
+## Linha de base para execução — superauditoria 10/11
+**Bloqueio conhecido antes do CI:** `x/tests/cabecalho.test.cjs` referencia `header.js?v=8` para Obras; a página real referencia v9. Ajustar expectativa do teste e comprovar execução dos **24 comandos** do workflow para o SHA de revisão, sem modificar layout aprovado apenas para satisfazer fixture. Ver [superauditoria](SUPERAUDITORIA-TEREON-X-2026-11-10.md).
+**Cenários P0/P1 indispensáveis:** duas contas e dois dispositivos com exclusão remota/edição conflitante; falha entre DELETE remoto e cache local; histórico de apontamentos em Diário após cancelar programa; funcionário desligado e equipe renomeada com histórico; logout/login no mesmo aparelho com dados de laboratório separados de identidade; PDF com registros cancelados e 2+ páginas; temas Claro/Escuro/TEREON com breadcrumb em Android; Listas #addDialog e fichas sob fluxo de uso real. Nenhuma prova E2E nova registrada.
