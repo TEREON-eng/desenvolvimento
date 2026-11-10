@@ -55,7 +55,7 @@ context.fetch=async url=>{
 new vm.Script(read('x/listas/app.js')).runInContext(context);
 function click(selector,attrs={}){
  const target={dataset:attrs,closest:s=>s===selector?target:null};
- if(['[data-ficha]','[data-pick]'].includes(selector))element('choices').listeners.click({target});
+ if(['[data-ficha]','[data-pick]','[data-skip-optional]'].includes(selector))element('choices').listeners.click({target});
  else documentEvents.click({target});
 }
 function choice(v){
@@ -118,5 +118,26 @@ function choice(v){
  assert.equal(element('fieldLabel').textContent,'Escolher material','remover tag retorna à escolha de ficha');
  assert.equal(element('addDialog').classList['is-choosing'],true,'modo de seleção usa área ampliada');
  assert.equal(element('saveItem').disabled,true,'trocar ficha impede salvamento sem nova confirmação');
+ // Condutores: um opcional que rege um obrigatório vem antes, mas nunca é presumido.
+ click('[data-ficha]',{ficha:'FT_COND-001'});
+ assert.equal(element('fieldLabel').textContent,'Tipo');
+ choice('Condutor isolado');
+ assert.equal(element('fieldLabel').textContent,'Material');
+ choice('Cobre');
+ assert.equal(element('fieldLabel').textContent,'Seção');
+ choice('2,5');
+ assert.equal(element('fieldLabel').textContent,'Comport. ao fogo','opcional que afeta isolação vem antes');
+ assert.ok(element('choices').innerHTML.includes('data-skip-optional="DET-005"'),'oferece pular sem confirmar opção');
+ click('[data-skip-optional]',{skipOptional:'DET-005'});
+ assert.equal(element('fieldLabel').textContent,'Isolação','pular avança para obrigatório dependente');
+ choice('PVC 70 °C');
+ assert.equal(element('fieldLabel').textContent,'Cor');
+ choice('Preto');
+ assert.equal(element('saveItem').disabled,false,'obrigatórios completos liberam salvar mesmo com opcional pulado');
+ element('saveItem').listeners.click();
+ const skippedItem=stored.lists[0].items.at(-1);
+ assert.equal(skippedItem.catalogId,'FT_COND-001');
+ assert.equal(Object.hasOwn(skippedItem.values,'DET-005'),false,'pular não preenche Comum, LSZH ou outro padrão');
+ assert.equal(skippedItem.values['DET-006'],'PVC 70 °C');
  console.log('TEREON X: 6 fichas reais → modal aprovado → condição → tags → salvar → editar e legado OK');
 })().catch(error=>{console.error(error);process.exitCode=1});
