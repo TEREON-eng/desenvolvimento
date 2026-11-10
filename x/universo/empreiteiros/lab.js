@@ -1,11 +1,11 @@
 /* TEREON X — laboratório local de Empreiteiros e Equipes */
 (function(){'use strict';
 const engine=globalThis.TereonXContractors,$=id=>document.getElementById(id),KEY='tereon-x-contractors-simulation-v1';
-let state={contractors:[],teams:[]};
+let state={contractors:[],teams:[]},readError=false;
 function say(v,error=false){$('message').textContent=v;$('message').classList.toggle('error',error)}
 function uid(){return globalThis.crypto?.randomUUID?.()||'sim-'+Date.now()+'-'+Math.random().toString(36).slice(2)}
-function load(){try{const r=localStorage.getItem(KEY);if(!r)return;const v=JSON.parse(r);if(!Array.isArray(v.contractors)||!Array.isArray(v.teams))throw Error('Formato inválido.');state=v;}catch(e){say('Não foi possível recuperar dados locais: '+e.message,true)}}
-function commit(next){localStorage.setItem(KEY,JSON.stringify(next));state=next;render()}
+function load(){try{const r=localStorage.getItem(KEY);if(!r)return;const v=JSON.parse(r);if(!Array.isArray(v.contractors)||!Array.isArray(v.teams))throw Error('Formato inválido.');state=v;}catch(e){readError=true;say('Cadastro local incompatível. Gravações bloqueadas para preservar os dados: '+e.message,true)}}
+function commit(next){if(readError)throw Error('Cadastro local incompatível: não é seguro sobrescrever os dados.');localStorage.setItem(KEY,JSON.stringify(next));state=next;render()}
 function elem(tag,text,className){const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(className)el.className=className;return el}
 function btn(text,fn,cls='secondary'){const b=elem('button',text,cls);b.type='button';b.addEventListener('click',fn);return b}
 function close(id){const d=$(id);if(d.open)d.close()}
