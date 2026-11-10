@@ -250,3 +250,12 @@ Na Preview e celular verificar: formulário de programação **não ocupa págin
 
 ## Roteiro preventivo de interface — Obras (10/11/2026)
 **Não executado em dispositivo:** comparar Obras, Diário, Empreiteiros e Visitas sob Claro/Escuro/TEREON; confirmar hierarquia de títulos e espaços, cartão da obra, botões de 44px, contraste/foco no modal, sem rolagem horizontal em 360/390px. Diário: agenda primeiro, ajuda recolhida, formulários apenas em modais; PDF A4 mantendo conteúdo. Verificar cadastro e gravação intactos ao mudar tema. Em laboratório descartável: tentar excluir equipe com programação no Diário — a UI deve bloquear; invalidar JSON local — nova gravação deve bloquear sem sobrescrever chave. Verificar Listas `#addDialog` sem regressões. Executar `node x/tests/obras-refino-visual.test.cjs`, verificar CI real e registrar evidência de aparelho/Preview. Pendências técnicas P0–P2 em [Auditoria](AUDITORIA-LAYOUT-OBRAS-2026-11-10.md).
+
+
+## Regressão de cabeçalho e funcionários — 10/11 (a executar no aparelho)
+- Em Obras, Empreiteiros, Diário e Relatórios de Visita, confirmar **mesma marca, perfil, rede e breadcrumb** sob a divisória: Ferramentas › Obras › módulo. Links de navegação sem voltar à nomenclatura visual Universo.
+- Empreiteiros: criar prestador via modal; adicionar funcionários via modal, ver `Ativo`; editar via modal e marcar `Desligado`; editar para `Ativo` e confirmar preservação do histórico no motor. Recarregar a página e verificar persistência local.
+- Cadastro preexistente com `contractors + teams` deve continuar íntegro, com equipes antigas na seção recolhida; não converter em funcionários nem apagar programações do Diário.
+- Bloquear exclusão de empreiteiro que possua funcionários; conferir que ausência de cadastro corporativo real e identidade compartilhada é informada na interface.
+- Diário deve continuar consultando equipes de demonstração sem atribuir automaticamente funcionários cadastrados. Os dois modais Diário e os modais de Listas devem continuar intactos.
+- Verificar tema claro/escuro/TEREON, alvos de toque e comportamento de teclado e rolagem de modais. `node x/tests/empreiteiros-funcionarios.test.cjs` incluído no CI; execução de Actions e teste visual reais não confirmados.
