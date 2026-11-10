@@ -325,3 +325,9 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Documentado o conceito de **Obras**, escopo e etapas persistentes independentes das Listas, com proposta de sugestão a partir de lista vinculada. Não houve criação de tabela/motor de etapas de obra.
 
 **Verificação adicional:** smoke-test JavaScript isolado foi executado sobre os motores extraídos da branch: etapa QD1 persiste com material, desaparece após mover o último a QD2, e QD2 desaparece após remover o último item; validações de quantidade infinita, título de 161 caracteres e payload de 301 itens rejeitaram as entradas. **Não é execução do GitHub Actions nem aceite de navegador.** Referências de scripts em `x/index.html` atualizadas para evitar reutilização de URLs em cache; estrutura `#addDialog` não editada.
+
+
+## 10/11/2026 — Hierarquia de Obras e gestão da capacidade (somente documentação)
+- Plano da organização TEREON-app verificado como Supabase Free; uso real da base ~12 MB, 2 usuários, 6 listas e 5 obras. Limites oficiais separados de tetos de laboratório. Orientações de monitoramento, backup, egress e Storage registradas.
+- Definido conceitualmente escopo hierárquico: Quadros elétricos → QD1; etapa cadastrada da Obra persiste, rótulo temporário da Lista só vive enquanto tiver materiais. Lista vinculada sugere etapas existentes, sempre sob permissão. Nada foi implementado no banco/motor de Obras.
+- Documentos de [capacidade](CAPACIDADE-ARMAZENAMENTO-2026-11-10.md) e [escopo hierárquico](ESCOPO-HIERARQUICO-OBRAS-2026-11-10.md) adicionados ao Hub. Não houve alteração de plano, pagamento, dados, `main` ou versão do aplicativo.
