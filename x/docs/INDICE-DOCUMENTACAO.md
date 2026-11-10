@@ -1,4 +1,7 @@
 # TEREON X — Índice oficial e situação documental
+
+> **ATUALIZAÇÃO DE FOCO — 10/11/2026:** leia primeiro [Estado vigente](ESTADO-VIGENTE-10-11-2026.md), [Plano 17/11](FOCO-TESTE-CAMPO-17-11-2026.md) e [História Vol.03](HISTORIA-TEREON-X-VOLUME-03.md). Listas é o núcleo do teste. Obras/Diário/Empreiteiros permanecem laboratórios. Arquivos históricos são memória do percurso, não regras novas.
+
 **Base: 07/11/2026 · Situação revisada: 09/11/2026**
 
 ## Leia primeiro para continuar em nova conversa
