@@ -44,3 +44,8 @@ Referência visual atual: **X.0.3.29**, considerada boa pelo fundador em Minhas 
 
 ## Situação da auditoria incremental em 09/11/2026
 A [validação técnica](VALIDACAO-TECNICA-2026-11-09.md) inclui leitura do código Listas/nuvem, conferência de quatro políticas RLS de `x_cloud_lists`, risco de cópia remota excluída permanecer em outro aparelho, testes não cobertos e alerta de segurança do Auth. **Sem execução confirmada de CI nem homologação E2E**. A execução prática e a reconciliação segura permanecem próximas prioridades. Nenhum documento histórico foi apagado.
+
+
+## Evolução de 10/11/2026
+- [Contrato de etapas entre Listas e Obras](CONTRATO-ETAPAS-LISTAS-OBRAS-2026-11-10.md) — diferencia rótulos derivados e etapas persistentes do escopo; integração futura sob confirmação.
+- A versão **X.0.3.30** em `desenvolvimento` implementa limpeza de etapas vazias **em Listas** e validação antecipada de payload para contas; CI e aceite real pendentes. `main` não atualizada nesta etapa.
