@@ -1,4 +1,7 @@
 # TEREON X — Documento Mestre vivo
+
+> **SITUAÇÃO OPERACIONAL — 10/11/2026:** prioridade do **teste restrito de Listas em 17/11**, apoiado por Catálogo/Fichas, especificação progressiva, modal aprovado, salvamento e compartilhamento. **Obras, Diário e Empreiteiros continuam laboratórios paralelos.** [Estado vigente](ESTADO-VIGENTE-10-11-2026.md) · [Plano 17/11](FOCO-TESTE-CAMPO-17-11-2026.md). Capítulos antigos são registros históricos, não escopo obrigatório do teste.
+
 **Base 07/11/2026 · Atualização de situação em 09/11/2026 · Fonte canônica do laboratório X**
 
 ## Situação vigente — 09/11/2026
