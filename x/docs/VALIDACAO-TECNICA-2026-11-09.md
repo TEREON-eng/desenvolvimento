@@ -31,3 +31,19 @@ Inspeção direta via GitHub de workflow, `x/listas/servico.js`, `store.js`, `in
 
 ## Próxima execução recomendada
 (1) obter evidência verificável de execução GitHub Actions do commit aplicativo; (2) abrir Preview com versão X.0.3.29; (3) roteiro manual de Listas/Modal/PDF; (4) duas contas e dois aparelhos com listas de teste; (5) priorizar correções apenas após reproduzir defeitos.
+
+
+## Continuação da auditoria — políticas efetivas e fronteira de exclusão (09/11, sessão seguinte)
+**Consulta ao banco (somente leitura):** políticas `x_cloud_lists_select_owner` (SELECT), `insert_owner` (INSERT), `update_owner` (UPDATE) e `delete_owner` (DELETE) usam `owner_id = (SELECT auth.uid())`; UPDATE tem `USING` **e** `WITH CHECK`. Os comandos são para role `authenticated`. Há trigger `x_cloud_lists_track_update`. **Interpretação:** política de propriedade consistente em nível de definição, não teste A/B com JWT real.
+
+**Fluxo de exclusão visto no código:** `x/listas/app.js` chama `syncController.deleteList(target.id)` para conta autenticada, e `lists.removeList` somente no modo visitante. `deleteList` consulta o remoto, compara versão, tenta DELETE e só depois remove cache. Isso mitiga exclusão local isolada **na interface atual**. A API de serviço ainda expõe `removeList`, portanto novos consumidores autenticados devem usar o contrato de exclusão coordenada; não chamá-la diretamente.
+
+**Cenários não cobertos integralmente pelos testes existentes:**
+- Excluída em aparelho A, a lista previamente sincronizada continua no cache de B ao executar `refresh()`, porque ausências remotas não são reconciliadas. Necessária política explícita e teste de “removida na origem”, sem apagar trabalhos offline.
+- `refresh()` não estabelece operação atômica entre receber estado da nuvem e salvar cache; erro de storage, troca de conta ou resposta atrasada merecem testes instrumentados.
+- `integration.repository.save` trata adições/edições por lista restante; um consumidor futuro que use diretamente `TereonXLists.removeList` em modo autenticado poderá remover só do cache sem exclusão remota. O `app.js` atual **não segue esse caminho**, mas a fronteira deve ser documentada e testada.
+- A biblioteca de autenticação é importada de CDN (`esm.sh`); abertura offline fria da PWA com sessão autenticada não foi comprovada, embora o cache de scripts esteja presente.
+
+**CI:** workflow de 17 comandos presente no GitHub. O conector disponível consulta runs de PR por commit; `workflow_runs: []` não permite concluir que não houve execução em `push`. Não declarar CI falho nem verde sem inspeção da página Actions e do job da branch.
+
+**Não foi alterado:** código aplicativo, banco, políticas, comportamento de exclusão, `main` ou versão X.0.3.29. Decisões de reconciliação, fluxos de conta, modo offline e eventual alteração de motor permanecem pendentes de teste/aceite.
