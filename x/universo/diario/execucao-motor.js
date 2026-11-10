@@ -31,6 +31,7 @@
   const note=clean(report.note);
   if(status==='not_executed'&&!VALID.has(reason))throw Error('Informe a justificativa para a não realização.');
   if(note.length>500)throw Error('Observação acima de 500 caracteres.');
+  if(status==='not_executed'&&reason==='other'&&!note)throw Error('Descreva a justificativa em Outros motivos.');
   if(status==='not_executed'&&report.completed)throw Error('Atividade não realizada não pode ser concluída.');
   const id=clean(report.id),recordedAt=clean(report.recordedAt);
   if(!id||!recordedAt||Number.isNaN(Date.parse(recordedAt)))throw Error('Identificação e data de registro obrigatórias.');
