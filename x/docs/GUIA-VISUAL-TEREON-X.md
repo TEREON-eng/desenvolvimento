@@ -46,3 +46,7 @@ Data: 09/11/2026 | Branch: desenvolvimento | **Aceite visual parcial de Minhas l
 2. Manter mesmo HTML funcional para links de módulos; variações apenas via classes/atributos e CSS.
 3. Testar navegação, estado da conta, modal técnico, teclado, offline e responsividade.
 4. Não alterar `main` sem aprovação.
+
+
+## Aplicação em Obras (10/11/2026) — sem aceite visual
+Foi criada a camada **transitória** `x/universo/ui-refino.css`, aplicada aos laboratórios Obras, Diário, Empreiteiros e Visitas. Todos devem respeitar os três temas e os tokens deste guia, inclusive modais. A camada mantém temporariamente CSS local por módulo para minimizar risco de regressões; depois do aceite, consolidar especificidades repetidas. **Não alegar aprovação visual** sem abrir em celular, comparar contraste/teclado/scroll e PDF impresso. [Auditoria](AUDITORIA-LAYOUT-OBRAS-2026-11-10.md).
