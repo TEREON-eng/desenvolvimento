@@ -25,6 +25,8 @@ assert.ok(diary.includes('<dialog id="entry-dialog"')&&diary.includes('<dialog i
 assert.ok(diary.includes('id="print-day"')&&diaryJS.includes('window.print()'),'exportação preservada');
 assert.ok(contractor.includes('id="contractor-form"')&&contractor.includes('id="team-form"'),'cadastro preservado');
 assert.ok(contractorJS.includes('hasDiaryReference(team.id)'),'não exclui equipe que aparece no Diário local');
+assert.ok(contractorJS.includes('readError=true')&&contractorJS.includes('if(readError)throw Error'),'cadastro não sobrescreve dados locais incompatíveis');
+assert.ok(diaryJS.includes('planningReadError=true')&&diaryJS.includes('executionReadError=true'),'Diário bloqueia gravação após erro de leitura');
 assert.ok(visits.includes('Em preparação'),'não anuncia Visitas pronta');
 for(const module of ['universo/diario/lab.js','universo/empreiteiros/lab.js'])new Function(read(module));
 const styleCount=(obras.match(/ui-refino.css/g)||[]).length;
