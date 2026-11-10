@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.29",
-  "build": "2026-11-09",
-  "notes": "Seleção alinhada ao título da lista; Editar Duplicar Compartilhar Excluir em linha abaixo"
+  "version": "x.0.3.30",
+  "build": "2026-11-10",
+  "notes": "Etapas derivadas dos materiais; validação antecipada de compatibilidade com a nuvem"
 }
