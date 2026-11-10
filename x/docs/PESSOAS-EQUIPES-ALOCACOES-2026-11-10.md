@@ -61,3 +61,7 @@ A nuvem pessoal básica pode permanecer gratuita; número de listas e preços de
 - Qual é o mínimo grátis de Escola e qual oferta paga é comprovadamente valiosa?
 
 **Status:** proposta documental e desenho de contratos, sem implementação de tabelas, contas, convites, alocações nem telas nesta rodada.
+
+
+## Nova decisão de UX em 10/11 — programação pelo Diário
+O **Diário de Obras** será a entrada do usuário para programar equipes. Exemplo: Equipe A do Empreiteiro JS, Wilson Rachid, 17/11/2026. O motor Cadastro continua dono de pessoas/equipes; o motor Programação guarda vínculo previsto e datas; o motor Acessos autoriza; o motor Diário consolida a visão por obra/data e execuções posteriormente confirmadas. **Escopo** pode durar vários dias, enquanto **Etapa/Subetapa** é pontual de um dia na regra do laboratório; isso não limita a duração de uma atividade real em múltiplos Diários. Simulação mobile independente disponível em `/x/universo/diario/lab.html`, sem banco real. Ver [Contrato](DIARIO-PROGRAMACAO-EQUIPES-2026-11-10.md).
