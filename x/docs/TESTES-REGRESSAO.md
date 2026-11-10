@@ -209,3 +209,16 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 9. Revalidar especificação com **fichas reais ainda Em revisão**; nenhuma regra/atributo não confirmado deve ser marcado como definitivo.
 
 **Classificação:** o fundador aprovou **visualmente** Minhas listas X.0.3.29. A inspeção de código confirmou equivalência do modal com fixture e alinhamento de versões. **Nenhum** teste E2E em duas contas, aprovação normativa de fichas, PDF real ou execução atual do CI foi comprovado nesta revisão. Ver [auditoria de 09/11](REVISAO-GERAL-CONTRATOS-2026-11-09.md).
+
+
+## Casos adicionais necessários — reconciliação e exclusão (auditoria documental 09/11)
+**Estado: roteiros propostos, NÃO executados.** Utilizar somente contas e listas descartáveis; não suprimir preservação local atual para forçar resultado.
+
+1. **Exclusão remota cruzada:** criar L em A, sincronizar e abrir em B, excluir L em A, atualizar B; registrar apresentação atual da lista ausente no servidor e decidir como indicar remoção remota sem apagar edições offline.
+2. **Fronteira de exclusão:** conferir que a interface autenticada invoca `TereonXListIntegration.deleteList` e que nenhum outro botão chama diretamente `TereonXLists.removeList`. Testar erro do DELETE remoto, conflito de versão e falha de gravação em cache após DELETE.
+3. **Falha de escrita:** forçar quota/erro no cache durante retorno do servidor e na atualização; recarregar sem limpar armazenamento; avaliar recuperação e versão.
+4. **Troca de sessão durante sincronização:** A inicia refresh, encerra sessão, B entra; resposta tardia de A não pode desenhar/gravar cache de B.
+5. **PWA offline:** instalar e carregar autenticação enquanto online; fechar navegador; abrir PWA offline e verificar acesso aos dados autorizados em cache sem tratar ausência da CDN como troca de conta; ao reconectar, conferir identidade e dados.
+6. **Autorização real:** com tokens válidos de A e B, testar SELECT, UPDATE e DELETE de um registro descartável de A usando B; todas operações devem negar ou retornar zero linhas, sem afetar A. Não inferir isso apenas por RLS configurada.
+
+Ver [Validação técnica](VALIDACAO-TECNICA-2026-11-09.md) e [Contratos vigentes](CONTRATOS-VIGENTES.md).
