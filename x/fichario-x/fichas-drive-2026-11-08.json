@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "fonte": "Fichario.xlsm Google Drive, FT_COND-001 bloco ativo linhas 11–24, capturado 2026-11-10 20:15 BRT; demais 5 fichas preservadas de 2026-11-08",
+  "fonte": "Fichario.xlsm oficial no Google Drive, FT_COND-001 linhas ativas 11–25, conferido 2026-11-10 20:29 BRT; demais fichas preservadas do snapshot 08/11",
   "aviso": "LABORATÓRIO — fichas não homologadas; alterações de condutores têm exclusões experimentais e lacunas de produto. Não usar para compras sem revisão humana.",
   "fichas": [
     {
@@ -329,6 +329,19 @@
           "status": "Aprovado"
         },
         {
+          "id": "DET-006",
+          "ordem": 6,
+          "nome": "Isolação",
+          "valores": [
+            "Termoplástico não halogenado 70 °C"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "",
+          "classificacao": "Obrigatório",
+          "origemLinha": 21,
+          "status": "Aprovado"
+        },
+        {
           "id": "DET-007",
           "ordem": 7,
           "nome": "Classe de tensão",
@@ -339,7 +352,7 @@
           "condicao": "Sempre",
           "exclusao": "",
           "classificacao": "Opcional",
-          "origemLinha": 21,
+          "origemLinha": 22,
           "status": "Aprovado"
         },
         {
@@ -347,12 +360,13 @@
           "ordem": 8,
           "nome": "Cobertura",
           "valores": [
-            "PVC 70 °C"
+            "PVC 70 °C",
+            "Termoplástico não halogenado 70 °C"
           ],
           "condicao": "Cabo unipolar//Cabo multipolar",
           "exclusao": "",
           "classificacao": "Opcional",
-          "origemLinha": 22,
+          "origemLinha": 23,
           "status": "Aprovado"
         },
         {
@@ -371,7 +385,7 @@
           "condicao": "Sempre",
           "exclusao": "",
           "classificacao": "Obrigatório",
-          "origemLinha": 23,
+          "origemLinha": 24,
           "status": "Aprovado"
         },
         {
@@ -387,19 +401,19 @@
           "condicao": "Sempre",
           "exclusao": "",
           "classificacao": "Opcional",
-          "origemLinha": 24,
+          "origemLinha": 25,
           "status": "Aprovado"
         }
       ],
       "pendencias": [
         "IMPORTAÇÃO EXPERIMENTAL da aba FT_COND-001, linhas 11–24, 10/11/2026; status da ficha continua Em revisão.",
-        "LSZH selecionado exclui PVC 70 °C, mas a ficha ainda não dispõe de isolação termoplástica não halogenada como alternativa.",
-        "Cobertura cadastrada somente como PVC 70 °C; faltam compostos não halogenados, sem inventar opções.",
         "Classe de tensão opcional na planilha; revisar se exigida para compra.",
         "Classe II descrita como 'Encordoado flexível'; classificação IEC 60228 deve ser revisada antes da homologação.",
         "Unidade de compra não figura no bloco ativo; quantidade/unidade continuam nos campos da Lista.",
         "Construções comerciais, compatibilidades e separação entre isolação e cobertura ainda não homologadas.",
-        "Título B5 da origem é Condutores isolados, porém inclui Cabo multipolar; nome exibido provisoriamente Condutor elétrico para não afirmar construção incorreta."
+        "Título B5 da origem é Condutores isolados, porém inclui Cabo multipolar; nome exibido provisoriamente Condutor elétrico para não afirmar construção incorreta.",
+        "IMPORTAÇÃO RECONFERIDA com fonte de 20h29 BRT, linhas 11–25: isolação não halogenada na linha 21 e cobertura não halogenada na linha 23 estão presentes.",
+        "Rótulo da cobertura 'Termoplástico não halogenado 70 °C' reproduz a planilha, mas temperatura/classe de composto de cobertura deve ser validada por ficha de produto; SHF1 não é sinônimo técnico automático."
       ],
       "nomeNaPlanilha": "Condutores isolados"
     },
