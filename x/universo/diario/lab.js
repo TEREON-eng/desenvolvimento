@@ -27,7 +27,7 @@ const ctx={
 };
 const $=id=>document.getElementById(id);
 const labels={scope:'Escopo',stage:'Etapa',substage:'Subetapa'};
-let entries=[],reports=[],reportingId=null;
+let entries=[],reports=[],reportingId=null,planningReadError=false,executionReadError=false;
 function openEntry(){
  $('work').value=$('filter-work').value;
  targets();
@@ -49,9 +49,10 @@ function load(){
   if(!Array.isArray(parsed))throw Error('Dados incompatíveis');
   // Nunca enviar nada a outro motor; recuperar itens somente se válidos.
   return parsed.map(e=>engine.validate(e,ctx)).filter(e=>e.id);
- }catch(e){say('Não foi possível ler a simulação anterior: '+e.message,true);return [];}
+ }catch(e){planningReadError=true;say('Não foi possível ler a simulação anterior. Gravações bloqueadas para preservar os dados: '+e.message,true);return [];}
 }
 function persist(next){
+ if(planningReadError)throw Error('Programações locais incompatíveis: não é seguro sobrescrever os dados.');
  const value=JSON.stringify(next);
  try{localStorage.setItem(KEY,value);}
  catch(e){throw Error('Não foi possível salvar no aparelho: '+e.message);}
@@ -65,7 +66,7 @@ function loadReports(){
   const saved=JSON.parse(raw);
   if(!Array.isArray(saved))throw Error('Histórico incompatível.');
   return saved.map(report=>execution.validate(report,entries));
- }catch(error){say('Histórico de execução não pôde ser carregado: '+error.message,true);return [];}
+ }catch(error){executionReadError=true;say('Histórico de execução incompatível. Gravações bloqueadas para preservar os dados: '+error.message,true);return [];}
 }
 function reportReasonLabel(id){return execution.REASONS.find(x=>x.id===id)?.label||id;}
 function reportControls(){
@@ -100,6 +101,7 @@ function onReport(e){
   recordedAt:new Date().toISOString()
  };
  try{
+  if(planningReadError||executionReadError)throw Error('Histórico incompatível: não é seguro salvar novos apontamentos.');
   const next=execution.record(reports,record,entries);
   localStorage.setItem(REPORT_KEY,JSON.stringify(next));
   reports=next;closeReport();dayList();
@@ -270,7 +272,11 @@ function init(){
  $('clear').addEventListener('click',()=>{$('note').value='';$('start').value='2026-11-17';$('end').value='2026-11-20';updateDates();say('Campos redefinidos. Programações existentes preservadas.');});
  $('reset').addEventListener('click',()=>{
   if(!confirm('Limpar apenas os registros fictícios deste laboratório neste navegador?'))return;
-  try{localStorage.removeItem(REPORT_KEY);persist([]);reports=[];dayList();say('Programações e apontamentos de demonstração apagados deste navegador.');}catch(error){say(error.message,true);}
+  try{
+   if(planningReadError||executionReadError)throw Error('Dados locais incompatíveis; restauração automática bloqueada para evitar apagamento acidental.');
+   persist([]);localStorage.removeItem(REPORT_KEY);reports=[];dayList();
+   say('Programações e apontamentos de demonstração apagados deste navegador.');
+  }catch(error){say(error.message,true);}
  });
  dayList();
 }
