@@ -427,3 +427,9 @@ O painel de Funcionários ganhou **filtro por empreiteiro**, e o modal de novo f
 - App usa `optionsFor` e impede confirmar uma escolha contraditória com tags existentes; **DOM do modal aprovado preservado**.
 - Versão x.0.3.31 e cache do SW atualizado; adicionado estresse de 648 combinações ao workflow de CI, sem prova de execução completa do GitHub Actions ou deploy no Cloudflare.
 - Pendências técnicas e testes: [Auditoria](AUDITORIA-FT-COND-001-2026-11-10-LAB.md). Ficha permanece **Em revisão**, não homologada.
+
+## 10/11/2026 — correção urgente do loop de atualização PWA
+- Causa diagnosticada: `x/version.json` e `x/pwa.js` divergiam (`x.0.3.32` x `x.0.3.30`); verificação no `pageshow` chamava `location.reload()` repetidamente, dando efeito de tela inicial piscando e impedindo navegar para Listas.
+- `x/pwa.js` alinhado com x.0.3.32 e protegido contra mais de uma recarga por versão na mesma sessão; `x/index.html` carrega `pwa.js?v=6` para escapar de cache obsoleto.
+- Teste de `x/tests/status.test.cjs` passou a comparar com `version.json` em vez de exigir versão antiga fixa e verifica proteção de reload.
+- Arquivos alterados apenas em `desenvolvimento`. Publicação no Cloudflare e confirmação em aparelho físico **ainda pendentes**; nenhuma alteração de lista ou dados do usuário.
