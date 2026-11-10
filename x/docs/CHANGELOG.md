@@ -398,3 +398,9 @@ O painel de Funcionários ganhou **filtro por empreiteiro**, e o modal de novo f
 - Verificados 24 comandos configurados no workflow, 838 commits à frente da `main`, versão/cache ainda X.0.3.30 e ausência de pré-cache dos novos laboratórios.
 - Conferidos por leitura de metadata Supabase os estados RLS das nove tabelas públicas `x_*` (RLS ativo, `anon SELECT` negado); sem ensaios JWT A/B.
 - Nenhuma mudança em código, schemas, usuários, dados, `main` ou release; investigação continua aberta para CI real, mobile, PDF e autorização.
+
+## 10/11/2026 — Prioridade de campo e história narrativa (apenas documentação)
+- Criado [Plano do teste restrito de 17/11](FOCO-TESTE-CAMPO-17-11-2026.md): prioridade **Listas, fichas/catálogo, especificação progressiva e compartilhamento**; programa de gestão de Obras separado como laboratório paralelo.
+- Criado [Estado vigente](ESTADO-VIGENTE-10-11-2026.md), distinguindo **VIGENTE / LABORATÓRIO / FUTURO / HISTÓRICO**. Arquivos de 07–09/11 foram sinalizados com orientação de precedência, sem apagar sua história.
+- Criado [Diário de Desenvolvimento Volume 03](HISTORIA-TEREON-X-VOLUME-03.md), com história humana do TEREON, episódios verificáveis, aprendizados e pautas editoriais para redes sociais. Volumes 01 e 02 preservados.
+- Atualizados Mestre, Contratos, Índice, Retomada histórica, Guia Visual, Mapa, Modelo de negócio e Superauditoria para apontar a prioridade real. **Não houve mudança em código operacional, fichas, Supabase, `main` ou deploy.**
