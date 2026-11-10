@@ -1,81 +1,111 @@
-/* TEREON X — laboratório local de Empreiteiros e Equipes */
+/* TEREON X — Empreiteiros e funcionários: laboratório local, independente de Auth/Obras. */
 (function(){'use strict';
-const engine=globalThis.TereonXContractors,$=id=>document.getElementById(id),KEY='tereon-x-contractors-simulation-v1';
-let state={contractors:[],teams:[]},readError=false;
+const engine=globalThis.TereonXContractors,$=id=>document.getElementById(id);
+const KEY='tereon-x-contractors-simulation-v1';
+let state={contractors:[],teams:[],employees:[]},readError=false,editingContractor=null,editingEmployee=null;
 function say(v,error=false){$('message').textContent=v;$('message').classList.toggle('error',error)}
 function uid(){return globalThis.crypto?.randomUUID?.()||'sim-'+Date.now()+'-'+Math.random().toString(36).slice(2)}
-function load(){try{const r=localStorage.getItem(KEY);if(!r)return;const v=JSON.parse(r);if(!Array.isArray(v.contractors)||!Array.isArray(v.teams))throw Error('Formato inválido.');state=v;}catch(e){readError=true;say('Cadastro local incompatível. Gravações bloqueadas para preservar os dados: '+e.message,true)}}
-function commit(next){if(readError)throw Error('Cadastro local incompatível: não é seguro sobrescrever os dados.');localStorage.setItem(KEY,JSON.stringify(next));state=next;render()}
-function elem(tag,text,className){const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(className)el.className=className;return el}
-function btn(text,fn,cls='secondary'){const b=elem('button',text,cls);b.type='button';b.addEventListener('click',fn);return b}
-function close(id){const d=$(id);if(d.open)d.close()}
-function hasDiaryReference(teamId){
- // Guarda de simulação. A futura regra ficará no motor de Relações/Alocações,
- // com histórico versionado e integridade no banco, não em chaves de navegador.
+function load(){
  try{
-  const raw=localStorage.getItem('tereon-x-diary-simulation-v1');
-  if(!raw)return false;
-  const records=JSON.parse(raw);
-  if(!Array.isArray(records))throw Error('Programações locais inválidas.');
-  return records.some(p=>p?.teamId===teamId);
- }catch(error){throw Error('Não foi possível verificar referências no Diário. Exclusão bloqueada para preservar histórico.');}
+  const r=localStorage.getItem(KEY);if(!r)return;
+  const v=JSON.parse(r);
+  if(!v||!Array.isArray(v.contractors)||!Array.isArray(v.teams)||v.employees!==undefined&&!Array.isArray(v.employees))throw Error('Formato inválido.');
+  state={...v,employees:v.employees||[]};
+ }catch(e){readError=true;say('Cadastro local incompatível. Gravações bloqueadas para preservar os dados: '+e.message,true)}
+}
+function commit(next){
+ if(readError)throw Error('Cadastro local incompatível: não é seguro sobrescrever os dados.');
+ localStorage.setItem(KEY,JSON.stringify(next));state=next;render();
+}
+function elem(tag,text,className){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(className)e.className=className;return e;}
+function btn(text,fn,cls='secondary'){const b=elem('button',text,cls);b.type='button';b.addEventListener('click',fn);return b;}
+function close(id){if($(id).open)$(id).close()}
+function openContractor(record=null){
+ editingContractor=record?.id||null;
+ $('contractor-title').textContent=record?'Editar empreiteiro':'Novo empreiteiro';
+ $('contractor-name').value=record?.name||'';
+ $('contractor-note').value=record?.note||'';
+ $('contractor-dialog').showModal();
+}
+function openEmployee(record=null){
+ if(!state.contractors.length){say('Cadastre primeiro o empreiteiro.',true);return;}
+ editingEmployee=record?.id||null;
+ $('employee-title').textContent=record?'Editar funcionário':'Novo funcionário';
+ const sel=$('employee-contractor');sel.replaceChildren();
+ for(const c of state.contractors){const option=elem('option',c.name);option.value=c.id;sel.append(option);}
+ sel.value=record?.contractorId||state.contractors[0].id;
+ sel.disabled=!!record;
+ $('employee-name').value=record?.name||'';
+ $('employee-role').value=record?.role||'';
+ $('employee-status-row').hidden=!record;
+ $('employee-status').value=record?.status||'active';
+ $('employee-dialog').showModal();
 }
 function render(){
- const target=$('contractors');target.replaceChildren();
- if(!state.contractors.length)target.append(elem('p','Nenhum empreiteiro cadastrado neste navegador.','empty'));
- for(const contractor of state.contractors){
+ const out=$('contractors');out.replaceChildren();
+ if(!state.contractors.length)out.append(elem('p','Nenhum empreiteiro cadastrado.','empty'));
+ for(const c of state.contractors){
   const row=elem('article',undefined,'entry');
-  row.append(elem('strong',contractor.name,'contractor-name'));
-  if(contractor.note)row.append(elem('div',contractor.note,'row-subtitle'));
-  const related=state.teams.filter(x=>x.contractorId===contractor.id);
-  row.append(elem('div',related.length+' equipe(s)','row-subtitle'));
+  row.append(elem('strong',c.name,'contractor-name'));
+  const count=state.employees.filter(x=>x.contractorId===c.id);
+  row.append(elem('span',count.length+' funcionário(s) · '+count.filter(x=>x.status!=='terminated').length+' ativo(s)','row-subtitle'));
+  if(c.note)row.append(elem('p',c.note,'row-subtitle'));
   const actions=elem('div',undefined,'entity-actions');
-  actions.append(btn('Renomear',()=>{
-   const name=prompt('Nome do prestador:',contractor.name);if(name===null)return;
-   try{commit(engine.rename(state,'contractor',contractor.id,name));say('Empreiteiro atualizado.')}catch(e){say(e.message,true)}
-  }));
+  actions.append(btn('Editar',()=>openContractor(c)));
   actions.append(btn('Excluir',()=>{
    if(!confirm('Excluir este empreiteiro da simulação?'))return;
-   try{commit(engine.removeContractor(state,contractor.id));say('Empreiteiro excluído.')}catch(e){say(e.message,true)}
+   try{commit(engine.removeContractor(state,c.id));say('Empreiteiro excluído.');}catch(e){say(e.message,true);}
   },'danger'));
-  row.append(actions);target.append(row);
+  row.append(actions);out.append(row);
  }
- const teams=$('teams');teams.replaceChildren();
- if(!state.teams.length)teams.append(elem('p','Nenhuma equipe cadastrada.','empty'));
- for(const team of state.teams){
+ const list=$('employees');list.replaceChildren();
+ if(!state.employees.length)list.append(elem('p','Nenhum funcionário cadastrado.','empty'));
+ const ordered=state.employees.slice().sort((a,b)=>(a.status==='terminated')-(b.status==='terminated')||a.name.localeCompare(b.name,'pt-BR'));
+ for(const e of ordered){
   const row=elem('article',undefined,'entry');
-  row.append(elem('strong',team.name,'contractor-name'));
-  row.append(elem('span',state.contractors.find(x=>x.id===team.contractorId)?.name||'Prestador não localizado','row-subtitle'));
+  const head=elem('div',undefined,'employee-head');
+  head.append(elem('strong',e.name,'contractor-name'));
+  head.append(elem('span',e.status==='terminated'?'Desligado':'Ativo','employee-status '+(e.status==='terminated'?'inactive':'active')));
+  row.append(head);
+  row.append(elem('span',(e.role?e.role+' · ':'')+(state.contractors.find(x=>x.id===e.contractorId)?.name||'Empreiteiro indisponível'),'row-subtitle'));
   const actions=elem('div',undefined,'entity-actions');
-  actions.append(btn('Renomear',()=>{
-   const name=prompt('Nome da equipe:',team.name);if(name===null)return;
-   try{commit(engine.rename(state,'team',team.id,name));say('Equipe atualizada.')}catch(e){say(e.message,true)}
-  }));
-  actions.append(btn('Excluir',()=>{
-   try{
-    if(hasDiaryReference(team.id))throw Error('Equipe usada no Diário. Preserve o histórico antes de remover; prefira renomear.');
-    if(!confirm('Excluir equipe nesta simulação?'))return;
-    commit(engine.removeTeam(state,team.id));say('Equipe excluída.');
-   }catch(e){say(e.message,true)}
-  },'danger'));
-  row.append(actions);teams.append(row);
+  actions.append(btn('Editar',()=>openEmployee(e)));
+  row.append(actions);list.append(row);
+ }
+ const legacy=$('legacy-teams');legacy.replaceChildren();
+ if(!state.teams.length)legacy.append(elem('p','Nenhuma equipe antiga cadastrada.','empty'));
+ for(const e of state.teams){const row=elem('article',undefined,'entry');
+  row.append(elem('strong',e.name));row.append(elem('span',state.contractors.find(x=>x.id===e.contractorId)?.name||'Empreiteiro antigo indisponível','row-subtitle'));
+  legacy.append(row);
  }
 }
-$('add-contractor').addEventListener('click',()=>{$('contractor-name').value='';$('contractor-note').value='';$('contractor-dialog').showModal()});
-$('add-team').addEventListener('click',()=>{
- if(!state.contractors.length){say('Cadastre primeiro o empreiteiro.',true);return}
- const sel=$('team-contractor');
- sel.replaceChildren(...state.contractors.map(x=>{const o=document.createElement('option');o.value=x.id;o.textContent=x.name;return o}));
- $('team-name').value='';$('team-dialog').showModal();
+document.querySelectorAll('[data-close]').forEach(x=>x.addEventListener('click',()=>close(x.dataset.close)));
+$('add-contractor').addEventListener('click',()=>openContractor());
+$('add-employee').addEventListener('click',()=>openEmployee());
+$('contractor-form').addEventListener('submit',event=>{
+ event.preventDefault();
+ try{
+  let next=state;
+  if(editingContractor){
+   next=engine.rename(state,'contractor',editingContractor,$('contractor-name').value);
+   next.contractors.find(x=>x.id===editingContractor).note=$('contractor-note').value.trim().slice(0,500);
+  }else next=engine.addContractor(state,{id:uid(),name:$('contractor-name').value,note:$('contractor-note').value});
+  commit(next);close('contractor-dialog');say('Empreiteiro salvo neste navegador.');
+ }catch(e){say(e.message,true);}
 });
-document.querySelectorAll('[data-close]').forEach(btn=>btn.addEventListener('click',()=>close(btn.dataset.close)));
-$('contractor-form').addEventListener('submit',e=>{
- e.preventDefault();
- try{commit(engine.addContractor(state,{id:uid(),name:$('contractor-name').value,note:$('contractor-note').value}));close('contractor-dialog');say('Empreiteiro cadastrado somente neste navegador.')}catch(err){say(err.message,true)}
-});
-$('team-form').addEventListener('submit',e=>{
- e.preventDefault();
- try{commit(engine.addTeam(state,{id:uid(),name:$('team-name').value,contractorId:$('team-contractor').value}));close('team-dialog');say('Equipe cadastrada somente neste navegador.')}catch(err){say(err.message,true)}
+$('employee-form').addEventListener('submit',event=>{
+ event.preventDefault();
+ try{
+  let next;
+  if(editingEmployee){
+   next=engine.updateEmployee(state,editingEmployee,{
+    name:$('employee-name').value,role:$('employee-role').value,status:$('employee-status').value
+   },new Date().toISOString().slice(0,10));
+  }else next=engine.addEmployee(state,{
+   id:uid(),contractorId:$('employee-contractor').value,name:$('employee-name').value,role:$('employee-role').value
+  });
+  commit(next);close('employee-dialog');say('Funcionário salvo. O histórico de situação foi preservado.');
+ }catch(e){say(e.message,true);}
 });
 load();render();
 })();
