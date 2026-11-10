@@ -48,7 +48,7 @@
   if(changes.status!==undefined){
    if(!['active','terminated'].includes(changes.status))throw Error('Situação inválida.');
    if(employee.status!==changes.status){
-    if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(changeAt||''))throw Error('Data da alteração obrigatória.');
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(changeAt||''))throw Error('Data da alteração obrigatória.');
     const d=new Date(changeAt+'T12:00:00Z');
     if(Number.isNaN(d.getTime())||d.toISOString().slice(0,10)!==changeAt)throw Error('Data da alteração inválida.');
     employee.statusHistory=Array.isArray(employee.statusHistory)?employee.statusHistory:[];
