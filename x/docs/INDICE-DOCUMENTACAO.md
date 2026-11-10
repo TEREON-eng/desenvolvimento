@@ -62,3 +62,7 @@ A estrutura vigente de **Obras** é **Escopo → Etapa → Subetapa**; não util
 
 ## Pessoas e equipes — proposta 10/11/2026
 - [Pessoas, Prestadores, Equipes e Alocações](PESSOAS-EQUIPES-ALOCACOES-2026-11-10.md) — desenho de entidades, vínculos temporais, permissões independentes e casos de trabalho na Escola X.
+
+
+## Diário — laboratório mobile (10/11/2026)
+- [Programação de equipes pelo Diário de Obras](DIARIO-PROGRAMACAO-EQUIPES-2026-11-10.md): contratos, diferença entre planejamento/presença/execução e roteiro de ensaio móvel. Laboratório isolado `/x/universo/diario/lab.html`; presença em Preview e CI completo ainda não confirmada.
