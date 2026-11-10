@@ -50,3 +50,10 @@ A navegação estava funcional no código, mas visualmente **incoerente**: Obras
 **Bloqueios:** CI e deploy comprovados; RLS de cadastro/equipe/programação/execução; entidade de equipe estável com histórico; política de exclusão/arquivo e eventos; snapshots do Diário e visibilidade de cancelamentos; validação E2E A/B e mobile.
 **Preservação:** programação não é presença; execução não é conclusão; subetapa pontual de um dia; hierarquia `Obra → Escopo → Etapa → Subetapa`; o Diário agrega por obra/data; Listas e Escola funcionam independentemente.
 **Publicação:** nenhum dos novos laboratórios foi promovido à `main` ou considerado homologado.
+
+
+## Correções posteriores da mesma rodada — cabeçalho e estrutura de funcionários
+- Corrigido **achado visual real não resolvido pela mera camada CSS**: Diário, Empreiteiros e Visitas ainda exibiam cabeçalhos próprios e não geravam breadcrumb. Todos agora usam `data-tx-header=module`, `header.js?v=9`, `header-session.js`, `status.js` e o breadcrumb do X; rota Obras exibe `Ferramentas › Obras` sem nome histórico Universo.
+- Cadastro remodelado em **Empreiteiro → Funcionários** (nome, função opcional, Ativo/Desligado com histórico de alteração). Cadastro e edição por modal; filtro de funcionários por empreiteiro. Antigas equipes de simulação ficam visíveis como legado somente leitura, **não convertidas em pessoas**.
+- Bloqueio de exclusão de empreiteiro com funcionários; funcionários permanecem cadastrados ao desligar, sem deleção destrutiva. A conexão do Diário **ainda é por equipe**, não há vinculação funcionário→Diário nem associação funcionário→equipe.
+- Proteções e testes estáticos adicionados ao workflow. **Pendente:** browser real, visual, tema, teclado/touch, validação da data local e CI. Foco em evitar a regressão de cabeçalho e a migração indevida dos cadastros históricos.
