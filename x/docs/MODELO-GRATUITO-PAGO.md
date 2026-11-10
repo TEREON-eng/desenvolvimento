@@ -1,4 +1,7 @@
 # TEREON X — Modelo gratuito e pago
+
+> **HIPÓTESES COMERCIAIS — 10/11:** Listas e Escola devem proporcionar utilidade gratuita real. Escola como plataforma de cursos e cobrança por colaboração profissional são possibilidades a testar, não serviços ou preços aprovados, nem prioridades do teste de 17/11. [Estado vigente](ESTADO-VIGENTE-10-11-2026.md).
+
 **07/11/2026 · v0.1 · PROPOSTA E HIPÓTESES, não preços nem funcionalidades comercialmente aprovadas**
 
 ## 1. Princípios DECIDIDOS
