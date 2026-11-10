@@ -13,9 +13,9 @@ const visits=read('universo/visitas/lab.html');
 const diaryJS=read('universo/diario/lab.js');
 const contractorJS=read('universo/empreiteiros/lab.js');
 for(const [name,doc] of [['obras',obras],['diario',diary],['empreiteiros',contractor],['visitas',visits]]){
- assert.ok(doc.includes('ui-refino.css?v=1'),name+' usa camada visual comum');
+ assert.ok(doc.includes('ui-refino.css?v=2'),name+' usa camada visual comum');
 }
-for(const doc of [diary,contractor,visits])assert.ok(doc.includes('appearance.js?v=3'),'tema aplicado à página');
+for(const doc of [diary,contractor,visits])assert.ok(doc.includes('appearance.js?v=3')&&doc.includes('data-tx-header="module"')&&doc.includes('header.js?v=9'),'tema e cabeçalho compartilhado');
 for(const theme of ['light','dark','tereon'])assert.ok(ui.includes('data-tx-appearance='+theme)||theme==='light'&&ui.includes(':root{--ux-bg'),'tema '+theme);
 assert.ok(appearance.includes('tereon-x-appearance-v1'),'mesma preferência global');
 assert.ok(ui.includes('@media(max-width:520px)')&&ui.includes('min-height:44px'),'base responsiva e toque');
@@ -23,8 +23,8 @@ assert.ok(obras.includes('Minhas obras')&&obras.includes('module-nav'),'painel e
 assert.ok(diary.includes('<details class="panel help">'),'ajuda recolhida');
 assert.ok(diary.includes('<dialog id="entry-dialog"')&&diary.includes('<dialog id="report-dialog"'),'modais separados');
 assert.ok(diary.includes('id="print-day"')&&diaryJS.includes('window.print()'),'exportação preservada');
-assert.ok(contractor.includes('id="contractor-form"')&&contractor.includes('id="team-form"'),'cadastro preservado');
-assert.ok(contractorJS.includes('hasDiaryReference(team.id)'),'não exclui equipe que aparece no Diário local');
+assert.ok(contractor.includes('id="contractor-form"')&&contractor.includes('id="employee-form"'),'cadastro de empreiteiros e funcionários em modais');
+assert.ok(contractorJS.includes("openEmployee(e)")&&contractorJS.includes('statusHistory')===false,'funcionários usam modal de edição e motor para histórico');
 assert.ok(contractorJS.includes('readError=true')&&contractorJS.includes('if(readError)throw Error'),'cadastro não sobrescreve dados locais incompatíveis');
 assert.ok(diaryJS.includes('planningReadError=true')&&diaryJS.includes('executionReadError=true'),'Diário bloqueia gravação após erro de leitura');
 assert.ok(visits.includes('Em preparação'),'não anuncia Visitas pronta');
