@@ -1,4 +1,7 @@
 # TEREON — Diário de Desenvolvimento | Continuação
+
+> **HISTÓRIA — VOLUME 02:** memória narrativa de 24/10 a 09/11, preservada sem reinterpretação técnica. Continuação e pautas de redes sociais no [Volume 03](HISTORIA-TEREON-X-VOLUME-03.md). O Volume 01 continua como arquivo histórico externo e não foi sobrescrito.
+
 **Volume 02 — Da prática de campo à arquitetura TEREON X**
 **Período: 24/10 a 07/11/2026 · reconstrução a partir de conversas e artefatos; não inventar marcos sem prova.**
 Preserva-se o Diário Volume 01 (origens, DataFluxx e TEREON até 23/10), sem reescrevê-lo.
