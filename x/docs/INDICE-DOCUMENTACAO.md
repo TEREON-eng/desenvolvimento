@@ -75,3 +75,7 @@ A estrutura vigente de **Obras** é **Escopo → Etapa → Subetapa**; não util
 
 ## Auditoria preventiva do visual (10/11/2026)
 - [Auditoria do layout de Obras, Diário e Empreiteiros](AUDITORIA-LAYOUT-OBRAS-2026-11-10.md): incongruências de interface corrigidas, lista de riscos P0–P2, proteção de dados locais, roteiro de aceite e limites de homologação. Camada CSS compartilhada com temas Claro/Escuro/TEREON.
+
+
+## Alteração no Cadastro Profissional — 10/11
+No laboratório de Empreiteiros, o núcleo atual passa a ser **Empreiteiro + Funcionários ativos/desligados**, com inclusão e edição em modais e histórico de status. Equipes anteriores permanecem como legado consultável, sem associação automática a funcionários. Todos os módulos de Obras usam agora cabeçalho e breadcrumb compartilhados. Ver [Mestre](MESTRE-TEREON-X.md), [Cadastro Profissional](PESSOAS-EQUIPES-ALOCACOES-2026-11-10.md) e [Guia Visual](GUIA-VISUAL-TEREON-X.md).
