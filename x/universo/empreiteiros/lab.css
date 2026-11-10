@@ -1,1 +1,7 @@
 #contractor-dialog,#team-dialog{position:fixed;inset:0;margin:auto;width:min(94vw,540px);max-height:90dvh;overflow:auto;background:#1a2822;color:#ecf1eb;border:1px solid #506857;border-radius:16px;padding:0;box-shadow:0 24px 70px #000a}#contractor-dialog::backdrop,#team-dialog::backdrop{background:#020a05c0}.contractor-name{font-size:15px;font-weight:700}.row-subtitle{font-size:12px;color:#b6c5bb}.entity-actions{display:flex;gap:7px;flex-wrap:wrap}.entity-actions button{min-height:36px;font-size:12px;padding:7px 11px}.entity-actions .danger{color:#ffb6b0;border-color:#9a605e}.entry{gap:10px}.add-button{font-size:13px;min-height:40px;padding:9px 12px}.empty{padding:20px;text-align:center;color:#b6c5bb}.modal-content{padding:18px;display:grid;gap:14px}.modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.modal-head h2{font-size:18px;margin:0}.close-button{width:44px;min-height:44px}.help-text{font-size:12px;color:#b6c5bb}
+.employee-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.employee-status{font-size:11px;font-weight:700;white-space:nowrap;padding:4px 9px;border-radius:100px;border:1px solid var(--ux-line,#405047)}
+.employee-status.active{color:var(--ux-ink,#ecf1eb);background:var(--ux-soft,#24352a)}
+.employee-status.inactive{color:var(--ux-muted,#b6c5bb);background:transparent}
+#legacy-teams{margin-top:10px}
+#employee-contractor:disabled{opacity:.75}
