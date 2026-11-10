@@ -51,3 +51,7 @@ A superauditoria encontrou teste de cabeçalho desatualizado, ausência de confi
 - **Após 17/11:** avaliar evidências, priorizar correções e retomar laboratórios de gestão com escopo separado.
 
 **Datas são proposta de organização, não atividades concluídas ou eventos agendados automaticamente.**
+
+
+## Auditoria efetiva do núcleo — 10/11/2026
+Criados [relatório de testes e bloqueios](AUDITORIA-NUCLEO-LISTAS-17-11-2026.md) e [matriz de fichas](MATRIZ-FICHAS-17-11-2026.md). **P0 técnico comprovado:** Condutor pode ser considerado completo só com Tipo+Material; Eletroduto e Curva podem ficar sem diâmetro obrigatório. Não entregar como pedido de compra homologado até sanear as fichas na origem. Cabeçalho e teste de exportação corrigidos **nos testes**, sem alteração de UI; nova regressão `fluxo-campo-17-11.test.cjs` incluída no CI. A exclusão remota cruzada entre dispositivos mostrou estado enganoso no segundo aparelho, sem solução destrutiva aplicada. CI completo, PDF, celular e deploy **seguem pendentes**.
