@@ -337,3 +337,11 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Novo laboratório puro `x/universo/obras/sugestoes-etapas.js`; testes `x/tests/escopo-etapas.test.cjs` e etapa correspondente no GitHub Actions. Caso QD1 ambíguo sob Quadros/Iluminação, escolha de etapa-mãe e rejeição de ciclos/parent inexistente incluídos.
 - Smoke-test JavaScript isolado sobre o código obtido do GitHub passou, mas a execução completa do Actions e o aceite no navegador seguem pendentes.
 - **Sem alterações de SQL, rotas, interface, modal aprovado, `main` ou versão X.0.3.30.**
+
+
+## 10/11/2026 — Motor independente de Escopo → Etapa → Subetapa
+- Criado `x/universo/obras/escopo-motor.js`, separado de UI, Listas, SQL e armazenamento. Tipos explícitos `scope/stage/substage`; validação de nível e obra, caminhos hierárquicos, renomeação e arquivamento com operações imutáveis.
+- Adicionado `x/tests/escopo-motor.test.cjs` e passo ao CI. Smoke-test isolado passou; **GitHub Actions completo e navegação real não comprovados**.
+- Regra atual substitui árvore simplificada de dois níveis: `Revisão elétrica → Quadros → QD1`, `SPDA` e `Entrada de energia → Abrigo`. Nenhuma subdivisão é obrigatória.
+- Debate sobre cobrança pelo armazenamento: sincronização pessoal básica gratuita recomendada, teto de listas e precificação **não aprovados nem implementados**.
+- Não tocou a UI aprovada, fichas, banco, `main` ou versão X.0.3.30.
