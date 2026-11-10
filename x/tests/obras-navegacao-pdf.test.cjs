@@ -18,6 +18,7 @@ assert.ok(contractors.includes('id="contractor-form"')&&contractors.includes('id
 assert.ok(visits.includes('Em preparação'),'não sugerir que Visitas foi implementado');
 assert.ok(diary.includes('id="print-day"')&&diary.includes('id="print-report"'),'impressão do Diário');
 assert.ok(diaryJS.includes('function printDay()')&&diaryJS.includes('window.print()'),'exportação por impressão do navegador');
+assert.ok(diaryJS.includes("tereon-x-contractors-simulation-v1")&&diaryJS.includes('importLocalContractors();'),'Diário lê empreiteiros do laboratório local');
 assert.ok(diaryJS.includes("execution.latest(reports,e.id,date)"),'PDF indica estado real apontado no dia');
 assert.ok(diaryCSS.includes('@media print')&&diaryCSS.includes('size:A4'),'diagramação para PDF');
 for(const file of ['universo/empreiteiros/lab.js','universo/diario/lab.js'])new Function(read(file));
