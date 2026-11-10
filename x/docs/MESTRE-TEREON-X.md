@@ -3,7 +3,7 @@
 
 ## Situação vigente — 09/11/2026
 A versão de referência na branch `desenvolvimento` é **X.0.3.29**. O fundador considerou **bom o layout atual de Minhas listas**: seleção discreta alinhada ao título no canto direito; Editar, Duplicar, Compartilhar e Excluir em linha inferior; cartão translúcido com status técnico individual. Isso é **aceite visual parcial**, não homologação integral. A navegação atual parte de `/x/`; marca e breadcrumb retornam às Ferramentas. Aparência Claro/Escuro/TEREON se escolhe em Minha conta e se aplica também aos modais. O HTML do modal técnico aprovado X.0.3.4 continua preservado.
-**Ponto de retomada:** [RETOMADA-2026-11-09.md](RETOMADA-2026-11-09.md). **Revisão de contratos e riscos:** [REVISAO-GERAL-CONTRATOS-2026-11-09.md](REVISAO-GERAL-CONTRATOS-2026-11-09.md). Seções abaixo escritas em 07–08/11 são **históricas** e podem descrever versões anteriores como se fossem atuais.
+**Norma de contratos atuais:** [CONTRATOS-VIGENTES.md](CONTRATOS-VIGENTES.md). **Ponto de retomada:** [RETOMADA-2026-11-09.md](RETOMADA-2026-11-09.md). **Revisão de contratos e riscos:** [REVISAO-GERAL-CONTRATOS-2026-11-09.md](REVISAO-GERAL-CONTRATOS-2026-11-09.md). Seções abaixo escritas em 07–08/11 são **históricas** e podem descrever versões anteriores como se fossem atuais.
 
 ## 0. Como ler
 - **DECIDIDO**: princípio ou separação aprovada pelo fundador.
