@@ -314,3 +314,12 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Identificada divergência de validação de nome, quantidade finita, teto de 300 itens e tamanho de dados entre serviço local e motor de nuvem, com risco de lista salva localmente mas sem aceitação remota.
 - Conferido o grant efetivo por coluna em `x_cloud_lists`: INSERT autenticado em `id` permitido, UPDATE de `version` bloqueado. Hipótese de falta de INSERT no ID descartada.
 - Complementados Validação Técnica, Mestre e Plano de Regressão com cenários reproduzíveis. **Nenhum código ou dado modificado; versão X.0.3.29 preservada.**
+
+
+## 10/11/2026 — X.0.3.30 · Etapas de Listas e validação compatível com a nuvem
+- `x/listas/servico.js`: recalcular etapas sugeridas pelos materiais após inclusão, alteração, duplicação e exclusão; etapa vazia removida só na lista modificada, sem varredura na leitura ou alteração de Obras. Nome de lista nova até 160 caracteres e quantidade finita positiva.
+- `x/listas/nuvem/motor.js`: expõe `validate` ao consumidor do adaptador remoto.
+- `x/listas/integracao.js`: valida listas novas/alteradas com regras de payload remoto **antes** de confirmar cache autenticado; não trunca itens nem mexe nas listas de visitante.
+- `x/tests/modulos.test.cjs` e `x/tests/listas-integracao.test.cjs`: casos de remoção da última etapa, movimentação de item, 301 materiais, quantidade inválida e conservação do cache. Testes adicionados; execução do CI não afirmada sem logs.
+- Versão, PWA e cache alinhados em X.0.3.30; fluxo `#addDialog`, fichário, SQL e `main` não modificados.
+- Documentado o conceito de **Obras**, escopo e etapas persistentes independentes das Listas, com proposta de sugestão a partir de lista vinculada. Não houve criação de tabela/motor de etapas de obra.
