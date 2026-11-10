@@ -301,3 +301,10 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Introduzida precedência explícita: `#addDialog` X.0.3.4 é o fluxo principal; referência antiga a `txCatalogDialog` permanece apenas histórica.
 - Ligados índice, mestre, retomada e matriz de testes à fonte normativa. Nenhum JS, CSS, banco, PWA, fichário ou `main` foi alterado nesta etapa.
 - **Não homologado por esta documentação:** execução atual do CI, Preview, testes reais multiusuário/offline, PDF e conteúdo técnico das fichas.
+
+
+## 09/11/2026 — ampliação da auditoria documental, sem mudança de versão
+- Revisão de fronteiras de Listas e exclusão coordenada, integridade do cache e comportamento de registros ausentes do servidor.
+- Confirmação de quatro políticas RLS por proprietário em `x_cloud_lists`; permanência de teste de segurança A/B como pendência.
+- Adicionados cenários à matriz de regressão: exclusão cruzada A→B, falha de escrita após DELETE, troca de conta durante sync, abertura offline e autorização real.
+- Atualizados [Mestre](MESTRE-TEREON-X.md), [Retomada](RETOMADA-2026-11-09.md), [Índice](INDICE-DOCUMENTACAO.md) e [Validação técnica](VALIDACAO-TECNICA-2026-11-09.md). **Nenhum motor, PWA, schema ou `main` alterado**; versão do aplicativo permanece X.0.3.29.
