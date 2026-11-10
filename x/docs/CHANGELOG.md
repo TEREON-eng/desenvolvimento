@@ -386,3 +386,7 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Empreiteiros prioriza cadastro de **funcionários** (nome, função, vínculo a prestador), com situação `Ativo` / `Desligado`, mudanças datadas em `statusHistory` e formulário/modal de inclusão e edição. Cadastro e edição de empreiteiros também em modais.
 - Equipes legadas são mantidas na chave local original e exibidas apenas para consulta, sem migração ou exclusão silenciosa; Diário ainda não atribui funcionários a equipes, portanto não afirmar integração operacional.
 - Teste isolado do motor passou; novo `x/tests/empreiteiros-funcionarios.test.cjs` no workflow. **Sem teste visual/CI verde/deploy comprovado**. Listas `#addDialog`, Supabase, `main` e versão de referência X.0.3.30 não alterados.
+
+
+### Ajuste complementar do cadastro (10/11)
+O painel de Funcionários ganhou **filtro por empreiteiro**, e o modal de novo funcionário usa o empreiteiro filtrado como contexto inicial. Nenhuma associação a equipes, obra ou Diário ocorre automaticamente.
