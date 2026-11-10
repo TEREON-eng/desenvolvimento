@@ -351,3 +351,10 @@ A Central do TEREON X passa a exibir **Minhas listas** e **Criar lista** como a�
 - Registrada a diretriz social do produto: Listas e Escola com valor concreto no gratuito; receitas profissionais/colaborativas e Escola avançada como hipóteses a validar.
 - Criado [contrato de desenho](PESSOAS-EQUIPES-ALOCACOES-2026-11-10.md) para pessoa sem conta, prestador, equipe, integrante temporal, alocação a Obra/Escopo/Etapa/Subetapa e autorização digital separada.
 - Mestre, Universo, Contratos, Modelo Comercial e Índice atualizados. **Sem mudança no app, banco, login, convite, equipes ou `main`; versão X.0.3.30 permanece.**
+
+
+## 10/11/2026 — Laboratório mobile: programação de equipes via Diário
+- Criado motor puro `x/universo/diario/programacao-motor.js`, sem DOM/Supabase, que diferencia programação de Escopo/Obra em intervalo de dias versus Etapa/Subetapa em um dia; consulta por obra/dia, validações, cancelamento lógico e preservação de dados na simulação.
+- Nova interface responsiva em `x/universo/diario/lab.html` + CSS/JS, com caso demonstrativo Wilson Rachid, Empreiteiro JS e Equipe A; armazenamento apenas local em chave segregada, sem autenticação ou gravação nos dados de Obras.
+- Acesso do laboratório de Obras para Diário. Teste `x/tests/diario-programacao.test.cjs` adicionado ao workflow. **Smoke-test JS isolado passou**; GitHub Actions, publicação real e teste no celular ainda não confirmados.
+- Não alterado o modal técnico, Listas, SQL, `main` ou versão X.0.3.30. Programação de equipe é previsão, **não** confirmação de presença ou execução.
