@@ -1,4 +1,7 @@
 # TEREON X — Mapa de módulos e contratos
+
+> **MATURIDADE ATUAL — 10/11:** este inventário inclui estados de datas diferentes. Prioridade para 17/11: **Listas + Fichas/Catálogo + especificação + compartilhamento**. Obras, Diário, Empreiteiros, Escopo e PDF diário são laboratórios paralelos. [Estado vigente](ESTADO-VIGENTE-10-11-2026.md) · [Superauditoria](SUPERAUDITORIA-TEREON-X-2026-11-10.md).
+
 Base histórica de 07/11/2026; **situação atual de 09/11/2026 no adendo final**. Branch `desenvolvimento`.
 
 | Componente | Responsabilidade | Entrada/saída | Independência atual |
