@@ -411,3 +411,7 @@ O painel de Funcionários ganhou **filtro por empreiteiro**, e o modal de novo f
 - Criado `x/tests/fluxo-campo-17-11.test.cjs`, adicionado ao workflow. **25 comandos configurados**, não há resultado de Actions completo confirmado.
 - Execução isolada de motores comprovou criação/edição/etapas/compartilhamento, além de **falha de prontidão do catálogo** (Condutor não exige seção/tensão; Eletroduto/Curva não exigem diâmetro) e **lista removida remotamente ainda parecendo sincronizada no dispositivo B**.
 - Criados [Auditoria de Listas](AUDITORIA-NUCLEO-LISTAS-17-11-2026.md) e [Matriz de fichas](MATRIZ-FICHAS-17-11-2026.md). Nenhuma ficha foi homologada por inferência, nenhum dado, interface, SQL, `main` ou deploy modificado.
+
+## 10/11/2026 — Revisão iniciada de Condutores BT (documentação)
+- Inventário inicial de características e relações técnicas para condutores isolados e cabos unipolares/multipolares registrado em [Retomada FT_COND-001](RETOMADA-FT-COND-001-2026-11-10.md).
+- **Em aberto:** ficha única com condicionais versus fichas separadas. Nenhuma regra foi homologada, nenhuma célula técnica, código, SQL ou dado real alterado.
