@@ -420,3 +420,10 @@ O painel de Funcionários ganhou **filtro por empreiteiro**, e o modal de novo f
 - Fundador aprovou **uma ficha única de Condutor elétrico** para isolado/unipolar/multipolar com condicionais, visando simplicidade e reutilização didática.
 - Definiu Escola TEREON aberta desde o começo com curso inaugural **“Como usar o TEREON”**, gratuito e curto. Registrado plano [Escola Inaugural](ESCOLA-INAUGURAL-2026-11-10.md), **sem afirmar curso implementado**.
 - Inspecionada FT_COND-001 atual no Drive (8 detalhes). Não foram alteradas células, normas, código de Listas ou publicação.
+
+## 10/11/2026 — x.0.3.31, laboratório experimental FT_COND-001
+- Importadas as linhas ativas de Condutores do Fichário do Drive no snapshot do app, sem alterar a planilha ou as outras cinco fichas; nome técnico neutro Condutor elétrico.
+- Motor de fichas passou a agrupar opções pelo mesmo ID, interpretar `//` e `+`, excluir detalhes ou opções, checar incompatibilidades reversíveis e não exigir detalhes ocultos.
+- App usa `optionsFor` e impede confirmar uma escolha contraditória com tags existentes; **DOM do modal aprovado preservado**.
+- Versão x.0.3.31 e cache do SW atualizado; adicionado estresse de 648 combinações ao workflow de CI, sem prova de execução completa do GitHub Actions ou deploy no Cloudflare.
+- Pendências técnicas e testes: [Auditoria](AUDITORIA-FT-COND-001-2026-11-10-LAB.md). Ficha permanece **Em revisão**, não homologada.
