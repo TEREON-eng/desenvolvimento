@@ -66,3 +66,8 @@ A estrutura vigente de **Obras** é **Escopo → Etapa → Subetapa**; não util
 
 ## Diário — laboratório mobile (10/11/2026)
 - [Programação de equipes pelo Diário de Obras](DIARIO-PROGRAMACAO-EQUIPES-2026-11-10.md): contratos, diferença entre planejamento/presença/execução e roteiro de ensaio móvel. Laboratório isolado `/x/universo/diario/lab.html`; presença em Preview e CI completo ainda não confirmada.
+
+
+## Obras: navegação e PDF (10/11)
+- A navegação `x/universo/obras/lab.html` conduz a Empreiteiros, Diário e Visitas (esta última somente preparação). O Diário possui impressão de **um dia** para salvar como PDF pelo navegador; não gera arquivo/sincronização automaticamente.
+- Referências: [Diário](DIARIO-PROGRAMACAO-EQUIPES-2026-11-10.md), [Pessoas/Equipes](PESSOAS-EQUIPES-ALOCACOES-2026-11-10.md), [Contrato vigente](CONTRATOS-VIGENTES.md).
