@@ -94,10 +94,14 @@ function missing(f,values){
   if(!d.required)continue;
   const opts=optionsFor(f,values||{},d.id);
   if(!opts.length){
-   // Grupo escondido por exclusão de DETALHE não é obrigatório; por condição
-   // ou exclusão total de opções, só deixar passar com confirmação humana.
+   // Condição de exibição falsa => detalhe não se aplica e não é obrigatório.
+   // Exclusão explícita do detalhe inteiro => não se aplica.
+   // Há linhas aplicáveis, porém todas as opções excluídas => conflito real.
    const hidden=excludedTargets(f,values).some(t=>eq(t,d.name));
-   if(!hidden)out.push(d.id);
+   const statuses=d.rows.map(r=>applyRule(r.condition,values||{},f.details));
+   const applicable=statuses.some(s=>s.visible);
+   const malformed=statuses.some(s=>!s.verified);
+   if(!hidden&&(applicable||malformed))out.push(d.id);
    continue;
   }
   if(!values?.[d.id]||!opts.some(o=>eq(o,values[d.id])))out.push(d.id);
