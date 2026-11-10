@@ -48,8 +48,8 @@ const cat=context.window.TereonXCatalog;
  assert.equal(cat.conflicts(f,{...cable,'DET-005':LSZH,'DET-008':'Termoplástico não halogenado 70 °C'}).length,0,'LSZH + cobertura não halogenada passa nas regras lógicas');
  let total=0,invalid=0,pass=0;
  const types=['Condutor isolado','Cabo unipolar','Cabo multipolar'],
-  fires=['','Comum',LSZH],isol=['',PVC,HEPR],volt=['','450/750 V','0,6/1,0 kV'],
-  covers=['',PVC],colors=['','Preto'],vias=['','3'];
+  fires=['','Comum',LSZH],isol=['',PVC,HEPR,'Termoplástico não halogenado 70 °C'],volt=['','450/750 V','0,6/1,0 kV'],
+  covers=['',PVC,'Termoplástico não halogenado 70 °C'],colors=['','Preto'],vias=['','3'];
  for(const t of types)for(const fi of fires)for(const ins of isol)for(const te of volt)
   for(const co of covers)for(const col of colors)for(const vi of vias){
    total++;const sample=v(t,fi,ins,te,co,col,vi);
@@ -57,10 +57,10 @@ const cat=context.window.TereonXCatalog;
    if(c.length){invalid++;assert.ok(missing.length>0,'conflitos nunca podem ser salvos');}
    if(!missing.length){pass++;assert.equal(c.length,0);}
   }
- assert.equal(total,648);assert.ok(invalid>0&&pass>0);
+ assert.equal(total,1296);assert.ok(invalid>0&&pass>0);
  assert.equal(all.length,6,'não alterar outras fichas');
  const html=read('x/index.html'),fixture=read('x/tests/fixtures/modal-adicionar-aprovado-x034.html');
  const a=html.indexOf('<dialog id="addDialog"');
  assert.ok(a>=0&&html.slice(a,html.indexOf('</dialog>',a)+9)===fixture,'modal aprovado preservado');
- console.log('TEREON X: 648 combinações, '+invalid+' conflitos, '+pass+' completas; exclusões, condicionais e modal OK (LABORATÓRIO)');
+ console.log('TEREON X: 1296 combinações, '+invalid+' conflitos, '+pass+' completas; exclusões, condicionais e modal OK (LABORATÓRIO)');
 })().catch(e=>{console.error(e);process.exitCode=1});
