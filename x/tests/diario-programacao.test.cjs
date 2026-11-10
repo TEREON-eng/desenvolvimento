@@ -37,6 +37,13 @@ assert.equal(entries.find(e=>e.id==='e2').status,'planned','histórico de entrad
 const html=fs.readFileSync(path.resolve(__dirname,'../universo/diario/lab.html'),'utf8');
 const js=fs.readFileSync(path.resolve(__dirname,'../universo/diario/lab.js'),'utf8');
 assert.ok(html.includes('name="viewport"')&&html.includes('id="entry-form"'),'tela mobile existente');
+assert.ok(html.includes('<dialog id="entry-dialog"')&&html.includes('id="open-entry"'),'consulta abre programação em modal');
+assert.ok(html.indexOf('id="entries"')<html.indexOf('id="entry-dialog"'),'formulário fica fora do conteúdo de consulta');
+assert.equal((html.match(/id="entry-form"/g)||[]).length,1,'somente um formulário de programação');
+assert.ok(js.includes("$('open-entry').addEventListener('click',openEntry)"),'botão adicionar abre o modal');
+assert.ok(js.includes("$('entry-dialog').showModal()"),'abertura modal real');
+assert.ok(js.includes('closeEntry();dayList()'),'ao salvar, fecha modal e atualiza consulta');
+assert.ok(js.includes("$('work').value=$('filter-work').value")&&js.includes("$('start').value=$('filter-date').value"),'modal herda obra e data consultadas');
 assert.ok(js.includes('tereon-x-diary-simulation-v1'),'cache separado dos dados reais');
 assert.ok(!js.includes('createClient(')&&!js.includes('x_works')&&!js.includes('x_cloud_lists'),'sem dependência do banco');
 console.log('TEREON X: Diário — programação de escopo/período e etapa/dia OK (simulado)');
