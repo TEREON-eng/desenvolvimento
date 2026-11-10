@@ -5,12 +5,12 @@
  <section class="notice"><strong>Simulação no aparelho</strong><span>Dados fictícios. Salvos somente neste navegador; não são enviados ao Supabase e não alteram as obras reais.</span></section>
  <section class="panel overview"><div class="section-head"><h2>Programações</h2><button id="open-entry" type="button" class="primary add-button">+ Adicionar atividade</button></div>
   <div class="two"><label>Obra<select id="filter-work"></select></label><label>Data<input id="filter-date" type="date"></label></div>
-  <p class="hint" id="day-label"></p><div id="entries" class="entries"></div>
+  <div class="report-actions"><button id="print-day" type="button" class="secondary">Gerar PDF do dia</button></div><p class="hint" id="day-label"></p><div id="entries" class="entries"></div>
  </section>
  <section class="panel help"><h2>Como testar</h2><p>Experimente alocar a <strong>Equipe A do JS</strong> à obra <strong>Wilson Rachid</strong>, em <strong>Revisão elétrica</strong> de 17 a 20/11. Depois selecione a etapa <strong>Quadros</strong>: ela aceita somente uma data.</p><button class="secondary" id="reset" type="button">Restaurar dados de demonstração</button></section>
  <div id="message" class="message" role="status" aria-live="polite"></div>
  <footer>TEREON X · ambiente de ensaio · sem cadastro de pessoas, presença ou permissões reais</footer>
-</main><dialog id="entry-dialog" aria-labelledby="entry-title">
+</main><section id="print-report" aria-label="Relatório de Diário para impressão" hidden></section><dialog id="entry-dialog" aria-labelledby="entry-title">
  <div class="modal-content">
   <div class="modal-head"><div><p class="eyebrow">DIÁRIO · NOVA PROGRAMAÇÃO</p><h2 id="entry-title">Adicionar atividade</h2></div><button type="button" id="close-entry" class="close-button" aria-label="Fechar programação">✕</button></div>
   <p class="hint">Programe uma equipe; presença e execução serão registradas separadamente.</p>
