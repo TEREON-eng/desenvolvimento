@@ -12,7 +12,8 @@ const cat=context.window.TereonXCatalog;
  const f=all.find(x=>x.id==='FT_COND-001');assert.ok(f);assert.equal(f.kind,'revisao');
  assert.equal(f.details.length,10);
  assert.equal(f.details.find(x=>x.id==='DET-001').options.length,3,'3 linhas do Tipo são uma única pergunta');
- assert.equal(f.details.find(x=>x.id==='DET-006').options.length,2,'2 linhas da Isolação são uma única pergunta');
+ assert.equal(f.details.find(x=>x.id==='DET-006').options.length,3,'3 linhas da Isolação são uma única pergunta');
+ assert.equal(f.details.find(x=>x.id==='DET-008').options.length,2,'Cobertura possui PVC e composto não halogenado');
  const v=(t,fire,iso,tensao,cobertura,cor,vias)=>{
   const d={'DET-001':t,'DET-002':'Cobre','DET-004':'2,5'};
   if(fire)d['DET-005']=fire;if(iso)d['DET-006']=iso;if(tensao)d['DET-007']=tensao;
@@ -28,16 +29,23 @@ const cat=context.window.TereonXCatalog;
  const ok=v('Condutor isolado','Comum',PVC,'450/750 V',null,'Preto');
  assert.equal(cat.conflicts(f,ok).length,0);
  assert.equal(cat.missing(f,ok).length,0,'condutor isolado comum completo pode ser lançado');
+ const green=v('Condutor isolado',LSZH,'Termoplástico não halogenado 70 °C','450/750 V',null,'Preto');
+ assert.equal(cat.conflicts(f,green).length,0,'condutor isolado LSZH 750 V é possível');
+ assert.equal(cat.missing(f,green).length,0,'condutor isolado LSZH 750 V pode ser especificado');
  const cable=v('Cabo multipolar','Comum',HEPR,'0,6/1,0 kV',null,null,'3');
  assert.equal(cat.conflicts(f,cable).length,0);
  assert.equal(cat.missing(f,cable).length,0,'multipolar normal pode ser lançado');
- assert.ok(!cat.optionsFor(f,{'DET-005':LSZH},'DET-006').includes(PVC),'LSZH impede PVC');
+ assert.ok(!cat.optionsFor(f,{'DET-005':LSZH},'DET-006').includes(PVC),'LSZH impede isolação PVC');
+ assert.ok(cat.optionsFor(f,{'DET-005':LSZH},'DET-006').includes('Termoplástico não halogenado 70 °C'),'LSZH oferece isolação não halogenada');
+ assert.ok(!cat.optionsFor(f,{'DET-005':LSZH,'DET-001':'Cabo multipolar'},'DET-008').includes(PVC),'LSZH impede cobertura PVC');
+ assert.ok(cat.optionsFor(f,{'DET-005':LSZH,'DET-001':'Cabo multipolar'},'DET-008').includes('Termoplástico não halogenado 70 °C'),'LSZH oferece cobertura não halogenada');
  assert.ok(!cat.optionsFor(f,{'DET-006':PVC},'DET-005').includes(LSZH),'PVC impede LSZH');
  assert.ok(!cat.optionsFor(f,{'DET-006':HEPR},'DET-007').includes('450/750 V'),'90 C exclui 750 V');
  assert.ok(!cat.optionsFor(f,{'DET-007':'450/750 V'},'DET-006').includes(HEPR),'750 V exclui 90 C');
  assert.ok(cat.conflicts(f,{...ok,'DET-005':LSZH}).length>0,'proibido LSZH + PVC');
  assert.ok(cat.missing(f,{...ok,'DET-005':LSZH}).length>0,'conflito impede adicionar');
  assert.ok(cat.conflicts(f,{...cable,'DET-005':LSZH,'DET-008':PVC}).length>0,'LSZH + cobertura PVC bloqueado');
+ assert.equal(cat.conflicts(f,{...cable,'DET-005':LSZH,'DET-008':'Termoplástico não halogenado 70 °C'}).length,0,'LSZH + cobertura não halogenada passa nas regras lógicas');
  let total=0,invalid=0,pass=0;
  const types=['Condutor isolado','Cabo unipolar','Cabo multipolar'],
   fires=['','Comum',LSZH],isol=['',PVC,HEPR],volt=['','450/750 V','0,6/1,0 kV'],
