@@ -34,3 +34,7 @@ Snapshot: **6 fichas, todas com status Em revisão, 0 homologadas**. Motor recon
 **NÃO declarar catálogo apto para pedidos reais sem revisão P0 de Condutor e Eletroduto/Curva e sem mapear quais itens o participante tentará lançar.** Caso o objetivo seja teste de usabilidade antes de aprovação técnica, usar pedidos explicitamente demonstrativos e identificar todos os materiais “Em revisão”; não entregar o resultado como pedido homologado para compra sem conferência.
 
 **Documento relacionado:** [Plano operacional](FOCO-TESTE-CAMPO-17-11-2026.md) · [Auditoria completa](AUDITORIA-NUCLEO-LISTAS-17-11-2026.md).
+
+
+## Conferência adicional das fontes acessíveis — 10/11
+Foi localizado na Biblioteca o arquivo histórico **`Fichario_TEREON_revisado_2026-11-07.xlsx`**. A aba `FT_INFRA-001 - Eletroduto` contém `DET-001 Tipo` e `DET-002 Material` classificados como obrigatórios, com linhas seguintes vazias; o índice desta cópia assinala “ABA NÃO ENCONTRADA” para várias entradas. **Isso confirma que esta versão antiga não é uma ficha completa e confiável para publicação.** Ela é de **07/11**, anterior ao snapshot JSON de **08/11**, portanto **não substitui** a fonte mais recente nem prova o estado atual do Fichário online. A pesquisa no Drive conectado por “Fichario/Fichário” não encontrou a planilha atual; nenhuma mudança foi aplicada à origem. A validação final deve ocorrer sobre o Fichário atualizado, com revisão humana e exportação controlada.
