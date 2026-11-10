@@ -34,3 +34,7 @@ Campos mínimos propostos para etapa da obra: `id`, `work_id`, `title`, `descrip
 **Próxima fase, não implementada:** desenhar o Escopo da Obra e a entidade Etapa da Obra em laboratório próprio; vínculo e sugestão após resolução de identidade, autoria e permissões. Testes devem assegurar que excluir último material numa lista NÃO exclui uma etapa da obra.
 
 **Perguntas ainda abertas:** fases versus ambientes versus serviços; etapa manual sem materiais; quem pode promover sugestão a etapa oficial; como lidar com renomeação e histórico; uma etapa pode ser compartilhada entre várias listas? Não antecipar essas escolhas na estrutura definitiva.
+
+
+## 7. Refinamento aprovado em 10/11 — hierarquia e persistência
+O fundador detalhou: **Quadros elétricos** pertence ao escopo da Obra; **QD1** pode nascer provisoriamente na Lista e ser associado como subetapa sob Quadros elétricos, após confirmação. Materiais sem subdivisão podem ser associados diretamente a Quadros elétricos. Uma etapa **cadastrada na Obra nunca desaparece automaticamente**; um rótulo **temporário da Lista desaparece quando fica sem materiais**, conforme X.0.3.30. Para Lista já vinculada à Obra, mostrar etapas da árvore do escopo como sugestões antes de sugerir novas; a implementação do vínculo ainda aguarda identidade estável/RLS. Ver [Escopo hierárquico](ESCOPO-HIERARQUICO-OBRAS-2026-11-10.md).
