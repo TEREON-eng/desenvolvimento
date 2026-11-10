@@ -18,6 +18,23 @@ const generateUuid=()=>{
  }
  throw Error('Este navegador não oferece geração segura de identificadores. Os dados não foram alterados.');
 };
+function reconcileStages(list){
+  // Etapas da Lista são sugestões derivadas dos lançamentos, não escopo de Obra.
+  // Preserva nomes e ordem já usados, descartando apenas as etapas sem materiais.
+  const used=new Map();
+  for(const item of list.items){
+   const stage=clean(item.stage);
+   const key=stage.toLocaleLowerCase('pt-BR');
+   if(stage&&!used.has(key))used.set(key,stage);
+  }
+  const next=[],seen=new Set();
+  for(const previous of list.stages){
+   const stage=clean(previous),key=stage.toLocaleLowerCase('pt-BR');
+   if(used.has(key)&&!seen.has(key)){next.push(stage);seen.add(key);}
+  }
+  for(const [key,stage] of used)if(!seen.has(key)){next.push(stage);seen.add(key);}
+  list.stages=next;
+}
 function create(repository,options){
  if(!repository||typeof repository.snapshot!=='function'||typeof repository.save!=='function')throw Error('Repositório de listas inválido.');
  const ids=options&&options.newId||newId;
@@ -47,7 +64,7 @@ function create(repository,options){
   });
  }
  function createList(name){
-  const title=clean(name);if(!title)throw Error('Informe um nome para a lista.');
+  const title=clean(name);if(!title||title.length>160)throw Error('Informe um nome para a lista de até 160 caracteres.');
   return change(data=>{const id=String(ids());if(data.lists.some(l=>l.id===id))throw Error('ID de lista repetido.');const recordUid=allocateRecordUid(data);data.lists.push({id,recordUid,name:title,items:[],stages:[]});return id;});
  }
  function renameList(listId,name){
@@ -75,7 +92,7 @@ function create(repository,options){
   });
  }
  function upsertItem(listId,entry,itemId){
-  if(!entry||!clean(entry.name)||!(Number(entry.qty)>0)||!clean(entry.unit)||!clean(entry.stage))throw Error('Preencha material, quantidade, unidade e etapa.');
+  if(!entry||!clean(entry.name)||!Number.isFinite(Number(entry.qty))||!(Number(entry.qty)>0)||!clean(entry.unit)||!clean(entry.stage))throw Error('Preencha material, quantidade, unidade e etapa.');
   return change(data=>{
    const list=find(data,listId);
    const stage=clean(entry.stage);
@@ -86,10 +103,11 @@ function create(repository,options){
     const old=list.items.find(x=>String(x.id)===String(itemId));
     if(!old)throw Error('Item original não encontrado.');
     Object.assign(old,validated);
+    reconcileStages(list);
     return String(old.id);
    }
    const id=String(ids());if(list.items.some(x=>String(x.id)===id))throw Error('ID de item repetido.');
-   list.items.push(Object.assign({id},validated));return id;
+   list.items.push(Object.assign({id},validated));reconcileStages(list);return id;
   });
  }
  function duplicateItem(listId,itemId){
@@ -97,7 +115,7 @@ function create(repository,options){
    const list=find(data,listId),source=list.items.find(x=>String(x.id)===String(itemId));
    if(!source)throw Error('Item não encontrado.');
    const id=String(ids());if(list.items.some(x=>String(x.id)===id))throw Error('ID de item repetido.');
-   list.items.push(Object.assign({},clone(source),{id}));return id;
+   list.items.push(Object.assign({},clone(source),{id}));reconcileStages(list);return id;
   });
  }
  function removeItem(listId,itemId){
@@ -105,6 +123,7 @@ function create(repository,options){
    const list=find(data,listId),before=list.items.length;
    list.items=list.items.filter(x=>String(x.id)!==String(itemId));
    if(before===list.items.length)throw Error('Item não encontrado.');
+   reconcileStages(list);
    return true;
   });
  }
