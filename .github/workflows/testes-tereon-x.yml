@@ -42,6 +42,8 @@ jobs:
         run: node x/tests/trilha-navegacao.test.cjs
       - name: Validar cabeçalho único em todos os módulos
         run: node x/tests/cabecalho.test.cjs
+      - name: Validar motor independente Escopo Etapa Subetapa
+        run: node x/tests/escopo-motor.test.cjs
       - name: Validar hierarquia de etapas de Obras sem associações automáticas
         run: node x/tests/escopo-etapas.test.cjs
       - name: Validar contratos do fechamento X.0.3.29
