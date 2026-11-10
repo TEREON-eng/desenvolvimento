@@ -4,6 +4,7 @@ const engine=globalThis.TereonXContractors,$=id=>document.getElementById(id);
 const KEY='tereon-x-contractors-simulation-v1';
 let state={contractors:[],teams:[],employees:[]},readError=false,editingContractor=null,editingEmployee=null;
 function say(v,error=false){$('message').textContent=v;$('message').classList.toggle('error',error)}
+function localDate(){const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
 function uid(){return globalThis.crypto?.randomUUID?.()||'sim-'+Date.now()+'-'+Math.random().toString(36).slice(2)}
 function load(){
  try{
@@ -100,7 +101,7 @@ $('employee-form').addEventListener('submit',event=>{
   if(editingEmployee){
    next=engine.updateEmployee(state,editingEmployee,{
     name:$('employee-name').value,role:$('employee-role').value,status:$('employee-status').value
-   },new Date().toISOString().slice(0,10));
+   },localDate());
   }else next=engine.addEmployee(state,{
    id:uid(),contractorId:$('employee-contractor').value,name:$('employee-name').value,role:$('employee-role').value
   });
