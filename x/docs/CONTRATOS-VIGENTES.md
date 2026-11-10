@@ -102,3 +102,9 @@ A **experiência do Diário de Obras** é a porta para programar a equipe: `Obra
 ## Preservação visual e governança de Obras — refinamento de 10/11
 As páginas de laboratório de Obras, Empreiteiros, Diário e Visitas compartilham camada de apresentação `x/universo/ui-refino.css`, alinhada ao Guia Visual e preferência local `tereon-x-appearance-v1`, sem mudar estrutura de dados. **Contrato:** o tema não muda regras, permissões ou registros. O modal técnico de Listas `#addDialog` permanece protegido.
 **Guarda temporária de histórico em laboratório:** não excluir equipe usada por programação local, nem sobrescrever JSON prévio quando falha a leitura. Essas proteções **não** substituem integridade de vínculos versionados, snapshots e RLS na integração profissional. Conclusões e riscos em [Auditoria preventiva de Obras](AUDITORIA-LAYOUT-OBRAS-2026-11-10.md).
+
+
+## Atualização de prioridade — Empreiteiros e Funcionários (10/11/2026)
+**VIGENTE PARA NOVO DESENVOLVIMENTO:** Cadastro Profissional inicia por `Empreiteiro → Funcionários`, cada profissional com identidade própria, função opcional, status **Ativo/Desligado** e histórico temporal; desligamento nunca equivale a apagar histórico. Equipes, sua composição e alocações serão relações futuras, explícitas. **Não converter** equipes antigas de laboratório em pessoas automaticamente. O Diário atual continua referenciando equipes demonstrativas, não funcionários; não ligar por nome.
+**UX:** todas as páginas Obras usam cabeçalho compartilhado, nome/estado da conta/rede e caminho `Ferramentas › Obras › …` sob a linha divisória. Inclusão/edição deve ocorrer em modais para não substituir a consulta, compatível com o padrão da tela de Listas, sem tocar seu modal técnico.
+**STATUS:** motor de funcionários e modais implementados apenas em ensaio local; contas e permissões corporativas reais ainda não disponíveis. [Auditoria de layout](AUDITORIA-LAYOUT-OBRAS-2026-11-10.md).
