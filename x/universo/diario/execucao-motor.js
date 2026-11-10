@@ -20,7 +20,7 @@
  function validate(report,programs){
   if(!Array.isArray(programs))throw Error('Programações inválidas.');
   const program=programs.find(p=>p.id===report?.programId);
-  if(!program||program.status==='cancelled')throw Error('Programação não encontrada ou cancelada.');
+  if(!program)throw Error('Programação não encontrada.');
   const date=clean(report.date);
   if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||date<program.startDate||date>program.endDate)
    throw Error('Selecione um dia pertencente à programação.');
@@ -39,6 +39,7 @@
  function record(history,report,programs){
   if(!Array.isArray(history))throw Error('Histórico inválido.');
   const next=validate(report,programs);
+  if(programs.find(p=>p.id===next.programId)?.status==='cancelled')throw Error('Programação cancelada não admite novos apontamentos.');
   if(history.some(x=>x.id===next.id))throw Error('Identificador de apontamento repetido.');
   return [...clone(history),next];
  }
