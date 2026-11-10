@@ -35,6 +35,12 @@
       if(!item.recordUid)throw Error('Esta lista precisa de uma identidade técnica.');
      }
     }
+    // Rejeitar antes da escrita local edições incompatíveis com o contrato remoto.
+    // Só valida listas novas ou alteradas: legados ficam intactos até edição explícita.
+    if(typeof cloud.validate==='function')for(const item of candidate.lists){
+     const before=old.get(item.id);
+     if(!before||comparable(item)!==comparable(before))cloud.validate(item);
+    }
     store.save(candidate);
     report();
     queueMicrotask(()=>{flush().catch(e=>{failed=e.message;report()})});
