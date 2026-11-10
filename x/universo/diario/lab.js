@@ -107,6 +107,27 @@ function onReport(e){
  }catch(error){say('Não foi possível salvar o apontamento: '+error.message,true);}
 }
 
+
+function importLocalContractors(){
+ // Leitura dos prestadores cadastrados no laboratório do mesmo navegador/origem.
+ // Não altera identidade, permissões, obras ou o cadastro fonte.
+ try{
+  const raw=localStorage.getItem('tereon-x-contractors-simulation-v1');
+  if(!raw)return;
+  const registry=JSON.parse(raw);
+  if(!Array.isArray(registry.contractors)||!Array.isArray(registry.teams))return;
+  for(const p of registry.contractors){
+   if(typeof p.id!=='string'||typeof p.name!=='string'||!p.id||!p.name)continue;
+   if(!ctx.contractors.some(x=>x.id===p.id))ctx.contractors.push({id:p.id,name:p.name});
+  }
+  for(const t of registry.teams){
+   if(typeof t.id!=='string'||typeof t.name!=='string'||typeof t.contractorId!=='string')continue;
+   if(!ctx.contractors.some(x=>x.id===t.contractorId)||ctx.teams.some(x=>x.id===t.id))continue;
+   ctx.teams.push({id:t.id,name:t.name,contractorId:t.contractorId});
+  }
+ }catch(error){say('Não foi possível carregar os empreiteiros locais: '+error.message,true);}
+}
+
 function contractors(){fill($('contractor'),ctx.contractors.map(c=>({value:c.id,label:c.name})));}
 function teams(){
  const c=$('contractor').value,all=ctx.teams.filter(x=>x.contractorId===c);
@@ -219,6 +240,7 @@ function onSubmit(e){
  }catch(error){say(error.message,true);}
 }
 function init(){
+ importLocalContractors();
  entries=load();
  reports=loadReports();
  fill($('report-reason'),[{value:'',label:'Selecione o motivo'},...execution.REASONS.map(r=>({value:r.id,label:r.label}))]);
