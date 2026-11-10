@@ -134,6 +134,7 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 - Testes de contrato simulados passaram, incluindo `x/tests/listas-integracao.test.cjs`; **teste manual com aparelhos reais e consulta posterior da tabela ainda obrigatório**.
 
 ## Falha reportada — modal de adicionar item (08/11/2026)
+> **HISTÓRICO / SUPERADO:** os passos abaixo que citam `txCatalogDialog` descrevem a tentativa anterior e **não devem ser executados como roteiro vigente**. Em X.0.3.29, o contrato é `#addDialog` → `openAdd()` → `pickFirstMissing()`, conforme seção “Bloqueio obrigatório — modal de adicionar materiais X.0.3.4” e [Contratos vigentes](CONTRATOS-VIGENTES.md).
 - A Central deve conduzir a `/x/?view=lists` ou `/x/?view=create`, e não ao laboratório básico da nuvem.
 - A URL antiga `/x/listas/nuvem/lab.html` sem parâmetros deve encaminhar para `/x/?view=lists`; `?diagnostico=1` preserva somente acesso técnico.
 - Em lista nova e existente, selecionar **Adicionar item** deve abrir o modal do Catálogo (`txCatalogDialog`), nunca abrir formulário avulso nem trocar de página.
@@ -193,6 +194,7 @@ Esses testes **não** reproduzem interações reais no modal, edição móvel, a
 - Casos de acesso negado A↔B e cache após troca de conta são **pendentes**, apesar de RLS habilitada.
 
 ## Fechamento de regressão X.0.3.29 — roteiro de execução (09/11/2026)
+**Regra de precedência:** executar este roteiro de fechamento e [Contratos vigentes](CONTRATOS-VIGENTES.md); seções antigas permanecem para rastreabilidade e não autorizam reintroduzir modal ou navegação rejeitados.
 **Automação configurada:** workflow `.github/workflows/testes-tereon-x.yml` (push em `desenvolvimento`, PR para `main`) contém testes de catálogo, módulos, identidade, compartilhamento, obras, relações, nuvem/conflitos, modal/fichas, navegação, estados, aparência, perfil/cabeçalho, breadcrumb e independência. Adicionado teste `x/tests/contratos-fechamento-2026-11-09.test.cjs` para invariantes do cartão, modal, persistência e versão do PWA. **Status real da execução mais recente NÃO CONFIRMADO**; consulta ao status combinado retornou lista vazia; verificar a página Actions e logs antes de afirmar CI verde.
 
 **Sequência manual mínima, em uma lista de TESTE**:
