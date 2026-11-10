@@ -62,3 +62,10 @@ Para cada alteração registrar:
 5. Somente então decidir o próximo recorte de Solicitações/Universo.
 
 **Referências:** `RETOMADA-2026-11-09.md`, `REVISAO-GERAL-CONTRATOS-2026-11-09.md`, `MESTRE-TEREON-X.md`, `MAPA-MODULOS.md`, `TESTES-REGRESSAO.md`, `../ARQUITETURA-MODULAR.md`.
+
+
+## Adendo CT-05 / CT-06 / CT-10 — 10/11/2026
+- **CT-05 Listas:** etapas da lista são sugestões de agrupamento derivadas de lançamentos, limpas após alterações que deixam a etapa vazia. A limpeza não é uma migração automática de todas as listas antigas e não toca Obras.
+- **CT-06 Persistência:** no contexto autenticado, novas listas e mudanças passam pelo validador do adaptador remoto **antes** da gravação no cache; no visitante, limites específicos do laboratório remoto não são aplicados. Registros legados sem alteração permanecem legíveis. A homologação depende de CI e navegador.
+- **CT-10 Obras:** etapas do escopo são entidades independentes, persistentes e associadas à obra, podendo existir sem materiais. Etapas de Listas vinculadas geram sugestões que precisam de associação/criação explícita. **Contrato proposto, motor ainda não implementado**. [Desenho das etapas](CONTRATO-ETAPAS-LISTAS-OBRAS-2026-11-10.md).
+- **Navegação:** nome **Obras** proposto para substituir “Universo” na interface, sem alterar caminhos técnicos nesta etapa.
