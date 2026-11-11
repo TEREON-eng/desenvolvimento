@@ -24,7 +24,7 @@ function normalize(f){
   g.required=g.required||norm(d.classificacao).includes('obrigat');
   g.classification=g.required?'Obrigatório':(clean(d.classificacao)||g.classification);
   options.forEach(o=>{if(!g.options.some(x=>norm(x)===norm(o)))g.options.push(o)});
-  g.rows.push({options,condition:clean(d.condicao),exclusion:clean(d.exclusao),originLine:d.origemLinha||null});
+  g.rows.push({options,condition:clean(d.condicao),exclusion:clean(d.exclusao),nameRule:clean(d.compoeNome),originLine:d.origemLinha||null});
  });
  const details=[...groups.values()].sort((a,b)=>a.order-b.order);
  for(const d of details)d.condition=d.rows.length===1?d.rows[0].condition:'';
@@ -35,7 +35,7 @@ function normalize(f){
   d.rows.forEach(row=>{if(!row.condition)pendencias.push('Condição não informada: '+d.name)});
  });
  return {id:clean(f.codigo),name:clean(f.nome),reference:clean(f.referencia)||clean(f.codigo),
-   status:clean(f.status),kind:sourceType,collection:'catalogo-oficial',homologada:isOfficial(f),
+   status:clean(f.status),kind:sourceType,aliases:Array.isArray(f.apelidos)?f.apelidos.map(clean).filter(Boolean):[],collection:'catalogo-oficial',homologada:isOfficial(f),
    pendencias,details,source:'fichario-x/fichas-drive-2026-11-08.json',sourceName:clean(f.nomeNaPlanilha),sourcePendencias:Array.isArray(f.pendencias)?f.pendencias:[]};
 }
 const eq=(a,b)=>norm(a)===norm(b);
@@ -171,8 +171,23 @@ function missing(f,values){
  return [...new Set([...out,...(conflicts(f,values).length?['__CONFLITO__']:[])])];
 }
 function technicalName(f,values){
- const picks=visibleDetails(f,values).filter(d=>values?.[d.id]).map(d=>values[d.id]);
- return f.name+(picks.length?' · '+picks.join(' · '):'');
+ const selected=f.details.filter(d=>values?.[d.id]);
+ const hasRules=selected.some(d=>d.rows.some(r=>r.nameRule));
+ if(!hasRules){
+  const picks=visibleDetails(f,values).filter(d=>values?.[d.id]).map(d=>values[d.id]);
+  return f.name+(picks.length?' · '+picks.join(' · '):'');
+ }
+ const parts=[];
+ for(const d of selected){
+  const chosen=values[d.id];
+  const row=d.rows.find(r=>r.options.some(x=>eq(x,chosen)));
+  const rule=clean(row?.nameRule);
+  if(!rule||norm(rule)==='nao')continue;
+  const matched=/^sim(?:\\s*\\(([\\s\\S]*)\\))?$/i.exec(rule);
+  if(!matched)continue; // Não interpretar sintaxe desconhecida como nome válido.
+  parts.push(matched[1]===undefined?chosen:matched[1].replace(/\\{valor\\}/gi,chosen).trim());
+ }
+ return parts.join(' ').replace(/\\s+/g,' ').trim()||f.name;
 }
 async function load(){
  if(cache)return cache;
