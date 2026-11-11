@@ -51,6 +51,21 @@ const cat=context.window.TereonXCatalog;
  assert.ok(cat.missing(f,{...ok,'DET-005':LSZH}).length>0,'conflito impede adicionar');
  assert.ok(cat.conflicts(f,{...cable,'DET-005':LSZH,'DET-008':PVC}).length>0,'LSZH + cobertura PVC bloqueado');
  assert.equal(cat.conflicts(f,{...cable,'DET-005':LSZH,'DET-008':'Termoplástico não halogenado 70 °C'}).length,0,'LSZH + cobertura não halogenada passa nas regras lógicas');
+ // UI de relações: mesmo valor bloqueado nos dois detalhes, mas ainda visível.
+ const linkedVals={'DET-001':'Cabo multipolar','DET-005':'Comum'};
+ for(const target of ['DET-006','DET-008']){
+  const grey=cat.optionStates(f,linkedVals,target).find(x=>x.option==='Termoplástico não halogenado 70 °C');
+  assert.ok(grey&&!grey.available,'não halogenado deve aparecer bloqueado em '+target);
+  assert.equal(grey.blockedBy[0].id,'DET-005','o bloqueio mostra tag Comum');
+  assert.ok(cat.relatedTags(f,linkedVals,target).includes('DET-005'),'Comum é tag relacionada');
+ }
+ const afterRemove={'DET-001':'Condutor isolado','DET-006':PVC};
+ const lszhGrey=cat.optionStates(f,afterRemove,'DET-005').find(x=>x.option===LSZH);
+ assert.ok(lszhGrey&&!lszhGrey.available,'LSZH continua bloqueado por isolação PVC confirmada');
+ assert.equal(lszhGrey.blockedBy[0].id,'DET-006','mostra qual tag deve ser removida');
+ assert.ok(cat.relatedTags(f,afterRemove,'DET-005').includes('DET-006'));
+ const withNoPVC={'DET-001':'Condutor isolado'};
+ assert.ok(cat.optionStates(f,withNoPVC,'DET-005').find(x=>x.option===LSZH).available,'sem PVC, LSZH é liberado sem inferir valor');
  let total=0,invalid=0,pass=0;
  const types=['Condutor isolado','Cabo unipolar','Cabo multipolar'],
   fires=['','Comum',LSZH],isol=['',PVC,HEPR,'Termoplástico não halogenado 70 °C'],volt=['','450/750 V','0,6/1,0 kV'],
