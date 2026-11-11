@@ -248,6 +248,8 @@ function redrawAdd(){
    (incomplete?'Ficha em revisão: há '+incomplete+' pendência(s) cadastrais. ':'')+
    (window.TereonXCatalog.missing(selectedFicha,values).length?'Confirme as características obrigatórias para adicionar.':'Obrigatórios confirmados; você pode continuar escolhendo detalhes opcionais.'):
    'Escolha uma opção; a próxima característica aparecerá automaticamente.');
+  if(!optionNotice&&field?.id==='DET-LSZH')
+   $('fieldHelp').textContent='Opcional · LSZH é uma exigência a confirmar para o produto completo, não uma certificação automática.';
   $('fieldHelp').classList.toggle('choice-warning',!!optionNotice);
 
  }
