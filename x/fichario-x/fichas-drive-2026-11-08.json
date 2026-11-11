@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "fonte": "Fichario.xlsm Drive, FT_COND-001 11/11/2026 19:52 BRT",
-  "aviso": "DET-010 é importado, sem exceção de motor. Fonte pendente: G6 apelidos de eletroduto; F25 sempre.",
+  "fonte": "Fichario.xlsm no Google Drive, FT_COND-001, salvo 11/11/2026 20:37 BRT",
+  "aviso": "Importação experimental. Fichas não são automaticamente homologadas pela indicação Aprovado do Excel.",
   "fichas": [
     {
       "codigo": "FT_INFRA-001",
@@ -409,29 +409,42 @@
           "ordem": 10,
           "nome": "Comportamento ao fogo",
           "valores": [
-            "Comum",
-            "Não halogenado com baixa emissão de fumaça (LSZH)"
+            "Comum"
           ],
-          "condicao": "Sempre",
+          "condicao": "PVC 70 °C",
           "exclusao": "",
           "classificacao": "Opcional",
           "origemLinha": 25,
           "status": "Aprovado",
           "compoeNome": "Sim"
+        },
+        {
+          "id": "DET-010",
+          "ordem": 10,
+          "nome": "Comportamento ao fogo",
+          "valores": [
+            "Não halogenado com baixa emissão de fumaça (LSZH)"
+          ],
+          "condicao": "!PVC 70 °C",
+          "exclusao": "",
+          "classificacao": "Opcional",
+          "origemLinha": 26,
+          "status": "Aprovado",
+          "compoeNome": "Sim"
         }
       ],
       "pendencias": [
-        "Fonte reconferida Fichario.xlsm 11/11/2026 19:52 BRT: B4 FT_COND-001, B5 Condutores isolados, G4 CONDUTORES; as exclusões foram corrigidas pelo fundador.",
-        "G6 consta 'Conduíte, duto, tubo' (apelidos pertencentes a eletroduto); conservar os apelidos anteriores do catálogo para evitar busca falsa até ajuste da planilha.",
-        "F25 Comportamento ao fogo = Sempre; a pergunta opcional aparece ao final mesmo quando LSZH está bloqueado por PVC. Para ocultar o detalhe por condição, precisa de outra expressão na fonte.",
-        "LSZH é exigência do profissional para o cabo inteiro, não certificação automática de produto.",
-        "Ficha em revisão experimental, apesar de status Aprovado no Excel; outras fichas preservadas."
+        "Fonte: Fichario.xlsm salvo 11/11/2026 20:37 BRT. Comportamento ao fogo DET-010 em duas linhas, opcional, com Comum condicionado a PVC 70 °C e LSZH condicionado a !PVC 70 °C.",
+        "Condição !PVC significa ausência de PVC confirmado nas tags; ela NÃO prova que o produto atende aos requisitos de baixa emissão de fumaça. Selecionar LSZH registra exigência explícita do profissional.",
+        "Unidade de compra continua controlada nos campos das listas.",
+        "Revisar classificação IEC 60228 de encordoamento e a compatibilidade de produtos antes de homologar comercialmente."
       ],
       "nomeNaPlanilha": "Condutores isolados",
       "apelidos": [
-        "Fio",
-        "Cabinho",
-        "Condutor"
+        "Cabo",
+        "fio",
+        "cabinho",
+        "condutor"
       ]
     },
     {
