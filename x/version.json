@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.34",
+  "version": "x.0.3.35",
   "build": "2026-11-10",
-  "notes": "Opções incompatíveis esmaecidas, tags relacionadas destacadas e explicação no modal"
+  "notes": "Apelidos filtram fichas na busca inicial; nome técnico segue coluna Compõe nome"
 }
