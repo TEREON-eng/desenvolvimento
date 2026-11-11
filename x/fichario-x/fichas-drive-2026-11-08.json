@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "fonte": "Fichario.xlsm (Drive), FT_COND-001, 11/11/2026 19:22 BRT",
-  "aviso": "Laboratório: ficha de origem atualizada sem Comportamento ao fogo; exigência LSZH depende de confirmação explícita no modal e não homologa produto.",
+  "fonte": "Fichario.xlsm Drive FT_COND-001 11/11/2026 19:48 BRT",
+  "aviso": "FT_COND-001 em revisão por cabeçalho e regras LSZH inconsistentes; dados técnicos importados literalmente.",
   "fichas": [
     {
       "codigo": "FT_INFRA-001",
@@ -283,11 +283,39 @@
           "compoeNome": "Sim (#{valor} mm²)"
         },
         {
-          "id": "DET-006",
-          "ordem": 6,
+          "id": "DET-005",
+          "ordem": 5,
           "nome": "Isolação",
           "valores": [
             "PVC 70 °C"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "",
+          "classificacao": "Obrigatório",
+          "origemLinha": 15,
+          "status": "Aprovado",
+          "compoeNome": "Sim (Isolação {valor})"
+        },
+        {
+          "id": "DET-005",
+          "ordem": 5,
+          "nome": "Isolação",
+          "valores": [
+            "HEPR ou XLPE 90 °C"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "450/750 V",
+          "classificacao": "Obrigatório",
+          "origemLinha": 16,
+          "status": "Aprovado",
+          "compoeNome": "Sim (Isolação {valor})"
+        },
+        {
+          "id": "DET-005",
+          "ordem": 5,
+          "nome": "Isolação",
+          "valores": [
+            "Termoplástico não halogenado 70 °C"
           ],
           "condicao": "Sempre",
           "exclusao": "",
@@ -299,34 +327,6 @@
         {
           "id": "DET-006",
           "ordem": 6,
-          "nome": "Isolação",
-          "valores": [
-            "HEPR ou XLPE 90 °C"
-          ],
-          "condicao": "Sempre",
-          "exclusao": "450/750 V",
-          "classificacao": "Obrigatório",
-          "origemLinha": 18,
-          "status": "Aprovado",
-          "compoeNome": "Sim (Isolação {valor})"
-        },
-        {
-          "id": "DET-006",
-          "ordem": 6,
-          "nome": "Isolação",
-          "valores": [
-            "Termoplástico não halogenado 70 °C"
-          ],
-          "condicao": "Sempre",
-          "exclusao": "",
-          "classificacao": "Obrigatório",
-          "origemLinha": 19,
-          "status": "Aprovado",
-          "compoeNome": "Sim (Isolação {valor})"
-        },
-        {
-          "id": "DET-007",
-          "ordem": 7,
           "nome": "Classe de tensão",
           "valores": [
             "450/750 V",
@@ -340,23 +340,36 @@
           "compoeNome": "Sim"
         },
         {
-          "id": "DET-008",
-          "ordem": 8,
+          "id": "DET-007",
+          "ordem": 7,
           "nome": "Cobertura",
           "valores": [
-            "PVC 70 °C",
-            "Termoplástico não halogenado 70 °C"
+            "PVC 70 °C"
           ],
           "condicao": "Cabo unipolar//Cabo multipolar",
-          "exclusao": "",
+          "exclusao": "Não halogenado com baixa emissão de fumaça (LSZH)",
           "classificacao": "Opcional",
           "origemLinha": 21,
           "status": "Aprovado",
           "compoeNome": "Sim"
         },
         {
-          "id": "DET-009",
-          "ordem": 9,
+          "id": "DET-007",
+          "ordem": 7,
+          "nome": "Cobertura",
+          "valores": [
+            "Termoplástico não halogenado 70 °C"
+          ],
+          "condicao": "Cabo unipolar//Cabo multipolar",
+          "exclusao": "Não halogenado com baixa emissão de fumaça (LSZH)",
+          "classificacao": "Opcional",
+          "origemLinha": 22,
+          "status": "Aprovado",
+          "compoeNome": "Sim"
+        },
+        {
+          "id": "DET-008",
+          "ordem": 8,
           "nome": "Cor",
           "valores": [
             "Preto",
@@ -370,13 +383,13 @@
           "condicao": "Sempre",
           "exclusao": "",
           "classificacao": "Obrigatório",
-          "origemLinha": 22,
+          "origemLinha": 23,
           "status": "Aprovado",
           "compoeNome": "Sim"
         },
         {
-          "id": "DET-010",
-          "ordem": 10,
+          "id": "DET-009",
+          "ordem": 9,
           "nome": "Classe de encordoamento",
           "valores": [
             "Classe I (Sólido)",
@@ -387,21 +400,35 @@
           "condicao": "Sempre",
           "exclusao": "",
           "classificacao": "Opcional",
-          "origemLinha": 23,
+          "origemLinha": 24,
+          "status": "Aprovado",
+          "compoeNome": "Sim"
+        },
+        {
+          "id": "DET-010",
+          "ordem": 10,
+          "nome": "Comportamento ao fogo",
+          "valores": [
+            "Comum",
+            "Não halogenado com baixa emissão de fumaça (LSZH)"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "",
+          "classificacao": "Opcional",
+          "origemLinha": 25,
           "status": "Aprovado",
           "compoeNome": "Sim"
         }
       ],
       "pendencias": [
-        "Sincronizada do Fichário.xlsm do Drive salvo em 11/11/2026 19:22 BRT, aba FT_COND-001, linhas ativas 11–23; Comportamento ao fogo removido pelo fundador.",
-        "Ficha marcada Aprovado no Excel de origem; publicação/homologação TEREON X mantida Em revisão até validação.",
-        "Classe de tensão opcional na planilha; revisar se exigida para compra.",
-        "Classe II descrita como 'Encordoado flexível'; confirmar classificação IEC 60228 antes da homologação.",
-        "Unidade de compra não figura na ficha; quantidade/unidade continuam nos campos da Lista.",
-        "Construções comerciais, requisitos de LSZH e compatibilidades de materiais ainda necessitam referência de fabricante/norma.",
-        "Cobertura 'Termoplástico não halogenado 70 °C' segue a redação da planilha; confirmar temperatura nominal aplicável à cobertura."
+        "Fonte: Fichario.xlsm do Drive salvo 11/11/2026 19:48 BRT. Correção de origem pendente: cabeçalho B4=FT_INFRA-001, B5=Eletroduto, G4=INFRAESTRUTURA, G6=Conduíte, duto, tubo, embora a aba e os detalhes sejam FT_COND-001.",
+        "F25 de Comportamento ao fogo consta Sempre: não condiciona a opção LSZH a materiais explicitamente selecionados.",
+        "G21 e G22 excluem ambos LSZH, inclusive na Cobertura termoplástica não halogenada: possível erro na origem. Nenhuma correção presumida.",
+        "G17 Isolação PVC 70 °C não exclui LSZH. A planilha requer regra explícita para essa incompatibilidade.",
+        "Regra técnica de LSZH exige avaliação da construção completa; selecionar apenas isolamento não prova conformidade. Ficha não homologada.",
+        "Importação em revisão; as demais fichas preservadas."
       ],
-      "nomeNaPlanilha": "Condutores isolados",
+      "nomeNaPlanilha": "Eletroduto (cabeçalho inconsistente)",
       "apelidos": [
         "Fio",
         "Cabinho",
