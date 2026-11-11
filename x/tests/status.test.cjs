@@ -42,7 +42,7 @@ const pwa=read('x/pwa.js');
 const publishedVersion=JSON.parse(read('x/version.json')).version;
 assert.ok(pwa.includes("const VERSION='"+publishedVersion+"'"),'versão do script PWA coincide com o arquivo de versão publicado');
 assert.ok(pwa.includes('sessionStorage.getItem(marker)===v.version'),'atualização PWA evita loop de recarga infinita');
-assert.ok(html.includes('/x/pwa.js?v=11'),'HTML força nova versão do controlador PWA');
+assert.ok(html.includes('/x/pwa.js?v=12'),'HTML força nova versão do controlador PWA');
 assert.ok(pwa.includes('updateInstallVisibility')&&pwa.includes('standalone()'),'Instalar é ocultado quando PWA está instalado');
 assert.ok(pwa.includes('(!installPrompt&&!iosSafari())'),'Instalar não fica visível por padrão sem opção de instalação');
 console.log('TEREON X: Online/Offline e Visitante/Registrado/Indisponível sem confusão OK');
