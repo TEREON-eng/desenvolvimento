@@ -118,7 +118,7 @@ function choice(v){
  assert.equal(element('fieldLabel').textContent,'Escolher material','remover tag retorna à escolha de ficha');
  assert.equal(element('addDialog').classList['is-choosing'],true,'modo de seleção usa área ampliada');
  assert.equal(element('saveItem').disabled,true,'trocar ficha impede salvamento sem nova confirmação');
- // Condutores: um opcional que rege um obrigatório vem antes, mas nunca é presumido.
+ // Condutores: ficha nova sem Comportamento ao fogo.
  click('[data-ficha]',{ficha:'FT_COND-001'});
  assert.equal(element('fieldLabel').textContent,'Tipo');
  choice('Condutor isolado');
@@ -126,24 +126,24 @@ function choice(v){
  choice('Cobre');
  assert.equal(element('fieldLabel').textContent,'Seção');
  choice('2,5');
- assert.equal(element('fieldLabel').textContent,'Comport. ao fogo','opcional que afeta isolação vem antes');
- assert.ok(element('choices').innerHTML.includes('data-skip-optional="DET-005"'),'oferece pular sem confirmar opção');
- click('[data-skip-optional]',{skipOptional:'DET-005'});
- assert.equal(element('fieldLabel').textContent,'Isolação','pular avança para obrigatório dependente');
- // Comum impede a escolha do termoplástico não halogenado, sem fazê-lo sumir.
- const currentF=window.TereonXCatalog.get('FT_COND-001');
- const related=window.TereonXCatalog.relatedTags(currentF,{'DET-001':'Condutor isolado','DET-005':'Comum'},'DET-006');
- assert.ok(related.includes('DET-005'),'a tag Comum deve ser destacada na Isolação');
- assert.ok(window.TereonXCatalog.optionStates(currentF,{'DET-001':'Condutor isolado','DET-005':'Comum'},'DET-006')
-  .some(x=>x.option==='Termoplástico não halogenado 70 °C'&&!x.available),'não halogenado esmaecido, não removido');
- choice('PVC 70 °C');
+ assert.equal(element('fieldLabel').textContent,'Isolação','nenhuma pergunta de Comportamento ao fogo');
+ choice('Termoplástico não halogenado 70 °C');
  assert.equal(element('fieldLabel').textContent,'Cor');
  choice('Preto');
- assert.equal(element('saveItem').disabled,false,'obrigatórios completos liberam salvar mesmo com opcional pulado');
+ assert.equal(element('saveItem').disabled,false);
+ assert.ok(element('fieldHelp').innerHTML.includes('data-lszh-decision="yes"'),'LSZH oferecido como exigência voluntária');
+ assert.ok(!element('liveName').textContent.includes('LSZH'),'não adiciona LSZH sem confirmação');
+ element('fieldHelp').listeners.click({target:{
+  dataset:{lszhDecision:'yes'},
+  closest:q=>q==='[data-lszh-decision]'?{dataset:{lszhDecision:'yes'}}:null
+ }});
+ assert.ok(element('liveName').textContent.includes('LSZH'),'confirmar acrescenta exigência ao nome');
  element('saveItem').listeners.click();
- const skippedItem=stored.lists[0].items.at(-1);
- assert.equal(skippedItem.catalogId,'FT_COND-001');
- assert.equal(Object.hasOwn(skippedItem.values,'DET-005'),false,'pular não preenche Comum, LSZH ou outro padrão');
- assert.equal(skippedItem.values['DET-006'],'PVC 70 °C');
+ const namedItem=stored.lists[0].items.at(-1);
+ assert.equal(namedItem.catalogId,'FT_COND-001');
+ assert.equal(namedItem.lszhRequired,true);
+ assert.equal(namedItem.lszhDecision,'yes');
+ assert.equal(Object.hasOwn(namedItem.values,'DET-005'),false,'não reintroduzir detalhe removido');
+ assert.ok(namedItem.name.includes('LSZH'),'exigência salva no item e no nome');
  console.log('TEREON X: 6 fichas reais → modal aprovado → condição → tags → salvar → editar e legado OK');
 })().catch(error=>{console.error(error);process.exitCode=1});
