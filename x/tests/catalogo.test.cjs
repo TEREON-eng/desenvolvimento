@@ -31,6 +31,23 @@ const catalog=context.window.TereonXCatalog;
  const vals={'DET-001':'Rígido','DET-002':'Aço'};
  assert.equal(catalog.applyRule('Rígido+Aço',vals,ele.details).visible,true);
  assert.equal(catalog.applyRule('Rígido+PVC',vals,ele.details).visible,false);
+ // Operador NÃO genérico: nega valores, sem inferir característica construtiva.
+ const withPVC={'DET-001':'Condutor isolado','DET-005':'PVC 70 °C'};
+ const withoutPVC={'DET-001':'Cabo unipolar','DET-005':'HEPR ou XLPE 90 °C','DET-007':'Termoplástico não halogenado 70 °C'};
+ const undetermined={'DET-001':'Cabo unipolar','DET-005':'HEPR ou XLPE 90 °C'};
+ const cond=all.find(x=>x.id==='FT_COND-001');
+ assert.equal(catalog.applyRule('!PVC 70 °C',withPVC,cond.details).visible,false);
+ assert.equal(catalog.applyRule('!PVC 70 °C',withoutPVC,cond.details).visible,true);
+ assert.equal(catalog.applyRule('!PVC 70 °C',undetermined,cond.details).visible,true,
+  'negação não garante cobertura: é ausência do valor PVC confirmado');
+ assert.equal(catalog.applyRule('PVC 70 °C',withPVC,cond.details).visible,true);
+ assert.equal(catalog.applyRule('!PVC 70 °C + Termoplástico não halogenado 70 °C',withoutPVC,cond.details).visible,true);
+ assert.equal(catalog.applyRule('!PVC 70 °C + Termoplástico não halogenado 70 °C',undetermined,cond.details).visible,false);
+ assert.equal(catalog.applyRule('PVC 70 °C // !PVC 70 °C',withPVC,cond.details).visible,true);
+ assert.equal(catalog.applyRule('!valor desconhecido',withoutPVC,cond.details).verified,false);
+ assert.equal(catalog.applyRule('!',{},cond.details).verified,false);
+ assert.equal(catalog.applyRule('!!PVC 70 °C',{},cond.details).verified,false);
+ assert.equal(catalog.applyRule('PVC 70 °C +',{},cond.details).verified,false);
  const unknown=catalog.applyRule('Condicao nao mapeada',{},ele.details);
  assert.equal(unknown.verified,false,'regra desconhecida não pode ser validada');
  const abr=all.find(x=>x.id==='FT_INFRA-004');
