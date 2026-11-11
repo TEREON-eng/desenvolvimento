@@ -168,6 +168,24 @@ function name(){
  (values.isolacao?' · '+values.isolacao:'')+(values.tensao?' · '+values.tensao:'')+
  (values.cor?' · '+values.cor.toLowerCase():'')+(values.classe?' · '+values.classe:'');
 }
+/* Um opcional perde sua escolha se uma nova tag o tornar incompatível.
+   Não remove valores de detalhes obrigatórios nem corrige especificações silenciosamente. */
+function reconcileInvalidOptional(target=values){
+ if(!selectedFicha)return target;
+ let changed=true;
+ while(changed){
+  changed=false;
+  for(const d of selectedFicha.details){
+   if(d.required||!target[d.id])continue;
+   const chosen=target[d.id];
+   const alternatives=window.TereonXCatalog.optionsFor(selectedFicha,{...target,[d.id]:undefined},d.id);
+   if(!alternatives.includes(chosen)){
+    delete target[d.id];skippedOptional.delete(d.id);changed=true;
+   }
+  }
+ }
+ return target;
+}
 function getFields(){
  if(!selectedFicha)return legacyFields;
  return window.TereonXCatalog.visibleDetails(selectedFicha,values)
@@ -248,8 +266,8 @@ function redrawAdd(){
    (incomplete?'Ficha em revisão: há '+incomplete+' pendência(s) cadastrais. ':'')+
    (window.TereonXCatalog.missing(selectedFicha,values).length?'Confirme as características obrigatórias para adicionar.':'Obrigatórios confirmados; você pode continuar escolhendo detalhes opcionais.'):
    'Escolha uma opção; a próxima característica aparecerá automaticamente.');
-  if(!optionNotice&&field?.id==='DET-LSZH')
-   $('fieldHelp').textContent='Opcional · LSZH é uma exigência a confirmar para o produto completo, não uma certificação automática.';
+  if(!optionNotice&&field?.label==='Comportamento ao fogo')
+   $('fieldHelp').textContent='Opcional · a classificação escolhida é uma exigência para o produto completo, não uma certificação automática.';
   $('fieldHelp').classList.toggle('choice-warning',!!optionNotice);
 
  }
@@ -266,10 +284,24 @@ async function openAdd(item){
  editId=item?String(item.id):null;
  skippedOptional.clear();optionNotice='';
  values=item&&item.values?Object.assign({},item.values):{};
- // Leitura de lançamentos da v0.3.36: migra confirmação anterior para a nova tag.
- if(item?.catalogId==='FT_COND-001'&&!values['DET-LSZH']){
-  if(item.lszhDecision==='yes'||item.lszhRequired===true)values['DET-LSZH']='LSZH';
-  else if(item.lszhDecision==='no')values['DET-LSZH']='Comum';
+ // Migração de itens anteriores: IDs DET-006..010 foram renumerados na planilha.
+ if(item?.catalogId==='FT_COND-001'&&
+    (Object.hasOwn(values,'DET-LSZH')||Object.hasOwn(item,'lszhDecision')||
+     Object.hasOwn(item,'lszhRequired')||Object.hasOwn(values,'DET-006')&&
+      ['PVC 70 °C','HEPR ou XLPE 90 °C','Termoplástico não halogenado 70 °C'].includes(values['DET-006']))){
+  const old=Object.assign({},values),migrated={};
+  for(const [id,val] of Object.entries(old)){
+   if(id==='DET-LSZH')continue;
+   const number=/^DET-(\\d+)$/.exec(id);
+   if(number&&Number(number[1])>=6&&Number(number[1])<=10)
+    migrated['DET-'+String(Number(number[1])-1).padStart(3,'0')]=val;
+   else migrated[id]=val;
+  }
+  const classified=old['DET-LSZH']==='LSZH'||item.lszhDecision==='yes'||item.lszhRequired===true?
+    'Não halogenado com baixa emissão de fumaça (LSZH)':
+    old['DET-LSZH']==='Comum'||item.lszhDecision==='no'?'Comum':null;
+  if(classified)migrated['DET-010']=classified;
+  values=migrated;
  }
  fichaSearch='';fichaError='';loadingFichas=!item;
  selectedFicha=null;choosingFicha=!item;
@@ -433,7 +465,7 @@ $('createForm').addEventListener('submit',function(e){
 $('tags').addEventListener('click',function(e){
  var b=e.target.closest('[data-remove]');if(!b)return;
  delete values[b.dataset.remove];optionNotice='';
- if(selectedFicha?.id==='FT_COND-001'&&!window.TereonXCatalog.lszhCandidate(selectedFicha,values))delete values['DET-LSZH'];
+ reconcileInvalidOptional();
  fields=getFields();
  // Sempre retoma a primeira característica obrigatória ainda pendente,
  // mesmo quando várias tags são removidas em sequência.
@@ -476,7 +508,7 @@ $('choices').addEventListener('click',function(e){
  const field=fields[focus];
  const next=Object.assign({},values,{[field.id]:b.dataset.pick});
  // Somente o detalhe DERIVADO perde a confirmação automaticamente se uma camada mudar.
- if(selectedFicha?.id==='FT_COND-001'&&!window.TereonXCatalog.lszhCandidate(selectedFicha,next))delete next['DET-LSZH'];
+ reconcileInvalidOptional(next);
  if(selectedFicha){
   const problems=window.TereonXCatalog.conflicts(selectedFicha,next);
   if(problems.length){alert('Combinação não permitida pela ficha: '+problems.join('; ')+'. Remova a tag incompatível antes de continuar.');return;}
@@ -491,11 +523,11 @@ $('saveItem').addEventListener('click',function(){
  var l=list();if(!l||choosingFicha||!(Number($('qty').value)>0)||!$('stage').value.trim())return;
  if(selectedFicha&&window.TereonXCatalog.missing(selectedFicha,values).length)return;
  if(!selectedFicha&&count()!==6)return;
- var itemData={name:name(),catalogId:selectedFicha?.id||null,values:Object.assign({},values),qty:$('qty').value,unit:$('unit').value,stage:$('stage').value.trim(),fichaStatus:selectedFicha?.status||'Ficha anterior',simulacao:selectedFicha?.kind==='simulacao'};
- if(selectedFicha?.id==='FT_COND-001'){
-   itemData.lszhDecision=values['DET-LSZH']==='LSZH'?'yes':values['DET-LSZH']==='Comum'?'no':'unspecified';
-   itemData.lszhRequired=values['DET-LSZH']==='LSZH'&&window.TereonXCatalog.lszhCandidate(selectedFicha,values);
+ if(selectedFicha&&window.TereonXCatalog.conflicts(selectedFicha,values).length){
+   alert('A ficha contém escolhas incompatíveis. Revise as tags antes de salvar.');return;
  }
+ var itemData={name:name(),catalogId:selectedFicha?.id||null,values:Object.assign({},values),qty:$('qty').value,unit:$('unit').value,stage:$('stage').value.trim(),fichaStatus:selectedFicha?.status||'Ficha anterior',simulacao:selectedFicha?.kind==='simulacao'};
+ // Sem regras paralelas: Comportamento ao fogo é o DET-010 da própria ficha.
  if(!safe(function(){return lists.upsertItem(activeId,itemData,editId);}))return;
  close('addDialog');editId=null;draw();
 });
