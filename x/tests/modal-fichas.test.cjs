@@ -118,7 +118,7 @@ function choice(v){
  assert.equal(element('fieldLabel').textContent,'Escolher material','remover tag retorna à escolha de ficha');
  assert.equal(element('addDialog').classList['is-choosing'],true,'modo de seleção usa área ampliada');
  assert.equal(element('saveItem').disabled,true,'trocar ficha impede salvamento sem nova confirmação');
- // Condutores: ficha nova sem Comportamento ao fogo.
+ // Condutores: opcional virtual Comportamento ao fogo é o ÚLTIMO detalhe.
  click('[data-ficha]',{ficha:'FT_COND-001'});
  assert.equal(element('fieldLabel').textContent,'Tipo');
  choice('Condutor isolado');
@@ -126,24 +126,35 @@ function choice(v){
  choice('Cobre');
  assert.equal(element('fieldLabel').textContent,'Seção');
  choice('2,5');
- assert.equal(element('fieldLabel').textContent,'Isolação','nenhuma pergunta de Comportamento ao fogo');
+ assert.equal(element('fieldLabel').textContent,'Isolação');
  choice('Termoplástico não halogenado 70 °C');
  assert.equal(element('fieldLabel').textContent,'Cor');
  choice('Preto');
  assert.equal(element('saveItem').disabled,false);
- assert.ok(element('fieldHelp').innerHTML.includes('data-lszh-decision="yes"'),'LSZH oferecido como exigência voluntária');
- assert.ok(!element('liveName').textContent.includes('LSZH'),'não adiciona LSZH sem confirmação');
- element('fieldHelp').listeners.click({target:{
-  dataset:{lszhDecision:'yes'},
-  closest:q=>q==='[data-lszh-decision]'?{dataset:{lszhDecision:'yes'}}:null
- }});
- assert.ok(element('liveName').textContent.includes('LSZH'),'confirmar acrescenta exigência ao nome');
+ assert.ok(!element('fieldHelp').innerHTML.includes('lszh-review'),'painel de LSZH não pode mais cobrir a tela');
+ assert.equal(element('fieldLabel').textContent,'Classe de tensão');
+ click('[data-skip-optional]',{skipOptional:'DET-007'});
+ assert.equal(element('fieldLabel').textContent,'Classe de encordoamento');
+ click('[data-skip-optional]',{skipOptional:'DET-010'});
+ assert.equal(element('fieldLabel').textContent,'Comportamento ao fogo');
+ assert.ok(element('choices').innerHTML.includes('data-pick="Comum"'));
+ assert.ok(element('choices').innerHTML.includes('data-pick="LSZH"'));
+ assert.ok(!element('liveName').textContent.includes('LSZH'),'não presume LSZH');
+ choice('LSZH');
+ assert.ok(element('liveName').textContent.includes('LSZH'),'confirmar adiciona LSZH no nome');
  element('saveItem').listeners.click();
  const namedItem=stored.lists[0].items.at(-1);
  assert.equal(namedItem.catalogId,'FT_COND-001');
  assert.equal(namedItem.lszhRequired,true);
  assert.equal(namedItem.lszhDecision,'yes');
- assert.equal(Object.hasOwn(namedItem.values,'DET-005'),false,'não reintroduzir detalhe removido');
- assert.ok(namedItem.name.includes('LSZH'),'exigência salva no item e no nome');
+ assert.equal(namedItem.values['DET-LSZH'],'LSZH');
+ assert.equal(Object.hasOwn(namedItem.values,'DET-005'),false,'não reintroduzir detalhe removido na fonte');
+ assert.ok(namedItem.name.includes('LSZH'));
+ // Ao remover Isolação, desaparece SOMENTE a classificação derivada.
+ click('[data-edit]',{edit:namedItem.id});
+ await new Promise(resolve=>setImmediate(resolve));
+ element('tags').listeners.click({target:{dataset:{remove:'DET-006'},closest:q=>q==='[data-remove]'?{dataset:{remove:'DET-006'}}:null}});
+ assert.ok(!element('tags').innerHTML.includes('data-remove="DET-LSZH"'),'remover isolação desmarca LSZH automaticamente');
+ assert.equal(element('saveItem').disabled,true);
  console.log('TEREON X: 6 fichas reais → modal aprovado → condição → tags → salvar → editar e legado OK');
 })().catch(error=>{console.error(error);process.exitCode=1});
