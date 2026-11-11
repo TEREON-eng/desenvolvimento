@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.35",
-  "build": "2026-11-10",
-  "notes": "Apelidos filtram fichas na busca inicial; nome técnico segue coluna Compõe nome"
+  "version": "x.0.3.36",
+  "build": "2026-11-11",
+  "notes": "Condutores sem Comportamento ao fogo; confirmação voluntária de exigência LSZH"
 }
