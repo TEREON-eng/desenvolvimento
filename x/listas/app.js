@@ -259,7 +259,7 @@ function redrawAdd(){
     '<div class="lszh-review"><strong>Exigir cabo não halogenado, com baixa emissão de fumaça (LSZH)?</strong>'+ 
     '<small>Possibilidade sugerida pelos materiais especificados. Só confirme se deseja exigir conformidade LSZH para o produto completo.</small>'+ 
     '<div class="lszh-actions">'+
-    [['yes','Sim, exigir LSZH'],['no','Não incluir'],['','Deixar sem definição']].map(([v,label])=>
+    [['yes','Sim, exigir LSZH'],['no','Não incluir'],['unspecified','Deixar sem definição']].map(([v,label])=>
       '<button type="button" data-lszh-decision="'+v+'" class="tag'+(lszhDecision===v?' on':'')+'" aria-pressed="'+(lszhDecision===v)+'">'+label+'</button>').join('')+'</div></div>');
   }
  }
@@ -437,7 +437,8 @@ $('createForm').addEventListener('submit',function(e){
 });
 $('tags').addEventListener('click',function(e){
  var b=e.target.closest('[data-remove]');if(!b)return;
- delete values[b.dataset.remove];optionNotice='';lszhDecision='';fields=getFields();
+ if(['DET-001','DET-006','DET-008'].includes(b.dataset.remove))lszhDecision='';
+ delete values[b.dataset.remove];optionNotice='';fields=getFields();
  // Sempre retoma a primeira característica obrigatória ainda pendente,
  // mesmo quando várias tags são removidas em sequência.
  focus=pickFirstMissing();redrawAdd();
@@ -482,7 +483,8 @@ $('choices').addEventListener('click',function(e){
   const problems=window.TereonXCatalog.conflicts(selectedFicha,next);
   if(problems.length){alert('Combinação não permitida pela ficha: '+problems.join('; ')+'. Remova a tag incompatível antes de continuar.');return;}
  }
- values=next;optionNotice='';lszhDecision=''; // Nunca apagar outra tag confirmada em decorrência de uma exclusão.
+ values=next;optionNotice='';
+ if(['DET-001','DET-006','DET-008'].includes(field.id))lszhDecision=''; // Mudança das camadas invalida confirmação anterior.
  skippedOptional.delete(field.id);
  fields=getFields();focus=pickFirstMissing();redrawAdd();
 });
