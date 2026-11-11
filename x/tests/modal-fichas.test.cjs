@@ -118,7 +118,7 @@ function choice(v){
  assert.equal(element('fieldLabel').textContent,'Escolher material','remover tag retorna à escolha de ficha');
  assert.equal(element('addDialog').classList['is-choosing'],true,'modo de seleção usa área ampliada');
  assert.equal(element('saveItem').disabled,true,'trocar ficha impede salvamento sem nova confirmação');
- // Condutores: opcional virtual Comportamento ao fogo é o ÚLTIMO detalhe.
+ // Condutores: pergunta real DET-010, vinda da planilha, por último.
  click('[data-ficha]',{ficha:'FT_COND-001'});
  assert.equal(element('fieldLabel').textContent,'Tipo');
  choice('Condutor isolado');
@@ -131,30 +131,22 @@ function choice(v){
  assert.equal(element('fieldLabel').textContent,'Cor');
  choice('Preto');
  assert.equal(element('saveItem').disabled,false);
- assert.ok(!element('fieldHelp').innerHTML.includes('lszh-review'),'painel de LSZH não pode mais cobrir a tela');
+ assert.ok(!element('fieldHelp').innerHTML.includes('lszh-review'),'sem painel sobreposto');
  assert.equal(element('fieldLabel').textContent,'Classe de tensão');
- click('[data-skip-optional]',{skipOptional:'DET-007'});
+ click('[data-skip-optional]',{skipOptional:'DET-006'});
  assert.equal(element('fieldLabel').textContent,'Classe de encordoamento');
- click('[data-skip-optional]',{skipOptional:'DET-010'});
+ click('[data-skip-optional]',{skipOptional:'DET-009'});
  assert.equal(element('fieldLabel').textContent,'Comportamento ao fogo');
  assert.ok(element('choices').innerHTML.includes('data-pick="Comum"'));
- assert.ok(element('choices').innerHTML.includes('data-pick="LSZH"'));
- assert.ok(!element('liveName').textContent.includes('LSZH'),'não presume LSZH');
- choice('LSZH');
- assert.ok(element('liveName').textContent.includes('LSZH'),'confirmar adiciona LSZH no nome');
+ assert.ok(element('choices').innerHTML.includes('data-pick="Não halogenado com baixa emissão de fumaça (LSZH)"'));
+ assert.ok(!element('liveName').textContent.includes('LSZH'),'não presume classificação');
+ choice('Não halogenado com baixa emissão de fumaça (LSZH)');
+ assert.ok(element('liveName').textContent.includes('LSZH'));
  element('saveItem').listeners.click();
  const namedItem=stored.lists[0].items.at(-1);
  assert.equal(namedItem.catalogId,'FT_COND-001');
- assert.equal(namedItem.lszhRequired,true);
- assert.equal(namedItem.lszhDecision,'yes');
- assert.equal(namedItem.values['DET-LSZH'],'LSZH');
- assert.equal(Object.hasOwn(namedItem.values,'DET-005'),false,'não reintroduzir detalhe removido na fonte');
+ assert.equal(namedItem.values['DET-010'],'Não halogenado com baixa emissão de fumaça (LSZH)');
+ assert.ok(!Object.hasOwn(namedItem.values,'DET-LSZH'));
  assert.ok(namedItem.name.includes('LSZH'));
- // Ao remover Isolação, desaparece SOMENTE a classificação derivada.
- click('[data-edit]',{edit:namedItem.id});
- await new Promise(resolve=>setImmediate(resolve));
- element('tags').listeners.click({target:{dataset:{remove:'DET-006'},closest:q=>q==='[data-remove]'?{dataset:{remove:'DET-006'}}:null}});
- assert.ok(!element('tags').innerHTML.includes('data-remove="DET-LSZH"'),'remover isolação desmarca LSZH automaticamente');
- assert.equal(element('saveItem').disabled,true);
  console.log('TEREON X: 6 fichas reais → modal aprovado → condição → tags → salvar → editar e legado OK');
 })().catch(error=>{console.error(error);process.exitCode=1});
