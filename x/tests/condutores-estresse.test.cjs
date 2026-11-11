@@ -21,6 +21,13 @@ const cat=context.window.TereonXCatalog;
   return d;
  };
  const LSZH='Não halogenado com baixa emissão de fumaça (LSZH)', PVC='PVC 70 °C', HEPR='HEPR ou XLPE 90 °C';
+ assert.ok(f.aliases.includes('Cabinho'),'apelidos lidos do Fichário');
+ const nomed=cat.technicalName(f,{'DET-001':'Condutor isolado','DET-002':'Cobre','DET-004':'2,5','DET-005':'Comum','DET-006':'PVC 70 °C','DET-007':'450/750 V','DET-009':'Preto'});
+ assert.ok(nomed.includes('#2,5 mm²'),'seção com formato da planilha');
+ assert.ok(nomed.includes('Isolação PVC 70 °C'),'isolação com {valor}');
+ assert.ok(!nomed.includes('Comum'),'Comum não compõe nome por decisão explícita');
+ assert.ok(!nomed.includes('{valor}'),'placeholder nunca aparece no nome');
+
  assert.ok(!cat.visibleDetails(f,v('Condutor isolado')).some(d=>d.name==='Cobertura'));
  assert.ok(!cat.visibleDetails(f,v('Cabo multipolar')).some(d=>d.name==='Cor'));
  assert.ok(cat.visibleDetails(f,v('Cabo multipolar')).some(d=>d.name==='Cobertura'));
