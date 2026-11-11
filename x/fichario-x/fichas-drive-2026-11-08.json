@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "fonte": "Fichario.xlsm oficial no Google Drive, FT_COND-001 linhas ativas 11–25, conferido 2026-11-10 20:29 BRT; demais fichas preservadas do snapshot 08/11",
-  "aviso": "LABORATÓRIO — fichas não homologadas; alterações de condutores têm exclusões experimentais e lacunas de produto. Não usar para compras sem revisão humana.",
+  "fonte": "Fichario.xlsm (Drive), FT_COND-001, 11/11/2026 19:22 BRT",
+  "aviso": "Laboratório: ficha de origem atualizada sem Comportamento ao fogo; exigência LSZH depende de confirmação explícita no modal e não homologa produto.",
   "fichas": [
     {
       "codigo": "FT_INFRA-001",
@@ -283,34 +283,6 @@
           "compoeNome": "Sim (#{valor} mm²)"
         },
         {
-          "id": "DET-005",
-          "ordem": 5,
-          "nome": "Comport. ao fogo",
-          "valores": [
-            "Comum"
-          ],
-          "condicao": "Sempre",
-          "exclusao": "Termoplástico não halogenado 70 °C",
-          "classificacao": "Opcional",
-          "origemLinha": 17,
-          "status": "Aprovado",
-          "compoeNome": "Não"
-        },
-        {
-          "id": "DET-005",
-          "ordem": 5,
-          "nome": "Comport. ao fogo",
-          "valores": [
-            "Não halogenado com baixa emissão de fumaça (LSZH)"
-          ],
-          "condicao": "Sempre",
-          "exclusao": "PVC 70 °C",
-          "classificacao": "Opcional",
-          "origemLinha": 18,
-          "status": "Aprovado",
-          "compoeNome": "Não"
-        },
-        {
           "id": "DET-006",
           "ordem": 6,
           "nome": "Isolação",
@@ -320,7 +292,7 @@
           "condicao": "Sempre",
           "exclusao": "",
           "classificacao": "Obrigatório",
-          "origemLinha": 19,
+          "origemLinha": 17,
           "status": "Aprovado",
           "compoeNome": "Sim (Isolação {valor})"
         },
@@ -334,7 +306,7 @@
           "condicao": "Sempre",
           "exclusao": "450/750 V",
           "classificacao": "Obrigatório",
-          "origemLinha": 20,
+          "origemLinha": 18,
           "status": "Aprovado",
           "compoeNome": "Sim (Isolação {valor})"
         },
@@ -348,7 +320,7 @@
           "condicao": "Sempre",
           "exclusao": "",
           "classificacao": "Obrigatório",
-          "origemLinha": 21,
+          "origemLinha": 19,
           "status": "Aprovado",
           "compoeNome": "Sim (Isolação {valor})"
         },
@@ -363,7 +335,7 @@
           "condicao": "Sempre",
           "exclusao": "",
           "classificacao": "Opcional",
-          "origemLinha": 22,
+          "origemLinha": 20,
           "status": "Aprovado",
           "compoeNome": "Sim"
         },
@@ -378,7 +350,7 @@
           "condicao": "Cabo unipolar//Cabo multipolar",
           "exclusao": "",
           "classificacao": "Opcional",
-          "origemLinha": 23,
+          "origemLinha": 21,
           "status": "Aprovado",
           "compoeNome": "Sim"
         },
@@ -398,7 +370,7 @@
           "condicao": "Sempre",
           "exclusao": "",
           "classificacao": "Obrigatório",
-          "origemLinha": 24,
+          "origemLinha": 22,
           "status": "Aprovado",
           "compoeNome": "Sim"
         },
@@ -415,21 +387,19 @@
           "condicao": "Sempre",
           "exclusao": "",
           "classificacao": "Opcional",
-          "origemLinha": 25,
+          "origemLinha": 23,
           "status": "Aprovado",
           "compoeNome": "Sim"
         }
       ],
       "pendencias": [
-        "IMPORTAÇÃO EXPERIMENTAL da aba FT_COND-001, linhas 11–24, 10/11/2026; status da ficha continua Em revisão.",
+        "Sincronizada do Fichário.xlsm do Drive salvo em 11/11/2026 19:22 BRT, aba FT_COND-001, linhas ativas 11–23; Comportamento ao fogo removido pelo fundador.",
+        "Ficha marcada Aprovado no Excel de origem; publicação/homologação TEREON X mantida Em revisão até validação.",
         "Classe de tensão opcional na planilha; revisar se exigida para compra.",
-        "Classe II descrita como 'Encordoado flexível'; classificação IEC 60228 deve ser revisada antes da homologação.",
-        "Unidade de compra não figura no bloco ativo; quantidade/unidade continuam nos campos da Lista.",
-        "Construções comerciais, compatibilidades e separação entre isolação e cobertura ainda não homologadas.",
-        "Título B5 da origem é Condutores isolados, porém inclui Cabo multipolar; nome exibido provisoriamente Condutor elétrico para não afirmar construção incorreta.",
-        "IMPORTAÇÃO RECONFERIDA com fonte de 20h29 BRT, linhas 11–25: isolação não halogenada na linha 21 e cobertura não halogenada na linha 23 estão presentes.",
-        "Rótulo da cobertura 'Termoplástico não halogenado 70 °C' reproduz a planilha, mas temperatura/classe de composto de cobertura deve ser validada por ficha de produto; SHF1 não é sinônimo técnico automático.",
-        "REGRA EXPERIMENTAL solicitada 10/11: Comum exclui valor 'Termoplástico não halogenado 70 °C' tanto em Isolação como Cobertura. Esta regra AINDA NÃO foi escrita no Fichario.xlsm de origem; sincronizar G17 após teste."
+        "Classe II descrita como 'Encordoado flexível'; confirmar classificação IEC 60228 antes da homologação.",
+        "Unidade de compra não figura na ficha; quantidade/unidade continuam nos campos da Lista.",
+        "Construções comerciais, requisitos de LSZH e compatibilidades de materiais ainda necessitam referência de fabricante/norma.",
+        "Cobertura 'Termoplástico não halogenado 70 °C' segue a redação da planilha; confirmar temperatura nominal aplicável à cobertura."
       ],
       "nomeNaPlanilha": "Condutores isolados",
       "apelidos": [
