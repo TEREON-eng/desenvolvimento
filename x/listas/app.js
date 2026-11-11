@@ -204,7 +204,7 @@ function populateUnitOptions(){
 function paintFichaChoices(){
  const all=window.TereonXCatalog?.list()||[];
  const q=fichaSearch.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
- const candidates=all.filter(f=>(f.name+' '+f.id+' '+f.reference).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(q));
+ const candidates=all.filter(f=>(f.name+' '+f.id+' '+f.reference+' '+(f.aliases||[]).join(' ')).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(q));
  $('choices').innerHTML='<input id="fichaSearch" class="ficha-search" type="search" autocomplete="off" placeholder="Buscar material ou família..." aria-label="Pesquisar fichas técnicas" value="'+esc(fichaSearch)+'">'+
   (loadingFichas?'<p class="tiny muted">Carregando fichas...</p>':fichaError?'<p class="notice">'+esc(fichaError)+'</p>':candidates.length?candidates.map(f=>
    '<button type="button" class="ficha-option" data-ficha="'+esc(f.id)+'"><strong>'+esc(f.name)+'</strong><small>'+esc(f.id)+' · '+esc(f.status||'Em revisão')+'</small></button>').join(''):
@@ -433,7 +433,9 @@ $('choices').addEventListener('input',function(e){
  fichaSearch=e.target.value;
  const q=fichaSearch.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
  $('choices').querySelectorAll('[data-ficha]').forEach(button=>{
-  button.hidden=!(button.textContent.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(q));
+  const ficha=window.TereonXCatalog.get(button.dataset.ficha);
+  const searchable=ficha?(ficha.name+' '+ficha.id+' '+ficha.reference+' '+(ficha.aliases||[]).join(' ')):button.textContent;
+  button.hidden=!searchable.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(q);
  });
 });
 $('choices').addEventListener('click',function(e){
