@@ -283,3 +283,14 @@ dialog::backdrop{background:#14281d77;backdrop-filter:blur(2px)}
  background:rgba(235,217,180,.24);color:#675127;
  line-height:1.45;
 }
+
+/* Confirmação voluntária de exigência LSZH, sem modificar a estrutura do modal. */
+#addDialog .lszh-review{display:grid;gap:7px;padding:11px 12px;margin-top:10px;
+ border:1px solid #c6d8c9;background:rgba(221,237,225,.38);border-radius:11px}
+#addDialog .lszh-review strong{color:#274636;font-size:12px;line-height:1.4}
+#addDialog .lszh-review small{color:#536e5b;font-size:11px;line-height:1.45}
+#addDialog .lszh-actions{display:flex;flex-wrap:wrap;gap:6px}
+#addDialog .lszh-actions button{white-space:normal;padding:8px 10px;font-size:11px;
+ border:1px solid #b8cbbb;background:rgba(255,255,255,.6);border-radius:8px}
+#addDialog .lszh-actions button.on{background:#d5e7d8;border-color:#679475;
+ box-shadow:inset 0 0 0 1px #679475;color:#244d32}
