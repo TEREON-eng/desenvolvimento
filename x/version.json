@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.36",
+  "version": "x.0.3.37",
   "build": "2026-11-11",
-  "notes": "Condutores sem Comportamento ao fogo; confirmação voluntária de exigência LSZH"
+  "notes": "Comportamento ao fogo como último detalhe opcional condicionado: Comum/LSZH/Pular"
 }
