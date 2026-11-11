@@ -76,6 +76,48 @@ function optionsFor(f,values,id){
   return row.options.filter(o=>!blocked(f,values,d,o));
  }).filter((o,i,a)=>a.findIndex(x=>eq(x,o))===i);
 }
+/* Descreve opções disponíveis e bloqueadas sem apagá-las da interface.
+   A restrição continua sendo a da ficha, sem inferência técnica. */
+function optionStates(f,values,id){
+ const d=f.details.find(x=>x.id===id);if(!d)return [];
+ const chosen=values||{};
+ return d.options.map(option=>{
+  const rows=d.rows.filter(r=>r.options.some(o=>eq(o,option)));
+  const applicable=rows.some(row=>applyRule(row.condition,chosen,f.details).visible);
+  const blockers=new Map();
+  for(const other of f.details){
+   if(other.id===d.id||!chosen[other.id])continue;
+   const selected=chosen[other.id];
+   const origin=other.rows.find(r=>r.options.some(o=>eq(o,selected)));
+   if(origin?.exclusion.split(';').some(t=>eq(t.trim(),d.name)||eq(t.trim(),option)))
+    blockers.set(other.id,{id:other.id,name:other.name,value:selected});
+   if(rows.some(row=>row.exclusion.split(';').some(t=>eq(t.trim(),other.name)||eq(t.trim(),selected))))
+    blockers.set(other.id,{id:other.id,name:other.name,value:selected});
+  }
+  const conditional=rows.some(row=>row.condition&&!eq(row.condition,'Sempre'));
+  const related=[...blockers.values()];
+  return {option,available:applicable&&!related.length,blockedBy:related,
+   reason:related.length?'Incompatível com '+related.map(x=>x.name+': '+x.value).join(', '):
+    !applicable?(conditional?'Não disponível para as características confirmadas':'Condição da ficha não atendida'):'',
+   conditional};
+ });
+}
+function relatedTags(f,values,id){
+ const d=f.details.find(x=>x.id===id);if(!d)return [];
+ const selected=values||{},links=new Set();
+ for(const other of f.details){
+  if(other.id===id||!selected[other.id])continue;
+  const choice=selected[other.id];
+  if(d.rows.some(row=>row.condition.split('//').some(clause=>clause.split('+').some(token=>eq(token.trim(),choice)))))
+   links.add(other.id);
+  const row=other.rows.find(r=>r.options.some(o=>eq(o,choice)));
+  if(row?.exclusion.split(';').some(t=>eq(t.trim(),d.name)||d.options.some(o=>eq(o,t.trim()))))
+   links.add(other.id);
+  if(d.rows.some(r=>r.exclusion.split(';').some(t=>eq(t.trim(),other.name)||eq(t.trim(),choice))))
+   links.add(other.id);
+ }
+ return [...links];
+}
 function visibleDetails(f,values){
  return f.details.filter(d=>optionsFor(f,values||{},d.id).length>0);
 }
@@ -144,5 +186,5 @@ async function load(){
 }
 function list(){return cache||[]}
 function get(id){return list().find(f=>f.id===id)||null}
-root.TereonXCatalog=Object.freeze({version:2,load,list,get,isOfficial,normalize,visibleDetails,missing,technicalName,applyRule,optionsFor,conflicts,nextDetail});
+root.TereonXCatalog=Object.freeze({version:2,load,list,get,isOfficial,normalize,visibleDetails,missing,technicalName,applyRule,optionsFor,conflicts,nextDetail,optionStates,relatedTags});
 })(window);
