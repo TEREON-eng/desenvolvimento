@@ -78,6 +78,7 @@ var fields=[
 const legacyFields=fields;
 let selectedFicha=null,choosingFicha=false,fichaSearch='',loadingFichas=false,fichaError='';
 const skippedOptional=new Set();
+let optionNotice='';
 var $=function(id){return document.getElementById(id);};
 var esc=function(x){return String(x==null?'':x).replace(/[&<>"']/g,function(k){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[k];});};
 function list(){return lists.get(activeId);}
@@ -228,20 +229,25 @@ function redrawAdd(){
   $('progress').innerHTML=required.map(x=>'<span class="segment'+(values[x.id]?' done':'')+'"></span>').join('');
   $('counter').textContent=count()+' / '+required.length+' obrigatórios';
   $('counter').nextElementSibling.textContent=selectedFicha?'Ficha em revisão':'Registro anterior';
-  $('tags').innerHTML=fields.filter(x=>values[x.id]).map(x=>'<button type="button" class="tag'+(x.required?' required':'')+'" data-remove="'+esc(x.id)+'" title="Remover '+esc(x.label)+'">'+esc(values[x.id])+' ×</button>').join('')||'<span class="tiny muted">As tags confirmadas aparecem aqui.</span>';
+  const activeField=fields[focus];
+  const linked=new Set(selectedFicha&&activeField?window.TereonXCatalog.relatedTags(selectedFicha,values,activeField.id):[]);
+  $('tags').innerHTML=fields.filter(x=>values[x.id]).map(x=>'<button type="button" class="tag'+(x.required?' required':'')+(linked.has(x.id)?' linked':'')+'" data-remove="'+esc(x.id)+'" title="'+esc((linked.has(x.id)?'Relacionada ao detalhe atual · ':'')+'Remover '+x.label)+'">'+esc(values[x.id])+' ×</button>').join('')||'<span class="tiny muted">As tags confirmadas aparecem aqui.</span>';
   const field=fields[focus];
   $('fieldLabel').textContent=field?.label||'Características';
   if(selectedFicha){
    $('fieldLabel').insertAdjacentHTML('beforeend',' <button type="button" class="tag ficha-trocar" data-ficha-back="1" aria-label="Trocar material '+esc(selectedFicha.name)+'" title="Trocar material">'+esc(selectedFicha.name)+' ×</button>');
   }
   $('fieldType').textContent=field?(field.required?'Obrigatório':'Opcional'):'Sem opções definidas';
-  $('choices').innerHTML=field?field.options.map(o=>'<button type="button" class="tag option'+(values[field.id]===o?' on':'')+'" data-pick="'+esc(o)+'">'+esc(o)+'</button>').join('')+
+  const states=selectedFicha&&field?window.TereonXCatalog.optionStates(selectedFicha,values,field.id):
+   (field?field.options.map(option=>({option,available:true,reason:'',blockedBy:[]})):[]);
+  $('choices').innerHTML=field?states.map(x=>'<button type="button" class="tag option'+(values[field.id]===x.option?' on':'')+(x.available?'':' is-blocked')+'" '+(x.available?'data-pick':'data-blocked-option')+'="'+esc(x.option)+'"'+(!x.available?' aria-disabled="true" title="'+esc(x.reason)+'"':'')+'>'+esc(x.option)+(x.available?'':' <span class="option-lock" aria-hidden="true">⊘</span>')+'</button>').join('')+
    (!field.required&&!values[field.id]&&!skippedOptional.has(field.id)?'<button type="button" class="tag" data-skip-optional="'+esc(field.id)+'">Pular · deixar em branco</button>':''):'';
   const incomplete=selectedFicha?.pendencias?.length||0;
-  $('fieldHelp').textContent=selectedFicha?
+  $('fieldHelp').textContent=optionNotice|| (selectedFicha?
    (incomplete?'Ficha em revisão: há '+incomplete+' pendência(s) cadastrais. ':'')+
    (window.TereonXCatalog.missing(selectedFicha,values).length?'Confirme as características obrigatórias para adicionar.':'Obrigatórios confirmados; você pode continuar escolhendo detalhes opcionais.'):
-   'Escolha uma opção; a próxima característica aparecerá automaticamente.';
+   'Escolha uma opção; a próxima característica aparecerá automaticamente.');
+  $('fieldHelp').classList.toggle('choice-warning',!!optionNotice);
  }
  const current=list();$('stageTags').innerHTML=(current?.stages||[]).map(s=>'<button type="button" class="tag" data-stage="'+esc(s)+'">'+esc(s)+'</button>').join('');
  validate();
@@ -254,7 +260,7 @@ function validate(){
 async function openAdd(item){
  if(!list())return;
  editId=item?String(item.id):null;
- skippedOptional.clear();
+ skippedOptional.clear();optionNotice='';
  values=item&&item.values?Object.assign({},item.values):{};
  fichaSearch='';fichaError='';loadingFichas=!item;
  selectedFicha=null;choosingFicha=!item;
@@ -417,7 +423,7 @@ $('createForm').addEventListener('submit',function(e){
 });
 $('tags').addEventListener('click',function(e){
  var b=e.target.closest('[data-remove]');if(!b)return;
- delete values[b.dataset.remove];fields=getFields();
+ delete values[b.dataset.remove];optionNotice='';fields=getFields();
  // Sempre retoma a primeira característica obrigatória ainda pendente,
  // mesmo quando várias tags são removidas em sequência.
  focus=pickFirstMissing();redrawAdd();
@@ -443,8 +449,15 @@ $('choices').addEventListener('click',function(e){
  if(skip){
   const field=fields[focus];
   if(!field||field.required||field.id!==skip.dataset.skipOptional)return;
-  skippedOptional.add(field.id);
+  skippedOptional.add(field.id);optionNotice='';
   fields=getFields();focus=pickFirstMissing();redrawAdd();return;
+ }
+ const blocked=e.target.closest('[data-blocked-option]');
+ if(blocked&&selectedFicha&&fields[focus]){
+  const current=fields[focus];
+  const state=window.TereonXCatalog.optionStates(selectedFicha,values,current.id).find(x=>x.option===blocked.dataset.blockedOption);
+  optionNotice=(state?.reason||'Opção indisponível')+'. Para alterar, remova a tag relacionada destacada acima.';
+  redrawAdd();return;
  }
  const b=e.target.closest('[data-pick]');if(!b||!fields[focus])return;
  const field=fields[focus];
@@ -453,7 +466,7 @@ $('choices').addEventListener('click',function(e){
   const problems=window.TereonXCatalog.conflicts(selectedFicha,next);
   if(problems.length){alert('Combinação não permitida pela ficha: '+problems.join('; ')+'. Remova a tag incompatível antes de continuar.');return;}
  }
- values=next; // Nunca apagar outra tag confirmada em decorrência de uma exclusão.
+ values=next;optionNotice=''; // Nunca apagar outra tag confirmada em decorrência de uma exclusão.
  skippedOptional.delete(field.id);
  fields=getFields();focus=pickFirstMissing();redrawAdd();
 });
