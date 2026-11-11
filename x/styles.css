@@ -263,3 +263,23 @@ dialog::backdrop{background:#14281d77;backdrop-filter:blur(2px)}
 @media(prefers-reduced-motion:reduce){
  #addDialog:not(.is-choosing) #choices .tag.option{transition:none}
 }
+
+/* Relações na especificação — exclusão visível e explicada, sem alterar tags.
+   A cor destaca a dependência da tag atual; não implica erro. */
+#addDialog #tags .tag.linked{
+ background:rgba(224,192,123,.23);border-color:#b9944a;
+ color:#645021;box-shadow:inset 0 0 0 1px rgba(185,148,74,.15);
+}
+#addDialog #tags .tag.linked.required{outline-color:#b9944a}
+#addDialog:not(.is-choosing) #choices .tag.option.is-blocked,
+#addDialog:not(.is-choosing) #choices .tag.option.is-blocked:hover{
+ background:rgba(194,202,197,.16);color:#839188;
+ border:1px dashed rgba(110,130,115,.36);
+ box-shadow:none;opacity:.67;cursor:help;
+}
+#addDialog #choices .option-lock{margin-left:6px;font-weight:600;font-size:13px}
+#addDialog #fieldHelp.choice-warning{
+ padding:9px 11px;border-left:3px solid #b9944a;border-radius:5px;
+ background:rgba(235,217,180,.24);color:#675127;
+ line-height:1.45;
+}
