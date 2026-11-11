@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.39",
+  "version": "x.0.3.40",
   "build": "2026-11-11",
-  "notes": "Motor genérico aceita ! como NÃO nas condições do Fichário; opções LSZH não alteradas"
+  "notes": "Comportamento ao fogo do Fichário: Comum se PVC, LSZH se !PVC; eletrodutos em revisão"
 }
