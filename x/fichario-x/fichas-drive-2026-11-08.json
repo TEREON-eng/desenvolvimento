@@ -174,7 +174,7 @@
     },
     {
       "codigo": "FT_COND-001",
-      "nome": "Condutor elétrico",
+      "nome": "Condutores isolados",
       "categoria": "CONDUTORES",
       "status": "Em revisão",
       "tipo": "real",
@@ -190,7 +190,8 @@
           "exclusao": "Cobertura",
           "classificacao": "Obrigatório",
           "origemLinha": 11,
-          "status": "Aprovado"
+          "status": "Aprovado",
+          "compoeNome": "Sim"
         },
         {
           "id": "DET-001",
@@ -203,7 +204,8 @@
           "exclusao": "",
           "classificacao": "Obrigatório",
           "origemLinha": 12,
-          "status": "Aprovado"
+          "status": "Aprovado",
+          "compoeNome": "Sim"
         },
         {
           "id": "DET-001",
@@ -216,7 +218,8 @@
           "exclusao": "Cor",
           "classificacao": "Obrigatório",
           "origemLinha": 13,
-          "status": "Aprovado"
+          "status": "Aprovado",
+          "compoeNome": "Sim"
         },
         {
           "id": "DET-002",
@@ -230,7 +233,8 @@
           "exclusao": "",
           "classificacao": "Obrigatório",
           "origemLinha": 14,
-          "status": "Aprovado"
+          "status": "Aprovado",
+          "compoeNome": "Sim"
         },
         {
           "id": "DET-003",
@@ -247,7 +251,8 @@
           "exclusao": "",
           "classificacao": "Obrigatório",
           "origemLinha": 15,
-          "status": "Aprovado"
+          "status": "Aprovado",
+          "compoeNome": "Sim ({valor} x)"
         },
         {
           "id": "DET-004",
@@ -274,7 +279,8 @@
           "exclusao": "",
           "classificacao": "Obrigatório",
           "origemLinha": 16,
-          "status": "Aprovado"
+          "status": "Aprovado",
+          "compoeNome": "Sim (#{valor} mm²)"
         },
         {
           "id": "DET-005",
@@ -287,7 +293,8 @@
           "exclusao": "Termoplástico não halogenado 70 °C",
           "classificacao": "Opcional",
           "origemLinha": 17,
-          "status": "Aprovado"
+          "status": "Aprovado",
+          "compoeNome": "Não"
         },
         {
           "id": "DET-005",
@@ -300,7 +307,8 @@
           "exclusao": "PVC 70 °C",
           "classificacao": "Opcional",
           "origemLinha": 18,
-          "status": "Aprovado"
+          "status": "Aprovado",
+          "compoeNome": "Não"
         },
         {
           "id": "DET-006",
@@ -313,7 +321,8 @@
           "exclusao": "",
           "classificacao": "Obrigatório",
           "origemLinha": 19,
-          "status": "Aprovado"
+          "status": "Aprovado",
+          "compoeNome": "Sim (Isolação {valor})"
         },
         {
           "id": "DET-006",
@@ -326,7 +335,8 @@
           "exclusao": "450/750 V",
           "classificacao": "Obrigatório",
           "origemLinha": 20,
-          "status": "Aprovado"
+          "status": "Aprovado",
+          "compoeNome": "Sim (Isolação {valor})"
         },
         {
           "id": "DET-006",
@@ -339,7 +349,8 @@
           "exclusao": "",
           "classificacao": "Obrigatório",
           "origemLinha": 21,
-          "status": "Aprovado"
+          "status": "Aprovado",
+          "compoeNome": "Sim (Isolação {valor})"
         },
         {
           "id": "DET-007",
@@ -353,7 +364,8 @@
           "exclusao": "",
           "classificacao": "Opcional",
           "origemLinha": 22,
-          "status": "Aprovado"
+          "status": "Aprovado",
+          "compoeNome": "Sim"
         },
         {
           "id": "DET-008",
@@ -367,7 +379,8 @@
           "exclusao": "",
           "classificacao": "Opcional",
           "origemLinha": 23,
-          "status": "Aprovado"
+          "status": "Aprovado",
+          "compoeNome": "Sim"
         },
         {
           "id": "DET-009",
@@ -386,7 +399,8 @@
           "exclusao": "",
           "classificacao": "Obrigatório",
           "origemLinha": 24,
-          "status": "Aprovado"
+          "status": "Aprovado",
+          "compoeNome": "Sim"
         },
         {
           "id": "DET-010",
@@ -402,7 +416,8 @@
           "exclusao": "",
           "classificacao": "Opcional",
           "origemLinha": 25,
-          "status": "Aprovado"
+          "status": "Aprovado",
+          "compoeNome": "Sim"
         }
       ],
       "pendencias": [
@@ -416,7 +431,12 @@
         "Rótulo da cobertura 'Termoplástico não halogenado 70 °C' reproduz a planilha, mas temperatura/classe de composto de cobertura deve ser validada por ficha de produto; SHF1 não é sinônimo técnico automático.",
         "REGRA EXPERIMENTAL solicitada 10/11: Comum exclui valor 'Termoplástico não halogenado 70 °C' tanto em Isolação como Cobertura. Esta regra AINDA NÃO foi escrita no Fichario.xlsm de origem; sincronizar G17 após teste."
       ],
-      "nomeNaPlanilha": "Condutores isolados"
+      "nomeNaPlanilha": "Condutores isolados",
+      "apelidos": [
+        "Fio",
+        "Cabinho",
+        "Condutor"
+      ]
     },
     {
       "codigo": "FT_INFRA-002",
