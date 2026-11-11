@@ -130,6 +130,12 @@ function choice(v){
  assert.ok(element('choices').innerHTML.includes('data-skip-optional="DET-005"'),'oferece pular sem confirmar opção');
  click('[data-skip-optional]',{skipOptional:'DET-005'});
  assert.equal(element('fieldLabel').textContent,'Isolação','pular avança para obrigatório dependente');
+ // Comum impede a escolha do termoplástico não halogenado, sem fazê-lo sumir.
+ const currentF=window.TereonXCatalog.get('FT_COND-001');
+ const related=window.TereonXCatalog.relatedTags(currentF,{'DET-001':'Condutor isolado','DET-005':'Comum'},'DET-006');
+ assert.ok(related.includes('DET-005'),'a tag Comum deve ser destacada na Isolação');
+ assert.ok(window.TereonXCatalog.optionStates(currentF,{'DET-001':'Condutor isolado','DET-005':'Comum'},'DET-006')
+  .some(x=>x.option==='Termoplástico não halogenado 70 °C'&&!x.available),'não halogenado esmaecido, não removido');
  choice('PVC 70 °C');
  assert.equal(element('fieldLabel').textContent,'Cor');
  choice('Preto');
