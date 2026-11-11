@@ -41,12 +41,24 @@ function normalize(f){
 const eq=(a,b)=>norm(a)===norm(b);
 function applyRule(rule,values,details){
  const r=clean(rule);if(!r||norm(r)==='sempre')return {visible:true,verified:!!r};
- // // significa OU, + significa E, ambos com correspondência exata e não por substring.
- const clauses=r.split('//').map(x=>x.trim()).filter(Boolean);
- const known=clauses.every(clause=>clause.split('+').map(x=>x.trim()).filter(Boolean).every(x=>details.some(d=>d.options.some(o=>eq(o,x)))));
+ // '//' = OU, '+' = E, '!' = NÃO (nega SOMENTE a opção seguinte).
+ // Uma opção negada precisa existir na ficha; ausência de seleção não prova característica técnica.
+ const clauses=r.split('//').map(x=>x.trim());
+ if(clauses.some(x=>!x))return {visible:false,verified:false};
+ const groups=clauses.map(clause=>clause.split('+').map(token=>token.trim()));
+ if(groups.some(tokens=>tokens.some(token=>!token||token==='!')))return {visible:false,verified:false};
+ const parsed=groups.map(tokens=>tokens.map(token=>{
+  const negative=token.startsWith('!');
+  return {negative,value:negative?token.slice(1).trim():token};
+ }));
+ const known=parsed.every(tokens=>tokens.every(token=>token.value&&!token.value.startsWith('!')&&
+  details.some(d=>d.options.some(option=>eq(option,token.value)))));
  if(!known)return {visible:false,verified:false};
- const all=Object.values(values||{});
- return {visible:clauses.some(clause=>clause.split('+').map(x=>x.trim()).filter(Boolean).every(x=>all.some(v=>eq(v,x)))),verified:true};
+ const chosen=Object.values(values||{});
+ return {visible:parsed.some(tokens=>tokens.every(token=>{
+  const present=chosen.some(v=>eq(v,token.value));
+  return token.negative?!present:present;
+ })),verified:true};
 }
 function excludedTargets(f,values){
  const tokens=[];
