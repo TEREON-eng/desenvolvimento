@@ -9,7 +9,9 @@ vm.createContext(context);new vm.Script(read('x/catalogo/motor.js'),{filename:'m
 const cat=context.window.TereonXCatalog;
 (async()=>{
  const all=await cat.load(),f=all.find(x=>x.id==='FT_COND-001');
- assert.ok(f);assert.equal(f.kind,'revisao');assert.equal(f.details.length,9);
+ assert.ok(f);assert.equal(f.kind,'revisao');assert.equal(f.details.length,10);
+ assert.equal(f.details.at(-1).id,'DET-LSZH');
+ assert.equal(f.details.at(-1).required,false);
  assert.ok(!f.details.some(d=>d.id==='DET-005'||d.name==='Comport. ao fogo'));
  assert.equal(f.details.find(x=>x.id==='DET-006').options.length,3);
  assert.equal(f.details.find(x=>x.id==='DET-008').options.length,2);
@@ -29,6 +31,13 @@ const cat=context.window.TereonXCatalog;
  assert.equal(cat.lszhCandidate(f,v('Cabo multipolar',PVC,'0,6/1,0 kV',NH,null,'3')),false,'isolação PVC impede sugestão mesmo com cobertura NH');
  assert.equal(cat.lszhCandidate(f,v('Cabo multipolar',HEPR,'0,6/1,0 kV',NH,null,'3')),true,'construção sem PVC permite perguntar');
  assert.equal(cat.lszhCandidate(f,v('Cabo multipolar',NH,'0,6/1,0 kV',NH,null,'3')),true,'duas camadas NH permitem perguntar');
+ assert.equal(cat.optionsFor(f,normal,'DET-LSZH').length,0,'PVC não oferece classificação');
+ const green=v('Condutor isolado',NH,'450/750 V',null,'Preto');
+ assert.equal(cat.nextDetail(f,green,['DET-007','DET-010']),'DET-LSZH','classificação é última opção');
+ assert.deepEqual(Array.from(cat.optionsFor(f,green,'DET-LSZH')),['Comum','LSZH']);
+ assert.ok(cat.technicalName(f,{...green,'DET-LSZH':'LSZH'}).includes('LSZH'));
+ assert.ok(!cat.technicalName(f,{...green,'DET-LSZH':'Comum'}).includes('LSZH'));
+ assert.ok(cat.conflicts(f,{...normal,'DET-LSZH':'LSZH'}).length>0,'LSZH anterior fica inválido ao mudar para PVC');
  assert.ok(!cat.optionsFor(f,v('Condutor isolado'),'DET-008').length,'condutor isolado não tem cobertura');
  assert.ok(!cat.visibleDetails(f,v('Cabo multipolar')).some(x=>x.name==='Cor'));
  assert.ok(cat.missing(f,v('Cabo multipolar',HEPR,null,null,null)).includes('DET-003'));
