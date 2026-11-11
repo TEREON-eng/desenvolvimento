@@ -27,16 +27,6 @@ function normalize(f){
   g.rows.push({options,condition:clean(d.condicao),exclusion:clean(d.exclusao),nameRule:clean(d.compoeNome),originLine:d.origemLinha||null});
  });
  const details=[...groups.values()].sort((a,b)=>a.order-b.order);
- // Etapa experimental DERIVADA, não linha importada da planilha:
- // aparece por último e apenas quando camadas confirmadas permitem perguntar.
- if(clean(f.codigo)==='FT_COND-001'){
-  details.push({id:'DET-LSZH',name:'Comportamento ao fogo',order:999,
-   required:false,classification:'Opcional',condition:'Sempre',
-   options:['Comum','LSZH'],rows:[
-    {options:['Comum'],condition:'Sempre',exclusion:'',nameRule:'Não',originLine:null},
-    {options:['LSZH'],condition:'Sempre',exclusion:'',nameRule:'Sim (LSZH)',originLine:null}
-   ],derived:true});
- }
  for(const d of details)d.condition=d.rows.length===1?d.rows[0].condition:'';
  const sourceType=f.tipo==='hipotetica'?'simulacao':isOfficial(f)?'oficial':'revisao';
  const pendencias=[...(Array.isArray(f.pendencias)?f.pendencias:[]),...(sourceType==='simulacao'?['Ficha ainda não criada: opções fictícias']:[])];
@@ -80,7 +70,6 @@ function blocked(f,values,d,option){
 }
 function optionsFor(f,values,id){
  const d=f.details.find(x=>x.id===id);if(!d)return [];
- if(id==='DET-LSZH'&&!lszhCandidate(f,values))return [];
  return d.rows.flatMap(row=>{
   const rule=applyRule(row.condition,values,f.details);
   if(!rule.visible)return [];
@@ -91,7 +80,6 @@ function optionsFor(f,values,id){
    A restrição continua sendo a da ficha, sem inferência técnica. */
 function optionStates(f,values,id){
  const d=f.details.find(x=>x.id===id);if(!d)return [];
- if(id==='DET-LSZH'&&!lszhCandidate(f,values))return [];
  const chosen=values||{};
  return d.options.map(option=>{
   const rows=d.rows.filter(r=>r.options.some(o=>eq(o,option)));
@@ -182,18 +170,6 @@ function missing(f,values){
  }
  return [...new Set([...out,...(conflicts(f,values).length?['__CONFLITO__']:[])])];
 }
-/* Candidato a exigência LSZH, NUNCA classificação automática.
-   Para cabos com cobertura possível, ausência de resposta não é ausência de PVC. */
-function lszhCandidate(f,values){
- if(f?.id!=='FT_COND-001')return false;
- const v=values||{},type=v['DET-001'],ins=v['DET-006'],cover=v['DET-008'];
- if(!type||!ins||!['Condutor isolado','Cabo unipolar','Cabo multipolar'].includes(type))return false;
- if(norm(ins).includes('pvc'))return false;
- const covered=type==='Cabo unipolar'||type==='Cabo multipolar';
- if(covered&&(!cover||norm(cover).includes('pvc')))return false;
- if(!covered&&cover)return false;
- return true;
-}
 function technicalName(f,values){
  const selected=f.details.filter(d=>values?.[d.id]);
  const hasRules=selected.some(d=>d.rows.some(r=>r.nameRule));
@@ -225,5 +201,5 @@ async function load(){
 }
 function list(){return cache||[]}
 function get(id){return list().find(f=>f.id===id)||null}
-root.TereonXCatalog=Object.freeze({version:2,load,list,get,isOfficial,normalize,visibleDetails,missing,technicalName,applyRule,optionsFor,conflicts,nextDetail,optionStates,relatedTags,lszhCandidate});
+root.TereonXCatalog=Object.freeze({version:2,load,list,get,isOfficial,normalize,visibleDetails,missing,technicalName,applyRule,optionsFor,conflicts,nextDetail,optionStates,relatedTags});
 })(window);
