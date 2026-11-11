@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.37",
+  "version": "x.0.3.38",
   "build": "2026-11-11",
-  "notes": "Comportamento ao fogo como último detalhe opcional condicionado: Comum/LSZH/Pular"
+  "notes": "Fichário real DET-010 e exclusões PVC/LSZH, sem detalhe artificial"
 }
