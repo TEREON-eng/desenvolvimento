@@ -183,11 +183,11 @@ function technicalName(f,values){
   const row=d.rows.find(r=>r.options.some(x=>eq(x,chosen)));
   const rule=clean(row?.nameRule);
   if(!rule||norm(rule)==='nao')continue;
-  const matched=/^sim(?:\\s*\\(([\\s\\S]*)\\))?$/i.exec(rule);
+  const matched=/^sim(?:\s*\(([\s\S]*)\))?$/i.exec(rule);
   if(!matched)continue; // Não interpretar sintaxe desconhecida como nome válido.
-  parts.push(matched[1]===undefined?chosen:matched[1].replace(/\\{valor\\}/gi,chosen).trim());
+  parts.push(matched[1]===undefined?chosen:matched[1].replace(/\{valor\}/gi,chosen).trim());
  }
- return parts.join(' ').replace(/\\s+/g,' ').trim()||f.name;
+ return parts.join(' ').replace(/\s+/g,' ').trim()||f.name;
 }
 async function load(){
  if(cache)return cache;
