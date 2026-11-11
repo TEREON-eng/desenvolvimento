@@ -27,6 +27,16 @@ function normalize(f){
   g.rows.push({options,condition:clean(d.condicao),exclusion:clean(d.exclusao),nameRule:clean(d.compoeNome),originLine:d.origemLinha||null});
  });
  const details=[...groups.values()].sort((a,b)=>a.order-b.order);
+ // Etapa experimental DERIVADA, não linha importada da planilha:
+ // aparece por último e apenas quando camadas confirmadas permitem perguntar.
+ if(clean(f.codigo)==='FT_COND-001'){
+  details.push({id:'DET-LSZH',name:'Comportamento ao fogo',order:999,
+   required:false,classification:'Opcional',condition:'Sempre',
+   options:['Comum','LSZH'],rows:[
+    {options:['Comum'],condition:'Sempre',exclusion:'',nameRule:'Não',originLine:null},
+    {options:['LSZH'],condition:'Sempre',exclusion:'',nameRule:'Sim (LSZH)',originLine:null}
+   ],derived:true});
+ }
  for(const d of details)d.condition=d.rows.length===1?d.rows[0].condition:'';
  const sourceType=f.tipo==='hipotetica'?'simulacao':isOfficial(f)?'oficial':'revisao';
  const pendencias=[...(Array.isArray(f.pendencias)?f.pendencias:[]),...(sourceType==='simulacao'?['Ficha ainda não criada: opções fictícias']:[])];
@@ -70,6 +80,7 @@ function blocked(f,values,d,option){
 }
 function optionsFor(f,values,id){
  const d=f.details.find(x=>x.id===id);if(!d)return [];
+ if(id==='DET-LSZH'&&!lszhCandidate(f,values))return [];
  return d.rows.flatMap(row=>{
   const rule=applyRule(row.condition,values,f.details);
   if(!rule.visible)return [];
@@ -80,6 +91,7 @@ function optionsFor(f,values,id){
    A restrição continua sendo a da ficha, sem inferência técnica. */
 function optionStates(f,values,id){
  const d=f.details.find(x=>x.id===id);if(!d)return [];
+ if(id==='DET-LSZH'&&!lszhCandidate(f,values))return [];
  const chosen=values||{};
  return d.options.map(option=>{
   const rows=d.rows.filter(r=>r.options.some(o=>eq(o,option)));
