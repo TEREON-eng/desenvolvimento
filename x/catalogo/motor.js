@@ -170,6 +170,18 @@ function missing(f,values){
  }
  return [...new Set([...out,...(conflicts(f,values).length?['__CONFLITO__']:[])])];
 }
+/* Candidato a exigência LSZH, NUNCA classificação automática.
+   Para cabos com cobertura possível, ausência de resposta não é ausência de PVC. */
+function lszhCandidate(f,values){
+ if(f?.id!=='FT_COND-001')return false;
+ const v=values||{},type=v['DET-001'],ins=v['DET-006'],cover=v['DET-008'];
+ if(!type||!ins||!['Condutor isolado','Cabo unipolar','Cabo multipolar'].includes(type))return false;
+ if(norm(ins).includes('pvc'))return false;
+ const covered=type==='Cabo unipolar'||type==='Cabo multipolar';
+ if(covered&&(!cover||norm(cover).includes('pvc')))return false;
+ if(!covered&&cover)return false;
+ return true;
+}
 function technicalName(f,values){
  const selected=f.details.filter(d=>values?.[d.id]);
  const hasRules=selected.some(d=>d.rows.some(r=>r.nameRule));
@@ -201,5 +213,5 @@ async function load(){
 }
 function list(){return cache||[]}
 function get(id){return list().find(f=>f.id===id)||null}
-root.TereonXCatalog=Object.freeze({version:2,load,list,get,isOfficial,normalize,visibleDetails,missing,technicalName,applyRule,optionsFor,conflicts,nextDetail,optionStates,relatedTags});
+root.TereonXCatalog=Object.freeze({version:2,load,list,get,isOfficial,normalize,visibleDetails,missing,technicalName,applyRule,optionsFor,conflicts,nextDetail,optionStates,relatedTags,lszhCandidate});
 })(window);
