@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.38",
+  "version": "x.0.3.39",
   "build": "2026-11-11",
-  "notes": "Fichário real DET-010 e exclusões PVC/LSZH, sem detalhe artificial"
+  "notes": "Motor genérico aceita ! como NÃO nas condições do Fichário; opções LSZH não alteradas"
 }
