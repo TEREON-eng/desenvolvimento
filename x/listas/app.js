@@ -79,6 +79,7 @@ const legacyFields=fields;
 let selectedFicha=null,choosingFicha=false,fichaSearch='',loadingFichas=false,fichaError='';
 const skippedOptional=new Set();
 let optionNotice='';
+let lszhDecision=''; // '', 'yes' ou 'no': nenhuma escolha presumida
 var $=function(id){return document.getElementById(id);};
 var esc=function(x){return String(x==null?'':x).replace(/[&<>"']/g,function(k){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[k];});};
 function list(){return lists.get(activeId);}
@@ -161,7 +162,10 @@ function draw(){
  }
 }
 function name(){
- if(selectedFicha)return window.TereonXCatalog.technicalName(selectedFicha,values);
+ if(selectedFicha){
+  const base=window.TereonXCatalog.technicalName(selectedFicha,values);
+  return lszhDecision==='yes'&&window.TereonXCatalog.lszhCandidate(selectedFicha,values)?base+' · LSZH':base;
+ }
  return 'Condutor elétrico'+(values.formacao?' '+values.formacao.toLowerCase():'')+
  (values.material?' de '+values.material.toLowerCase():'')+(values.secao?' · # '+values.secao:'')+
  (values.isolacao?' · '+values.isolacao:'')+(values.tensao?' · '+values.tensao:'')+
@@ -248,6 +252,16 @@ function redrawAdd(){
    (window.TereonXCatalog.missing(selectedFicha,values).length?'Confirme as características obrigatórias para adicionar.':'Obrigatórios confirmados; você pode continuar escolhendo detalhes opcionais.'):
    'Escolha uma opção; a próxima característica aparecerá automaticamente.');
   $('fieldHelp').classList.toggle('choice-warning',!!optionNotice);
+  if(selectedFicha?.id==='FT_COND-001'&&
+     window.TereonXCatalog.missing(selectedFicha,values).length===0&&
+     window.TereonXCatalog.lszhCandidate(selectedFicha,values)){
+   $('fieldHelp').insertAdjacentHTML('beforeend',
+    '<div class="lszh-review"><strong>Exigir cabo não halogenado, com baixa emissão de fumaça (LSZH)?</strong>'+ 
+    '<small>Possibilidade sugerida pelos materiais especificados. Só confirme se deseja exigir conformidade LSZH para o produto completo.</small>'+ 
+    '<div class="lszh-actions">'+
+    [['yes','Sim, exigir LSZH'],['no','Não incluir'],['','Deixar sem definição']].map(([v,label])=>
+      '<button type="button" data-lszh-decision="'+v+'" class="tag'+(lszhDecision===v?' on':'')+'" aria-pressed="'+(lszhDecision===v)+'">'+label+'</button>').join('')+'</div></div>');
+  }
  }
  const current=list();$('stageTags').innerHTML=(current?.stages||[]).map(s=>'<button type="button" class="tag" data-stage="'+esc(s)+'">'+esc(s)+'</button>').join('');
  validate();
@@ -260,7 +274,7 @@ function validate(){
 async function openAdd(item){
  if(!list())return;
  editId=item?String(item.id):null;
- skippedOptional.clear();optionNotice='';
+ skippedOptional.clear();optionNotice='';lszhDecision=item?.lszhDecision||(item?.lszhRequired?'yes':'');
  values=item&&item.values?Object.assign({},item.values):{};
  fichaSearch='';fichaError='';loadingFichas=!item;
  selectedFicha=null;choosingFicha=!item;
@@ -423,7 +437,7 @@ $('createForm').addEventListener('submit',function(e){
 });
 $('tags').addEventListener('click',function(e){
  var b=e.target.closest('[data-remove]');if(!b)return;
- delete values[b.dataset.remove];optionNotice='';fields=getFields();
+ delete values[b.dataset.remove];optionNotice='';lszhDecision='';fields=getFields();
  // Sempre retoma a primeira característica obrigatória ainda pendente,
  // mesmo quando várias tags são removidas em sequência.
  focus=pickFirstMissing();redrawAdd();
@@ -443,7 +457,7 @@ $('choices').addEventListener('click',function(e){
  if(select){
   selectedFicha=window.TereonXCatalog.get(select.dataset.ficha);
   if(!selectedFicha)return;
-  choosingFicha=false;values={};skippedOptional.clear();fields=getFields();focus=pickFirstMissing();
+  choosingFicha=false;values={};skippedOptional.clear();lszhDecision='';fields=getFields();focus=pickFirstMissing();
   $('unit').value=selectedFicha.id==='FT_COND-001'?'m':'un';
   redrawAdd();return;
  }
@@ -468,9 +482,15 @@ $('choices').addEventListener('click',function(e){
   const problems=window.TereonXCatalog.conflicts(selectedFicha,next);
   if(problems.length){alert('Combinação não permitida pela ficha: '+problems.join('; ')+'. Remova a tag incompatível antes de continuar.');return;}
  }
- values=next;optionNotice=''; // Nunca apagar outra tag confirmada em decorrência de uma exclusão.
+ values=next;optionNotice='';lszhDecision=''; // Nunca apagar outra tag confirmada em decorrência de uma exclusão.
  skippedOptional.delete(field.id);
  fields=getFields();focus=pickFirstMissing();redrawAdd();
+});
+$('fieldHelp').addEventListener('click',function(e){
+ const b=e.target.closest('[data-lszh-decision]');
+ if(!b||!selectedFicha||!window.TereonXCatalog.lszhCandidate(selectedFicha,values))return;
+ lszhDecision=b.dataset.lszhDecision;
+ redrawAdd();
 });
 $('stageTags').addEventListener('click',function(e){var b=e.target.closest('[data-stage]');if(b){$('stage').value=b.dataset.stage;validate();}});
 ['qty','stage'].forEach(function(x){$(x).addEventListener('input',validate);});
@@ -479,6 +499,10 @@ $('saveItem').addEventListener('click',function(){
  if(selectedFicha&&window.TereonXCatalog.missing(selectedFicha,values).length)return;
  if(!selectedFicha&&count()!==6)return;
  var itemData={name:name(),catalogId:selectedFicha?.id||null,values:Object.assign({},values),qty:$('qty').value,unit:$('unit').value,stage:$('stage').value.trim(),fichaStatus:selectedFicha?.status||'Ficha anterior',simulacao:selectedFicha?.kind==='simulacao'};
+ if(selectedFicha?.id==='FT_COND-001'&&window.TereonXCatalog.lszhCandidate(selectedFicha,values)){
+   itemData.lszhDecision=lszhDecision;
+   itemData.lszhRequired=lszhDecision==='yes';
+ }
  if(!safe(function(){return lists.upsertItem(activeId,itemData,editId);}))return;
  close('addDialog');editId=null;draw();
 });
