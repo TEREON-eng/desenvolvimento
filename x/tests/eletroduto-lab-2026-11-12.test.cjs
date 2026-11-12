@@ -1,0 +1,38 @@
+/* FT_INFRA-001 — ensaio do fichário experimental; não homologa normas nem catálogo. */
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
+const root=path.resolve(__dirname,'../..');
+const source=JSON.parse(fs.readFileSync(path.join(root,'x/fichario-x/fichas-lab-2026-11-12.json'),'utf8'));
+const original=JSON.parse(fs.readFileSync(path.join(root,'x/fichario-x/fichas-drive-2026-11-08.json'),'utf8'));
+const ctx={window:{},fetch:async()=>({ok:true,json:async()=>structuredClone(source)})};vm.createContext(ctx);
+new vm.Script(fs.readFileSync(path.join(root,'x/catalogo/motor.js'),'utf8')).runInContext(ctx);
+(async()=>{
+ const cat=ctx.window.TereonXCatalog;
+ const fich=(await cat.load()).find(f=>f.id==='FT_INFRA-001');
+ assert.ok(fich,'ficha deve aparecer no seletor');
+ assert.equal(fich.kind,'revisao');assert.equal(fich.homologada,false);
+ assert.equal(original.fichas.find(f=>f.codigo==='FT_INFRA-001').detalhes.find(d=>d.id==='DET-008').valores.length,0,'original preservado');
+ const rig={'DET-001':'Rígido','DET-002':'PVC'};
+ assert.deepEqual([...cat.missing(fich,rig)],['DET-004'],'rígido PVC não pode salvar sem diâmetro');
+ assert.deepEqual([...cat.missing(fich,{...rig,'DET-004':'3/4"'} )],[]);
+ assert.ok(!cat.optionsFor(fich,{'DET-001':'Rígido'},'DET-002').includes('PEAD'),'PEAD nunca para rígido');
+ const flex={'DET-001':'Flexível','DET-002':'PVC'};
+ assert.deepEqual([...cat.missing(fich,flex)],['DET-004','DET-007','DET-008']);
+ assert.deepEqual([...cat.missing(fich,{...flex,'DET-004':'3/4"','DET-007':'Corrugado','DET-008':'Média'})],[]);
+ const pead={'DET-001':'Flexível','DET-002':'PEAD'};
+ assert.deepEqual([...cat.missing(fich,pead)],['DET-005','DET-007']);
+ const steel={'DET-001':'Rígido','DET-002':'Aço'};
+ assert.deepEqual([...cat.missing(fich,steel)],['DET-003','DET-010']);
+ const flexibleSteel={'DET-001':'Flexível','DET-002':'Aço'};
+ assert.deepEqual([...cat.missing(fich,flexibleSteel)],['DET-003','DET-006']);
+ assert.ok(cat.visibleDetails(fich,rig).some(d=>d.id==='DET-013'));
+ assert.ok(!cat.visibleDetails(fich,rig).some(d=>d.id==='DET-012'));
+ assert.ok(cat.visibleDetails(fich,flex).some(d=>d.id==='DET-012'));
+ assert.ok(!cat.visibleDetails(fich,flex).some(d=>d.id==='DET-013'));
+ const illegal={'DET-001':'Rígido','DET-002':'PEAD'};
+ assert.ok(cat.conflicts(fich,illegal).length,'PEAD em rígido deve bloquear');
+ const app=fs.readFileSync(path.join(root,'x/listas/app.js'),'utf8');
+ assert.ok(app.includes("selectedFicha?.id==='FT_INFRA-001'"),'unidade governada pela ficha');
+ assert.ok(app.includes("['DET-012','DET-013'].includes(d.id)"),'evita pergunta duplicada de unidade');
+ console.log('FT_INFRA-001 laboratório: tipologias, diâmetros, perfil, resistência e unidade por tipo OK; SEM homologação');
+})().catch(e=>{console.error(e);process.exitCode=1});
