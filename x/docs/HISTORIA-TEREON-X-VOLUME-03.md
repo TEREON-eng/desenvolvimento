@@ -84,3 +84,23 @@ Esta história não termina com um “lançamento pronto”. Termina com uma esc
 - **Linguagem:** natural, humana, com conflito, tentativas e revisão; não transformar tudo em publicidade perfeita.
 
 **Pontes:** [Vol.02](HISTORIA-TEREON-X.md), [Foco 17/11](FOCO-TESTE-CAMPO-17-11-2026.md), [Mestre](MESTRE-TEREON-X.md), [Superauditoria](SUPERAUDITORIA-TEREON-X-2026-11-10.md).
+
+## 12/11 — O momento de parar de pintar e voltar para o material
+Uma sequência de testes com listas mostrou uma descoberta recorrente: a interface melhora quando o usuário consegue reconhecer **o que é o insumo**, **quais características o identificam**, **a que etapa pertence** e **quanto foi lançado**, sem reler o nome completo a cada linha. O fundador começou descrevendo cards muito grandes, depois pediu títulos mais curtos, etapas recolhíveis, distinção entre material e especificação, e por fim exigiu que as visões **Por insumo** e **Por etapa** fossem visualmente coerentes. O resultado da X.0.3.50 foi considerado suficientemente bom para usar e ajustar com a experiência.
+
+O aprendizado não foi “escolher a cor certa”. Foram vários **passos pequenos, com preservação do que já tinha funcionado**, até o visual deixar de competir com a tarefa. Houve pelo menos uma regressão real: os botões Por insumo/Por etapa foram desenhados, mas o tratamento de clique ficou dentro de uma condição que não os alcançava. A correção virou teste dedicado de regressão. A lição é simples e desconfortável: interface bonita não substitui interação testada.
+
+Com o visual encaminhado, o foco voltou ao coração técnico. No snapshot de Eletrodutos, ainda era possível concluir uma seleção de rígido PVC sem informar diâmetro; atributos condicionais de capa, perfil, resistência e galvanização careciam de coerência. Para preparar o uso restrito em 17/11, o laboratório gerou **uma cópia experimental da ficha** e manteve intacta a origem do Fichário. Essa escolha protege a memória técnica: simular é necessário, mas não equivale a homologar.
+
+Outra frente voltou ao caminho do pedido na obra: o que o encarregado lança precisa chegar compreensível a quem compra. A ideia de apresentar **Compras**, **Completo** e **Execução** foi refinada para WhatsApp, e-mail e PDF. O formato de compra deve mostrar a apresentação comercial sem perder a metragem e sem confundir rolos com lances. O exemplo de 500 metros divididos em sete lances continua sendo uma prova de que a palavra “quantidade” pode esconder necessidades materiais bem diferentes.
+
+**Situação honesta da história neste ponto:** código X.0.3.51 gravado em `desenvolvimento`; revisão de ficha e relatórios implementadas para simulação; testes automatizados ampliados; experiência real do PDF, funcionamento em dispositivos e deploy ainda não confirmados. Não transformar expectativa de 17/11 em história de lançamento já realizado.
+
+**Possíveis conteúdos para redes sociais, após autorização e revisão editorial:**
+- “Por que deixamos de mostrar o nome técnico inteiro em toda linha da lista.”
+- “Os pequenos ajustes que deixaram a tela boa o bastante para ir à obra.”
+- “Sete lances não são sete rolos: o que o comprador precisa enxergar.”
+- “Uma ficha de eletroduto sem diâmetro: o tipo de erro que uma boa interface não pode esconder.”
+- “Por que simular uma ficha é diferente de chamá-la de oficial.”
+
+**Referências:** [changelog](CHANGELOG.md), [matriz de fichas](MATRIZ-FICHAS-17-11-2026.md), [decisões da rodada](REVISAO-ELETRODUTO-E-RELATORIOS-2026-11-12.md). A narrativa é síntese editorial de decisões e dificuldades discutidas; não é uma transcrição literal das falas.
