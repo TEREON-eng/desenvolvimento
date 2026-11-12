@@ -1,3 +1,11 @@
+## 12/11/2026 — X.0.3.52 · Compras consolida unidades antigas iguais sem converter
+- Ajuste final do motor Compartilhar depois da X.0.3.51: linhas legadas com **mesma especificação, mesmo nome e mesma unidade de compra** agora são consolidadas no relatório **Compras**, mantendo uma linha por material e discriminação de etapas.
+- Exemplo: 8 `br3m` na Sala 2 + 2 `br3m` na Sala 1 => **10 barras de 3 m**, com ambas as etapas identificadas. **Não converter automaticamente em 30 m** nem misturar com outra apresentação.
+- Nomes comerciais conhecidos (`br3m`, `rl25`, `rl100`) passam a ser escritos de modo legível, com a unidade original explicitada. Relatório Completo e Execução mantêm os lançamentos individuais.
+- Corpo de e-mail deixa de atribuir assinatura fictícia a uma “equipe responsável”; usuário revisa e assina pelo cliente de e-mail.
+- Teste `compartilhar-formatos-2026-11-12.test.cjs` ampliado para validar soma e rastreio de etapas. `x/index.html`, `x/pwa.js`, `x/sw.js` e `x/version.json` sincronizados em X.0.3.52.
+- Continua **não comprovada** a execução integral do CI, o PDF real em celular e o deploy Cloudflare. [Revisão central](REVISAO-ELETRODUTO-E-RELATORIOS-2026-11-12.md).
+
 ## 12/11/2026 — X.0.3.51 · Ficha Eletroduto em laboratório e compartilhamento para obra
 - A aparência X.0.3.50 das listas foi **aceita pelo fundador como referência para uso e observação**, sem declarar versão geral homologada.
 - Criado `x/fichario-x/fichas-lab-2026-11-12.json` a partir do snapshot original `fichas-drive-2026-11-08.json`, **preservado intacto**; apenas `FT_INFRA-001` foi refinada. A planilha Fichario.xlsm **não foi modificada**.
