@@ -1,3 +1,5 @@
+> **VIGENTE — 12/11/2026 · X.0.3.51:** referência visual de Listas X.0.3.50 aceita para observação de campo; ficha Eletroduto aprimorada em **snapshot experimental separado**, sem editar Fichario.xlsm; relatórios WhatsApp, e-mail e PDF revisados para Compras/Completo/Execução; workflow ampliado com seis testes. **Nenhuma homologação técnica, CI concluído, PDF em celular ou Cloudflare confirmado.** Leia primeiro [Revisão da rodada](REVISAO-ELETRODUTO-E-RELATORIOS-2026-11-12.md), [Estado vigente](ESTADO-VIGENTE-10-11-2026.md), [Contratos](CONTRATOS-VIGENTES.md), [Foco de 17/11](FOCO-TESTE-CAMPO-17-11-2026.md) e [Histórico](CHANGELOG.md).
+
 > **12/11/2026 · X.0.3.50:** padronizados também os **fundos do último nível** em Por insumo e Por etapa com superfície opaca idêntica. Paleta lousa/neon atenuada, sem alterações funcionais. [Histórico](CHANGELOG.md). Teste visual no celular e publicação Cloudflare pendentes.
 
 > **12/11/2026 · X.0.3.49:** cards de **Por insumo** e **Por etapa** padronizados com fundo verde-lousa translúcido e cabeçalho verde neon translúcido. Revisão restrita a CSS e atualização de cache/versão, sem mudança funcional. [Histórico](CHANGELOG.md). Publicação Cloudflare e teste visual pendentes de confirmação.
@@ -10,7 +12,11 @@
 
 > **12/11/2026 · X.0.3.45:** corrigida a alternância entre **Por insumo** e **Por etapa**, que estava inacessível por erro de delegação de cliques. Teste de regressão acrescentado; deploy e teste no celular ainda sem confirmação. [Histórico](CHANGELOG.md).
 
-> **Revisão de 12/11/2026 — X.0.3.44:** lançamentos consolidados agora aparecem compactos por insumo, com título expansível e apenas etapas/quantidades abaixo; ações preservadas ao expandir etapa. Visualização Por etapa também compactada. [Histórico](CHANGELOG.md). Publicação Cloudflare e teste no celular ainda pendentes de confirmação.\n\n> **Evolução de 12/11/2026 — X.0.3.43:** lista com visualização por insumo/etapa e consolidação de lances por composição, relatórios Compras/Completo/Execução implementados na branch `desenvolvimento`; publicação e homologação não confirmadas. [Contrato](CONTRATO-LISTAS-AGRUPAMENTO-E-RELATORIOS-2026-11-12.md) · [Histórico](CHANGELOG.md).\n\n# TEREON X — Índice oficial e situação documental
+> **Revisão de 12/11/2026 — X.0.3.44:** lançamentos consolidados agora aparecem compactos por insumo, com título expansível e apenas etapas/quantidades abaixo; ações preservadas ao expandir etapa. Visualização Por etapa também compactada. [Histórico](CHANGELOG.md). Publicação Cloudflare e teste no celular ainda pendentes de confirmação.
+
+> **Evolução de 12/11/2026 — X.0.3.43:** lista com visualização por insumo/etapa e consolidação de lances por composição, relatórios Compras/Completo/Execução implementados na branch `desenvolvimento`; publicação e homologação não confirmadas. [Contrato](CONTRATO-LISTAS-AGRUPAMENTO-E-RELATORIOS-2026-11-12.md) · [Histórico](CHANGELOG.md).
+
+# TEREON X — Índice oficial e situação documental
 
 > **ATUALIZAÇÃO DE FOCO — 10/11/2026:** leia primeiro [Estado vigente](ESTADO-VIGENTE-10-11-2026.md), [Plano 17/11](FOCO-TESTE-CAMPO-17-11-2026.md) e [História Vol.03](HISTORIA-TEREON-X-VOLUME-03.md). Listas é o núcleo do teste. Obras/Diário/Empreiteiros permanecem laboratórios. Arquivos históricos são memória do percurso, não regras novas.
 
