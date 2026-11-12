@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.46",
+  "version": "x.0.3.47",
   "build": "2026-11-12",
-  "notes": "Etapas compactas: um título por insumo, descrição técnica secundária e lançamentos recolhidos"
+  "notes": "Hierarquia de listas com verde neon translúcido nas etapas, itens e lançamentos; sem alterar dados"
 }
