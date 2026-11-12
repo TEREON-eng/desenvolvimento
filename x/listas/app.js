@@ -189,7 +189,7 @@ function reconcileInvalidOptional(target=values){
 function getFields(){
  if(!selectedFicha)return legacyFields;
  return window.TereonXCatalog.visibleDetails(selectedFicha,values)
-  .filter(d=>d.name!=='[Detalhe sem nome]')
+  .filter(d=>d.name!=='[Detalhe sem nome]'&&!(selectedFicha.id==='FT_COND-001'&&d.id==='DET-011'))
   .map(d=>({id:d.id,label:d.name,required:d.required,options:window.TereonXCatalog.optionsFor(selectedFicha,values,d.id)}));
 }
 function count(){return fields.filter(f=>f.required&&values[f.id]).length}
@@ -215,10 +215,11 @@ function cleanHiddenValues(){
  }
 }
 function populateUnitOptions(){
- const known=['m','un','rl','br3m','rl25','rl50','rl100','rl50m','rl100m','rl200m'];
+ const detail=selectedFicha?.details.find(d=>d.name==='Unidade'||d.name==='Unidade de compra');
+ const known=detail?.options.length?detail.options:['m','un','rl','br3m','rl25','rl50','rl100','rl50m','rl100m','rl200m'];
  const current=$('unit').value;
- $('unit').innerHTML=known.map(u=>'<option value="'+u+'">'+u+'</option>').join('');
- if(known.includes(current))$('unit').value=current;
+ $('unit').innerHTML=known.map(u=>'<option value="'+esc(u)+'">'+esc(u)+'</option>').join('');
+ $('unit').value=known.includes(current)?current:known[0];
 }
 function paintFichaChoices(){
  const all=window.TereonXCatalog?.list()||[];
@@ -271,7 +272,16 @@ function redrawAdd(){
   $('fieldHelp').classList.toggle('choice-warning',!!optionNotice);
 
  }
- const current=list();$('stageTags').innerHTML=(current?.stages||[]).map(s=>'<button type="button" class="tag" data-stage="'+esc(s)+'">'+esc(s)+'</button>').join('');
+ const current=list();
+ const q=Number($('qty').value),info=window.TereonXQuant?.unitInfo($('unit').value);
+ let hint='';
+ if(selectedFicha?.id==='FT_COND-001'&&q>0&&info){
+   if(info.kind==='lance')hint=q+' m medidos → '+info.count+' lances de '+(q/info.count).toLocaleString('pt-BR',{maximumFractionDigits:6})+' m cada';
+   else if(info.kind==='package')hint=q+' m medidos · '+info.unit+' · arredondar na consolidação';
+   else hint=q+' m medidos';
+ }
+ $('stageTags').innerHTML=(hint?'<span class="tiny muted" style="display:block;width:100%;margin-bottom:5px">'+esc(hint)+'</span>':'')+
+  (current?.stages||[]).map(s=>'<button type="button" class="tag" data-stage="'+esc(s)+'">'+esc(s)+'</button>').join('');
  validate();
 }
 function validate(){
@@ -323,7 +333,15 @@ async function openAdd(item){
   if(item?.catalogId){
    selectedFicha=window.TereonXCatalog.get(item.catalogId);
    if(!selectedFicha){fichaError='A ficha deste material não existe mais nesta revisão. Não altere o item até verificar a origem.';choosingFicha=true;}
-   else{choosingFicha=false;fields=getFields();focus=pickFirstMissing();}
+   else{
+    choosingFicha=false;
+    populateUnitOptions();
+    if(selectedFicha.id==='FT_COND-001'&&selectedFicha.details.some(d=>d.id==='DET-011')){
+      if(item.qtyBasis==='m')values['DET-011']=item.unit;
+      else delete values['DET-011']; // Legado: não converter quantidade antiga de rolos em metros.
+    }
+    fields=getFields();focus=pickFirstMissing();
+   }
   }
   loadingFichas=false;
   redrawAdd();
@@ -486,8 +504,10 @@ $('choices').addEventListener('click',function(e){
  if(select){
   selectedFicha=window.TereonXCatalog.get(select.dataset.ficha);
   if(!selectedFicha)return;
-  choosingFicha=false;values={};skippedOptional.clear();fields=getFields();focus=pickFirstMissing();
-  $('unit').value=selectedFicha.id==='FT_COND-001'?'m':'un';
+  choosingFicha=false;values={};skippedOptional.clear();
+  populateUnitOptions();
+  if(selectedFicha.id==='FT_COND-001'){$('unit').value='m';values['DET-011']='m';}
+  fields=getFields();focus=pickFirstMissing();
   redrawAdd();return;
  }
  const skip=e.target.closest('[data-skip-optional]');
@@ -518,7 +538,11 @@ $('choices').addEventListener('click',function(e){
  fields=getFields();focus=pickFirstMissing();redrawAdd();
 });
 $('stageTags').addEventListener('click',function(e){var b=e.target.closest('[data-stage]');if(b){$('stage').value=b.dataset.stage;validate();}});
-['qty','stage'].forEach(function(x){$(x).addEventListener('input',validate);});
+['qty','stage'].forEach(function(x){$(x).addEventListener('input',function(){if(x==='qty')redrawAdd();else validate();});});
+$('unit').addEventListener('change',function(){
+ if(selectedFicha?.id==='FT_COND-001')values['DET-011']=$('unit').value;
+ redrawAdd();
+});
 $('saveItem').addEventListener('click',function(){
  var l=list();if(!l||choosingFicha||!(Number($('qty').value)>0)||!$('stage').value.trim())return;
  if(selectedFicha&&window.TereonXCatalog.missing(selectedFicha,values).length)return;
@@ -526,7 +550,13 @@ $('saveItem').addEventListener('click',function(){
  if(selectedFicha&&window.TereonXCatalog.conflicts(selectedFicha,values).length){
    alert('A ficha contém escolhas incompatíveis. Revise as tags antes de salvar.');return;
  }
+ if(selectedFicha?.id==='FT_COND-001'){
+  const known=selectedFicha.details.find(d=>d.id==='DET-011')?.options||[];
+  if(!known.includes($('unit').value)){alert('Unidade não prevista na ficha atual.');return;}
+  values['DET-011']=$('unit').value;
+ }
  var itemData={name:name(),catalogId:selectedFicha?.id||null,values:Object.assign({},values),qty:$('qty').value,unit:$('unit').value,stage:$('stage').value.trim(),fichaStatus:selectedFicha?.status||'Ficha anterior',simulacao:selectedFicha?.kind==='simulacao'};
+ if(selectedFicha?.id==='FT_COND-001')itemData.qtyBasis='m';
  // Sem regras paralelas: Comportamento ao fogo é o DET-010 da própria ficha.
  if(!safe(function(){return lists.upsertItem(activeId,itemData,editId);}))return;
  close('addDialog');editId=null;draw();
