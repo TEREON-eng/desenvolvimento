@@ -1,3 +1,5 @@
+> **12/11/2026 · X.0.3.47:** sugestões de hierarquia visual aplicadas na Lista: neon TEREON translúcido nas etapas, superfície secundária nos insumos e guia sutil nos lançamentos. Apenas CSS e versão/cache alterados; teste visual no celular pendente. [Changelog](CHANGELOG.md).
+
 > **12/11/2026 · X.0.3.46:** Por etapa passou a exibir **grupos recolhíveis e insumos em linhas compactas**, com nome do material em destaque e especificação secundária. Lançamentos e ações preservados. [Changelog](CHANGELOG.md). Publicação Cloudflare e teste em celular não confirmados.
 
 > **12/11/2026 · X.0.3.45:** corrigida a alternância entre **Por insumo** e **Por etapa**, que estava inacessível por erro de delegação de cliques. Teste de regressão acrescentado; deploy e teste no celular ainda sem confirmação. [Histórico](CHANGELOG.md).
