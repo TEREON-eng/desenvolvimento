@@ -1,3 +1,12 @@
+## 12/11/2026 — X.0.3.49 · Padronização de cores nos dois agrupamentos
+- Revisão visual solicitada: **Por insumo** e **Por etapa** devem ter a **mesma linguagem de cores**, sem diferença entre seus cards principais.
+- Card do agrupador (ambas as visões): **verde-lousa translúcido** `rgba(102,139,119,.16)` no tema claro, `.20` nos temas escuro/TEREON.
+- Faixa do cabeçalho (ambas as visões): **verde neon TEREON #C7FF46 translúcido**, `rgba(199,255,70,.16)` no claro, `.13` no escuro e `.14` no TEREON.
+- Bordas discretas do mesmo sistema; itens e lançamentos internos mantidos em fundos neutros para reforçar a hierarquia. Tons do texto do tema preservados.
+- Mudanças limitadas ao `x/styles.css`; `x/index.html`, `x/pwa.js`, `x/sw.js`, `x/version.json` atualizados para X.0.3.49 e invalidação do cache.
+- **Não alterados**: modal de adicionar item, fichas, quantificação, agrupamento de dados, textos técnicos, ações de editar/duplicar/excluir, relatórios e `main`.
+- Conferência estática dos seletores/versões efetuada; testes visuais em celular, CI e publicação Cloudflare não confirmados.
+
 ## 12/11/2026 — X.0.3.48 · Resumo essencial para localizar materiais
 - Feedback do fundador: a visão **Por etapa** estava próxima do esperado; **Por insumo** ainda exibia atributos menos úteis. A cor precisa ser legível e a isolação PVC precisa aparecer quando confirmada.
 - As **duas visualizações** agora usam a mesma seleção de atributos curtos, independente da composição do nome técnico completo. Exemplo de condutor: **Condutor isolado** / **Cobre · 2,5 mm² · Azul · PVC**.
