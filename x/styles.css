@@ -349,3 +349,81 @@ dialog::backdrop{background:#14281d77;backdrop-filter:blur(2px)}
 #listDialog .compact-stage-extra{font-size:11px;color:var(--tx-app-muted,#758276);padding:3px 0;overflow-wrap:anywhere}
 #listDialog .compact-stage-material>summary>.compact-stage-qty{font-size:12px;flex-shrink:0;text-align:right}
 #listDialog .compact-stage-items .compact-source{min-height:31px}
+
+/* X.0.3.47 — Profundidade visual com o verde neon TEREON (#C7FF46).
+   Apenas cores/contornos; nenhuma mudança de dados, eventos ou dimensões da UI. */
+#listDialog{
+ --tx-stage-bg:rgba(199,255,70,.17);
+ --tx-stage-head:rgba(199,255,70,.12);
+ --tx-stage-border:rgba(115,154,36,.28);
+ --tx-item-bg:rgba(255,255,255,.82);
+ --tx-item-border:rgba(127,158,85,.21);
+ --tx-launch-bg:rgba(234,242,229,.55);
+ --tx-launch-rule:rgba(122,160,49,.30);
+}
+html[data-tx-appearance="dark"] #listDialog{
+ --tx-stage-bg:rgba(199,255,70,.095);
+ --tx-stage-head:rgba(199,255,70,.055);
+ --tx-stage-border:rgba(199,255,70,.25);
+ --tx-item-bg:rgba(255,255,255,.045);
+ --tx-item-border:rgba(199,255,70,.15);
+ --tx-launch-bg:rgba(0,0,0,.14);
+ --tx-launch-rule:rgba(199,255,70,.28);
+}
+html[data-tx-appearance="tereon"] #listDialog{
+ --tx-stage-bg:rgba(199,255,70,.10);
+ --tx-stage-head:rgba(199,255,70,.07);
+ --tx-stage-border:rgba(199,255,70,.30);
+ --tx-item-bg:rgba(255,255,255,.045);
+ --tx-item-border:rgba(199,255,70,.16);
+ --tx-launch-bg:rgba(0,0,0,.12);
+ --tx-launch-rule:rgba(199,255,70,.32);
+}
+/* Etapa: agrupador principal, com cor mais evidente. */
+#listDialog .compact-stage-section{
+ background:var(--tx-stage-bg);
+ border-color:var(--tx-stage-border);
+}
+#listDialog .compact-stage-section>.compact-stage-heading{
+ background:var(--tx-stage-head);
+ border-left-color:#C7FF46;
+}
+/* Cada item pertence visualmente à etapa, mas continua compacto. */
+#listDialog .compact-stage-section>.compact-stage-items{
+ background:transparent;
+ border-top-color:var(--tx-stage-border);
+ padding:3px 8px 5px;
+}
+#listDialog .compact-stage-material{
+ margin:4px 0;
+ padding:0 8px;
+ border:1px solid var(--tx-item-border);
+ border-radius:8px;
+ background:var(--tx-item-bg);
+}
+#listDialog .compact-stage-material:last-child{
+ border-bottom:1px solid var(--tx-item-border);
+}
+/* Lançamentos recolhidos: área subordinada com guia vertical discreta. */
+#listDialog .compact-stage-material>.compact-stage-sources,
+#listDialog .compact-stage .compact-stage-sources{
+ background:var(--tx-launch-bg);
+ border-left:2px solid var(--tx-launch-rule);
+ border-top-color:var(--tx-item-border);
+ border-radius:0 0 6px 6px;
+ margin:0 0 6px 5px;
+ padding:3px 6px 6px 9px;
+}
+/* A visão Por insumo mantém a mesma linguagem de camadas. */
+#listDialog .compact-material-card{
+ border-color:var(--tx-stage-border);
+ box-shadow:inset 3px 0 0 var(--tx-stage-border);
+}
+#listDialog .compact-material-card .compact-stage-list{
+ background:var(--tx-stage-head);
+ border-radius:7px;
+ padding:0 8px;
+}
+#listDialog .compact-material-card .compact-stage{
+ border-top-color:var(--tx-item-border);
+}
