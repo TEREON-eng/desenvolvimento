@@ -2,7 +2,7 @@
    Independente do cadastro/lista, nunca altera os registros de origem. */
 (function(root){
 'use strict';
-let current=null,mode='text';
+let current=null,mode='text',purpose='compras';
 const $=id=>document.getElementById(id);
 const esc=x=>String(x??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','"':'&quot;'}[c]));
 const qty=n=>Number(n).toLocaleString('pt-BR',{maximumFractionDigits:4});
@@ -11,7 +11,7 @@ const css=`
 .ter-share-dialog::backdrop{background:#0008}
 .ter-share-inner{padding:18px;display:grid;gap:13px;background:#fff}
 .ter-share-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.ter-share-format{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.ter-share-purpose{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}\n.ter-share-purpose button{padding:10px 5px;border:1px solid #bdcfc2;background:#fff;border-radius:9px;color:#19372b;font-size:12px;min-height:43px}\n.ter-share-purpose button[aria-pressed=true]{color:#fff;background:#173e2b}\n.ter-share-format{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
 .ter-share-format button{padding:10px 5px;border:1px solid #bdcfc2;background:#fff;border-radius:9px;color:#19372b;font-size:12px;min-height:43px}
 .ter-share-format button[aria-pressed=true]{color:#fff;background:#173e2b}
 .ter-share-preview{border:1px solid #dde6de;border-radius:10px;background:#f5f8f6;padding:11px;white-space:pre-wrap;overflow:auto;max-height:27dvh;font:12px/1.55 system-ui}
@@ -19,20 +19,53 @@ const css=`
 .ter-share-note{font:12px/1.4 system-ui;color:#42614d}
 `;
 function model(list){
- const rows=(list.items||[]).map(it=>({
-  name:String(it.name||'Material'),qty:Number(it.qty),unit:String(it.unit||'un'),
-  stage:String(it.stage||'Geral'),details:Object.entries(it.values||{}).filter(([k,v])=>v!=null&&String(v).trim()).map(([k,v])=>String(k)+': '+String(v))
+ const items=list.items||[];
+ const rows=items.map(it=>({
+  id:String(it.id||''),name:String(it.name||'Material'),qty:Number(it.qty),unit:String(it.unit||'un'),
+  stage:String(it.stage||'Geral'),details:Object.entries(it.values||{}).filter(([k,v])=>v!=null&&String(v).trim()).map(([k,v])=>String(k)+': '+String(v)),
+  item:it
  }));
  if(rows.some(r=>!Number.isFinite(r.qty)||r.qty<=0))throw Error('Há uma quantidade inválida na lista.');
- return {name:String(list.name||'Lista de materiais'),rows};
+ const groups=root.TereonXQuant?.consolidate(items)||[];
+ const groupedIds=new Set(groups.flatMap(g=>g.sourceIds||[]));
+ const legacy=rows.filter(r=>!groupedIds.has(r.id));
+ return {name:String(list.name||'Lista de materiais'),rows,groups,legacy};
 }
 function text(m){
- const out=['TEREON | LISTA DE MATERIAIS',m.name,''];
- m.rows.forEach((r,i)=>{
-  out.push((i+1)+'. '+r.name+' — '+qty(r.qty)+' '+r.unit);
-  if(r.details.length)out.push('   '+r.details.join(' · '));
-  out.push('   Etapa: '+r.stage);
- });
+ const fmt=qty,out=['TEREON | '+({compras:'COMPRAS',completo:'RELATÓRIO COMPLETO',execucao:'EXECUÇÃO POR ETAPAS'}[purpose]||'LISTA'),m.name,''];
+ if(purpose==='compras'){
+  let i=0;
+  for(const g of m.groups){
+   out.push((++i)+'. '+g.name);
+   const summary=g.kind==='lance'?fmt(g.meters)+' m · '+fmt(g.units)+' lances':
+    g.kind==='package'?fmt(g.units)+' '+g.unit+' ('+fmt(g.meters)+' m medidos)':
+    fmt(g.meters)+' m';
+   out.push('   Compra: '+summary);
+   if(g.kind==='lance')out.push('   Composição: '+g.breakdown.map(x=>fmt(x.count)+' × '+fmt(x.length)+' m').join(' + '));
+  }
+  for(const r of m.legacy){
+   out.push((++i)+'. '+r.name+' — '+fmt(r.qty)+' '+r.unit+' (apresentação original, sem conversão)');
+  }
+ }else if(purpose==='execucao'){
+  const stages=[...new Set(m.rows.map(r=>r.stage))];
+  for(const stage of stages){
+   out.push('ETAPA: '+stage);
+   m.rows.filter(r=>r.stage===stage).forEach((r,i)=>{
+    out.push('  '+(i+1)+'. '+r.name+' — '+fmt(r.qty)+(r.item.qtyBasis==='m'?' m medidos · '+r.unit:' '+r.unit));
+    const d=root.TereonXQuant?.describe(r.item);
+    if(d?.kind==='lance')out.push('     '+fmt(d.units)+' lances de '+fmt(d.each)+' m');
+   });
+   out.push('');
+  }
+ }else{
+  m.rows.forEach((r,i)=>{
+   out.push((i+1)+'. '+r.name+' — '+fmt(r.qty)+(r.item.qtyBasis==='m'?' m medidos · '+r.unit:' '+r.unit));
+   if(r.details.length)out.push('   '+r.details.join(' · '));
+   out.push('   Etapa: '+r.stage);
+   const d=root.TereonXQuant?.describe(r.item);
+   if(d?.kind==='lance')out.push('   Composição: '+fmt(d.units)+' lances de '+fmt(d.each)+' m');
+  });
+ }
  out.push('','Cópia informativa gerada pelo TEREON.');
  return out.join('\n');
 }
@@ -40,9 +73,10 @@ function ensure(){
  if($('terShareDialog'))return;
  const style=document.createElement('style');style.textContent=css;document.head.appendChild(style);
  const dialog=document.createElement('dialog');dialog.id='terShareDialog';dialog.className='ter-share-dialog';
- dialog.innerHTML='<div class="ter-share-inner"><div class="ter-share-top"><strong>Compartilhar lista</strong><button type="button" id="terShareClose" aria-label="Fechar">✕</button></div><div class="ter-share-format"><button data-mode="text" aria-pressed="true">WhatsApp / texto</button><button data-mode="email">E-mail</button><button data-mode="pdf">PDF</button></div><div class="ter-share-preview" id="terSharePreview"></div><button class="ter-share-action" id="terShareSend">Compartilhar texto</button><div id="terShareNote" class="ter-share-note" role="status"></div></div>';
+ dialog.innerHTML='<div class="ter-share-inner"><div class="ter-share-top"><strong>Compartilhar lista</strong><button type="button" id="terShareClose" aria-label="Fechar">✕</button></div><div class="ter-share-purpose"><button data-purpose="compras">Compras</button><button data-purpose="completo">Completo</button><button data-purpose="execucao">Execução</button></div><div class="ter-share-format"><button data-mode="text" aria-pressed="true">WhatsApp / texto</button><button data-mode="email">E-mail</button><button data-mode="pdf">PDF</button></div><div class="ter-share-preview" id="terSharePreview"></div><button class="ter-share-action" id="terShareSend">Compartilhar texto</button><div id="terShareNote" class="ter-share-note" role="status"></div></div>';
  document.body.appendChild(dialog);
  $('terShareClose').onclick=()=>dialog.close();
+ dialog.querySelector('.ter-share-purpose').onclick=e=>{const b=e.target.closest('[data-purpose]');if(!b)return;purpose=b.dataset.purpose;paint();};
  dialog.querySelector('.ter-share-format').onclick=e=>{
   const b=e.target.closest('[data-mode]');if(!b)return;mode=b.dataset.mode;paint();
  };
@@ -52,6 +86,7 @@ function paint(){
  if(!current)return;
  $('terSharePreview').textContent=text(current).slice(0,1600);
  $('terShareSend').textContent=mode==='pdf'?'Gerar PDF':mode==='email'?'Preparar e-mail':'Compartilhar texto';
+ document.querySelectorAll('#terShareDialog [data-purpose]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.purpose===purpose)));
  document.querySelectorAll('#terShareDialog [data-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===mode)));
  $('terShareNote').textContent='';
 }
@@ -79,11 +114,7 @@ async function makePdf(m){
   if(partial)write(partial,size,space);
  }
  function write(value,size,space){if(y<60)begin();page.drawText(value,{x:M,y,font,size,color:root.PDFLib.rgb(.1,.19,.14)});y-=space;}
- begin();line('TEREON | LISTA DE MATERIAIS',12,24);line(m.name,13,26);
- m.rows.forEach((r,i)=>{
-  line((i+1)+'. '+r.name,10,17);line('Quantidade: '+qty(r.qty)+' '+r.unit,9);
-  r.details.forEach(x=>line(x,8,13));line('Etapa: '+r.stage,8,18);
- });
+ begin();text(m).split('\n').forEach((value,i)=>line(value,i<2?11:9,i<2?23:14));
  const pdfBytes=await documentPdf.save();
  const name=m.name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9_-]+/g,'-').slice(0,70)||'lista';
  return new File([pdfBytes],name+'.pdf',{type:'application/pdf'});
@@ -109,5 +140,5 @@ async function send(){
  }catch(e){note.textContent='Não foi possível concluir: '+(e.message||'erro desconhecido');}
  finally{button.disabled=false;}
 }
-root.TereonXShare={open(list){try{current=model(list);if(!current.rows.length){alert('Adicione um material antes de compartilhar.');return;}ensure();mode='text';paint();$('terShareDialog').showModal();}catch(e){alert(e.message);}},model,text};
+root.TereonXShare={open(list){try{current=model(list);if(!current.rows.length){alert('Adicione um material antes de compartilhar.');return;}ensure();mode='text';purpose='compras';paint();$('terShareDialog').showModal();}catch(e){alert(e.message);}},model,text};
 })(window);
