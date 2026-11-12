@@ -441,32 +441,39 @@ html[data-tx-appearance="tereon"] #listDialog{
  line-height:1.3;
 }
 
-/* X.0.3.49 — Agrupamentos padronizados (por etapa / por insumo).
-   Mesma cor para o card organizador e sua faixa de título, sem alterar
-   dimensões dos lançamentos, hierarquia, componentes ou regra técnica.
-   Verde-lousa: 102,139,119. Verde-neon TEREON: 199,255,70. */
+/* X.0.3.50 — Mesma superfície final nas duas visões, menos saturação.
+   Diagnóstico: alpha de fundo interno era diferente (branco 82% vs 48%),
+   e se combinava com camadas slate/neon de forma distinta em cada visão.
+   A superfície interna agora é OPACA e idêntica em ambos os agrupamentos;
+   transparência permanece apenas no card agrupador e no cabeçalho. */
 #listDialog{
- --tx-group-card-bg:rgba(102,139,119,.16);
- --tx-group-card-border:rgba(102,139,119,.30);
- --tx-group-title-bg:rgba(199,255,70,.16);
- --tx-group-title-rule:rgba(199,255,70,.38);
- --tx-group-inner-bg:rgba(255,255,255,.48);
+ --tx-group-card-bg:rgba(102,139,119,.09);
+ --tx-group-card-border:rgba(102,139,119,.24);
+ --tx-group-title-bg:rgba(199,255,70,.085);
+ --tx-group-title-rule:rgba(97,141,43,.62);
+ --tx-inner-solid:var(--tx-app-surface,#FCFDFC);
+ --tx-inner-border:rgba(102,139,119,.22);
+ --tx-launch-line:rgba(102,139,119,.34);
 }
 html[data-tx-appearance="dark"] #listDialog{
- --tx-group-card-bg:rgba(102,139,119,.20);
- --tx-group-card-border:rgba(102,139,119,.36);
- --tx-group-title-bg:rgba(199,255,70,.13);
- --tx-group-title-rule:rgba(199,255,70,.38);
- --tx-group-inner-bg:rgba(0,0,0,.10);
+ --tx-group-card-bg:rgba(102,139,119,.12);
+ --tx-group-card-border:rgba(102,139,119,.30);
+ --tx-group-title-bg:rgba(199,255,70,.075);
+ --tx-group-title-rule:rgba(199,255,70,.54);
+ --tx-inner-solid:var(--tx-app-surface,#242C28);
+ --tx-inner-border:rgba(102,139,119,.34);
+ --tx-launch-line:rgba(199,255,70,.26);
 }
 html[data-tx-appearance="tereon"] #listDialog{
- --tx-group-card-bg:rgba(102,139,119,.20);
- --tx-group-card-border:rgba(102,139,119,.36);
- --tx-group-title-bg:rgba(199,255,70,.14);
- --tx-group-title-rule:rgba(199,255,70,.40);
- --tx-group-inner-bg:rgba(0,0,0,.10);
+ --tx-group-card-bg:rgba(102,139,119,.13);
+ --tx-group-card-border:rgba(102,139,119,.32);
+ --tx-group-title-bg:rgba(199,255,70,.075);
+ --tx-group-title-rule:rgba(199,255,70,.56);
+ --tx-inner-solid:var(--tx-app-surface,#193629);
+ --tx-inner-border:rgba(102,139,119,.35);
+ --tx-launch-line:rgba(199,255,70,.27);
 }
-/* Os dois agrupamentos principais compartilham exatamente o mesmo card. */
+/* A mesma aparência para o card do insumo e o card da etapa. */
 #listDialog .compact-stage-section,
 #listDialog .compact-material-card{
  background:var(--tx-group-card-bg);
@@ -474,7 +481,7 @@ html[data-tx-appearance="tereon"] #listDialog{
  border-radius:11px;
  box-shadow:none;
 }
-/* Mesmo cabeçalho neon translúcido e marcador, independentemente da visão. */
+/* Título em neon transparente: mesma faixa para qualquer agrupamento. */
 #listDialog .compact-stage-section>.compact-stage-heading,
 #listDialog .compact-material-card>.compact-material-head{
  background:var(--tx-group-title-bg);
@@ -489,14 +496,40 @@ html[data-tx-appearance="tereon"] #listDialog{
  padding:10px 12px;
  border-radius:10px 10px 0 0;
 }
-/* Conteúdo subordinado neutro: destaque fica no agrupador, não em tudo. */
+/* Não somar branco translúcido a cinza translúcido: isso criava dois tons. */
 #listDialog .compact-stage-section>.compact-stage-items{
  background:transparent;
  border-top:0;
+ padding:3px 8px 5px;
+}
+#listDialog .compact-stage-material{
+ margin:4px 0;
+ padding:0 8px;
+ background:var(--tx-inner-solid);
+ border:1px solid var(--tx-inner-border);
+ border-radius:8px;
+}
+#listDialog .compact-stage-material:last-child{
+ border-bottom:1px solid var(--tx-inner-border);
 }
 #listDialog .compact-material-card .compact-stage-list{
- background:var(--tx-group-inner-bg);
- border-radius:7px;
+ background:var(--tx-inner-solid);
+ border:1px solid var(--tx-inner-border);
+ border-radius:8px;
  padding:0 8px;
  margin-top:8px;
+}
+#listDialog .compact-material-card .compact-stage{
+ border-top-color:var(--tx-inner-border);
+}
+/* Fundo de origem dos lançamentos: exata mesma superfície opaca,
+   tanto em Por insumo quanto em Por etapa. O recuo e a guia fazem a relação. */
+#listDialog .compact-stage-material>.compact-stage-sources,
+#listDialog .compact-stage .compact-stage-sources{
+ background:var(--tx-inner-solid);
+ border-left:2px solid var(--tx-launch-line);
+ border-top-color:var(--tx-inner-border);
+ border-radius:0 0 6px 6px;
+ margin:0 0 6px 5px;
+ padding:3px 6px 6px 9px;
 }
