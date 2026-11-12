@@ -1,3 +1,13 @@
+## 12/11/2026 — X.0.3.48 · Resumo essencial para localizar materiais
+- Feedback do fundador: a visão **Por etapa** estava próxima do esperado; **Por insumo** ainda exibia atributos menos úteis. A cor precisa ser legível e a isolação PVC precisa aparecer quando confirmada.
+- As **duas visualizações** agora usam a mesma seleção de atributos curtos, independente da composição do nome técnico completo. Exemplo de condutor: **Condutor isolado** / **Cobre · 2,5 mm² · Azul · PVC**.
+- Ordem de localização para `FT_COND-001`: tipo selecionado, material, seção, **cor**, isolação e, quando for diferente, cobertura. PVC e cor são exibidos apenas se tiverem sido explicitamente confirmados nos valores do lançamento; o resumo não os infere do nome ou de catálogo genérico.
+- Em outras fichas, exibir até quatro detalhes confirmados, priorizando tipo, material, dimensão e cor. Sempre preservar especificação técnica integral na expansão.
+- CSS libera até **duas linhas** da legenda técnica nas visualizações por insumo/etapa para evitar ocultar cor e PVC em telas estreitas.
+- Não modificar cadastro, motor de especificação, chaves de consolidação, cálculo comercial, quantidade, unidades, relatórios, registros, dados em nuvem ou `main`.
+- Adicionado `x/tests/resumo-localizacao.test.cjs` com verificações de cor, PVC, ausência não inferida, cobertura distinta e insumos de infraestrutura.
+- Código e versão `x.0.3.48` gravados em `desenvolvimento`; verificação sintática e ensaio isolado dos cenários acima concluídos. **Deploy Cloudflare, CI e teste em celular não confirmados**.
+
 ## 12/11/2026 — X.0.3.47 · Hierarquia visual com verde neon translúcido
 - Sugestão aplicada a partir do feedback de campo: utilizar o verde **#C7FF46** como acento translúcido, sem tornar a lista carregada.
 - **Etapa**: fundo neon suave, contorno discreto e filete lateral neon no cabeçalho.
