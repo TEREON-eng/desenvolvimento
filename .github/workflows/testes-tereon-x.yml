@@ -26,6 +26,8 @@ jobs:
         run: node x/tests/etapas-compactas.test.cjs
       - name: Validar resumo de material cor e isolação
         run: node x/tests/resumo-localizacao.test.cjs
+      - name: Validar tags de consolidação/revisão e família de condutores
+        run: node x/tests/listas-tags-e-familia.test.cjs
       - name: Estressar 648 combinações de Condutores no Fichário experimental
         run: node x/tests/condutores-estresse.test.cjs
       - name: Validar contrato do catálogo
