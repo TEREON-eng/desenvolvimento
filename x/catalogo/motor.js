@@ -36,7 +36,7 @@ function normalize(f){
  });
  return {id:clean(f.codigo),name:clean(f.nome),reference:clean(f.referencia)||clean(f.codigo),
    status:clean(f.status),kind:sourceType,aliases:Array.isArray(f.apelidos)?f.apelidos.map(clean).filter(Boolean):[],collection:'catalogo-oficial',homologada:isOfficial(f),
-   pendencias,details,source:'fichario-x/fichas-drive-2026-11-08.json',sourceName:clean(f.nomeNaPlanilha),sourcePendencias:Array.isArray(f.pendencias)?f.pendencias:[]};
+   pendencias,details,source:'fichario-x/fichas-lab-2026-11-12.json',sourceName:clean(f.nomeNaPlanilha),sourcePendencias:Array.isArray(f.pendencias)?f.pendencias:[]};
 }
 const eq=(a,b)=>norm(a)===norm(b);
 function applyRule(rule,values,details){
@@ -203,7 +203,7 @@ function technicalName(f,values){
 }
 async function load(){
  if(cache)return cache;
- if(!loading)loading=fetch('/x/fichario-x/fichas-drive-2026-11-08.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Catálogo indisponível ('+r.status+')');return r.json()}).then(d=>{
+ if(!loading)loading=fetch('/x/fichario-x/fichas-lab-2026-11-12.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Catálogo indisponível ('+r.status+')');return r.json()}).then(d=>{
   if(d.schema!==1||!Array.isArray(d.fichas))throw Error('Esquema de catálogo incompatível');
   const all=d.fichas.map(normalize);const ids=new Set();
   all.forEach((f,i)=>{if(ids.has(f.id)){f.pendencias.push('Código do fichário duplicado: '+f.id);f.id=f.id+'-SIM-'+String(i+1).padStart(2,'0');}ids.add(f.id)});
