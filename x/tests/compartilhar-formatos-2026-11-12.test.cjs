@@ -16,8 +16,15 @@ const buying=share.text(model,'compras','text');
 assert.ok(buying.includes('500 m medidos'));assert.ok(buying.includes('7 lances'));
 assert.ok(buying.includes('3 × 100 m + 2 × 70 m + 2 × 30 m'),'comprimentos não podem se perder');
 assert.ok(buying.includes('4 rolos de 100 m'),'rolo fica em outra linha comercial');
-assert.ok(buying.includes('8 br3m (unidade original, sem conversão)'),'legado preservado');
+assert.ok(buying.includes('8 barras de 3 m (br3m; unidade original, sem conversão)'),'legado legível sem conversão');
 assert.ok(buying.includes('*Lista: Escola A*'));
+const repeated={...list,items:[...list.items,{id:'f',name:'Eletroduto rígido PVC 3/4"',qty:2,unit:'br3m',stage:'Sala 1',fichaStatus:'Em revisão'}]};
+const combined=share.model(repeated),combinedText=share.text(combined,'compras','text');
+assert.equal(combined.legacyGroups.length,1,'legado idêntico por unidade vira uma linha');
+assert.ok(combinedText.includes('10 barras de 3 m (br3m; unidade original, sem conversão)'),'quantidade comercial somada sem converter');
+assert.ok(combinedText.includes('Etapa: Sala 1 — 2 br3m'),'rastreia etapa original');
+assert.ok(combinedText.includes('Etapa: Sala 2 — 8 br3m'));
+
 const email=share.text(model,'completo','email');
 assert.ok(email.includes('Olá,'));
 assert.ok(email.includes('Etapa: Sala 1'));
