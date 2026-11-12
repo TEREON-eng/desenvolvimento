@@ -138,8 +138,7 @@ function draw(){
   var l=list();if(!l){exitList();return;}
   html='<div class="row list-detail-header"><div><button class="btn ghost small list-return" data-action="lists" aria-label="Voltar para a tela anterior">'+(listBackdrop==='home'?'← Início':'← Minhas listas')+'</button><h1>'+esc(l.name)+'</h1><span class="tiny muted">'+l.items.length+' lançamento(s)</span> '+listStorageBadge(l)+'</div><button class="btn ghost small" data-action="lists" aria-label="Fechar lista">✕</button></div>'+
    '<div style="margin-top:20px"><button class="btn primary full" data-action="add">＋ Adicionar item</button></div>'+ 
-   '<div style="margin-top:10px"><button class="btn full" data-action="share">↗ Compartilhar lista</button></div>'+ 
-   '<div style="margin-top:10px;text-align:right"><a href="/x/contribuir.html" style="color:#4f6f59;font-size:12px">Não encontrou o material? Envie seu item para nós ›</a></div>'+
+
    '<div class="row" style="margin-top:18px"><strong style="font-size:14px">Lançamentos da lista</strong><span class="tiny muted">'+l.items.length+' item(ns)</span></div>'+
    '<div style="display:flex;gap:8px;margin:10px 0" role="group" aria-label="Agrupar lançamentos"><button type="button" class="btn small" data-list-view="insumo" aria-pressed="'+(listView==='insumo')+'">Por insumo</button><button type="button" class="btn small" data-list-view="etapa" aria-pressed="'+(listView==='etapa')+'">Por etapa</button></div>';
   const fmt=n=>Number(n).toLocaleString('pt-BR',{maximumFractionDigits:6});
@@ -183,6 +182,8 @@ function draw(){
     html+='</div></section>';
    }
   }
+  html+='<div style="margin-top:16px"><button class="btn full" data-action="share">↗ Compartilhar / Gerar relatório</button></div>'+
+   '<div style="margin-top:10px;text-align:right"><a href="/x/contribuir.html" style="color:#4f6f59;font-size:12px">Não encontrou o material? Envie seu item para nós ›</a></div>';
  }
  if(page==='home'||page==='lists'||page==='list'){
   // Estado de armazenamento agora é individual em cada lista, não um aviso geral.
