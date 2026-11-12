@@ -1,3 +1,13 @@
+## 12/11/2026 — X.0.3.47 · Hierarquia visual com verde neon translúcido
+- Sugestão aplicada a partir do feedback de campo: utilizar o verde **#C7FF46** como acento translúcido, sem tornar a lista carregada.
+- **Etapa**: fundo neon suave, contorno discreto e filete lateral neon no cabeçalho.
+- **Insumo**: superfície secundária dentro da etapa, com borda fina; mantém título, especificação, quantidade e expansão.
+- **Lançamentos**: área recolhida com fundo quase neutro e guia lateral, indicando visualmente que pertencem ao insumo.
+- **Por insumo**: cartão de material recebe detalhe leve de contorno e as etapas internas, fundo suave.
+- Intensidades específicas para temas `light`, `dark` e `tereon`, respeitando contrastes já existentes e sem alterar HTML/JS de listas, catálogo, registros ou regras de quantificação.
+- CSS em `x/styles.css`; `x/index.html` atualiza query de estilos e `x/pwa.js`, `x/sw.js`, `x/version.json` avançam para X.0.3.47.
+- Escopo **somente visual**. Validação visual no celular, CI e publicação no Cloudflare não confirmadas nesta atualização.
+
 ## 12/11/2026 — X.0.3.46 · Etapas compactas e identidade visual do material
 - Feedback do fundador: visão Por insumo aprovada, mas cartões Por etapa grandes demais; difícil diferenciar nome do item e especificação.
 - A etapa agora é um grupo recolhível, com lista interna de **linhas compactas por insumo e apresentação**. Lançamentos idênticos na mesma etapa se agregam visualmente, sem alterar os registros originais nem seus vínculos.
