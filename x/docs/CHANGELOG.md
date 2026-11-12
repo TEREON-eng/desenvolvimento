@@ -1,3 +1,12 @@
+## 12/11/2026 — X.0.3.46 · Etapas compactas e identidade visual do material
+- Feedback do fundador: visão Por insumo aprovada, mas cartões Por etapa grandes demais; difícil diferenciar nome do item e especificação.
+- A etapa agora é um grupo recolhível, com lista interna de **linhas compactas por insumo e apresentação**. Lançamentos idênticos na mesma etapa se agregam visualmente, sem alterar os registros originais nem seus vínculos.
+- Separação visual: **nome do insumo em destaque**, derivado do nome da ficha quando disponível; detalhes técnicos confirmados em legenda secundária. O nome técnico completo permanece no detalhe expandido.
+- Quantidade Por etapa é a **metragem medida** quando `qtyBasis='m'`, sem fazer arredondamentos comerciais individuais. Em apresentação legada, mantém quantidade/unidade original.
+- Tocar na linha exibe cada lançamento original e seus botões **Editar, Duplicar, Excluir**. O modo Por insumo continua agrupando por apresentação de compra e vinculando as etapas.
+- Sem alteração em motor de quantificação, catálogo, ficha, dados de usuário ou `main`. Acrescentado teste `x/tests/etapas-compactas.test.cjs` para agrupamento visual, separação título/descrição e preservação das ações.
+- Nova versão e recursos PWA: **X.0.3.46**. Sintaxe e montagem isolada de linhas verificadas; CI, publicação Cloudflare e teste físico ainda não confirmados.
+
 ## 12/11/2026 — X.0.3.45 · Correção dos botões Por insumo / Por etapa
 - Feedback de campo: o alternador aparecia, mas não mudava a organização após criar lançamento na etapa Sala 2.
 - Causa confirmada em `x/listas/app.js`: a rotina `[data-list-view]` estava dentro do bloco `if(a)` dedicado a `[data-action]`. Os botões de agrupamento não possuem `data-action`, por isso o clique não alcançava essa rotina.
