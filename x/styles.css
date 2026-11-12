@@ -427,3 +427,16 @@ html[data-tx-appearance="tereon"] #listDialog{
 #listDialog .compact-material-card .compact-stage{
  border-top-color:var(--tx-item-border);
 }
+
+/* X.0.3.48 — Prioridades de localização: cor e isolação devem ficar legíveis.
+   Duas linhas compactas em ambas as visões, sem alterar cliques ou dimensões do modal. */
+#listDialog .compact-material-label small,
+#listDialog .compact-stage-material-text small{
+ display:-webkit-box;
+ -webkit-box-orient:vertical;
+ -webkit-line-clamp:2;
+ white-space:normal;
+ overflow:hidden;
+ overflow-wrap:anywhere;
+ line-height:1.3;
+}
