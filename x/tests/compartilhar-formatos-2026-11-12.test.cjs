@@ -1,0 +1,38 @@
+/* Relatórios Compras, Completo e Execução com três canais — sem DOM nem rede. */
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
+const root=path.resolve(__dirname,'../..');
+const win={},ctx={window:win};vm.createContext(ctx);
+for(const name of ['x/listas/quantificacao.js','x/motor-compartilhar.js'])
+ new vm.Script(fs.readFileSync(path.join(root,name),'utf8'),{filename:name}).runInContext(ctx);
+const base={catalogId:'FT_COND-001',name:'Condutor isolado Cobre # 10 mm² PVC Azul',values:{'DET-001':'Condutor isolado','DET-004':'10,0','DET-005':'PVC 70 °C','DET-008':'Azul'}};
+const item=(id,qty,unit,stage)=>({...base,id,qty,unit,qtyBasis:'m',stage,fichaStatus:'Em revisão'});
+const list={name:'Escola A',items:[item('a',300,'3 lances','Sala 1'),item('b',140,'2 lances','Sala 2'),item('c',60,'2 lances','Sala 2'),item('d',400,'rl100m','Sala 1'),{id:'e',name:'Eletroduto rígido PVC 3/4"',qty:8,unit:'br3m',stage:'Sala 2',fichaStatus:'Em revisão'}]};
+const copy=JSON.stringify(list);
+const share=win.TereonXShare,model=share.model(list);
+const purchases=share.sections(model,'compras');
+assert.equal(purchases.length,1);assert.equal(purchases[0].entries.length,3);
+const buying=share.text(model,'compras','text');
+assert.ok(buying.includes('500 m medidos'));assert.ok(buying.includes('7 lances'));
+assert.ok(buying.includes('3 × 100 m + 2 × 70 m + 2 × 30 m'),'comprimentos não podem se perder');
+assert.ok(buying.includes('4 rolos de 100 m'),'rolo fica em outra linha comercial');
+assert.ok(buying.includes('8 br3m (unidade original, sem conversão)'),'legado preservado');
+assert.ok(buying.includes('*Lista: Escola A*'));
+const email=share.text(model,'completo','email');
+assert.ok(email.includes('Olá,'));
+assert.ok(email.includes('Etapa: Sala 1'));
+assert.ok(email.includes('DET-005: PVC 70 °C'),'sem catálogo conectado, mantém chave original');
+assert.equal(share.subject(model,'completo'),'TEREON | Relatório completo — Escola A');
+const exe=share.text(model,'execucao','text');
+assert.ok(exe.includes('ETAPA · SALA 1')&&exe.includes('ETAPA · SALA 2'));
+assert.ok(exe.includes('300 m medidos · 3 lances'));
+const pdfData=share.sections(model,'compras');
+assert.equal(pdfData[0].entries.length,3,'PDF e texto usam as mesmas seções');
+assert.ok(share.text(model,'compras','pdf').includes('ITENS PARA COMPRA'));
+assert.ok(share.text(model,'compras','text').includes('ATENÇÃO: há fichas em revisão'));
+assert.equal(JSON.stringify(list),copy,'modelo/formatos não alteram lançamentos');
+assert.throws(()=>share.model({name:'Invalida',items:[{qty:0,name:'X'}]}),/quantidade inválida/);
+const source=fs.readFileSync(path.join(root,'x/motor-compartilhar.js'),'utf8');
+assert.ok(source.includes('for(let i=0;i<pages.length;i++)'),'PDF tem paginação');
+assert.ok(source.includes('for(const section of sections(m,kind))'),'PDF lê mesma representação');
+console.log('Compartilhar: WhatsApp, e-mail, PDF por seções, 500 m/7 lances, rolos e legado OK (sem renderização física de PDF)');
