@@ -533,3 +533,57 @@ html[data-tx-appearance="tereon"] #listDialog{
  margin:0 0 6px 5px;
  padding:3px 6px 6px 9px;
 }
+
+/* X.0.3.53 — etiquetas compactas de agrupamento e situação técnica.
+   São indicadores de leitura: não alteram aprovação, consolidação ou cadastro. */
+#listDialog{
+ --tx-status-group-bg:rgba(102,139,119,.16);
+ --tx-status-group-ink:#315944;
+ --tx-status-group-border:rgba(102,139,119,.28);
+ --tx-status-review-bg:rgba(180,135,51,.12);
+ --tx-status-review-ink:#795a20;
+ --tx-status-review-border:rgba(180,135,51,.25);
+}
+html[data-tx-appearance="dark"] #listDialog,
+html[data-tx-appearance="tereon"] #listDialog{
+ --tx-status-group-bg:rgba(102,139,119,.26);
+ --tx-status-group-ink:#d1efda;
+ --tx-status-group-border:rgba(169,204,180,.33);
+ --tx-status-review-bg:rgba(199,154,66,.16);
+ --tx-status-review-ink:#f5d99f;
+ --tx-status-review-border:rgba(225,183,101,.28);
+}
+#listDialog .compact-status-tags,
+#listDialog .compact-technical summary .compact-status-tags{
+ display:flex;
+ align-items:center;
+ flex-wrap:wrap;
+ gap:4px;
+ margin-top:5px;
+ max-width:100%;
+ overflow:visible;
+}
+#listDialog .compact-status-chip,
+#listDialog .compact-technical summary .compact-status-chip{
+ display:inline-block;
+ flex:0 0 auto;
+ width:auto;
+ overflow:visible;
+ white-space:nowrap;
+ font-size:10px;
+ font-weight:630;
+ line-height:1.15;
+ padding:3px 6px;
+ border:1px solid;
+ border-radius:5px;
+}
+#listDialog .compact-status-chip.consolidated{
+ color:var(--tx-status-group-ink);
+ background:var(--tx-status-group-bg);
+ border-color:var(--tx-status-group-border);
+}
+#listDialog .compact-status-chip.review{
+ color:var(--tx-status-review-ink);
+ background:var(--tx-status-review-bg);
+ border-color:var(--tx-status-review-border);
+}
