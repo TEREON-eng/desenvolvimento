@@ -143,9 +143,11 @@ function choice(v){
  assert.ok(!element('liveName').textContent.includes('LSZH'),'não presume classificação');
  choice('Não halogenado com baixa emissão de fumaça (LSZH)');
  assert.ok(element('liveName').textContent.includes('LSZH'));
- assert.ok(element('unit').innerHTML.includes('3 lances'),'DET-011 alimenta seletor já existente');
- assert.ok(!element('fieldLabel').textContent.includes('Unidade'),'DET-011 não cria pergunta duplicada');
- element('unit').value='3 lances';element('unit').listeners.change();
+ assert.ok(element('unit').innerHTML.includes('3 lances'),'DET-011 alimenta seletor existente');
+ assert.equal(element('fieldLabel').textContent,'Unidade','DET-011 aparece como etapa opcional após comportamento ao fogo');
+ assert.ok(element('choices').innerHTML.includes('data-pick="3 lances"'));
+ choice('3 lances');
+ assert.equal(element('unit').value,'3 lances','escolher detalhe sincroniza campo Unidade');
  element('qty').value='150';element('qty').listeners.input();
  assert.ok(element('stageTags').innerHTML.includes('3 lances de 50 m'),'prévia de comprimento por lance');
  element('saveItem').listeners.click();
