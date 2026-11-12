@@ -361,13 +361,16 @@ function reconcileInvalidOptional(target=values){
 function getFields(){
  if(!selectedFicha)return legacyFields;
  return window.TereonXCatalog.visibleDetails(selectedFicha,values)
-  .filter(d=>d.name!=='[Detalhe sem nome]')
+  // Eletroduto: a unidade vem do mesmo fichário, mas é escolhida no
+  // seletor visível de unidade, não duplicada como pergunta opcional.
+  .filter(d=>d.name!=='[Detalhe sem nome]'&&!(selectedFicha.id==='FT_INFRA-001'&&['DET-012','DET-013'].includes(d.id)))
   .map(d=>({id:d.id,label:d.name,required:d.required,options:window.TereonXCatalog.optionsFor(selectedFicha,values,d.id)}));
 }
 function count(){return fields.filter(f=>f.required&&values[f.id]).length}
 function pickFirstMissing(){
  if(selectedFicha){
-  const id=window.TereonXCatalog.nextDetail(selectedFicha,values,[...skippedOptional]);
+  const ignored=[...skippedOptional,...(selectedFicha.id==='FT_INFRA-001'?['DET-012','DET-013']:[])];
+  const id=window.TereonXCatalog.nextDetail(selectedFicha,values,ignored);
   if(id){
    const i=fields.findIndex(f=>f.id===id);
    if(i>=0)return i;
@@ -387,9 +390,24 @@ function cleanHiddenValues(){
  }
 }
 function populateUnitOptions(){
+ const current=$('unit').value;
+ if(selectedFicha?.id==='FT_INFRA-001'){
+  // Unidade condicional da ficha, com seleção única no formulário.
+  const applicable=selectedFicha.details.filter(d=>
+   ['DET-012','DET-013'].includes(d.id)&&
+   window.TereonXCatalog.applyRule(d.condition,values,selectedFicha.details).visible);
+  const known=[...new Set(applicable.flatMap(d=>d.options))];
+  // Antes da escolha do tipo, só um valor visual provisório: não é dado confirmado.
+  if(!known.length)known.push('m');
+  // Preservar unidade de item antigo durante sua edição, sem converter quantidade.
+  const original=editId!=null?list()?.items.find(it=>String(it.id)===String(editId)):null;
+  if(original?.unit&&!known.includes(original.unit))known.push(String(original.unit));
+  $('unit').innerHTML=known.map(u=>'<option value="'+esc(u)+'">'+esc(u)+'</option>').join('');
+  $('unit').value=known.includes(current)?current:known[0];
+  return;
+ }
  const detail=selectedFicha?.details.find(d=>d.name==='Unidade'||d.name==='Unidade de compra');
  const known=detail?.options.length?detail.options:['m','un','rl','br3m','rl25','rl50','rl100','rl50m','rl100m','rl200m'];
- const current=$('unit').value;
  $('unit').innerHTML=known.map(u=>'<option value="'+esc(u)+'">'+esc(u)+'</option>').join('');
  $('unit').value=known.includes(current)?current:known[0];
 }
@@ -403,6 +421,7 @@ function paintFichaChoices(){
    '<p class="tiny muted">Nenhuma ficha encontrada.</p>');
 }
 function redrawAdd(){
+ if(selectedFicha?.id==='FT_INFRA-001'&&!choosingFicha)populateUnitOptions();
  $('addDialog').classList.toggle('is-choosing',choosingFicha);
  if(choosingFicha){
   $('liveName').textContent='Selecione um material';
