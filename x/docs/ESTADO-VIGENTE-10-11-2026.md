@@ -1,3 +1,5 @@
+> **ATUALIZAÇÃO VIGENTE — 12/11/2026, X.0.3.51, branch `desenvolvimento`:** o visual das listas X.0.3.50 foi considerado adequado pelo fundador para uso e ajustes de campo. A prioridade agora é **ficha experimental de Eletrodutos (FT_INFRA-001)** e relatórios de **Compras, Completo e Execução** em WhatsApp/texto, e-mail e PDF. A ficha original do Fichário não foi alterada; o código usa cópia **não homologada**. O plano restrito de 17/11 permanece, sem declaração de produção publicada. [Revisão técnica e roteiro](REVISAO-ELETRODUTO-E-RELATORIOS-2026-11-12.md) · [Changelog](CHANGELOG.md). A tabela X.0.3.30 adiante é **histórica de 10/11**, não estado atual.
+
 # TEREON X — Estado vigente e precedência documental
 **10/11/2026 · Página de orientação obrigatória; não substitui documentação histórica**
 
