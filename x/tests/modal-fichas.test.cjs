@@ -48,6 +48,7 @@ const window={
 const context={window,document:doc,URLSearchParams,console,alert:message=>{throw Error(message)},confirm:()=>true};
 vm.createContext(context);
 new vm.Script(read('x/catalogo/motor.js')).runInContext(context);
+new vm.Script(read('x/listas/quantificacao.js')).runInContext(context);
 context.fetch=async url=>{
  assert.ok(url.includes('fichas-drive-2026-11-08.json'),'fonte deve ser a planilha, não o catálogo hipotético');
  return {ok:true,json:async()=>clone(data)};
@@ -142,11 +143,20 @@ function choice(v){
  assert.ok(!element('liveName').textContent.includes('LSZH'),'não presume classificação');
  choice('Não halogenado com baixa emissão de fumaça (LSZH)');
  assert.ok(element('liveName').textContent.includes('LSZH'));
+ assert.ok(element('unit').innerHTML.includes('3 lances'),'DET-011 alimenta seletor já existente');
+ assert.ok(!element('fieldLabel').textContent.includes('Unidade'),'DET-011 não cria pergunta duplicada');
+ element('unit').value='3 lances';element('unit').listeners.change();
+ element('qty').value='150';element('qty').listeners.input();
+ assert.ok(element('stageTags').innerHTML.includes('3 lances de 50 m'),'prévia de comprimento por lance');
  element('saveItem').listeners.click();
  const namedItem=stored.lists[0].items.at(-1);
  assert.equal(namedItem.catalogId,'FT_COND-001');
  assert.equal(namedItem.values['DET-010'],'Não halogenado com baixa emissão de fumaça (LSZH)');
  assert.ok(!Object.hasOwn(namedItem.values,'DET-LSZH'));
  assert.ok(namedItem.name.includes('LSZH'));
+ assert.equal(namedItem.unit,'3 lances');
+ assert.equal(namedItem.qtyBasis,'m');
+ assert.equal(namedItem.qty,'150');
+ assert.equal(namedItem.values['DET-011'],'3 lances');
  console.log('TEREON X: 6 fichas reais → modal aprovado → condição → tags → salvar → editar e legado OK');
 })().catch(error=>{console.error(error);process.exitCode=1});
