@@ -1,4 +1,4 @@
-/* X.0.3.53 — identificação visual não muda especificação nem consolidação. */
+/* X.0.3.54 — identificação somente no cabeçalho Por insumo. */
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const app=fs.readFileSync(path.join(__dirname,'../listas/app.js'),'utf8');
@@ -13,6 +13,9 @@ const before=JSON.stringify(sample);
 const another={...sample,id:'2',qty:170,stage:'Sala 2'};
 const group=helpers.fullMaterial(sample.name,'',sample,[sample,another]);
 assert.ok(group.includes('<strong>Condutores elétricos</strong>'),'cabeçalho da família');
+assert.ok(group.includes('<span class="compact-material-title-line"><strong>Condutores elétricos</strong><span class="compact-status-tags"'),
+ 'etiquetas devem aparecer na mesma linha de título do card principal');
+
 assert.ok(group.includes('Condutor isolado · Cobre · 2,5 mm² · Azul · PVC'),'tipo técnico não desaparece');
 assert.ok(group.includes('>Consolidado</span>'),'2+ lançamentos agrupados');
 assert.ok(group.includes('>Em revisão</span>'),'selo de revisão');
@@ -24,7 +27,11 @@ assert.equal(helpers.groupTags([{id:'4',fichaStatus:'Em revisão'}, {id:'5',fich
 assert.equal(helpers.materialParts(sample.name,sample).base,'Condutor isolado','por etapa mantém título técnico');
 assert.equal(JSON.stringify(sample),before,'não modificar material');
 assert.ok(app.includes("fullMaterial(g.name,composition,entries[0],entries)"),'tags presentes por insumo');
-assert.ok(app.includes("(info.description?'<small>'+esc(info.description)+'</small>':'')+groupTags(entries)"),'tags presentes por etapa');
+const stageStart=app.indexOf('  function stageMaterialRow(');
+const stageEnd=app.indexOf('  if(!l.items.length)',stageStart);
+assert.ok(stageStart>=0&&stageEnd>stageStart,'visão por etapa localizada');
+assert.ok(!app.slice(stageStart,stageEnd).includes('groupTags(entries)'),
+ 'linhas internas da visualização por etapa não exibem etiquetas');
 const style=fs.readFileSync(path.join(__dirname,'../styles.css'),'utf8');
 assert.ok(style.includes('.compact-status-chip.review')&&style.includes('.compact-status-chip.consolidated'));
-console.log('Listas: família no grupo, subtipo na descrição, Consolidado/Em revisão e dados intactos OK');
+console.log('Listas: etiquetas apenas no título da família Por insumo, sem repetir por etapa; dados intactos OK');
