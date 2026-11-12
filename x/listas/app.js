@@ -205,7 +205,7 @@ function reconcileInvalidOptional(target=values){
 function getFields(){
  if(!selectedFicha)return legacyFields;
  return window.TereonXCatalog.visibleDetails(selectedFicha,values)
-  .filter(d=>d.name!=='[Detalhe sem nome]'&&!(selectedFicha.id==='FT_COND-001'&&d.id==='DET-011'))
+  .filter(d=>d.name!=='[Detalhe sem nome]')
   .map(d=>({id:d.id,label:d.name,required:d.required,options:window.TereonXCatalog.optionsFor(selectedFicha,values,d.id)}));
 }
 function count(){return fields.filter(f=>f.required&&values[f.id]).length}
@@ -527,7 +527,7 @@ $('choices').addEventListener('click',function(e){
   if(!selectedFicha)return;
   choosingFicha=false;values={};skippedOptional.clear();
   populateUnitOptions();
-  if(selectedFicha.id==='FT_COND-001'){$('unit').value='m';values['DET-011']='m';}
+  if(selectedFicha.id==='FT_COND-001')$('unit').value='m'; // padrão visual; DET-011 permanece sem confirmação
   fields=getFields();focus=pickFirstMissing();
   redrawAdd();return;
  }
@@ -555,6 +555,7 @@ $('choices').addEventListener('click',function(e){
   if(problems.length){alert('Combinação não permitida pela ficha: '+problems.join('; ')+'. Remova a tag incompatível antes de continuar.');return;}
  }
  values=next;optionNotice='';
+ if(selectedFicha?.id==='FT_COND-001'&&field.id==='DET-011')$('unit').value=values['DET-011'];
  skippedOptional.delete(field.id);
  fields=getFields();focus=pickFirstMissing();redrawAdd();
 });
@@ -562,7 +563,11 @@ $('stageTags').addEventListener('click',function(e){var b=e.target.closest('[dat
 ['qty','stage'].forEach(function(x){$(x).addEventListener('input',function(){if(x==='qty'){editingLegacyQuantity=false;redrawAdd();}else validate();});});
 $('unit').addEventListener('change',function(){
  editingLegacyQuantity=false;
- if(selectedFicha?.id==='FT_COND-001')values['DET-011']=$('unit').value;
+ if(selectedFicha?.id==='FT_COND-001'){
+  values['DET-011']=$('unit').value;
+  skippedOptional.delete('DET-011');
+  fields=getFields();focus=pickFirstMissing();
+ }
  redrawAdd();
 });
 $('saveItem').addEventListener('click',function(){
@@ -575,7 +580,7 @@ $('saveItem').addEventListener('click',function(){
  if(selectedFicha?.id==='FT_COND-001'){
   const known=selectedFicha.details.find(d=>d.id==='DET-011')?.options||[];
   if(!known.includes($('unit').value)){alert('Unidade não prevista na ficha atual.');return;}
-  values['DET-011']=$('unit').value;
+  if(values['DET-011']&&values['DET-011']!==$('unit').value)values['DET-011']=$('unit').value;
  }
  var itemData={name:name(),catalogId:selectedFicha?.id||null,values:Object.assign({},values),qty:$('qty').value,unit:$('unit').value,stage:$('stage').value.trim(),fichaStatus:selectedFicha?.status||'Ficha anterior',simulacao:selectedFicha?.kind==='simulacao'};
  if(selectedFicha?.id==='FT_COND-001'&&!editingLegacyQuantity)itemData.qtyBasis='m';
