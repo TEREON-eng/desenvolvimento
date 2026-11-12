@@ -14,6 +14,18 @@ jobs:
           node-version: '22'
       - name: Validar fluxo completo de Listas para o teste de 17/11
         run: node x/tests/fluxo-campo-17-11.test.cjs
+      - name: Validar Eletroduto experimental com diâmetros e condições
+        run: node x/tests/eletroduto-lab-2026-11-12.test.cjs
+      - name: Validar relatórios Compras Completo Execução e formatos
+        run: node x/tests/compartilhar-formatos-2026-11-12.test.cjs
+      - name: Validar quantificação comercial por lances e rolos
+        run: node x/tests/quantificacao.test.cjs
+      - name: Validar alternância Por insumo e Por etapa
+        run: node x/tests/agrupamento-ui.test.cjs
+      - name: Validar cartões compactos por etapa
+        run: node x/tests/etapas-compactas.test.cjs
+      - name: Validar resumo de material cor e isolação
+        run: node x/tests/resumo-localizacao.test.cjs
       - name: Estressar 648 combinações de Condutores no Fichário experimental
         run: node x/tests/condutores-estresse.test.cjs
       - name: Validar contrato do catálogo
