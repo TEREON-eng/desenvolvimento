@@ -139,8 +139,23 @@ function draw(){
    '<div style="margin-top:10px"><button class="btn full" data-action="share">↗ Compartilhar lista</button></div>'+ 
    '<div style="margin-top:10px;text-align:right"><a href="/x/contribuir.html" style="color:#4f6f59;font-size:12px">Não encontrou o material? Envie seu item para nós ›</a></div>'+
    '<div class="row" style="margin-top:26px"><strong style="font-size:14px">Materiais da lista</strong><span class="tiny muted">'+l.items.length+' item(ns)</span></div><div class="items">';
+  // Consolidação de compra: por identidade técnica, apresentação e comprimento individual de lance.
+  const groups=window.TereonXQuant?.consolidate(l.items)||[];
+  if(groups.length){
+    const fmt=n=>Number(n.toFixed(6)).toLocaleString('pt-BR',{maximumFractionDigits:6});
+    const summary=groups.map(g=>{
+      const requested=g.kind==='lance'?fmt(g.units)+' lances de '+fmt(g.each)+' m':
+       g.kind==='package'?fmt(g.units)+' '+g.unit:fmt(g.units)+' m';
+      return '<div class="item"><div><strong>'+esc(g.name)+'</strong><small>'+esc(fmt(g.meters)+' m medidos · '+g.count+' lançamento(s)')+'</small></div><aside><strong>'+esc(requested)+'</strong></aside></div>';
+    }).join('');
+    html=html.replace('<div class="items">','<div class="items">'); // Não alterar conteúdo dos lançamentos.
+    // Colocar o resumo antes da relação individual.
+    const anchor='<div class="row" style="margin-top:26px"><strong style="font-size:14px">Materiais da lista</strong>';
+    const summaryHtml='<div style="margin-top:20px"><strong style="font-size:14px">Resumo para compra · experimental</strong><div class="items">'+summary+'</div></div>';
+    html=html.replace(anchor,summaryHtml+anchor);
+  }
   if(!l.items.length)html+='<div class="empty">Nenhum material adicionado.</div>';
-  l.items.slice().reverse().forEach(function(it){html+='<div class="item"><div><strong>'+esc(it.name)+'</strong><small>'+esc(it.stage)+'</small></div><aside><strong>'+esc(it.qty)+' '+esc(it.unit)+'</strong><div class="item-actions">'+
+  l.items.slice().reverse().forEach(function(it){html+='<div class="item"><div><strong>'+esc(it.name)+'</strong><small>'+esc(it.stage)+'</small></div><aside><strong>'+esc(it.qtyBasis==='m'&&it.catalogId==='FT_COND-001'?it.qty+' m · '+it.unit:it.qty+' '+it.unit)+'</strong><div class="item-actions">'+
  '<button class="item-icon" type="button" data-edit="'+esc(it.id)+'" aria-label="Editar item" title="Editar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L9 17l-4 1 1-4z"/></svg></button>'+
  '<button class="item-icon" type="button" data-duplicate="'+esc(it.id)+'" aria-label="Duplicar item" title="Duplicar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg></button>'+
  '<button class="item-icon remove" type="button" data-delete="'+esc(it.id)+'" aria-label="Remover item" title="Remover"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>'+
