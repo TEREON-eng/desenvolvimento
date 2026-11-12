@@ -1,3 +1,5 @@
+> **ATUALIZAÇÃO DE 12/11/2026 — NÃO SUBSTITUI A AUDITORIA ORIGINAL:** a tabela abaixo descreve fielmente o **snapshot histórico de 08/11**; a branch `desenvolvimento` agora carrega **`x/fichario-x/fichas-lab-2026-11-12.json`**, cópia experimental com apenas a ficha `FT_INFRA-001` ajustada. Agora `Rígido + PVC` exige diâmetro, `Flexível + PVC` exige diâmetro/perfil/classe, `Rígido + Aço` exige diâmetro/galvanização e `Flexível + Aço` exige diâmetro/capa; PEAD é exclusivo de flexível. **A coluna P0 histórica não é mais descrição do comportamento do laboratório, mas a ficha ainda NÃO é tecnicamente homologada**: resistência do rígido PVC sem valores confirmados, diâmetros/variantes dependentes de revisão comercial/fabricante, Fichario.xlsm original intacto. As outras fichas mantêm suas lacunas. [Revisão e exemplos](REVISAO-ELETRODUTO-E-RELATORIOS-2026-11-12.md).
+
 # TEREON X — Auditoria do catálogo para o teste em 17/11
 **10/11/2026 · Inspeção do snapshot `x/fichario-x/fichas-drive-2026-11-08.json` e execução isolada do motor `x/catalogo/motor.js`**
 
