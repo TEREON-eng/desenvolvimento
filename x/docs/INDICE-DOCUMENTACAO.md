@@ -1,3 +1,5 @@
+> **12/11/2026 · X.0.3.48:** nas visões **Por etapa** e **Por insumo**, o resumo do material prioriza atributos de localização (material, seção, cor, isolação), incluindo PVC somente quando confirmado. Especificação integral preservada ao expandir. [Histórico](CHANGELOG.md). Publicação Cloudflare e teste no celular pendentes.
+
 > **12/11/2026 · X.0.3.47:** sugestões de hierarquia visual aplicadas na Lista: neon TEREON translúcido nas etapas, superfície secundária nos insumos e guia sutil nos lançamentos. Apenas CSS e versão/cache alterados; teste visual no celular pendente. [Changelog](CHANGELOG.md).
 
 > **12/11/2026 · X.0.3.46:** Por etapa passou a exibir **grupos recolhíveis e insumos em linhas compactas**, com nome do material em destaque e especificação secundária. Lançamentos e ações preservados. [Changelog](CHANGELOG.md). Publicação Cloudflare e teste em celular não confirmados.
