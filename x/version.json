@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.41",
+  "version": "x.0.3.42",
   "build": "2026-11-11",
-  "notes": "Unidade DET-011 integrada ao seletor; pedidos em 2/3 lances e agrupamento de rolos por apresentação"
+  "notes": "DET-011 Unidade aparece como último detalhe opcional e sincroniza unidade de compra"
 }
