@@ -234,8 +234,8 @@ function draw(){
    const heading=conductor?'Condutores elétricos':info.base;
    const subtitle=conductor?[info.base,info.description].filter(Boolean).join(' · '):info.description;
    return '<details class="compact-technical"><summary title="'+technical+'" aria-label="Ver especificação completa: '+technical+'">'+
-    '<span class="compact-material-label"><strong>'+esc(heading)+'</strong>'+
-    (subtitle?'<small>'+esc(subtitle)+'</small>':'')+groupTags(entries)+'</span></summary>'+
+    '<span class="compact-material-label"><span class="compact-material-title-line"><strong>'+esc(heading)+'</strong>'+groupTags(entries)+'</span>'+
+    (subtitle?'<small>'+esc(subtitle)+'</small>':'')+'</span></summary>'+
     '<div class="compact-technical-full">'+technical+(composition?'<div>'+esc(composition)+'</div>':'')+'</div></details>';
   }
   function stageDetails(entries,kind){
@@ -276,7 +276,7 @@ function draw(){
    const composition=g.kind==='lance'?'Composição dos lances: '+g.breakdown.map(part=>fmt(part.count)+' × '+fmt(part.length)+' m').join(' + '):'';
    let output='<details class="compact-stage-material"><summary title="'+esc(info.technical)+'" aria-label="'+esc(info.base+', '+amount+'. Abrir lançamentos')+'">'+
     '<span class="compact-stage-material-text"><strong>'+esc(info.base)+'</strong>'+
-    (info.description?'<small>'+esc(info.description)+'</small>':'')+groupTags(entries)+'</span>'+
+    (info.description?'<small>'+esc(info.description)+'</small>':'')+'</span>'+
     '<strong class="compact-stage-qty">'+esc(amount)+'</strong></summary><div class="compact-stage-sources">';
    if(composition)output+='<div class="compact-stage-extra">'+esc(composition)+'</div>';
    output+='<div class="compact-stage-extra">'+esc(info.technical)+'</div>';
