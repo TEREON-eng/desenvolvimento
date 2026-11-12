@@ -142,45 +142,97 @@ function draw(){
    '<div class="row" style="margin-top:18px"><strong style="font-size:14px">Lançamentos da lista</strong><span class="tiny muted">'+l.items.length+' item(ns)</span></div>'+
    '<div style="display:flex;gap:8px;margin:10px 0" role="group" aria-label="Agrupar lançamentos"><button type="button" class="btn small" data-list-view="insumo" aria-pressed="'+(listView==='insumo')+'">Por insumo</button><button type="button" class="btn small" data-list-view="etapa" aria-pressed="'+(listView==='etapa')+'">Por etapa</button></div>';
   const fmt=n=>Number(n).toLocaleString('pt-BR',{maximumFractionDigits:6});
-  function renderLine(it){
-   return '<div class="item"><div><strong>'+esc(it.name)+'</strong><small>'+esc(it.stage)+'</small></div><aside><strong>'+esc(it.qtyBasis==='m'&&it.catalogId==='FT_COND-001'?it.qty+' m · '+it.unit:it.qty+' '+it.unit)+'</strong><div class="item-actions">'+
-   '<button class="item-icon" type="button" data-edit="'+esc(it.id)+'" aria-label="Editar item" title="Editar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L9 17l-4 1 1-4z"/></svg></button>'+
-   '<button class="item-icon" type="button" data-duplicate="'+esc(it.id)+'" aria-label="Duplicar item" title="Duplicar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg></button>'+
-   '<button class="item-icon remove" type="button" data-delete="'+esc(it.id)+'" aria-label="Remover item" title="Remover"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div></aside></div>';
+  // Uma ficha técnica é exibida uma vez no cabeçalho; sua identificação
+  // integral continua acessível ao abrir o título, sem alterar o item.
+  function launchActions(it){
+   const id=esc(it.id);
+   return '<div class="compact-launch-actions">'+
+    '<button class="item-icon" type="button" data-edit="'+id+'" aria-label="Editar lançamento" title="Editar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L9 17l-4 1 1-4z"/></svg></button>'+
+    '<button class="item-icon" type="button" data-duplicate="'+id+'" aria-label="Duplicar lançamento" title="Duplicar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg></button>'+
+    '<button class="item-icon remove" type="button" data-delete="'+id+'" aria-label="Excluir lançamento" title="Excluir"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>'+
+   '</div>';
+  }
+  function buyLabel(g){
+   if(g.kind==='lance')return fmt(g.units)+' lance'+(g.units===1?'':'s');
+   if(g.kind==='package'){
+    const roll=String(g.unit).toLowerCase().startsWith('rl');
+    return fmt(g.units)+' '+(roll?(g.units===1?'rolo':'rolos'):(g.units===1?'barra':'barras'))+' de '+fmt(g.factor)+' m';
+   }
+   return fmt(g.units)+(g.kind==='meter'?' m':' '+g.unit);
+  }
+  function fullMaterial(name,composition){
+   const technical=esc(name||'Material');
+   return '<details class="compact-technical"><summary title="'+technical+'" aria-label="Ver especificação completa: '+technical+'"><span>'+technical+'</span></summary>'+
+    '<div class="compact-technical-full">'+technical+(composition?'<div>'+esc(composition)+'</div>':'')+'</div></details>';
+  }
+  function stageDetails(entries,kind){
+   const byStage=new Map();
+   entries.forEach(it=>{
+    const stage=it.stage||'Geral';
+    if(!byStage.has(stage))byStage.set(stage,[]);
+    byStage.get(stage).push(it);
+   });
+   let output='';
+   for(const [stage,stageItems] of byStage){
+    const measured=stageItems.reduce((sum,it)=>sum+Number(it.qty),0);
+    const measureUnit=kind==='legacy'?stageItems[0].unit:'m';
+    output+='<details class="compact-stage"><summary aria-label="Etapa '+esc(stage)+', '+esc(fmt(measured)+' '+measureUnit)+'. Toque para ver os lançamentos e as ações.">'+
+     '<span class="compact-stage-name">'+esc(stage)+'</span><span class="compact-stage-qty">'+esc(fmt(measured)+' '+measureUnit)+'</span></summary>'+
+     '<div class="compact-stage-sources">';
+    stageItems.forEach((it,index)=>{
+     const amount=fmt(Number(it.qty))+' '+(kind==='legacy'?it.unit:'m');
+     output+='<div class="compact-source"><span class="tiny muted">'+
+      (stageItems.length>1?'Lançamento '+(index+1)+' · ':'')+esc(amount)+'</span>'+launchActions(it)+'</div>';
+    });
+    output+='</div></details>';
+   }
+   return output;
+  }
+  function groupCard(g,entries){
+   const composition=g.kind==='lance'?'Composição: '+g.breakdown.map(part=>fmt(part.count)+' × '+fmt(part.length)+' m').join(' + '):'';
+   const measured=g.kind==='package'||g.kind==='lance'?
+    '<small class="compact-meter-total">'+esc(fmt(g.meters)+' m medidos')+'</small>':'';
+   return '<section class="compact-material-card"><div class="compact-material-head">'+
+    fullMaterial(g.name,composition)+
+    '<div class="compact-purchase"><strong>'+esc(buyLabel(g))+'</strong>'+measured+'</div></div>'+
+    '<div class="compact-stage-list">'+stageDetails(entries,g.kind)+'</div></section>';
   }
   if(!l.items.length)html+='<div class="empty">Nenhum material adicionado.</div>';
   else if(listView==='etapa'){
    const stages=[...new Set(l.items.map(it=>it.stage||'Geral'))];
    stages.forEach(stage=>{
     const entries=l.items.filter(it=>(it.stage||'Geral')===stage);
-    html+='<section style="margin-top:16px"><strong>'+esc(stage)+'</strong><span class="tiny muted"> · '+entries.length+' lançamento(s)</span><div class="items">';
-    entries.slice().reverse().forEach(it=>{html+=renderLine(it);});
+    html+='<section class="compact-stage-section"><strong>'+esc(stage)+'</strong><span class="tiny muted"> · '+entries.length+' lançamento(s)</span><div class="compact-material-list">';
+    entries.slice().reverse().forEach(it=>{
+     const amount=it.qtyBasis==='m'?fmt(Number(it.qty))+' m':fmt(Number(it.qty))+' '+it.unit;
+     html+='<div class="compact-stage-item"><div class="compact-material-head">'+fullMaterial(it.name,'')+
+      '<strong class="compact-stage-qty">'+esc(amount)+'</strong></div>'+
+      '<div class="compact-single-actions">'+launchActions(it)+'</div></div>';
+    });
     html+='</div></section>';
    });
   }else{
    const groups=window.TereonXQuant?.consolidate(l.items)||[];
    const shown=new Set();
+   html+='<div class="compact-material-list">';
    groups.forEach(g=>{
-    const entries=l.items.filter(it=>g.sourceIds.includes(String(it.id)));
+    const ids=new Set(g.sourceIds||[]);
+    const entries=l.items.filter(it=>ids.has(String(it.id)));
     if(!entries.length)return;
     entries.forEach(it=>shown.add(String(it.id)));
-    const total=g.kind==='lance'?fmt(g.meters)+' m · '+fmt(g.units)+' lances':
-     g.kind==='package'?fmt(g.units)+' '+g.unit+' ('+fmt(g.meters)+' m medidos)':
-     fmt(g.meters)+' m';
-    const composition=g.kind==='lance'?' · '+g.breakdown.map(part=>fmt(part.count)+' × '+fmt(part.length)+' m').join(' + '):'';
-    html+='<section style="margin-top:16px"><div class="row"><strong>'+esc(g.name)+'</strong><span class="tiny muted">'+esc(total)+'</span></div>'+
-     (composition?'<small class="muted">'+esc('Composição: '+composition.slice(3))+'</small>':'')+
-     '<div class="items">';
-    entries.slice().reverse().forEach(it=>{html+=renderLine(it);});
-    html+='</div></section>';
+    html+=groupCard(g,entries);
    });
-   // Itens legados não reinterpretados são exibidos integralmente.
-   const legacy=l.items.filter(it=>!shown.has(String(it.id)));
-   if(legacy.length){
-    html+='<section style="margin-top:16px"><strong>Outros lançamentos</strong><div class="items">';
-    legacy.slice().reverse().forEach(it=>{html+=renderLine(it);});
-    html+='</div></section>';
-   }
+   // Legado: agrupar apenas material/especificação/unidade idênticos,
+   // mantendo quantidades originais e SEM conversão comercial.
+   const legacyGroups=new Map();
+   l.items.filter(it=>!shown.has(String(it.id))).forEach(it=>{
+    const specs=Object.entries(it.values||{}).sort((a,b)=>a[0].localeCompare(b[0]));
+    const key=JSON.stringify([it.catalogId||'',it.name,it.unit,it.qtyBasis||'',specs]);
+    if(!legacyGroups.has(key))legacyGroups.set(key,{name:it.name,kind:'legacy',unit:it.unit,units:0,items:[]});
+    const g=legacyGroups.get(key);g.units+=Number(it.qty);g.items.push(it);
+   });
+   legacyGroups.forEach(g=>{html+=groupCard(g,g.items);});
+   html+='</div>';
   }
   html+='<div style="margin-top:16px"><button class="btn full" data-action="share">↗ Compartilhar / Gerar relatório</button></div>'+
    '<div style="margin-top:10px;text-align:right"><a href="/x/contribuir.html" style="color:#4f6f59;font-size:12px">Não encontrou o material? Envie seu item para nós ›</a></div>';
