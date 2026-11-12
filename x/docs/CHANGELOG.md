@@ -1,3 +1,11 @@
+## 12/11/2026 — X.0.3.45 · Correção dos botões Por insumo / Por etapa
+- Feedback de campo: o alternador aparecia, mas não mudava a organização após criar lançamento na etapa Sala 2.
+- Causa confirmada em `x/listas/app.js`: a rotina `[data-list-view]` estava dentro do bloco `if(a)` dedicado a `[data-action]`. Os botões de agrupamento não possuem `data-action`, por isso o clique não alcançava essa rotina.
+- Corrigido tratamento do alternador antes do roteamento geral, sem alterar os lançamentos, o motor de quantificação, os cartões compactos e o modal aprovado.
+- Nova verificação isolada simulou cliques `insumo → etapa` e `etapa → insumo` e confirmou chamada de renderização para ambos. Criado `x/tests/agrupamento-ui.test.cjs` para regressão.
+- Incrementados `x/index.html` (cache bust), `x/pwa.js`, `x/sw.js` e `x/version.json` para X.0.3.45.
+- **Limites:** sintaxe e cliques simulados validados; publicação Cloudflare e execução no celular não confirmadas.
+
 ## 12/11/2026 — X.0.3.44 · Visão compacta de listas (revisão de campo)
 - Feedback do fundador em trânsito: cabeçalhos de material ocupavam espaço excessivo e a especificação era repetida em cada lançamento da mesma lista.
 - A visualização **Por insumo** agora apresenta **um cartão por identidade técnica + apresentação comercial**, com título técnico limitado a duas linhas na visualização compacta e especificação completa disponível ao expandir o próprio título.
