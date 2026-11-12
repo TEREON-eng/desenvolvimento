@@ -1,3 +1,11 @@
+## 12/11/2026 — X.0.3.54 · Etiquetas só no cabeçalho do agrupamento
+- Ajuste solicitado após X.0.3.53: **não repetir as etiquetas nos itens da lista**. **Consolidado** e **Em revisão** aparecem apenas ao lado do título do **card principal em Por insumo** — exemplos: “Condutores elétricos · Consolidado” e “Eletroduto · Em revisão”.
+- Na visão **Por etapa**, nenhum selo é repetido nas linhas internas de material ou lançamentos; a lista continua organizada por etapa, com tipo técnico, cor, bitola, isolação e quantidades visíveis.
+- A posição foi ajustada para **a mesma linha do título da família**, com quebra responsiva apenas quando faltar espaço, e sem criar uma linha exclusiva para tags.
+- Sem alterar a semântica: Consolidado = dois ou mais lançamentos reunidos; Em revisão = ficha/registro pendente. Um agrupamento pode receber **os dois** quando ambas as condições forem verdadeiras; a situação técnica nunca é ocultada para simular aprovação.
+- Apenas apresentação em `x/listas/app.js` e `x/styles.css`; motor de consolidação, dados, catálogo, nomes técnicos, WhatsApp/e-mail/PDF e modal de adição não mudaram.
+- Atualizados o teste `x/tests/listas-tags-e-familia.test.cjs`, versionamento/cache do PWA X.0.3.54 e documentação. Verificação sintática e ensaio isolado realizados; publicação Cloudflare e inspeção em celular não confirmadas.
+
 ## 12/11/2026 — X.0.3.53 · Identificação de materiais na lista
 - A pedido do fundador, a visão **Por insumo** apresenta o card da ficha `FT_COND-001` com título de **família “Condutores elétricos”**, preservando o **subtipo técnico confirmado** (“Condutor isolado”, “Cabo unipolar”, etc.) no resumo logo abaixo; também mantém material, seção, cor, isolação e o nome técnico completo no detalhe expandido.
 - A visão **Por etapa** conserva o nome específico do item, valorizado pela leitura de campo.
