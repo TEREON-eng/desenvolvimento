@@ -1,3 +1,5 @@
+> **ADENDO DE ARQUITETURA — 12/11/2026 · X.0.3.51:** o catálogo continua dono das condições/obrigatoriedades e consome um **snapshot experimental versionado**, sem sobrescrever a planilha; o modal continua responsável apenas por confirmar opções e enviar dados à Lista. A unidade do eletroduto continua no seletor de unidade, derivada das condições da ficha; não gerar regra paralela de conversão comercial. O compartilhamento usa `model(snapshot)` e `sections(snapshot,finalidade)` como projeções de leitura que alimentam WhatsApp/e-mail/PDF e nunca gravam. O motor `quantificacao.js` conserva rolos, lances e legado separados. [Revisão técnica](docs/REVISAO-ELETRODUTO-E-RELATORIOS-2026-11-12.md) · [Foco de 17/11](docs/FOCO-TESTE-CAMPO-17-11-2026.md). **O original Fichario.xlsm não foi alterado; homologação pendente.**
+
 # TEREON X — Regra de Arquitetura Modular
 **Decisão do fundador · 07/11/2026 · Norma de desenvolvimento do laboratório X**
 
