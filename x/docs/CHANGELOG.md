@@ -1,3 +1,14 @@
+## 12/11/2026 — X.0.3.51 · Ficha Eletroduto em laboratório e compartilhamento para obra
+- A aparência X.0.3.50 das listas foi **aceita pelo fundador como referência para uso e observação**, sem declarar versão geral homologada.
+- Criado `x/fichario-x/fichas-lab-2026-11-12.json` a partir do snapshot original `fichas-drive-2026-11-08.json`, **preservado intacto**; apenas `FT_INFRA-001` foi refinada. A planilha Fichario.xlsm **não foi modificada**.
+- Regras experimentais: diâmetro obrigatório por material; PEAD restrito a flexível; capa em aço flexível; perfil e classe de resistência no PVC flexível; galvanização para aço rígido. Resistência PVC rígido e compatibilidades comerciais seguem pendentes. Ficha mantém o status **Em revisão**.
+- `x/catalogo/motor.js` usa o snapshot LAB; `x/listas/app.js` apresenta a unidade comercial condicional para Eletroduto no seletor `Unidade`, sem pergunta redundante e sem reconverter itens antigos.
+- `x/motor-compartilhar.js`: relatórios estruturados Compras, Completo, Execução; texto de WhatsApp com títulos legíveis, assunto/corpo próprio para e-mail, PDF com cabeçalho, seções, quebra de linha, páginas e rodapé. Mesma fonte de verdade, alertas para fichas em revisão, preservação de rolos, lances e unidades legadas.
+- Criados testes `eletroduto-lab-2026-11-12.test.cjs` e `compartilhar-formatos-2026-11-12.test.cjs`; atualizado `fluxo-campo-17-11.test.cjs`; fixture `etapas-compactas.test.cjs` alinhada a IDs de condutor atuais. Workflow GitHub Actions recebeu **seis testes** adicionais, incluindo quantificação e visões recentes.
+- `x/index.html` atualiza URLs de scripts; `x/sw.js` pré-carrega o snapshot LAB; `x/pwa.js` e `x/version.json` identificam X.0.3.51.
+- **Evidências:** verificação sintática e execução isolada de regras/modelos; **ainda não confirmados** execução integral do CI, renderização real do PDF, envio em aplicativos, deploy Cloudflare e testes móveis.
+- [Roteiro, matriz técnica, formatos e pendências](REVISAO-ELETRODUTO-E-RELATORIOS-2026-11-12.md).
+
 ## 12/11/2026 — X.0.3.50 · Fundos internos iguais, paleta mais suave
 - Feedback de campo: apesar da padronização dos agrupadores, o último nível tinha uma diferença perceptível entre **branco** e **cinza**. A composição lousa + neon também estava carregada.
 - Causa revisada no CSS: na versão anterior `.compact-stage-material` usava branco a 82% de opacidade, enquanto `.compact-material-card .compact-stage-list` usava branco a 48% (além de camadas lousa/neon nos pais). A mesma informação terminava com fundos diferentes.
