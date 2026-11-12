@@ -351,6 +351,10 @@ async function openAdd(item){
    else{
     choosingFicha=false;
     populateUnitOptions();
+    if(item?.unit && selectedFicha.details.some(d=>d.name==='Unidade'||d.name==='Unidade de compra')){
+      const allowed=selectedFicha.details.find(d=>d.name==='Unidade'||d.name==='Unidade de compra')?.options||[];
+      if(allowed.includes(item.unit))$('unit').value=item.unit;
+    }
     if(selectedFicha.id==='FT_COND-001'&&selectedFicha.details.some(d=>d.id==='DET-011')){
       if(item.qtyBasis==='m')values['DET-011']=item.unit;
       else delete values['DET-011']; // Legado: não converter quantidade antiga de rolos em metros.
