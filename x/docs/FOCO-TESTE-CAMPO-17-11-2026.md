@@ -1,3 +1,5 @@
+> **ADENDO OPERACIONAL — 12/11/2026 · X.0.3.51:** congelar o desenho visual X.0.3.50 e observar uso real, sem expansão de escopo. Para o teste, simular `FT_INFRA-001` com (a) rígido PVC + diâmetro, (b) flexível PVC + diâmetro/perfil/resistência e (c) rígido aço + galvanização; registrar a unidade comercial e a etapa. Gerar três saídas da mesma lista: Compras por WhatsApp, Completo por e-mail e Execução por PDF. Conferir quantidades, edição, recarga, avisos de ficha em revisão, botões e retorno. **O snapshot de laboratório não é homologação técnica e o PDF não foi validado em aparelho real.** [Roteiro e evidências](REVISAO-ELETRODUTO-E-RELATORIOS-2026-11-12.md).
+
 # TEREON X — Foco do teste de campo em 17/11/2026
 **Decisão operacional de 10/11/2026 · Teste restrito com empreiteiros · Não é lançamento comercial**
 
