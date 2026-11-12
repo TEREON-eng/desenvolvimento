@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.45",
+  "version": "x.0.3.46",
   "build": "2026-11-12",
-  "notes": "Corrigidos botões Por insumo / Por etapa na tela de lançamentos"
+  "notes": "Etapas compactas: um título por insumo, descrição técnica secundária e lançamentos recolhidos"
 }
