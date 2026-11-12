@@ -211,11 +211,31 @@ function draw(){
     technical.slice(base.length).replace(/^[ ·:,–—-]+/,'').trim():technical;
    return {base,description:unique(options).slice(0,4).join(' · ')||remaining,technical};
   }
-  function fullMaterial(name,composition,sourceItem){
+  function groupTags(entries){
+   // Consolidado é propriedade da APRESENTAÇÃO (2+ lançamentos reunidos),
+   // não equivale a uma ficha homologada nem altera status persistido.
+   const merged=(entries||[]).length>1;
+   const review=(entries||[]).some(it=>{
+    const ficha=it.catalogId?window.TereonXCatalog?.get?.(it.catalogId):null;
+    const status=String(it.fichaStatus||ficha?.status||'')
+     .normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+    return it.simulacao===true||ficha?.kind==='revisao'||/revis|simulacao/.test(status);
+   });
+   const chips=[];
+   if(merged)chips.push('<span class="compact-status-chip consolidated" title="Dois ou mais lançamentos agrupados nesta visualização">Consolidado</span>');
+   if(review)chips.push('<span class="compact-status-chip review" title="Ficha técnica em revisão: especificação ainda não homologada">Em revisão</span>');
+   return chips.length?'<span class="compact-status-tags" aria-label="Identificação do material">'+chips.join('')+'</span>':'';
+  }
+  function fullMaterial(name,composition,sourceItem,entries){
    const info=materialParts(name,sourceItem),technical=esc(info.technical);
+   // Cabeçalho mostra a família, com tipo selecionado na descrição.
+   // A ficha, o nome técnico e a chave de consolidação não são renomeados.
+   const conductor=sourceItem?.catalogId==='FT_COND-001';
+   const heading=conductor?'Condutores elétricos':info.base;
+   const subtitle=conductor?[info.base,info.description].filter(Boolean).join(' · '):info.description;
    return '<details class="compact-technical"><summary title="'+technical+'" aria-label="Ver especificação completa: '+technical+'">'+
-    '<span class="compact-material-label"><strong>'+esc(info.base)+'</strong>'+
-    (info.description?'<small>'+esc(info.description)+'</small>':'')+'</span></summary>'+
+    '<span class="compact-material-label"><strong>'+esc(heading)+'</strong>'+
+    (subtitle?'<small>'+esc(subtitle)+'</small>':'')+groupTags(entries)+'</span></summary>'+
     '<div class="compact-technical-full">'+technical+(composition?'<div>'+esc(composition)+'</div>':'')+'</div></details>';
   }
   function stageDetails(entries,kind){
@@ -246,7 +266,7 @@ function draw(){
    const measured=g.kind==='package'||g.kind==='lance'?
     '<small class="compact-meter-total">'+esc(fmt(g.meters)+' m medidos')+'</small>':'';
    return '<section class="compact-material-card"><div class="compact-material-head">'+
-    fullMaterial(g.name,composition,entries[0])+
+    fullMaterial(g.name,composition,entries[0],entries)+
     '<div class="compact-purchase"><strong>'+esc(buyLabel(g))+'</strong>'+measured+'</div></div>'+
     '<div class="compact-stage-list">'+stageDetails(entries,g.kind)+'</div></section>';
   }
@@ -256,7 +276,7 @@ function draw(){
    const composition=g.kind==='lance'?'Composição dos lances: '+g.breakdown.map(part=>fmt(part.count)+' × '+fmt(part.length)+' m').join(' + '):'';
    let output='<details class="compact-stage-material"><summary title="'+esc(info.technical)+'" aria-label="'+esc(info.base+', '+amount+'. Abrir lançamentos')+'">'+
     '<span class="compact-stage-material-text"><strong>'+esc(info.base)+'</strong>'+
-    (info.description?'<small>'+esc(info.description)+'</small>':'')+'</span>'+
+    (info.description?'<small>'+esc(info.description)+'</small>':'')+groupTags(entries)+'</span>'+
     '<strong class="compact-stage-qty">'+esc(amount)+'</strong></summary><div class="compact-stage-sources">';
    if(composition)output+='<div class="compact-stage-extra">'+esc(composition)+'</div>';
    output+='<div class="compact-stage-extra">'+esc(info.technical)+'</div>';
