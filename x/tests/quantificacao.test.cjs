@@ -1,0 +1,27 @@
+/* Contrato de quantificação e consolidação — sem alterar itens legados. */
+'use strict';
+const assert=require('node:assert/strict'),vm=require('node:vm'),fs=require('node:fs'),path=require('node:path');
+const root=path.resolve(__dirname,'../..'),ctx={window:{}};
+vm.createContext(ctx);
+new vm.Script(fs.readFileSync(path.join(root,'x/listas/quantificacao.js'),'utf8')).runInContext(ctx);
+const q=ctx.window.TereonXQuant;
+const common={'DET-001':'Cabo unipolar','DET-004':'35,0'};
+const item=(qty,unit,stage='Geral',opt={})=>({catalogId:'FT_COND-001',name:'Cabo unipolar #35 mm²',values:{...common},qty,unit,qtyBasis:'m',stage,...opt});
+assert.equal(q.describe(item(150,'3 lances')).each,50);
+assert.equal(q.describe(item(150,'2 lances')).each,75);
+assert.equal(q.describe(item(73,'rl100m')).units,1);
+assert.equal(q.describe(item(72,'rl50m')).units,2);
+assert.equal(q.describe(item(7,'rl100m','Geral',{qtyBasis:undefined})).kind,'legacy');
+const a=q.consolidate([item(72,'rl100m'),item(33,'rl100m','Sala 02')]);
+assert.equal(a.length,1);assert.equal(a[0].meters,105);assert.equal(a[0].units,2);
+const b=q.consolidate([item(150,'3 lances'),item(150,'3 lances','Sala 02')]);
+assert.equal(b.length,1);assert.equal(b[0].units,6);assert.equal(b[0].each,50);
+const c=q.consolidate([item(150,'3 lances'),item(180,'3 lances')]);
+assert.equal(c.length,2,'não juntar lances de comprimentos diferentes');
+const d=q.consolidate([item(150,'3 lances'),item(100,'2 lances')]);
+assert.equal(d.length,2,'não misturar unidades distintas');
+const e=q.consolidate([item(250,'rl100m'),item(250,'rl200m')]);
+assert.equal(e.length,2,'não converter automaticamente rolos de apresentações diferentes');
+const f=q.consolidate([item(200,'rl100m'),item(150,'rl100m','Geral',{values:{...common,'DET-005':'PVC 70 °C'}})]);
+assert.equal(f.length,2,'não misturar especificações técnicas');
+console.log('Quantificação: 150 m em 3 lances, arredondamento por grupo, identidade técnica e legado OK');
