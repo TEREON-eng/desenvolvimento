@@ -1,0 +1,711 @@
+{
+  "schema": 1,
+  "fonte": "Laboratório experimental TEREON X 12/11/2026, derivado de fichas-drive-2026-11-08.json; planilha Fichario.xlsm NÃO foi alterada",
+  "aviso": "Snapshot de laboratório, não homologado. Mantém fichas não alteradas do snapshot anterior. Confirmar detalhes na planilha de origem e na documentação técnica de fabricantes antes de comprar.",
+  "fichas": [
+    {
+      "codigo": "FT_INFRA-001",
+      "nome": "Eletroduto",
+      "categoria": "INFRAESTRUTURA",
+      "status": "Em revisão",
+      "tipo": "real",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "ordem": 1,
+          "nome": "Tipo",
+          "valores": [
+            "Rígido",
+            "Flexível"
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-002",
+          "ordem": 2,
+          "nome": "Material",
+          "valores": [
+            "PVC",
+            "Aço"
+          ],
+          "condicao": "Rígido",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-002",
+          "ordem": 2,
+          "nome": "Material",
+          "valores": [
+            "PVC",
+            "Aço",
+            "PEAD"
+          ],
+          "condicao": "Flexível",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-003",
+          "ordem": 3,
+          "nome": "Diâmetro nominal · aço",
+          "valores": [
+            "1/2\"",
+            "3/4\"",
+            "1\"",
+            "1.1/4\"",
+            "1.1/2\"",
+            "2\"",
+            "2.1/2\"",
+            "3\"",
+            "4\""
+          ],
+          "condicao": "Aço",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-004",
+          "ordem": 4,
+          "nome": "Diâmetro nominal · PVC",
+          "valores": [
+            "1/2\"",
+            "3/4\"",
+            "1\"",
+            "1.1/4\"",
+            "1.1/2\"",
+            "2\"",
+            "2.1/2\"",
+            "3\"",
+            "4\""
+          ],
+          "condicao": "PVC",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-005",
+          "ordem": 5,
+          "nome": "Diâmetro nominal · PEAD",
+          "valores": [
+            "1/2\"",
+            "3/4\"",
+            "1\"",
+            "1.1/4\"",
+            "1.1/2\"",
+            "2\"",
+            "2.1/2\"",
+            "3\"",
+            "4\""
+          ],
+          "condicao": "Flexível+PEAD",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-006",
+          "ordem": 6,
+          "nome": "Capa do eletroduto",
+          "valores": [
+            "COM capa",
+            "SEM capa"
+          ],
+          "condicao": "Flexível+Aço",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-007",
+          "ordem": 7,
+          "nome": "Perfil",
+          "valores": [
+            "Liso",
+            "Corrugado"
+          ],
+          "condicao": "Flexível+PVC // Flexível+PEAD",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-008",
+          "ordem": 8,
+          "nome": "Classe de resistência · PVC flexível",
+          "valores": [
+            "Leve",
+            "Média",
+            "Pesada"
+          ],
+          "condicao": "Flexível+PVC",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-009",
+          "ordem": 9,
+          "nome": "Classe de resistência · PVC rígido (pendente de revisão)",
+          "valores": [],
+          "condicao": "Rígido+PVC",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-010",
+          "ordem": 10,
+          "nome": "Galvanização do aço rígido",
+          "valores": [
+            "Galvanização eletrolítica",
+            "Imersão a quente (a fogo)"
+          ],
+          "condicao": "Rígido+Aço",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-011",
+          "ordem": 11,
+          "nome": "Tipo ponta",
+          "valores": [
+            "Rosqueável",
+            "Soldável"
+          ],
+          "condicao": "Rígido+PVC",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-012",
+          "ordem": 12,
+          "nome": "Unidade de compra",
+          "valores": [
+            "m",
+            "rl25",
+            "rl50",
+            "rl100"
+          ],
+          "condicao": "Flexível",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-013",
+          "ordem": 13,
+          "nome": "Unidade de compra",
+          "valores": [
+            "br3m"
+          ],
+          "condicao": "Rígido",
+          "classificacao": ""
+        }
+      ],
+      "revisaoLaboratorio": {
+        "data": "2026-11-12",
+        "status": "EXPERIMENTAL — revisão de campo; não é ficha homologada",
+        "base": "Fichario.xlsm / snapshot importado de 08/11/2026",
+        "observacoes": [
+          "Classe PVC flexível: rótulos preliminares, sem afirmar classificação normativa ou resistência medida",
+          "PVC rígido: classe de resistência ainda sem opções validadas",
+          "Diâmetros disponíveis reproduzem snapshot anterior e dependem de conferência comercial",
+          "Unidades continuam expressas na unidade de compra escolhida; não converter em metros sem decisão técnica"
+        ]
+      },
+      "pendencias": [
+        "Revisar diâmetros comerciais e resistência do PVC rígido na planilha de origem",
+        "Validar rótulos de resistência por norma/produto antes de publicar",
+        "Conferir regras de eletrodutos flexíveis de aço, com/sem capa, e uso de PEAD"
+      ]
+    },
+    {
+      "codigo": "FT_COND-001",
+      "nome": "Condutores isolados",
+      "categoria": "CONDUTORES",
+      "status": "Em revisão",
+      "tipo": "real",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "ordem": 1,
+          "nome": "Tipo",
+          "valores": [
+            "Condutor isolado"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "Cobertura",
+          "classificacao": "Obrigatório",
+          "origemLinha": 11,
+          "status": "Aprovado",
+          "compoeNome": "Sim"
+        },
+        {
+          "id": "DET-001",
+          "ordem": 1,
+          "nome": "Tipo",
+          "valores": [
+            "Cabo unipolar"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "",
+          "classificacao": "Obrigatório",
+          "origemLinha": 12,
+          "status": "Aprovado",
+          "compoeNome": "Sim"
+        },
+        {
+          "id": "DET-001",
+          "ordem": 1,
+          "nome": "Tipo",
+          "valores": [
+            "Cabo multipolar"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "Cor",
+          "classificacao": "Obrigatório",
+          "origemLinha": 13,
+          "status": "Aprovado",
+          "compoeNome": "Sim"
+        },
+        {
+          "id": "DET-002",
+          "ordem": 2,
+          "nome": "Material",
+          "valores": [
+            "Cobre",
+            "Alumínio"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "",
+          "classificacao": "Obrigatório",
+          "origemLinha": 14,
+          "status": "Aprovado",
+          "compoeNome": "Sim"
+        },
+        {
+          "id": "DET-003",
+          "ordem": 3,
+          "nome": "Qnt de vias",
+          "valores": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "condicao": "Cabo multipolar",
+          "exclusao": "",
+          "classificacao": "Obrigatório",
+          "origemLinha": 15,
+          "status": "Aprovado",
+          "compoeNome": "Sim ({valor} x)"
+        },
+        {
+          "id": "DET-004",
+          "ordem": 4,
+          "nome": "Seção",
+          "valores": [
+            "1,5",
+            "2,5",
+            "4,0",
+            "6,0",
+            "10,0",
+            "16,0",
+            "25,0",
+            "35,0",
+            "50,0",
+            "70,0",
+            "95,0",
+            "120,0",
+            "150,0",
+            "185,0",
+            "240,0"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "",
+          "classificacao": "Obrigatório",
+          "origemLinha": 16,
+          "status": "Aprovado",
+          "compoeNome": "Sim (#{valor} mm²)"
+        },
+        {
+          "id": "DET-005",
+          "ordem": 5,
+          "nome": "Isolação",
+          "valores": [
+            "PVC 70 °C"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "Não halogenado com baixa emissão de fumaça (LSZH)",
+          "classificacao": "Obrigatório",
+          "origemLinha": 15,
+          "status": "Aprovado",
+          "compoeNome": "Sim (Isolação {valor})"
+        },
+        {
+          "id": "DET-005",
+          "ordem": 5,
+          "nome": "Isolação",
+          "valores": [
+            "HEPR ou XLPE 90 °C"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "450/750 V",
+          "classificacao": "Obrigatório",
+          "origemLinha": 16,
+          "status": "Aprovado",
+          "compoeNome": "Sim (Isolação {valor})"
+        },
+        {
+          "id": "DET-005",
+          "ordem": 5,
+          "nome": "Isolação",
+          "valores": [
+            "Termoplástico não halogenado 70 °C"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "",
+          "classificacao": "Obrigatório",
+          "origemLinha": 17,
+          "status": "Aprovado",
+          "compoeNome": "Sim (Isolação {valor})"
+        },
+        {
+          "id": "DET-006",
+          "ordem": 6,
+          "nome": "Classe de tensão",
+          "valores": [
+            "450/750 V",
+            "0,6/1,0 kV"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "",
+          "classificacao": "Opcional",
+          "origemLinha": 20,
+          "status": "Aprovado",
+          "compoeNome": "Sim"
+        },
+        {
+          "id": "DET-007",
+          "ordem": 7,
+          "nome": "Cobertura",
+          "valores": [
+            "PVC 70 °C"
+          ],
+          "condicao": "Cabo unipolar//Cabo multipolar",
+          "exclusao": "Não halogenado com baixa emissão de fumaça (LSZH)",
+          "classificacao": "Opcional",
+          "origemLinha": 21,
+          "status": "Aprovado",
+          "compoeNome": "Sim"
+        },
+        {
+          "id": "DET-007",
+          "ordem": 7,
+          "nome": "Cobertura",
+          "valores": [
+            "Termoplástico não halogenado 70 °C"
+          ],
+          "condicao": "Cabo unipolar//Cabo multipolar",
+          "exclusao": "",
+          "classificacao": "Opcional",
+          "origemLinha": 22,
+          "status": "Aprovado",
+          "compoeNome": "Sim"
+        },
+        {
+          "id": "DET-008",
+          "ordem": 8,
+          "nome": "Cor",
+          "valores": [
+            "Preto",
+            "Azul",
+            "Verde",
+            "Vermelho",
+            "Amarelo",
+            "Cinza",
+            "Marrom"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "",
+          "classificacao": "Obrigatório",
+          "origemLinha": 23,
+          "status": "Aprovado",
+          "compoeNome": "Sim"
+        },
+        {
+          "id": "DET-009",
+          "ordem": 9,
+          "nome": "Classe de encordoamento",
+          "valores": [
+            "Classe I (Sólido)",
+            "Classe II (Encordoado flexível)",
+            "Classe V (Flexivel)",
+            "Classe VI (Extraflexível)"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "",
+          "classificacao": "Opcional",
+          "origemLinha": 24,
+          "status": "Aprovado",
+          "compoeNome": "Sim"
+        },
+        {
+          "id": "DET-010",
+          "ordem": 10,
+          "nome": "Comportamento ao fogo",
+          "valores": [
+            "Comum"
+          ],
+          "condicao": "PVC 70 °C",
+          "exclusao": "",
+          "classificacao": "Opcional",
+          "origemLinha": 25,
+          "status": "Aprovado",
+          "compoeNome": "Sim"
+        },
+        {
+          "id": "DET-010",
+          "ordem": 10,
+          "nome": "Comportamento ao fogo",
+          "valores": [
+            "Não halogenado com baixa emissão de fumaça (LSZH)"
+          ],
+          "condicao": "!PVC 70 °C",
+          "exclusao": "",
+          "classificacao": "Opcional",
+          "origemLinha": 26,
+          "status": "Aprovado",
+          "compoeNome": "Sim"
+        },
+        {
+          "id": "DET-011",
+          "ordem": 11,
+          "nome": "Unidade",
+          "valores": [
+            "m",
+            "rl50m",
+            "rl100m",
+            "rl200m",
+            "2 lances",
+            "3 lances"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "",
+          "classificacao": "Opcional",
+          "origemLinha": 27,
+          "status": "Aprovado",
+          "compoeNome": "Não"
+        }
+      ],
+      "pendencias": [
+        "Fonte: Fichario.xlsm salvo 11/11/2026 20:37 BRT. Comportamento ao fogo DET-010 em duas linhas, opcional, com Comum condicionado a PVC 70 °C e LSZH condicionado a !PVC 70 °C.",
+        "Condição !PVC significa ausência de PVC confirmado nas tags; ela NÃO prova que o produto atende aos requisitos de baixa emissão de fumaça. Selecionar LSZH registra exigência explícita do profissional.",
+        "Revisar classificação IEC 60228 de encordoamento e a compatibilidade de produtos antes de homologar comercialmente.",
+        "Unidade DET-011 sincronizada de Fichario.xlsm salvo 11/11/2026 21:20 BRT: m; rl50m; rl100m; rl200m; 2 lances; 3 lances. Campo de unidade no modal é a fonte da apresentação; medições continuam em metros."
+      ],
+      "nomeNaPlanilha": "Condutores isolados",
+      "apelidos": [
+        "Cabo",
+        "fio",
+        "cabinho",
+        "condutor"
+      ]
+    },
+    {
+      "codigo": "FT_INFRA-002",
+      "nome": "Curva para eletroduto",
+      "categoria": "INFRAESTRUTURA",
+      "status": "Em revisão",
+      "tipo": "real",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "ordem": 1,
+          "nome": "Tipo",
+          "valores": [
+            "45°",
+            "90°"
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-002",
+          "ordem": 2,
+          "nome": "Material",
+          "valores": [
+            "Aço",
+            "PVC"
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-003",
+          "ordem": 3,
+          "nome": "Diâmetro",
+          "valores": [
+            "1/2\"",
+            "3/4\"",
+            "1\"",
+            "1.1/4\"",
+            "1.1/2\"",
+            "2\"",
+            "2.1/2\"",
+            "3\"",
+            "4\""
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-004",
+          "ordem": 4,
+          "nome": "Revestimento_Aço",
+          "valores": [
+            "Galvanização eletrolítica",
+            "Imersão a quente (a fogo)"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-005",
+          "ordem": 5,
+          "nome": "Tipo ponta",
+          "valores": [
+            "Rosqueável",
+            "Soldável"
+          ],
+          "condicao": "PVC",
+          "classificacao": ""
+        }
+      ]
+    },
+    {
+      "codigo": "FT_INFRA-003",
+      "nome": "Conectores para eletroduto",
+      "categoria": "INFRAESTRUTURA",
+      "status": "Em revisão",
+      "tipo": "real",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "ordem": 1,
+          "nome": "Tipo",
+          "valores": [
+            "Reto",
+            "Cônico",
+            "Múltiplo"
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório",
+          "observacao": "Na planilha, os três valores aparecem separados por vírgula."
+        },
+        {
+          "id": "DET-002",
+          "ordem": 2,
+          "nome": "Diâmetro",
+          "valores": [
+            "1/2\"",
+            "3/4\"",
+            "1\"",
+            "1.1/4\"",
+            "1.1/2\"",
+            "2\"",
+            "2.1/2\"",
+            "3\"",
+            "4\""
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        }
+      ]
+    },
+    {
+      "codigo": "FT_INFRA-004",
+      "nome": "Abraçadeiras",
+      "nomeNaPlanilha": "Conectores para eletroduto",
+      "categoria": "INFRAESTRUTURA",
+      "status": "Em revisão",
+      "tipo": "real",
+      "pendencias": [
+        "Na aba FT_INFRA-004, a célula B5 contém 'Conectores para eletroduto'. Nome exibido usa o assunto da aba e o código, sem modificar a fonte."
+      ],
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "ordem": 1,
+          "nome": "Tipo",
+          "valores": [
+            "Tipo \"D\" c/ cunha",
+            "Tipo \"U\" p/ perfialdo",
+            "Tipo \"U Ohmega\""
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-002",
+          "ordem": 2,
+          "nome": "Diâmetro",
+          "valores": [
+            "1/2\"",
+            "3/4\"",
+            "1\"",
+            "1.1/4\"",
+            "1.1/2\"",
+            "2\"",
+            "2.1/2\"",
+            "3\"",
+            "4\""
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        }
+      ]
+    },
+    {
+      "codigo": "FT_INFRA-005",
+      "nome": "Caixa de passagem",
+      "categoria": "INFRAESTRUTURA",
+      "status": "Em revisão",
+      "tipo": "real",
+      "detalhes": [
+        {
+          "id": "DET-001",
+          "ordem": 1,
+          "nome": "Tipo",
+          "valores": [
+            "Sobrepor",
+            "Embutir"
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-002",
+          "ordem": 2,
+          "nome": "Material",
+          "valores": [
+            "Chapa de aço",
+            "Alumínio",
+            "PVC"
+          ],
+          "condicao": "Sempre",
+          "classificacao": "Obrigatório"
+        },
+        {
+          "id": "DET-003",
+          "ordem": 3,
+          "nome": "Tamanho",
+          "valores": [
+            "10x10",
+            "20x20",
+            "30x30",
+            "40x40"
+          ],
+          "condicao": "",
+          "classificacao": ""
+        },
+        {
+          "id": "DET-004",
+          "ordem": 4,
+          "nome": "Tamanho PVC",
+          "valores": [
+            "4x2",
+            "4x4"
+          ],
+          "condicao": "PVC+Embutir",
+          "classificacao": ""
+        }
+      ]
+    }
+  ]
+}
