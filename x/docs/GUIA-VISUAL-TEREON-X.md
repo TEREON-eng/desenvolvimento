@@ -1,3 +1,5 @@
+> **REFERÊNCIA VISUAL VIGENTE — 12/11/2026:** a X.0.3.50 foi considerada suficiente para testes pelo fundador. Preservar visual compacto de Listas, alternador Por insumo/Por etapa, cor e isolação na descrição, cabeçalhos neon suave, fundo lousa atenuado e superfície interna opaca uniforme, além de ações recolhíveis e modal/tags já aprovados. X.0.3.51 altera ficha experimental e relatórios, **não a aparência das listas**. [Revisão atual](REVISAO-ELETRODUTO-E-RELATORIOS-2026-11-12.md). A referência X.0.3.29 no título abaixo é histórica.
+
 # TEREON X — Guia visual · revisão X.0.3.29 (09/11/2026)
 
 > **FOCO DE HOMOLOGAÇÃO — 10/11:** para 17/11, validar a experiência de **Listas** e o modal técnico aprovado em aparelho real; refinamentos de Obras/Diário continuam laboratório sem aceite visual definitivo. [Plano 17/11](FOCO-TESTE-CAMPO-17-11-2026.md).
