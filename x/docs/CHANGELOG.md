@@ -1,3 +1,11 @@
+## 12/11/2026 — X.0.3.44 · Visão compacta de listas (revisão de campo)
+- Feedback do fundador em trânsito: cabeçalhos de material ocupavam espaço excessivo e a especificação era repetida em cada lançamento da mesma lista.
+- A visualização **Por insumo** agora apresenta **um cartão por identidade técnica + apresentação comercial**, com título técnico limitado a duas linhas na visualização compacta e especificação completa disponível ao expandir o próprio título.
+- No cabeçalho, quantidade de compra e apresentação comercial; abaixo, **apenas etapas e respectivas quantidades medidas**, consolidadas por etapa. Tocar na etapa revela os lançamentos de origem e mantém **Editar, Duplicar, Excluir** acessíveis.
+- Visualização **Por etapa** também utiliza cartões compactos, com especificação expansível e ações mantidas. O motor de quantificação, o catálogo, o modal aprovado e os dados originais **não foram modificados** nesta revisão.
+- Exemplo validado no motor: Sala 1 (100 m) + Sala 2 (170 m) = 270 m medidos; RL200 m => **2 rolos**; RL100 m => **3 rolos**. A conversão depende da apresentação previamente escolhida e não é refeita no relatório.
+- Sintaxe de `x/listas/app.js`, `quantificacao.js`, PWA e SW avaliada; teste isolado de formação dos cartões, estágios, ações e regra de rolos executado. Teste visual no celular, CI e publicação Cloudflare **não comprovados**.
+
 ## 12/11/2026 — X.0.3.43 · Lista por insumo/etapa e relatórios
 - Implementada interface de lançamentos diretamente abaixo de Adicionar item, com modos Por insumo e Por etapa. Excluído bloco redundante de resumo experimental na tela.
 - Motor `x/listas/quantificacao.js`: lances de comprimentos diferentes do mesmo insumo passaram a compor **uma linha**, preservando metragem, contagem, `breakdown`, etapas e IDs de origem. Rolos de apresentações diferentes permanecem separados; registros legados continuam sem reinterpretação.
