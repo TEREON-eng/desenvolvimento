@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.43",
+  "version": "x.0.3.44",
   "build": "2026-11-12",
-  "notes": "Listas por insumo/etapa; compras com composição de lances; relatórios por finalidade"
+  "notes": "Visualização compacta: material único por grupo, etapas e quantidades medidas; compras preserva arredondamento"
 }
