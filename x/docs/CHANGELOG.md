@@ -1,3 +1,11 @@
+## 12/11/2026 — X.0.3.53 · Identificação de materiais na lista
+- A pedido do fundador, a visão **Por insumo** apresenta o card da ficha `FT_COND-001` com título de **família “Condutores elétricos”**, preservando o **subtipo técnico confirmado** (“Condutor isolado”, “Cabo unipolar”, etc.) no resumo logo abaixo; também mantém material, seção, cor, isolação e o nome técnico completo no detalhe expandido.
+- A visão **Por etapa** conserva o nome específico do item, valorizado pela leitura de campo.
+- Etiquetas em ambas as visões: **“Consolidado”** apenas quando **dois ou mais lançamentos** foram reunidos no mesmo grupo visual; **“Em revisão”** quando qualquer origem está em revisão/simulação segundo o lançamento ou a ficha de catálogo. Uma tag não equivale a aprovação técnica, e nenhuma delas altera o cadastro.
+- Paleta da X.0.3.50 preservada; chips pequenos, discretos, com contraste para temas Claro/Escuro/TEREON e explicação ao manter o toque/foco.
+- `x/listas/app.js` e `x/styles.css` ajustados; versão/cache X.0.3.53. O catálogo experimental, fichas originais, motor de quantificação, relatórios, dados persistidos e modal técnico aprovado **não foram alterados**.
+- Regressão dedicada `x/tests/listas-tags-e-familia.test.cjs` incorporada ao workflow; execução local/CI integral, publicação Cloudflare e teste visual móvel ainda não confirmados.
+
 ## 12/11/2026 — X.0.3.52 · Compras consolida unidades antigas iguais sem converter
 - Ajuste final do motor Compartilhar depois da X.0.3.51: linhas legadas com **mesma especificação, mesmo nome e mesma unidade de compra** agora são consolidadas no relatório **Compras**, mantendo uma linha por material e discriminação de etapas.
 - Exemplo: 8 `br3m` na Sala 2 + 2 `br3m` na Sala 1 => **10 barras de 3 m**, com ambas as etapas identificadas. **Não converter automaticamente em 30 m** nem misturar com outra apresentação.
