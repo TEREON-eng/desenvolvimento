@@ -160,9 +160,25 @@ function draw(){
    }
    return fmt(g.units)+(g.kind==='meter'?' m':' '+g.unit);
   }
-  function fullMaterial(name,composition){
-   const technical=esc(name||'Material');
-   return '<details class="compact-technical"><summary title="'+technical+'" aria-label="Ver especificação completa: '+technical+'"><span>'+technical+'</span></summary>'+
+  function materialParts(name,sourceItem){
+   const technical=String(name||'Material').trim();
+   // A ficha é a fonte do nome do insumo; a descrição mostra os detalhes
+   // confirmados sem repetir a identificação do material.
+   const ficha=sourceItem?.catalogId?window.TereonXCatalog?.get?.(sourceItem.catalogId):null;
+   const first=technical.split(' · ')[0].trim();
+   const base=String(ficha?.name||first||technical).trim();
+   const values=sourceItem?.values||{};
+   const options=Object.entries(values).filter(([id,v])=>id!=='DET-011'&&v!=null&&String(v).trim()).map(([,v])=>String(v).trim());
+   const remaining=technical.toLocaleLowerCase('pt-BR').startsWith(base.toLocaleLowerCase('pt-BR'))?
+    technical.slice(base.length).replace(/^[ ·:,–—-]+/,'').trim():technical;
+   const description=options.length?options.join(' · '):(remaining===base?'':remaining);
+   return {base,description,technical};
+  }
+  function fullMaterial(name,composition,sourceItem){
+   const info=materialParts(name,sourceItem),technical=esc(info.technical);
+   return '<details class="compact-technical"><summary title="'+technical+'" aria-label="Ver especificação completa: '+technical+'">'+
+    '<span class="compact-material-label"><strong>'+esc(info.base)+'</strong>'+
+    (info.description?'<small>'+esc(info.description)+'</small>':'')+'</span></summary>'+
     '<div class="compact-technical-full">'+technical+(composition?'<div>'+esc(composition)+'</div>':'')+'</div></details>';
   }
   function stageDetails(entries,kind){
@@ -193,23 +209,52 @@ function draw(){
    const measured=g.kind==='package'||g.kind==='lance'?
     '<small class="compact-meter-total">'+esc(fmt(g.meters)+' m medidos')+'</small>':'';
    return '<section class="compact-material-card"><div class="compact-material-head">'+
-    fullMaterial(g.name,composition)+
+    fullMaterial(g.name,composition,entries[0])+
     '<div class="compact-purchase"><strong>'+esc(buyLabel(g))+'</strong>'+measured+'</div></div>'+
     '<div class="compact-stage-list">'+stageDetails(entries,g.kind)+'</div></section>';
+  }
+  function stageMaterialRow(g,entries){
+   const info=materialParts(g.name,entries[0]);
+   const amount=g.kind==='legacy'?fmt(g.units)+' '+g.unit:fmt(g.meters)+' m';
+   const composition=g.kind==='lance'?'Composição dos lances: '+g.breakdown.map(part=>fmt(part.count)+' × '+fmt(part.length)+' m').join(' + '):'';
+   let output='<details class="compact-stage-material"><summary title="'+esc(info.technical)+'" aria-label="'+esc(info.base+', '+amount+'. Abrir lançamentos')+'">'+
+    '<span class="compact-stage-material-text"><strong>'+esc(info.base)+'</strong>'+
+    (info.description?'<small>'+esc(info.description)+'</small>':'')+'</span>'+
+    '<strong class="compact-stage-qty">'+esc(amount)+'</strong></summary><div class="compact-stage-sources">';
+   if(composition)output+='<div class="compact-stage-extra">'+esc(composition)+'</div>';
+   output+='<div class="compact-stage-extra">'+esc(info.technical)+'</div>';
+   entries.forEach((it,index)=>{
+    const measured=it.qtyBasis==='m'?fmt(Number(it.qty))+' m':fmt(Number(it.qty))+' '+it.unit;
+    output+='<div class="compact-source"><span class="tiny muted">'+
+     (entries.length>1?'Lançamento '+(index+1)+' · ':'')+esc(measured)+'</span>'+launchActions(it)+'</div>';
+   });
+   return output+'</div></details>';
   }
   if(!l.items.length)html+='<div class="empty">Nenhum material adicionado.</div>';
   else if(listView==='etapa'){
    const stages=[...new Set(l.items.map(it=>it.stage||'Geral'))];
    stages.forEach(stage=>{
     const entries=l.items.filter(it=>(it.stage||'Geral')===stage);
-    html+='<section class="compact-stage-section"><strong>'+esc(stage)+'</strong><span class="tiny muted"> · '+entries.length+' lançamento(s)</span><div class="compact-material-list">';
-    entries.slice().reverse().forEach(it=>{
-     const amount=it.qtyBasis==='m'?fmt(Number(it.qty))+' m':fmt(Number(it.qty))+' '+it.unit;
-     html+='<div class="compact-stage-item"><div class="compact-material-head">'+fullMaterial(it.name,'')+
-      '<strong class="compact-stage-qty">'+esc(amount)+'</strong></div>'+
-      '<div class="compact-single-actions">'+launchActions(it)+'</div></div>';
+    const grouped=window.TereonXQuant?.consolidate(entries)||[];
+    const shown=new Set(),rows=[];
+    grouped.forEach(g=>{
+     const ids=new Set(g.sourceIds||[]);
+     const origin=entries.filter(it=>ids.has(String(it.id)));
+     if(!origin.length)return;
+     origin.forEach(it=>shown.add(String(it.id)));
+     rows.push(stageMaterialRow(g,origin));
     });
-    html+='</div></section>';
+    const legacyGroups=new Map();
+    entries.filter(it=>!shown.has(String(it.id))).forEach(it=>{
+     const specs=Object.entries(it.values||{}).sort((x,y)=>x[0].localeCompare(y[0]));
+     const key=JSON.stringify([it.catalogId||'',it.name,it.unit,it.qtyBasis||'',specs]);
+     if(!legacyGroups.has(key))legacyGroups.set(key,{name:it.name,kind:'legacy',unit:it.unit,units:0,items:[]});
+     const group=legacyGroups.get(key);group.units+=Number(it.qty);group.items.push(it);
+    });
+    legacyGroups.forEach(g=>rows.push(stageMaterialRow(g,g.items)));
+    html+='<details class="compact-stage-section" open><summary class="compact-stage-heading"><strong>'+esc(stage)+'</strong>'+
+     '<span>'+rows.length+' insumo(s) · '+entries.length+' lançamento(s)</span></summary>'+
+     '<div class="compact-stage-items">'+rows.join('')+'</div></details>';
    });
   }else{
    const groups=window.TereonXQuant?.consolidate(l.items)||[];
