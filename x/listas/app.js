@@ -162,17 +162,54 @@ function draw(){
   }
   function materialParts(name,sourceItem){
    const technical=String(name||'Material').trim();
-   // A ficha é a fonte do nome do insumo; a descrição mostra os detalhes
-   // confirmados sem repetir a identificação do material.
-   const ficha=sourceItem?.catalogId?window.TereonXCatalog?.get?.(sourceItem.catalogId):null;
-   const first=technical.split(' · ')[0].trim();
-   const base=String(ficha?.name||first||technical).trim();
    const values=sourceItem?.values||{};
-   const options=Object.entries(values).filter(([id,v])=>id!=='DET-011'&&v!=null&&String(v).trim()).map(([,v])=>String(v).trim());
+   const ficha=sourceItem?.catalogId?window.TereonXCatalog?.get?.(sourceItem.catalogId):null;
+   const picked=id=>typeof values[id]==='string'?values[id].trim():'';
+   const unique=parts=>[...new Set(parts.map(v=>String(v||'').trim()).filter(Boolean))];
+   const fromName=technical.split(' · ')[0].trim()||technical;
+   // Rótulo de localização, não substitui o nome técnico completo nem
+   // altera a chave de consolidação. Somente atributos explicitamente salvos.
+   if(sourceItem?.catalogId==='FT_COND-001'){
+    const selectedType=picked('DET-001');
+    const base=/^(condutor|cabo)\b/i.test(selectedType)?selectedType:
+     (/^(condutor isolado|cabo unipolar|cabo multipolar)\b/i.exec(technical)?.[0]||fromName);
+    const section=picked('DET-004'),insulation=picked('DET-005'),coverage=picked('DET-007');
+    const shortMaterial=value=>{
+     if(/^PVC(?:\s|$)/i.test(value))return 'PVC';
+     if(/^HEPR ou XLPE(?:\s|$)/i.test(value))return 'HEPR ou XLPE';
+     if(/^Termoplástico não halogenado(?:\s|$)/i.test(value))return 'Não halogenado';
+     return value.replace(/\s+(?:70|90)\s*°C$/i,'').trim();
+    };
+    const isol=insulation?shortMaterial(insulation):'';
+    const cover=coverage?shortMaterial(coverage):'';
+    const description=unique([
+     picked('DET-002'),
+     section?(section.includes('mm²')?section:section+' mm²'):'',
+     picked('DET-008'), // Cor deve permanecer identificável na lista.
+     isol,
+     cover&&cover!==isol?'Cob. '+cover:''
+    ]).join(' · ');
+    if(description)return {base,description,technical};
+   }
+   // Nas demais famílias, o fichário também determina quais detalhes são
+   // pertinentes. Ignorar unidade e priorizar tipo/material/dimensão/cor.
+   const first=fromName;
+   const base=String(ficha?.name||first||technical).trim();
+   const selected=Object.entries(values).filter(([id,value])=>
+    id!=='DET-011'&&id!=='DET-012'&&id!=='DET-013'&&value!=null&&String(value).trim());
+   const labels=new Map((ficha?.details||[]).map(d=>[d.id,d.name||'']));
+   const priority=label=>{
+    const t=String(label).toLocaleLowerCase('pt-BR');
+    if(/tipo|material|seção|secao|diâmetro|diametro|cor|isolação|isolacao/.test(t))return 0;
+    if(/tensão|tensao|formação|formacao|resist|acabamento|revestimento/.test(t))return 1;
+    return 2;
+   };
+   const options=selected.filter(([id])=>!ficha||labels.has(id))
+    .sort((a,b)=>priority(labels.get(a[0]))-priority(labels.get(b[0])))
+    .map(([,value])=>String(value).trim());
    const remaining=technical.toLocaleLowerCase('pt-BR').startsWith(base.toLocaleLowerCase('pt-BR'))?
     technical.slice(base.length).replace(/^[ ·:,–—-]+/,'').trim():technical;
-   const description=options.length?options.join(' · '):(remaining===base?'':remaining);
-   return {base,description,technical};
+   return {base,description:unique(options).slice(0,4).join(' · ')||remaining,technical};
   }
   function fullMaterial(name,composition,sourceItem){
    const info=materialParts(name,sourceItem),technical=esc(info.technical);
