@@ -79,6 +79,7 @@ const legacyFields=fields;
 let selectedFicha=null,choosingFicha=false,fichaSearch='',loadingFichas=false,fichaError='';
 const skippedOptional=new Set();
 let optionNotice='';
+let editingLegacyQuantity=false;
 // Comportamento ao fogo é DET-LSZH: opcional derivado, exibido por último.
 var $=function(id){return document.getElementById(id);};
 var esc=function(x){return String(x==null?'':x).replace(/[&<>"']/g,function(k){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[k];});};
@@ -307,6 +308,7 @@ function validate(){
 async function openAdd(item){
  if(!list())return;
  editId=item?String(item.id):null;
+ editingLegacyQuantity=!!(item?.catalogId==='FT_COND-001'&&item.qtyBasis!=='m'&&item.unit!=='m');
  skippedOptional.clear();optionNotice='';
  values=item&&item.values?Object.assign({},item.values):{};
  // Migração de itens anteriores: IDs DET-006..010 foram renumerados na planilha.
@@ -557,8 +559,9 @@ $('choices').addEventListener('click',function(e){
  fields=getFields();focus=pickFirstMissing();redrawAdd();
 });
 $('stageTags').addEventListener('click',function(e){var b=e.target.closest('[data-stage]');if(b){$('stage').value=b.dataset.stage;validate();}});
-['qty','stage'].forEach(function(x){$(x).addEventListener('input',function(){if(x==='qty')redrawAdd();else validate();});});
+['qty','stage'].forEach(function(x){$(x).addEventListener('input',function(){if(x==='qty'){editingLegacyQuantity=false;redrawAdd();}else validate();});});
 $('unit').addEventListener('change',function(){
+ editingLegacyQuantity=false;
  if(selectedFicha?.id==='FT_COND-001')values['DET-011']=$('unit').value;
  redrawAdd();
 });
@@ -575,7 +578,7 @@ $('saveItem').addEventListener('click',function(){
   values['DET-011']=$('unit').value;
  }
  var itemData={name:name(),catalogId:selectedFicha?.id||null,values:Object.assign({},values),qty:$('qty').value,unit:$('unit').value,stage:$('stage').value.trim(),fichaStatus:selectedFicha?.status||'Ficha anterior',simulacao:selectedFicha?.kind==='simulacao'};
- if(selectedFicha?.id==='FT_COND-001')itemData.qtyBasis='m';
+ if(selectedFicha?.id==='FT_COND-001'&&!editingLegacyQuantity)itemData.qtyBasis='m';
  // Sem regras paralelas: Comportamento ao fogo é o DET-010 da própria ficha.
  if(!safe(function(){return lists.upsertItem(activeId,itemData,editId);}))return;
  close('addDialog');editId=null;draw();
