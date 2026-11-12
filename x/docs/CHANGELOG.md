@@ -1,3 +1,12 @@
+## 12/11/2026 — X.0.3.43 · Lista por insumo/etapa e relatórios
+- Implementada interface de lançamentos diretamente abaixo de Adicionar item, com modos Por insumo e Por etapa. Excluído bloco redundante de resumo experimental na tela.
+- Motor `x/listas/quantificacao.js`: lances de comprimentos diferentes do mesmo insumo passaram a compor **uma linha**, preservando metragem, contagem, `breakdown`, etapas e IDs de origem. Rolos de apresentações diferentes permanecem separados; registros legados continuam sem reinterpretação.
+- Motor Compartilhar: finalidades Compras, Completo e Execução e saídas texto/e-mail/PDF, com composição dos lances no resumo de compras.
+- Caso de contrato: 3×100 m + 2×70 m + 2×30 m = 500 m em 7 lances, separado de RL100 m. Teste de quantificação atualizado.
+- Arquivos de entrada, versão PWA e cache incrementados para X.0.3.43.
+- **Validação disponível:** análise sintática dos cinco scripts alterados e execução isolada de consolidação e texto de compras, com saída confirmada. **Ainda não comprovados** testes automatizados no GitHub Actions, renderização/teste físico, publicação Cloudflare e PDF no navegador.
+- [Contrato de decisão](CONTRATO-LISTAS-AGRUPAMENTO-E-RELATORIOS-2026-11-12.md).
+
 # TEREON X — Histórico técnico consolidado
 
 ## 09/11/2026 — Encerramento da conversa e conceito de CI
