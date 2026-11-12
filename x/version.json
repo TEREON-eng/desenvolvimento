@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.47",
+  "version": "x.0.3.48",
   "build": "2026-11-12",
-  "notes": "Hierarquia de listas com verde neon translúcido nas etapas, itens e lançamentos; sem alterar dados"
+  "notes": "Resumo essencial de materiais por etapa e por insumo: cobre, bitola, cor e isolacao confirmadas"
 }
