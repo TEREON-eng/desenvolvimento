@@ -587,3 +587,42 @@ html[data-tx-appearance="tereon"] #listDialog{
  background:var(--tx-status-review-bg);
  border-color:var(--tx-status-review-border);
 }
+
+/* X.0.3.54 — Tags só no título do agrupador principal Por insumo.
+   A descrição, linhas internas e lançamentos permanecem livres de etiquetas. */
+#listDialog .compact-technical summary .compact-material-label{
+ display:block;
+ flex:1 1 auto;
+ min-width:0;
+ overflow:hidden;
+}
+#listDialog .compact-technical summary .compact-material-title-line{
+ display:flex;
+ align-items:center;
+ flex-wrap:wrap;
+ column-gap:7px;
+ row-gap:3px;
+ min-width:0;
+ overflow:visible;
+}
+#listDialog .compact-material-title-line strong{
+ display:inline-block;
+ flex:0 1 auto;
+ max-width:100%;
+ overflow-wrap:anywhere;
+ white-space:normal;
+}
+#listDialog .compact-technical summary .compact-material-title-line .compact-status-tags{
+ display:inline-flex;
+ flex:0 0 auto;
+ align-items:center;
+ flex-wrap:wrap;
+ margin:0;
+ gap:4px;
+ max-width:100%;
+ overflow:visible;
+}
+#listDialog .compact-material-title-line .compact-status-chip{
+ font-size:10px;
+ padding:2px 5px;
+}
