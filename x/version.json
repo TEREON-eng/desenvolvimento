@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.40",
+  "version": "x.0.3.41",
   "build": "2026-11-11",
-  "notes": "Comportamento ao fogo do Fichário: Comum se PVC, LSZH se !PVC; eletrodutos em revisão"
+  "notes": "Unidade DET-011 integrada ao seletor; pedidos em 2/3 lances e agrupamento de rolos por apresentação"
 }
