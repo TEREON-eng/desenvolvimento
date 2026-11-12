@@ -37,12 +37,32 @@ function model(list){
  const groups=root.TereonXQuant?.consolidate(items)||[];
  const groupedIds=new Set(groups.flatMap(g=>g.sourceIds||[]));
  const legacy=rows.filter(r=>!groupedIds.has(r.id));
+ // Agrupa somente lançamentos antigos idênticos, na MESMA unidade comercial;
+ // nunca transforma barra ou rolo antigo em metros sem decisão do usuário.
+ const map=new Map();
+ for(const r of legacy){
+  const specs=Object.entries(r.item.values||{}).sort((a,b)=>a[0].localeCompare(b[0]));
+  const key=JSON.stringify([r.item.catalogId||'',r.name,r.unit,r.item.qtyBasis||'',specs]);
+  if(!map.has(key))map.set(key,{name:r.name,unit:r.unit,qty:0,stages:new Map(),rows:[]});
+  const g=map.get(key);g.qty+=r.qty;g.rows.push(r);
+  g.stages.set(r.stage,(g.stages.get(r.stage)||0)+r.qty);
+ }
+ const legacyGroups=[...map.values()];
  const review=rows.some(r=>r.item.simulacao||r.item.fichaStatus&&
   !['aprovada','publicada','oficial'].includes(String(r.item.fichaStatus).toLowerCase()));
- return {name:String(list.name||'Lista de materiais'),rows,groups,legacy,review};
+ return {name:String(list.name||'Lista de materiais'),rows,groups,legacy,legacyGroups,review};
+}
+function originalUnits(count,unit){
+ const u=String(unit||'un'),s=u.toLowerCase();
+ const pack=/^(rl|br)(\d+)m?$/.exec(s);
+ if(pack){
+  const n=Number(pack[2]),label=pack[1]==='rl'?(count===1?'rolo':'rolos'):(count===1?'barra':'barras');
+  return fmt(count)+' '+label+' de '+fmt(n)+' m';
+ }
+ return fmt(count)+' '+u;
 }
 function quantityOf(r){
- return fmt(r.qty)+(r.item.qtyBasis==='m'?' m medidos · '+r.unit:' '+r.unit);
+ return r.item.qtyBasis==='m'?fmt(r.qty)+' m medidos · '+r.unit:originalUnits(r.qty,r.unit);
 }
 function purchaseQuantity(g){
  if(g.kind==='lance')return fmt(g.units)+' lances · '+fmt(g.meters)+' m medidos';
@@ -71,10 +91,12 @@ function sections(m,kind='compras'){
    if(stages.length)detail.push('Etapas: '+stages.join(' · '));
    lines.push({name:g.name,detail});
   });
-  m.legacy.forEach(r=>lines.push({name:r.name,detail:[
-   'Compra: '+fmt(r.qty)+' '+r.unit+' (unidade original, sem conversão)',
-   'Etapa: '+r.stage
-  ]}));
+  (m.legacyGroups||m.legacy.map(r=>({name:r.name,unit:r.unit,qty:r.qty,stages:new Map([[r.stage,r.qty]])}))).forEach(g=>{
+   lines.push({name:g.name,detail:[
+    'Compra: '+originalUnits(g.qty,g.unit)+' ('+g.unit+'; unidade original, sem conversão)',
+    ...[...g.stages].map(([stage,amount])=>'Etapa: '+stage+' — '+fmt(amount)+' '+g.unit)
+   ]});
+  });
   return [{title:'Itens para compra',entries:lines}];
  }
  if(kind==='completo')return [{title:'Lançamentos e especificações',entries:m.rows.map(r=>({
@@ -110,7 +132,7 @@ function text(m,kind='compras',channel='text'){
   out.push('');
  }
  out.push(disclaimer(m));
- if(channel==='email')out.push('','Atenciosamente,','Equipe responsável pela lista');
+ if(channel==='email')out.push('','Atenciosamente,'); // Assinatura do cliente de e-mail fica a cargo do remetente.
  else out.push('Gerado pelo TEREON.');
  return out.join('\n');
 }
