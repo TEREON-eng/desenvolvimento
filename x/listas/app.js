@@ -5,6 +5,7 @@ const guestRepository=window.TereonXListStore.create();
 let lists=window.TereonXLists.create(guestRepository);
 let accountId=null, syncController=null, ready=false, accountSession=0;
 const selectedLists=new Set();
+let listView='insumo';
 const storageKey=id=>'tereon-x-cloud-cache-'+id;
 const uuid=()=>{
  const api=globalThis.crypto;
@@ -139,29 +140,49 @@ function draw(){
    '<div style="margin-top:20px"><button class="btn primary full" data-action="add">＋ Adicionar item</button></div>'+ 
    '<div style="margin-top:10px"><button class="btn full" data-action="share">↗ Compartilhar lista</button></div>'+ 
    '<div style="margin-top:10px;text-align:right"><a href="/x/contribuir.html" style="color:#4f6f59;font-size:12px">Não encontrou o material? Envie seu item para nós ›</a></div>'+
-   '<div class="row" style="margin-top:26px"><strong style="font-size:14px">Materiais da lista</strong><span class="tiny muted">'+l.items.length+' item(ns)</span></div><div class="items">';
-  // Consolidação de compra: por identidade técnica, apresentação e comprimento individual de lance.
-  const groups=window.TereonXQuant?.consolidate(l.items)||[];
-  if(groups.length){
-    const fmt=n=>Number(n.toFixed(6)).toLocaleString('pt-BR',{maximumFractionDigits:6});
-    const summary=groups.map(g=>{
-      const requested=g.kind==='lance'?fmt(g.units)+' lances de '+fmt(g.each)+' m':
-       g.kind==='package'?fmt(g.units)+' '+g.unit:fmt(g.units)+' m';
-      return '<div class="item"><div><strong>'+esc(g.name)+'</strong><small>'+esc(fmt(g.meters)+' m medidos · '+g.count+' lançamento(s)')+'</small></div><aside><strong>'+esc(requested)+'</strong></aside></div>';
-    }).join('');
-    html=html.replace('<div class="items">','<div class="items">'); // Não alterar conteúdo dos lançamentos.
-    // Colocar o resumo antes da relação individual.
-    const anchor='<div class="row" style="margin-top:26px"><strong style="font-size:14px">Materiais da lista</strong>';
-    const summaryHtml='<div style="margin-top:20px"><strong style="font-size:14px">Resumo para compra · experimental</strong><div class="items">'+summary+'</div></div>';
-    html=html.replace(anchor,summaryHtml+anchor);
+   '<div class="row" style="margin-top:18px"><strong style="font-size:14px">Lançamentos da lista</strong><span class="tiny muted">'+l.items.length+' item(ns)</span></div>'+
+   '<div style="display:flex;gap:8px;margin:10px 0" role="group" aria-label="Agrupar lançamentos"><button type="button" class="btn small" data-list-view="insumo" aria-pressed="'+(listView==='insumo')+'">Por insumo</button><button type="button" class="btn small" data-list-view="etapa" aria-pressed="'+(listView==='etapa')+'">Por etapa</button></div>';
+  const fmt=n=>Number(n).toLocaleString('pt-BR',{maximumFractionDigits:6});
+  function renderLine(it){
+   return '<div class="item"><div><strong>'+esc(it.name)+'</strong><small>'+esc(it.stage)+'</small></div><aside><strong>'+esc(it.qtyBasis==='m'&&it.catalogId==='FT_COND-001'?it.qty+' m · '+it.unit:it.qty+' '+it.unit)+'</strong><div class="item-actions">'+
+   '<button class="item-icon" type="button" data-edit="'+esc(it.id)+'" aria-label="Editar item" title="Editar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L9 17l-4 1 1-4z"/></svg></button>'+
+   '<button class="item-icon" type="button" data-duplicate="'+esc(it.id)+'" aria-label="Duplicar item" title="Duplicar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg></button>'+
+   '<button class="item-icon remove" type="button" data-delete="'+esc(it.id)+'" aria-label="Remover item" title="Remover"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div></aside></div>';
   }
   if(!l.items.length)html+='<div class="empty">Nenhum material adicionado.</div>';
-  l.items.slice().reverse().forEach(function(it){html+='<div class="item"><div><strong>'+esc(it.name)+'</strong><small>'+esc(it.stage)+'</small></div><aside><strong>'+esc(it.qtyBasis==='m'&&it.catalogId==='FT_COND-001'?it.qty+' m · '+it.unit:it.qty+' '+it.unit)+'</strong><div class="item-actions">'+
- '<button class="item-icon" type="button" data-edit="'+esc(it.id)+'" aria-label="Editar item" title="Editar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L9 17l-4 1 1-4z"/></svg></button>'+
- '<button class="item-icon" type="button" data-duplicate="'+esc(it.id)+'" aria-label="Duplicar item" title="Duplicar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg></button>'+
- '<button class="item-icon remove" type="button" data-delete="'+esc(it.id)+'" aria-label="Remover item" title="Remover"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>'+
- '</div></aside></div>';});
-  html+='</div>';
+  else if(listView==='etapa'){
+   const stages=[...new Set(l.items.map(it=>it.stage||'Geral'))];
+   stages.forEach(stage=>{
+    const entries=l.items.filter(it=>(it.stage||'Geral')===stage);
+    html+='<section style="margin-top:16px"><strong>'+esc(stage)+'</strong><span class="tiny muted"> · '+entries.length+' lançamento(s)</span><div class="items">';
+    entries.slice().reverse().forEach(it=>{html+=renderLine(it);});
+    html+='</div></section>';
+   });
+  }else{
+   const groups=window.TereonXQuant?.consolidate(l.items)||[];
+   const shown=new Set();
+   groups.forEach(g=>{
+    const entries=l.items.filter(it=>g.sourceIds.includes(String(it.id)));
+    if(!entries.length)return;
+    entries.forEach(it=>shown.add(String(it.id)));
+    const total=g.kind==='lance'?fmt(g.meters)+' m · '+fmt(g.units)+' lances':
+     g.kind==='package'?fmt(g.units)+' '+g.unit+' ('+fmt(g.meters)+' m medidos)':
+     fmt(g.meters)+' m';
+    const composition=g.kind==='lance'?' · '+g.breakdown.map(part=>fmt(part.count)+' × '+fmt(part.length)+' m').join(' + '):'';
+    html+='<section style="margin-top:16px"><div class="row"><strong>'+esc(g.name)+'</strong><span class="tiny muted">'+esc(total)+'</span></div>'+
+     (composition?'<small class="muted">'+esc('Composição: '+composition.slice(3))+'</small>':'')+
+     '<div class="items">';
+    entries.slice().reverse().forEach(it=>{html+=renderLine(it);});
+    html+='</div></section>';
+   });
+   // Itens legados não reinterpretados são exibidos integralmente.
+   const legacy=l.items.filter(it=>!shown.has(String(it.id)));
+   if(legacy.length){
+    html+='<section style="margin-top:16px"><strong>Outros lançamentos</strong><div class="items">';
+    legacy.slice().reverse().forEach(it=>{html+=renderLine(it);});
+    html+='</div></section>';
+   }
+  }
  }
  if(page==='home'||page==='lists'||page==='list'){
   // Estado de armazenamento agora é individual em cada lista, não um aviso geral.
@@ -407,7 +428,12 @@ document.addEventListener('click',function(e){
    return;
   }
 
-  if(a.dataset.action==='home'){e.preventDefault();navigate('home');return;}
+  const viewButton=e.target.closest('[data-list-view]');
+ if(viewButton&&page==='list'){
+  listView=viewButton.dataset.listView==='etapa'?'etapa':'insumo';
+  draw();return;
+ }
+ if(a.dataset.action==='home'){e.preventDefault();navigate('home');return;}
   if(a.dataset.action==='create'){e.preventDefault();$('newName').value='';$('createDialog').showModal();$('newName').focus();}
   if(a.dataset.action==='lists'){
    e.preventDefault();
