@@ -1,3 +1,5 @@
+> **ESTADO VIGENTE — 12/11/2026 · X.0.3.51 (branch `desenvolvimento`):** Listas X.0.3.50 aceitas como referência visual para teste; ficha `FT_INFRA-001` ajustada em **snapshot LAB independente** (`x/fichario-x/fichas-lab-2026-11-12.json`) sem modificar a fonte de 08/11 nem a planilha Fichario.xlsm. Relatórios Compras/Completo/Execução em WhatsApp, e-mail e PDF reorganizados para leitura; seis testes recentes adicionados ao CI. A execução do CI, a renderização do PDF em aparelho, o deploy Cloudflare e a homologação das fichas **não foram comprovados**. [Revisão e roteiro de campo](x/docs/REVISAO-ELETRODUTO-E-RELATORIOS-2026-11-12.md) · [Estado vigente](x/docs/ESTADO-VIGENTE-10-11-2026.md).
+
 # TEREON X — Repositório independente
 
 **Ambiente ativo:** TEREON X, sob `/x/`. A branch `desenvolvimento` recebe experimentos e testes; `main` recebe somente versões aprovadas. O endereço do Worker chamado `desenvolvimento` pode ser a **produção** do Cloudflare; não inferir ambiente pelo nome do hostname.
@@ -15,7 +17,7 @@
 - `assets/`, `vendor/`, `fonts/`: dependências estáticas necessárias ao X.
 
 ## Catálogo e homologação
-O rótulo **Catálogo Oficial** indica a coleção/candidatos em estudo, **não uma certificação**. O catálogo de testes possui 24 entradas: 2 fichas reais em revisão e 22 hipotéticas. Nenhuma está homologada. Pendências permanecem visíveis; aprovação/publicação exige decisão explícita do responsável e mecanismo próprio (ainda não implementado). Não usar opções fictícias como especificações técnicas válidas.
+O rótulo **Catálogo Oficial** indica a coleção/candidatos em estudo, **não uma certificação**. O motor do catálogo ativo lê um snapshot de laboratório com **6 fichas reais em revisão e nenhuma homologada**, alterando só a ficha de eletrodutos em relação ao snapshot importado de 08/11. Nenhuma está homologada. Pendências permanecem visíveis; aprovação/publicação exige decisão explícita do responsável e mecanismo próprio (ainda não implementado). Não usar opções fictícias como especificações técnicas válidas.
 
 ## Estado atual de referência — 09/11/2026
 - **X.0.3.29 na branch `desenvolvimento`**: layout de Minhas listas considerado bom pelo fundador; não significa homologação geral do aplicativo. `main` segue separada; nome do Worker não prova qual branch está publicada.
