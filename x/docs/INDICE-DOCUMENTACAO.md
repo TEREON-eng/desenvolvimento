@@ -1,3 +1,5 @@
+> **12/11/2026 · X.0.3.50:** padronizados também os **fundos do último nível** em Por insumo e Por etapa com superfície opaca idêntica. Paleta lousa/neon atenuada, sem alterações funcionais. [Histórico](CHANGELOG.md). Teste visual no celular e publicação Cloudflare pendentes.
+
 > **12/11/2026 · X.0.3.49:** cards de **Por insumo** e **Por etapa** padronizados com fundo verde-lousa translúcido e cabeçalho verde neon translúcido. Revisão restrita a CSS e atualização de cache/versão, sem mudança funcional. [Histórico](CHANGELOG.md). Publicação Cloudflare e teste visual pendentes de confirmação.
 
 > **12/11/2026 · X.0.3.48:** nas visões **Por etapa** e **Por insumo**, o resumo do material prioriza atributos de localização (material, seção, cor, isolação), incluindo PVC somente quando confirmado. Especificação integral preservada ao expandir. [Histórico](CHANGELOG.md). Publicação Cloudflare e teste no celular pendentes.
