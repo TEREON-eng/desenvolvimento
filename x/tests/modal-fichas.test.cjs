@@ -5,7 +5,7 @@
 const assert=require('node:assert/strict'),vm=require('node:vm'),fs=require('node:fs'),path=require('node:path');
 const root=path.resolve(__dirname,'../..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
-const data=JSON.parse(read('x/fichario-x/fichas-drive-2026-11-08.json'));
+const data=JSON.parse(read('x/fichario-x/fichas-lab-2026-11-12.json'));
 const elements=new Map(),documentEvents={};
 function element(id){
  if(!elements.has(id))elements.set(id,{
@@ -50,7 +50,7 @@ vm.createContext(context);
 new vm.Script(read('x/catalogo/motor.js')).runInContext(context);
 new vm.Script(read('x/listas/quantificacao.js')).runInContext(context);
 context.fetch=async url=>{
- assert.ok(url.includes('fichas-drive-2026-11-08.json'),'fonte deve ser a planilha, não o catálogo hipotético');
+ assert.ok(url.includes('fichas-lab-2026-11-12.json'),'catálogo do laboratório deve ler snapshot experimental sem sobrescrever fonte');
  return {ok:true,json:async()=>clone(data)};
 };
 new vm.Script(read('x/listas/app.js')).runInContext(context);
@@ -80,13 +80,17 @@ function choice(v){
  choice('Rígido');
  assert.equal(element('fieldLabel').textContent,'Material');
  choice('PVC');
- assert.equal(element('fieldLabel').textContent,'Diâmetro PVC','condicional verdadeiro da planilha');
+ assert.equal(element('fieldLabel').textContent,'Diâmetro nominal · PVC','condicional de diâmetro no laboratório');
  assert.ok(!element('choices').innerHTML.includes('data-pick="Aço"'),'não oferece material de aço ao selecionar detalhe PVC');
- assert.equal(element('saveItem').disabled,false,'obrigatórios da ficha estão confirmados');
+ assert.equal(element('saveItem').disabled,true,'sem diâmetro o eletroduto permanece incompleto');
+ choice('3/4"');
+ assert.equal(element('saveItem').disabled,false,'diâmetro confirmado libera apenas a simulação');
  element('tags').listeners.click({target:{dataset:{remove:'DET-002'},closest:s=>s==='[data-remove]'?{dataset:{remove:'DET-002'}}:null}});
  assert.equal(element('fieldLabel').textContent,'Material','remover obrigatória retorna à seleção correta');
  assert.equal(element('saveItem').disabled,true,'remover obrigatória bloqueia adicionar');
  choice('PVC');
+ assert.equal(element('saveItem').disabled,true,'remoção de material também invalidou diâmetro associado');
+ choice('3/4"');
  assert.equal(element('saveItem').disabled,false);
  element('saveItem').listeners.click();
  assert.equal(stored.lists[0].items.length,1);
