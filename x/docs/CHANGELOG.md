@@ -1,3 +1,11 @@
+## 12/11/2026 — X.0.3.50 · Fundos internos iguais, paleta mais suave
+- Feedback de campo: apesar da padronização dos agrupadores, o último nível tinha uma diferença perceptível entre **branco** e **cinza**. A composição lousa + neon também estava carregada.
+- Causa revisada no CSS: na versão anterior `.compact-stage-material` usava branco a 82% de opacidade, enquanto `.compact-material-card .compact-stage-list` usava branco a 48% (além de camadas lousa/neon nos pais). A mesma informação terminava com fundos diferentes.
+- **Solução:** superfícies internas (itens e lançamentos) usam a **mesma cor opaca**, `var(--tx-app-surface)`, nos modos Por etapa e Por insumo, evitando variação causada pela mistura de transparências. Recuo, bordas e pequena guia lateral preservam relações de pertencimento.
+- Reduzidas as intensidades da paleta: card lousa 9% no claro (12–13% escuro/TEREON), título neon ~8% e filete de destaque. Cabeçalhos continuam padronizados entre os modos.
+- Não alterados dados, estrutura do modal, motor, ficha, cálculo comercial, relatórios, estados da lista ou JS da interface. Apenas `x/styles.css` e versão/cache em `x/index.html`, `x/pwa.js`, `x/sw.js` e `x/version.json` (X.0.3.50).
+- Verificação estática de seletores e alinhamento das cores feita. **Revisão visual em celular, CI e publicação Cloudflare ainda não confirmados.**
+
 ## 12/11/2026 — X.0.3.49 · Padronização de cores nos dois agrupamentos
 - Revisão visual solicitada: **Por insumo** e **Por etapa** devem ter a **mesma linguagem de cores**, sem diferença entre seus cards principais.
 - Card do agrupador (ambas as visões): **verde-lousa translúcido** `rgba(102,139,119,.16)` no tema claro, `.20` nos temas escuro/TEREON.
