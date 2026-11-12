@@ -12,7 +12,7 @@ const start=app.indexOf("  const fmt=n=>Number(n).toLocaleString('pt-BR',{maximu
 const end=app.indexOf("  if(!l.items.length)html+='<div class=\"empty\">",start);
 assert.ok(start>=0&&end>start,'Funções de renderização da lista presentes');
 const render=new Function('window','esc',app.slice(start,end)+'return {materialParts,stageMaterialRow,groupCard};')(rootWindow,esc);
-const sample=(id,qty,stage,unit='rl200m')=>({id,name:'Condutor isolado de cobre 2,5 mm²',catalogId:'FT_COND-001',values:{'DET-001':'Cobre','DET-002':'2,5 mm²','DET-011':unit},qty,qtyBasis:'m',unit,stage});
+const sample=(id,qty,stage,unit='rl200m')=>({id,name:'Condutor isolado de cobre 2,5 mm²',catalogId:'FT_COND-001',values:{'DET-001':'Condutor isolado','DET-002':'Cobre','DET-004':'2,5','DET-011':unit},qty,qtyBasis:'m',unit,stage});
 const items=[sample('a',100,'Sala 2'),sample('b',170,'Sala 2')];
 const group=rootWindow.TereonXQuant.consolidate(items)[0];
 const stage=render.stageMaterialRow(group,items);
