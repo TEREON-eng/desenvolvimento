@@ -459,6 +459,15 @@ function close(id){$(id).close();}
 // Retorno global agora é o link HTML do cabeçalho; navegação de Listas preservada nos controles internos.
 document.addEventListener('click',function(e){
  if(!ready)return;
+ // Os botões de agrupamento não possuem data-action; tratar ANTES do
+ // roteador geral para que ambos funcionem dentro do modal de lista.
+ const viewButton=e.target.closest('[data-list-view]');
+ if(viewButton&&page==='list'){
+  e.preventDefault();
+  listView=viewButton.dataset.listView==='etapa'?'etapa':'insumo';
+  draw();
+  return;
+ }
  var a=e.target.closest('[data-action]');if(a){
   if(a.dataset.action==='sync'&&syncController){
    e.preventDefault();
@@ -481,12 +490,7 @@ document.addEventListener('click',function(e){
    return;
   }
 
-  const viewButton=e.target.closest('[data-list-view]');
- if(viewButton&&page==='list'){
-  listView=viewButton.dataset.listView==='etapa'?'etapa':'insumo';
-  draw();return;
- }
- if(a.dataset.action==='home'){e.preventDefault();navigate('home');return;}
+if(a.dataset.action==='home'){e.preventDefault();navigate('home');return;}
   if(a.dataset.action==='create'){e.preventDefault();$('newName').value='';$('createDialog').showModal();$('newName').focus();}
   if(a.dataset.action==='lists'){
    e.preventDefault();
