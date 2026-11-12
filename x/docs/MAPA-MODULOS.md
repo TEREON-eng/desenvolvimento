@@ -1,3 +1,5 @@
+> **INVENTÁRIO VIGENTE — 12/11/2026 · X.0.3.51:** `x/catalogo/motor.js` carrega `fichas-lab-2026-11-12.json` no laboratório, preservando o snapshot `fichas-drive-2026-11-08.json` como origem histórica; `x/listas/app.js` usa seletor de unidade por tipo em `FT_INFRA-001`, sem duplicar pergunta técnica; `x/motor-compartilhar.js` mantém `model/text/open` e expõe `sections/subject` para construir relatórios por finalidade e canal sem alterar a lista; `x/sw.js` pré-carrega o snapshot LAB. Os níveis de maturidade e débitos descritos abaixo são fotografias anteriores, não evidência de homologação. [Rodada atual](REVISAO-ELETRODUTO-E-RELATORIOS-2026-11-12.md).
+
 # TEREON X — Mapa de módulos e contratos
 
 > **MATURIDADE ATUAL — 10/11:** este inventário inclui estados de datas diferentes. Prioridade para 17/11: **Listas + Fichas/Catálogo + especificação + compartilhamento**. Obras, Diário, Empreiteiros, Escopo e PDF diário são laboratórios paralelos. [Estado vigente](ESTADO-VIGENTE-10-11-2026.md) · [Superauditoria](SUPERAUDITORIA-TEREON-X-2026-11-10.md).
