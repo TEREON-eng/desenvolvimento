@@ -1,3 +1,5 @@
+> **ADENDO 12/11/2026 · X.0.3.51:** as falhas P0 de Eletroduto sem diâmetro, observadas em 10/11 abaixo, **continuam válidas no snapshot original**, mas foram corrigidas **para simulação no snapshot LAB ativo da branch**. Seleção condicional do fichário, persistência de lista e formato de compartilhamento preservam origem; Compras/Completo/Execução em texto/e-mail/PDF receberam revisão de hierarquia e avisos. Ainda restam P0 de outras fichas, sincronização entre dispositivos, CI completo, PDF efetivo e uso móvel. **Não interpretar o ensaio como homologação técnica ou publicação.** [Detalhes e provas](REVISAO-ELETRODUTO-E-RELATORIOS-2026-11-12.md).
+
 # TEREON X — Auditoria do núcleo Listas para o campo em 17/11
 **10/11/2026 · Evidência de código, testes isolados, fixtures e contratos · Branch `desenvolvimento`**
 
