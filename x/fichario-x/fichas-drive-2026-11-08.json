@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "fonte": "Fichario.xlsm no Google Drive, FT_COND-001, salvo 11/11/2026 20:37 BRT",
+  "fonte": "Fichario.xlsm FT_COND-001 Google Drive 11/11/2026 21:20 BRT",
   "aviso": "Importação experimental. Fichas não são automaticamente homologadas pela indicação Aprovado do Excel.",
   "fichas": [
     {
@@ -431,13 +431,32 @@
           "origemLinha": 26,
           "status": "Aprovado",
           "compoeNome": "Sim"
+        },
+        {
+          "id": "DET-011",
+          "ordem": 11,
+          "nome": "Unidade",
+          "valores": [
+            "m",
+            "rl50m",
+            "rl100m",
+            "rl200m",
+            "2 lances",
+            "3 lances"
+          ],
+          "condicao": "Sempre",
+          "exclusao": "",
+          "classificacao": "Opcional",
+          "origemLinha": 27,
+          "status": "Aprovado",
+          "compoeNome": "Não"
         }
       ],
       "pendencias": [
         "Fonte: Fichario.xlsm salvo 11/11/2026 20:37 BRT. Comportamento ao fogo DET-010 em duas linhas, opcional, com Comum condicionado a PVC 70 °C e LSZH condicionado a !PVC 70 °C.",
         "Condição !PVC significa ausência de PVC confirmado nas tags; ela NÃO prova que o produto atende aos requisitos de baixa emissão de fumaça. Selecionar LSZH registra exigência explícita do profissional.",
-        "Unidade de compra continua controlada nos campos das listas.",
-        "Revisar classificação IEC 60228 de encordoamento e a compatibilidade de produtos antes de homologar comercialmente."
+        "Revisar classificação IEC 60228 de encordoamento e a compatibilidade de produtos antes de homologar comercialmente.",
+        "Unidade DET-011 sincronizada de Fichario.xlsm salvo 11/11/2026 21:20 BRT: m; rl50m; rl100m; rl200m; 2 lances; 3 lances. Campo de unidade no modal é a fonte da apresentação; medições continuam em metros."
       ],
       "nomeNaPlanilha": "Condutores isolados",
       "apelidos": [
