@@ -1,3 +1,5 @@
+> **IMPLEMENTAÇÃO — 12/11/2026 · X.0.3.51:** “Implementação ainda pendente” no texto de criação abaixo é um marco histórico, **não** o estado vigente. O alternador Por insumo/Por etapa, a composição de lances com metragem preservada e os relatórios Compras/Completo/Execução em WhatsApp, e-mail e PDF já têm código na branch `desenvolvimento`. A revisão X.0.3.51 acrescenta formatação por canal e estrutura paginada no PDF, além de ficha Eletroduto LAB, sem alterar a fonte original. Ainda falta validação real dos canais, CI, PDF e deploy. [Detalhes](REVISAO-ELETRODUTO-E-RELATORIOS-2026-11-12.md).
+
 # TEREON X — Decisão de Listas, agrupamento e relatórios (12/11/2026)
 
 **Status:** decisão de UX e regra de negócio aprovada pelo fundador em conversa; **implementação ainda pendente**. Repositório canônico: `TEREON-eng/desenvolvimento`, branch `desenvolvimento`. Não editar `main` nem considerar deploy realizado.
