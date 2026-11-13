@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.57",
+  "version": "x.0.3.58",
   "build": "2026-11-13",
-  "notes": "Navegação por todas características no modal e revisão de possíveis equivalências de condutores, sem fusão automática"
+  "notes": "Navegar pelos detalhes tocando na tag confirmada; botão × independente remove, barra compacta anterior restaurada"
 }
