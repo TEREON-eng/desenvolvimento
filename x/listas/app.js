@@ -482,20 +482,20 @@ function paintFichaChoices(){
   }).join(''):
    '<p class="tiny muted">Nenhuma ficha encontrada.</p>');
 }
-function navigateDetail(index){
- if(choosingFicha)return;
+function navigateConfirmedTag(detailId){
+ // Navegação pelos próprios atributos escolhidos. A tag não altera o valor;
+ // somente a ação no botão × remove a característica e as dependências.
+ if(choosingFicha||!Object.hasOwn(values,detailId)||!values[detailId])return;
  const available=getFields();
- if(!available.length)return;
- const target=Number(index);
- if(!Number.isInteger(target)||target<0||target>=available.length)return;
+ const target=available.findIndex(field=>field.id===detailId);
+ if(target<0)return; // Não navegar para característica condicional oculta.
  fields=available;focus=target;optionNotice='';
- redrawAdd(); // Apenas navegar: nenhuma característica é presumida ou removida.
+ redrawAdd();
 }
 function redrawAdd(){
  if(selectedFicha?.id==='FT_INFRA-001'&&!choosingFicha)populateUnitOptions();
  $('addDialog').classList.toggle('is-choosing',choosingFicha);
  if(choosingFicha){
-  $('detailPrev').disabled=true;$('detailNext').disabled=true;
   $('liveName').textContent='Selecione um material';
   $('progress').innerHTML='';
   $('counter').textContent=(window.TereonXCatalog?.list()||[]).length+' fichas disponíveis';
@@ -510,23 +510,20 @@ function redrawAdd(){
   $('liveName').textContent=name();
   focus=Math.max(0,Math.min(focus,fields.length-1));
   const required=fields.filter(x=>x.required);
-  $('progress').innerHTML=fields.map((detail,index)=>{
-   const active=index===focus,confirmed=!!values[detail.id];
-   return '<button type="button" class="segment detail-step'+(detail.required?' required':' optional')+
-    (confirmed?' done':'')+(active?' current':'')+
-    '" data-detail-index="'+index+'" title="'+esc((index+1)+'/'+fields.length+' · '+detail.label+
-      ' · '+(detail.required?'Obrigatório':'Opcional')+' · '+(confirmed?'Confirmado':'Pendente'))+
-    '" aria-label="'+esc('Abrir detalhe '+(index+1)+' de '+fields.length+': '+detail.label+
-      ' ('+(detail.required?'obrigatório':'opcional')+(confirmed?', confirmado':', pendente')+')')+
-    '"'+(active?' aria-current="step"':'')+'></button>';
-  }).join('');
-  $('detailPrev').disabled=focus<=0||!fields.length;
-  $('detailNext').disabled=focus>=fields.length-1||!fields.length;
-  $('counter').textContent='Detalhe '+(fields.length?focus+1:0)+'/'+fields.length+' · '+count()+'/'+required.length+' obrigatórios';
+  // Progresso apenas informativo. Para REVISAR um detalhe confirmado,
+  // o usuário toca na própria tag selecionada; × continua removendo.
+  $('progress').innerHTML=required.map(x=>'<span class="segment'+(values[x.id]?' done':'')+'"></span>').join('');
+  $('counter').textContent=count()+' / '+required.length+' obrigatórios';
   $('counter').nextElementSibling.textContent=selectedFicha?'Ficha em revisão':'Registro anterior';
   const activeField=fields[focus];
   const linked=new Set(selectedFicha&&activeField?window.TereonXCatalog.relatedTags(selectedFicha,values,activeField.id):[]);
-  $('tags').innerHTML=fields.filter(x=>values[x.id]).map(x=>'<button type="button" class="tag'+(x.required?' required':'')+(linked.has(x.id)?' linked':'')+'" data-remove="'+esc(x.id)+'" title="'+esc((linked.has(x.id)?'Relacionada ao detalhe atual · ':'')+'Remover '+x.label)+'">'+esc(values[x.id])+' ×</button>').join('')||'<span class="tiny muted">As tags confirmadas aparecem aqui.</span>';
+  $('tags').innerHTML=fields.filter(x=>values[x.id]).map(x=>
+   '<span class="tag selected-detail-tag'+(x.required?' required':'')+(linked.has(x.id)?' linked':'')+(activeField?.id===x.id?' is-current':'')+'">'+
+   '<button type="button" class="tag-open" data-edit-tag="'+esc(x.id)+'" title="'+esc('Revisar '+x.label+': '+values[x.id])+
+   '" aria-label="'+esc('Revisar '+x.label+': '+values[x.id])+'">'+esc(values[x.id])+'</button>'+
+   '<button type="button" class="tag-remove" data-remove="'+esc(x.id)+'" title="'+esc('Remover '+x.label)+
+   '" aria-label="'+esc('Remover '+x.label)+ '">×</button></span>'
+  ).join('')||'<span class="tiny muted">As tags confirmadas aparecem aqui. Toque numa tag para revisar; × remove.</span>';
   const field=fields[focus];
   $('fieldLabel').textContent=field?.label||'Características';
   if(selectedFicha){
@@ -815,19 +812,19 @@ $('createForm').addEventListener('submit',function(e){
  var id=safe(function(){return lists.createList(name);});
  if(!id)return;close('createDialog');activeId=id;navigate('list');
 });
-$('progress').addEventListener('click',function(e){
- const b=e.target.closest('[data-detail-index]');if(b)navigateDetail(b.dataset.detailIndex);
-});
-$('detailPrev').addEventListener('click',function(){navigateDetail(focus-1);});
-$('detailNext').addEventListener('click',function(){navigateDetail(focus+1);});
 $('tags').addEventListener('click',function(e){
- var b=e.target.closest('[data-remove]');if(!b)return;
- delete values[b.dataset.remove];optionNotice='';
- reconcileInvalidOptional();
- fields=getFields();
- // Sempre retoma a primeira característica obrigatória ainda pendente,
- // mesmo quando várias tags são removidas em sequência.
- focus=pickFirstMissing();redrawAdd();
+ // × e a área de revisão são botões independentes: nunca excluir ao navegar.
+ const removal=e.target.closest('[data-remove]');
+ if(removal){
+  delete values[removal.dataset.remove];optionNotice='';
+  reconcileInvalidOptional();
+  fields=getFields();
+  // Remover mantém a dinâmica anterior: primeiro obrigatório pendente.
+  focus=pickFirstMissing();redrawAdd();
+  return;
+ }
+ const edit=e.target.closest('[data-edit-tag]');
+ if(edit)navigateConfirmedTag(edit.dataset.editTag);
 });
 $('choices').addEventListener('input',function(e){
  if(e.target.id!=='fichaSearch')return;
