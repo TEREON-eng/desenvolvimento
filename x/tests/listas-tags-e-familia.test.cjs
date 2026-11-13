@@ -7,7 +7,7 @@ const css=fs.readFileSync(path.join(__dirname,'../styles.css'),'utf8');
 const begin=app.indexOf('function fichaPresentation(f){'),end=app.indexOf('function redrawAdd(){',begin);
 assert.ok(begin>=0&&end>begin,'seletor inicial da ficha deve existir');
 const entries=[
- {id:'FT_COND-001',name:'Condutores isolados',reference:'FT_COND-001',status:'Em revisão',kind:'revisao'},
+ {id:'FT_COND-001',name:'Condutores isolados',reference:'FT_COND-001',status:'Em revisão',maturity:'Consolidado',kind:'revisao'},
  {id:'FT_INFRA-001',name:'Eletroduto',reference:'FT_INFRA-001',status:'Em revisão',kind:'revisao'},
  {id:'FT_TEST',name:'Ficha experimental',reference:'FT_TEST',status:'Consolidado',kind:'revisao'},
  {id:'FT_OK',name:'Ficha publicada',reference:'FT_OK',status:'Aprovada',kind:'oficial',homologada:true}
@@ -23,7 +23,9 @@ assert.ok(holder.innerHTML.includes('<strong>Condutores elétricos</strong>'),'n
 assert.ok(holder.innerHTML.includes('<strong>Eletroduto</strong>'),'nome da ficha de infraestrutura');
 assert.ok(holder.innerHTML.includes('class="ficha-maturity-tag revision"')&&holder.innerHTML.includes('>Em revisão</span>'),'situação em revisão no seletor');
 assert.ok(holder.innerHTML.includes('class="ficha-maturity-tag consolidated"')&&holder.innerHTML.includes('>Consolidado</span>'),'consolidado somente quando status da ficha é explícito');
-assert.equal((holder.innerHTML.match(/>Consolidado<\/span>/g)||[]).length,1,'não inferir consolidado de múltiplos lançamentos');
+assert.equal((holder.innerHTML.match(/>Consolidado<\/span>/g)||[]).length,2,'consolidado exige indicação explícita de maturidade ou status da ficha');
+assert.equal(picker.fichaPresentation(entries[0]).tag,'Consolidado','maturidade consolidada não remove revisão');
+assert.ok(holder.innerHTML.includes('FT_COND-001 · Publicação pendente'),'sem homologação técnica automática');
 assert.equal(picker.fichaPresentation(entries[3]).tag,'','ficha aprovada não vira consolidada por inferência');
 assert.ok(!holder.innerHTML.includes('FT_OK · Aprovada'),'não repetir status em texto solto');
 assert.ok(!app.includes('groupTags(')&&!app.includes('compact-status-chip'),'nenhum status na lista lançada');
