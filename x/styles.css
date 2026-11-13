@@ -802,3 +802,11 @@ html[data-tx-appearance="tereon"] #addDialog .detail-navigation .segment.detail-
  color:var(--tx-app-text,#213b2b);
  border-color:var(--tx-app-slate,#759380);
 }
+
+#matchDialog .match-multiple-note{
+ border:1px solid var(--tx-app-border,#d6e1d9);
+ border-left:3px solid var(--tx-app-slate,#7d9e89);
+ border-radius:8px;background:var(--tx-app-bg,#f3f5f4);
+ color:var(--tx-app-text,#23372c);
+ font-size:12px;line-height:1.5;padding:9px 11px;
+}
