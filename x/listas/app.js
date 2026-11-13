@@ -482,13 +482,13 @@ function paintFichaChoices(){
   }).join(''):
    '<p class="tiny muted">Nenhuma ficha encontrada.</p>');
 }
-function navigateConfirmedTag(detailId){
- // Navegação pelos próprios atributos escolhidos. A tag não altera o valor;
- // somente a ação no botão × remove a característica e as dependências.
- if(choosingFicha||!Object.hasOwn(values,detailId)||!values[detailId])return;
+function navigateTagDetail(detailId){
+ // As tags mostram todos os detalhes aplicáveis, preenchidos ou pendentes.
+ // Navegar muda apenas o foco; nem marca opção nem remove características.
+ if(choosingFicha)return;
  const available=getFields();
  const target=available.findIndex(field=>field.id===detailId);
- if(target<0)return; // Não navegar para característica condicional oculta.
+ if(target<0)return; // Condicional não aplicável permanece fora da navegação.
  fields=available;focus=target;optionNotice='';
  redrawAdd();
 }
@@ -510,20 +510,30 @@ function redrawAdd(){
   $('liveName').textContent=name();
   focus=Math.max(0,Math.min(focus,fields.length-1));
   const required=fields.filter(x=>x.required);
-  // Progresso apenas informativo. Para REVISAR um detalhe confirmado,
-  // o usuário toca na própria tag selecionada; × continua removendo.
-  $('progress').innerHTML=required.map(x=>'<span class="segment'+(values[x.id]?' done':'')+'"></span>').join('');
-  $('counter').textContent=count()+' / '+required.length+' obrigatórios';
+  const completed=fields.filter(x=>!!values[x.id]).length;
+  // Uma posição para TODO detalhe atualmente aplicável (inclusive opcional).
+  // A barra segue informativa; a navegação ocorre pelas próprias tags.
+  $('progress').innerHTML=fields.map(x=>'<span class="segment'+
+   (x.required?' required':' optional')+(values[x.id]?' done':'')+
+   '" title="'+esc(x.label+' · '+(x.required?'Obrigatório':'Opcional')+
+   ' · '+(values[x.id]?'Selecionado':'Pendente'))+'"></span>').join('');
+  $('counter').textContent=completed+' / '+fields.length+' detalhes · '+count()+' / '+required.length+' obrigatórios';
   $('counter').nextElementSibling.textContent=selectedFicha?'Ficha em revisão':'Registro anterior';
   const activeField=fields[focus];
   const linked=new Set(selectedFicha&&activeField?window.TereonXCatalog.relatedTags(selectedFicha,values,activeField.id):[]);
-  $('tags').innerHTML=fields.filter(x=>values[x.id]).map(x=>
-   '<span class="tag selected-detail-tag'+(x.required?' required':'')+(linked.has(x.id)?' linked':'')+(activeField?.id===x.id?' is-current':'')+'">'+
-   '<button type="button" class="tag-open" data-edit-tag="'+esc(x.id)+'" title="'+esc('Revisar '+x.label+': '+values[x.id])+
-   '" aria-label="'+esc('Revisar '+x.label+': '+values[x.id])+'">'+esc(values[x.id])+'</button>'+
-   '<button type="button" class="tag-remove" data-remove="'+esc(x.id)+'" title="'+esc('Remover '+x.label)+
-   '" aria-label="'+esc('Remover '+x.label)+ '">×</button></span>'
-  ).join('')||'<span class="tiny muted">As tags confirmadas aparecem aqui. Toque numa tag para revisar; × remove.</span>';
+  $('tags').innerHTML=fields.map(x=>{
+   const chosen=!!values[x.id],caption=chosen?values[x.id]:x.label;
+   return '<span class="tag selected-detail-tag'+(x.required?' required':'')+
+    (chosen?' is-selected':' is-pending')+(chosen&&linked.has(x.id)?' linked':'')+
+    (activeField?.id===x.id?' is-current':'')+'">'+
+    '<button type="button" class="tag-open" data-edit-tag="'+esc(x.id)+'" title="'+
+    esc((chosen?'Revisar ':'Selecionar ')+x.label+(chosen?': '+values[x.id]:''))+
+    '" aria-label="'+esc((chosen?'Revisar ':'Selecionar ')+x.label+
+      (chosen?': '+values[x.id]:' (não selecionado)'))+'">'+esc(caption)+'</button>'+
+    (chosen?'<button type="button" class="tag-remove" data-remove="'+esc(x.id)+
+     '" title="'+esc('Remover '+x.label)+'" aria-label="'+esc('Remover '+x.label)+'">×</button>':'')+
+    '</span>';
+  }).join('')||'<span class="tiny muted">Escolha uma característica para continuar.</span>';
   const field=fields[focus];
   $('fieldLabel').textContent=field?.label||'Características';
   if(selectedFicha){
@@ -824,7 +834,7 @@ $('tags').addEventListener('click',function(e){
   return;
  }
  const edit=e.target.closest('[data-edit-tag]');
- if(edit)navigateConfirmedTag(edit.dataset.editTag);
+ if(edit)navigateTagDetail(edit.dataset.editTag);
 });
 $('choices').addEventListener('input',function(e){
  if(e.target.id!=='fichaSearch')return;
