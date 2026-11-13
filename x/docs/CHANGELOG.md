@@ -1,3 +1,13 @@
+## 13/11/2026 — X.0.3.57 · Navegar pelos detalhes e revisar equivalências possíveis
+- Feedback real da tela Por insumo: variações de condutores visualmente semelhantes ainda separadas, sem convite para verificar equivalência. O comparador anterior era **apenas contrato proposto**.
+- Modal de Adicionar item atualizado **sem mudar a dinâmica aprovada**: barra com **todos os detalhes aplicáveis**, obrigatórios e opcionais; segmentos tocáveis com estado atual/confirmado/pendente; setas anterior/próximo; contador atual e obrigação. Navegar não altera valores ou quantidades.
+- Implementado `x/listas/correspondencia.js`: primeiro detector **não destrutivo**, restrito a condutores `FT_COND-001`, baseado em atributos confirmados (não no nome técnico textual); conflitos explícitos bloqueiam sugestão, omissões geram aviso para revisão. Dois candidatos para a mesma lacuna continuam alternativas, sem escolha automática.
+- Na visão Por insumo, surge aviso discreto **Possíveis correspondências — Revisar** quando existem pares elegíveis; um painel expõe as diferenças e abre o **mesmo modal de edição**, posicionado no detalhe faltante. **Nenhuma fusão ou quantidade é alterada automaticamente**.
+- Casos de teste `x/tests/correspondencia-progressiva.test.cjs` adicionados ao CI (15 cenários) e `modal-fichas.test.cjs` ampliado para navegação. `x/index.html`, `x/styles.css`, `x/listas/app.js`, `x/sw.js` e `x/version.json` ajustados para X.0.3.57.
+- `x/listas/quantificacao.js`, ficha de Condutores, persistência, relatórios e regras de compra **não alterados**.
+- Sintaxe e verificações isoladas realizadas; **execução integral do CI, experiência no celular e publicação no Cloudflare ainda não confirmadas**.
+- [Implementação e roteiro de testes](IMPLEMENTACAO-NAVEGACAO-CORRESPONDENCIA-X0357-2026-11-13.md) · [Contrato de correspondência](CONTRATO-CORRESPONDENCIA-PROGRESSIVA-2026-11-13.md).
+
 ## 13/11/2026 — Proposta de Correspondência Técnica Progressiva (documentação, sem versão do app)
 - Discussão disparada por pedidos incompletos que podem corresponder ao mesmo produto: “Condutor flexível cobre 2,5 preto” versus “... 450”, o último ainda exigindo confirmação da classe de tensão.
 - Diagnóstico: a função `signature()` do motor `x/listas/quantificacao.js` inclui `item.name` e todos os valores registrados (salvo unidade técnica), o que permite identidades diferentes para pedidos com detalhes ausentes ou nomes formatados de forma distinta. Isso protege o pedido atual, mas não resolve compatibilidade progressiva.
