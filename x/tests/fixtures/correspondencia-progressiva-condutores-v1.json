@@ -1,0 +1,719 @@
+{
+  "schema": "tereon.correspondencia-progressiva.1",
+  "createdAt": "2026-11-13",
+  "status": "PROPOSTA_NAO_APROVADA",
+  "implementedInApp": false,
+  "executedAsTests": false,
+  "source": "x/docs/CONTRATO-CORRESPONDENCIA-PROGRESSIVA-2026-11-13.md",
+  "technicalIdentityCandidates": [
+    "DET-001",
+    "DET-002",
+    "DET-004",
+    "DET-005",
+    "DET-006",
+    "DET-008",
+    "DET-009"
+  ],
+  "commercialField": "unit",
+  "note": "Valores fictícios; apenas oráculo de teste futuro. Não editar lançamentos, não inferir características e não misturar unidades.",
+  "cases": [
+    {
+      "id": "C01",
+      "title": "Tensão ausente versus confirmada",
+      "a": {
+        "id": "A",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "b": {
+        "id": "B",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "expected": {
+        "status": "potencial",
+        "missing": [
+          "DET-006"
+        ],
+        "conflicts": [],
+        "autoMerge": false
+      }
+    },
+    {
+      "id": "C02",
+      "title": "Tensões explicitamente diferentes",
+      "a": {
+        "id": "A",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "b": {
+        "id": "B",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "0,6/1,0 kV",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "expected": {
+        "status": "incompativel",
+        "missing": [],
+        "conflicts": [
+          "DET-006"
+        ],
+        "autoMerge": false
+      }
+    },
+    {
+      "id": "C03",
+      "title": "Condutor preto versus azul",
+      "a": {
+        "id": "A",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "b": {
+        "id": "B",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Azul",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "expected": {
+        "status": "incompativel",
+        "missing": [],
+        "conflicts": [
+          "DET-008"
+        ],
+        "autoMerge": false
+      }
+    },
+    {
+      "id": "C04",
+      "title": "Cobre versus alumínio",
+      "a": {
+        "id": "A",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "b": {
+        "id": "B",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Alumínio",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "expected": {
+        "status": "incompativel",
+        "missing": [],
+        "conflicts": [
+          "DET-002"
+        ],
+        "autoMerge": false
+      }
+    },
+    {
+      "id": "C05",
+      "title": "PVC versus HEPR ou XLPE",
+      "a": {
+        "id": "A",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "b": {
+        "id": "B",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "HEPR ou XLPE 90 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "expected": {
+        "status": "incompativel",
+        "missing": [],
+        "conflicts": [
+          "DET-005"
+        ],
+        "autoMerge": false
+      }
+    },
+    {
+      "id": "C06",
+      "title": "Classes de encordoamento distintas",
+      "a": {
+        "id": "A",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "b": {
+        "id": "B",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe II (Encordoado flexível)"
+        }
+      },
+      "expected": {
+        "status": "incompativel",
+        "missing": [],
+        "conflicts": [
+          "DET-009"
+        ],
+        "autoMerge": false
+      }
+    },
+    {
+      "id": "C07",
+      "title": "Cor ausente versus preto",
+      "a": {
+        "id": "A",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "b": {
+        "id": "B",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "expected": {
+        "status": "potencial",
+        "missing": [
+          "DET-008"
+        ],
+        "conflicts": [],
+        "autoMerge": false
+      }
+    },
+    {
+      "id": "C08",
+      "title": "Uma descrição incompleta, duas tensões candidatas",
+      "a": {
+        "id": "A",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "candidates": [
+        {
+          "id": "B",
+          "catalogId": "FT_COND-001",
+          "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+          "unit": "rl100m",
+          "qty": 100,
+          "qtyBasis": "m",
+          "values": {
+            "DET-001": "Condutor isolado",
+            "DET-002": "Cobre",
+            "DET-004": "2,5",
+            "DET-005": "PVC 70 °C",
+            "DET-006": "450/750 V",
+            "DET-008": "Preto",
+            "DET-009": "Classe V (Flexivel)"
+          }
+        },
+        {
+          "id": "C",
+          "catalogId": "FT_COND-001",
+          "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+          "unit": "rl100m",
+          "qty": 100,
+          "qtyBasis": "m",
+          "values": {
+            "DET-001": "Condutor isolado",
+            "DET-002": "Cobre",
+            "DET-004": "2,5",
+            "DET-005": "PVC 70 °C",
+            "DET-006": "0,6/1,0 kV",
+            "DET-008": "Preto",
+            "DET-009": "Classe V (Flexivel)"
+          }
+        }
+      ],
+      "expected": {
+        "status": "indeterminado",
+        "candidatePairStatus": "potencial",
+        "missing": [
+          "DET-006"
+        ],
+        "choices": [
+          "450/750 V",
+          "0,6/1,0 kV"
+        ],
+        "autoSelect": false,
+        "autoMerge": false
+      }
+    },
+    {
+      "id": "C09",
+      "title": "Mesmo vetor técnico, nomes formatados diferentes",
+      "a": {
+        "id": "A",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "b": {
+        "id": "B",
+        "catalogId": "FT_COND-001",
+        "name": "Cabo flexível Cu # 2,50 preto PVC 450/750",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "expected": {
+        "status": "identidade_confirmada",
+        "commercialCompatible": true,
+        "autoMergeEligible": true
+      }
+    },
+    {
+      "id": "C10",
+      "title": "Mesmo produto, compra em metro versus rolo",
+      "a": {
+        "id": "A",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "b": {
+        "id": "B",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "expected": {
+        "status": "identidade_confirmada",
+        "commercialCompatible": false,
+        "autoMergeEligible": false
+      }
+    },
+    {
+      "id": "C11",
+      "title": "Texto 450 não confirmado não equivale à tensão nominal",
+      "a": {
+        "id": "A",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        },
+        "rawInput": "condutor flexível cobre 2,5 preto 450"
+      },
+      "b": {
+        "id": "B",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "expected": {
+        "status": "potencial",
+        "missing": [
+          "DET-006"
+        ],
+        "mustNotInfer": "450/750 V",
+        "autoMerge": false
+      }
+    },
+    {
+      "id": "C12",
+      "title": "Bitolas diferentes",
+      "a": {
+        "id": "A",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "b": {
+        "id": "B",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "4,0",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "expected": {
+        "status": "incompativel",
+        "conflicts": [
+          "DET-004"
+        ],
+        "autoMerge": false
+      }
+    },
+    {
+      "id": "C13",
+      "title": "Normalização segura da seção 2,50 versus 2,5",
+      "a": {
+        "id": "A",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,50",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "b": {
+        "id": "B",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "expected": {
+        "status": "identidade_confirmada",
+        "commercialCompatible": true,
+        "normalization": [
+          "DET-004"
+        ],
+        "autoMergeEligible": true
+      }
+    },
+    {
+      "id": "C14",
+      "title": "Sem identidade da ficha",
+      "a": {
+        "id": "A",
+        "catalogId": null,
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "b": {
+        "id": "B",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "PVC 70 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "expected": {
+        "status": "indeterminado",
+        "reason": "sem_catalogId",
+        "autoMerge": false
+      }
+    },
+    {
+      "id": "C15",
+      "title": "Opção ambígua HEPR ou XLPE versus HEPR específico",
+      "a": {
+        "id": "A",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "HEPR ou XLPE 90 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "b": {
+        "id": "B",
+        "catalogId": "FT_COND-001",
+        "name": "Condutor isolado de cobre 2,5 mm² preto PVC",
+        "unit": "rl100m",
+        "qty": 100,
+        "qtyBasis": "m",
+        "values": {
+          "DET-001": "Condutor isolado",
+          "DET-002": "Cobre",
+          "DET-004": "2,5",
+          "DET-005": "HEPR 90 °C",
+          "DET-006": "450/750 V",
+          "DET-008": "Preto",
+          "DET-009": "Classe V (Flexivel)"
+        }
+      },
+      "expected": {
+        "status": "indeterminado",
+        "reason": "valor_agregado_na_ficha",
+        "autoMerge": false
+      }
+    }
+  ]
+}
