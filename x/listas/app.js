@@ -653,13 +653,17 @@ function openMatchReview(){
   'DET-005':'Isolação','DET-006':'Classe de tensão','DET-007':'Cobertura','DET-008':'Cor',
   'DET-009':'Classe de encordoamento','DET-010':'Comportamento ao fogo'};
  const label=id=>fieldNames.get(id)||fallback[id]||id;
- $('matchBody').innerHTML=possible.slice(0,12).map((pair,i)=>{
+ const frequencies=new Map();
+ possible.forEach(pair=>[pair.leftId,pair.rightId].forEach(id=>
+  frequencies.set(id,(frequencies.get(id)||0)+1)));
+ const multiple=[...frequencies.values()].some(count=>count>1);
+ $('matchBody').innerHTML=(multiple?'<p class="match-multiple-note">Um lançamento pode ter mais de uma correspondência possível. Verifique cada alternativa; o TEREON não escolhe por você.</p>':'')+
+ possible.slice(0,12).map((pair,i)=>{
   const A=active.items.find(it=>String(it.id)===pair.leftId);
   const B=active.items.find(it=>String(it.id)===pair.rightId);
   if(!A||!B)return '';
   const gaps=pair.missing.map(m=>{
    const missingItem=m.on==='left'?A:B;
-   const confirmedItem=m.on==='left'?B:A;
    return '<li><strong>'+esc(label(m.id))+'</strong>: não informado no lançamento <strong>'+esc(missingItem.stage||'Geral')+
     '</strong>; no outro lançamento: <strong>'+esc(m.confirmed)+'</strong>.</li>';
   }).join('');
