@@ -96,16 +96,16 @@ assert.equal(map.get(key),beforePrepare,'preparo repetido não regrava lista exi
 
 const html=src('x/index.html');
 const scripts=[...html.matchAll(/<script src="([^"]+)"/g)].map(x=>x[1].split('?')[0]);
-const expected=['/x/components/header.js','/x/listas/store.js','/x/listas/servico.js','/x/motor-compartilhar.js','/x/catalogo/motor.js','/x/catalogo/seletor.js','/x/listas/nuvem/motor.js','/x/listas/integracao.js','/x/listas/app.js','/x/status.js','/x/appearance.js','/x/pwa.js'];
+const expected=['/x/components/header.js','/x/listas/store.js','/x/listas/servico.js','/x/motor-compartilhar.js','/x/catalogo/motor.js','/x/catalogo/seletor.js','/x/listas/nuvem/motor.js','/x/listas/integracao.js','/x/listas/quantificacao.js','/x/listas/correspondencia.js','/x/listas/app.js','/x/status.js','/x/appearance.js','/x/pwa.js'];
 assert.deepEqual(scripts,expected,'ordem explícita de dependências');
 assert.equal(/<script>/.test(html),false,'shell não deve conter lógica inline');
 for(const url of scripts)new vm.Script(src(url.slice(1)),{filename:url});
 for(const file of ['x/fichario-x/leitor.js','x/fichario-x/simulador.js','x/motor-compartilhar.js','x/sugestoes-config.js','x/sw.js'])new vm.Script(src(file),{filename:file});
-const goldenAdd=src('x/tests/fixtures/modal-adicionar-aprovado-x034.html');
+const goldenAdd=src('x/tests/fixtures/modal-adicionar-aprovado-x0357.html');
 const at=html.indexOf('<dialog id="addDialog"');
 assert.ok(at>=0,'modal de Adicionar item deve estar no shell');
 const currentAdd=html.slice(at,html.indexOf('</dialog>',at)+9);
-assert.equal(currentAdd,goldenAdd,'estrutura do modal deve ser idêntica à aprovada na X.0.3.4');
+assert.equal(currentAdd,goldenAdd,'estrutura do modal deve ser idêntica à revisão navegável X.0.3.57');
 assert.ok(src('x/styles.css').includes('.tag-tray{')&&src('x/styles.css').includes('.tag.required{'),'tags e contornos aprovados preservados');
 assert.ok(src('x/listas/app.js').includes('focus=pickFirstMissing();redrawAdd();'),'remoção de tags retoma primeira obrigatória pendente');
 assert.ok(src('x/listas/app.js').includes('lists.upsertItem(activeId,itemData,editId)'),'modal aprovado grava pelo Motor Único de Listas');
