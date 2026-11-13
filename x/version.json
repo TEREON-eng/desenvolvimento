@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.54",
+  "version": "x.0.3.55",
   "build": "2026-11-12",
-  "notes": "Tags Consolidado e Em revisão apenas no título do card principal Por insumo; sem repetir nas linhas Por etapa"
+  "notes": "Correção de contraste dos botões de detalhes no tema escuro; tags de maturidade só no seletor inicial Adicionar item"
 }
