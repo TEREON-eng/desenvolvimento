@@ -680,3 +680,77 @@ html[data-tx-appearance="tereon"] #addDialog #fieldHelp.choice-warning{
  border:0;
  margin-top:4px;
 }
+
+/* X.0.3.57 — navegação completa de detalhes no modal APROVADO.
+   Botões de progresso são clicáveis e incluem opcionais. Sem alterar tags. */
+#addDialog .detail-navigation{
+ display:flex;align-items:center;gap:7px;min-height:34px;width:100%;min-width:0;
+}
+#addDialog.is-choosing .detail-navigation{display:none}
+#addDialog .detail-arrow{
+ flex:0 0 32px;width:32px;height:32px;min-width:32px;
+ border:1px solid var(--tx-app-border,#d0ddd3);
+ border-radius:9px;background:var(--tx-app-surface,#fff);
+ color:var(--tx-app-text,#263b2d);
+ font:700 23px/1 system-ui;
+ display:flex;align-items:center;justify-content:center;
+ padding:0;cursor:pointer;
+}
+#addDialog .detail-arrow:disabled{opacity:.33;cursor:default}
+#addDialog .detail-arrow:not(:disabled):hover{border-color:var(--tx-app-slate,#6e9681)}
+#addDialog .detail-navigation .progress{
+ display:flex;flex:1 1 auto;min-width:0;height:32px;
+ align-items:center;gap:4px;
+ overflow-x:auto;overflow-y:hidden;
+ padding:2px 1px 3px;
+ scrollbar-width:thin;overscroll-behavior-x:contain;
+}
+#addDialog .detail-navigation .segment.detail-step{
+ flex:1 0 24px;min-width:24px;height:22px;
+ border:1px solid var(--tx-app-border,#d6e1d9);
+ border-radius:5px;
+ padding:0;cursor:pointer;
+ background:var(--tx-app-bg,#f3f5f4);
+ box-shadow:none;opacity:1;
+}
+#addDialog .detail-navigation .segment.detail-step.optional{
+ border-style:dashed;
+}
+#addDialog .detail-navigation .segment.detail-step.required{
+ border-style:solid;
+ background:var(--tx-app-border,#d6e1d9);
+}
+#addDialog .detail-navigation .segment.detail-step.done{
+ background:var(--tx-app-slate,#64806e);
+ border-color:var(--tx-app-slate,#64806e);
+}
+#addDialog .detail-navigation .segment.detail-step.current{
+ border:2px solid var(--tx-app-accent,#18372d);
+ box-shadow:0 0 0 2px var(--tx-app-surface,#fff),0 0 0 3px var(--tx-app-slate,#64806e);
+}
+#addDialog .detail-navigation .segment.detail-step:focus-visible,
+#addDialog .detail-navigation .detail-arrow:focus-visible{
+ outline:2px solid var(--tx-app-accent,#18372d);
+ outline-offset:2px;
+}
+html[data-tx-appearance="dark"] #addDialog .detail-navigation .segment.detail-step,
+html[data-tx-appearance="tereon"] #addDialog .detail-navigation .segment.detail-step{
+ color:var(--tx-app-text);
+}
+html[data-tx-appearance="dark"] #addDialog .detail-navigation .segment.detail-step.optional,
+html[data-tx-appearance="tereon"] #addDialog .detail-navigation .segment.detail-step.optional{
+ background:rgba(176,199,182,.09);border-color:#829a89;
+}
+html[data-tx-appearance="dark"] #addDialog .detail-navigation .segment.detail-step.required,
+html[data-tx-appearance="tereon"] #addDialog .detail-navigation .segment.detail-step.required{
+ background:#495e50;border-color:#9bb3a3;
+}
+html[data-tx-appearance="dark"] #addDialog .detail-navigation .segment.detail-step.done,
+html[data-tx-appearance="tereon"] #addDialog .detail-navigation .segment.detail-step.done{
+ background:#7fa18a;border-color:#b6dabd;
+}
+html[data-tx-appearance="dark"] #addDialog .detail-navigation .segment.detail-step.current,
+html[data-tx-appearance="tereon"] #addDialog .detail-navigation .segment.detail-step.current{
+ border-color:#c7ff46;
+ box-shadow:0 0 0 2px var(--tx-app-surface),0 0 0 3px #c7ff46;
+}
