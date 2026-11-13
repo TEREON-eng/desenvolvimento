@@ -1,3 +1,10 @@
+## 13/11/2026 — Proposta de Correspondência Técnica Progressiva (documentação, sem versão do app)
+- Discussão disparada por pedidos incompletos que podem corresponder ao mesmo produto: “Condutor flexível cobre 2,5 preto” versus “... 450”, o último ainda exigindo confirmação da classe de tensão.
+- Diagnóstico: a função `signature()` do motor `x/listas/quantificacao.js` inclui `item.name` e todos os valores registrados (salvo unidade técnica), o que permite identidades diferentes para pedidos com detalhes ausentes ou nomes formatados de forma distinta. Isso protege o pedido atual, mas não resolve compatibilidade progressiva.
+- Criado o [contrato proposto de correspondência](CONTRATO-CORRESPONDENCIA-PROGRESSIVA-2026-11-13.md) e a [fixture com 15 cenários](../tests/fixtures/correspondencia-progressiva-condutores-v1.json), incluindo identidade técnica, completude, apresentação comercial, conflito explícito, múltiplas alternativas e confirmação humana.
+- **Nenhum código funcional, ficha, catálogo, UI, dados ou cálculo de compras foi modificado.** A versão permanece X.0.3.56 e a proposta não foi homologada.
+- Próxima etapa: validar a matriz com o fundador, implementar um comparador puro e não destrutivo em laboratório, adicionar regressões e só então discutir integração com o modal e o motor comercial.
+
 ## 12/11/2026 — X.0.3.56 · Agrupamento por família visual e maturidade de Condutores
 - Feedback do fundador: a consolidação exigia correspondência técnica integral e apresentação de compra, de modo que cores/bitolas distintas geravam muitos cards. **Decisão:** separar **agrupamento para localizar** de **consolidação quantitativa para comprar**.
 - **Por insumo:** materiais com o mesmo `catalogId` são apresentados na mesma família visual (ex.: **Condutores elétricos** ou **Eletroduto**); quando há duas ou mais variações, a família fica **recolhida inicialmente**, com contador de variações e lançamentos. Abrir revela os cartões de cada especificação comercial. Uma única variação conserva cartão direto, sem camada extra. Itens sem `catalogId` só são agrupados quando compartilham um nome-base seguro.
