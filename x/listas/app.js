@@ -211,13 +211,15 @@ function draw(){
     technical.slice(base.length).replace(/^[ ·:,–—-]+/,'').trim():technical;
    return {base,description:unique(options).slice(0,4).join(' · ')||remaining,technical};
   }
-  function fullMaterial(name,composition,sourceItem){
+  function fullMaterial(name,composition,sourceItem,nested=false){
    const info=materialParts(name,sourceItem),technical=esc(info.technical);
-   // Cabeçalho mostra a família, com tipo selecionado na descrição.
-   // A ficha, o nome técnico e a chave de consolidação não são renomeados.
+   // "Por insumo" separa família (busca) de variação técnica (compra).
+   // Nem identidade técnica nem quantificação se alteram por esta apresentação.
    const conductor=sourceItem?.catalogId==='FT_COND-001';
-   const heading=conductor?'Condutores elétricos':info.base;
-   const subtitle=conductor?[info.base,info.description].filter(Boolean).join(' · '):info.description;
+   const heading=nested?(conductor?info.base:info.description||info.base):
+    (conductor?'Condutores elétricos':info.base);
+   const subtitle=nested?(conductor?info.description:''):
+    (conductor?[info.base,info.description].filter(Boolean).join(' · '):info.description);
    return '<details class="compact-technical"><summary title="'+technical+'" aria-label="Ver especificação completa: '+technical+'">'+
     '<span class="compact-material-label"><strong>'+esc(heading)+'</strong>'+
     (subtitle?'<small>'+esc(subtitle)+'</small>':'')+'</span></summary>'+
@@ -246,14 +248,45 @@ function draw(){
    }
    return output;
   }
-  function groupCard(g,entries){
+  function groupCard(g,entries,nested=false){
    const composition=g.kind==='lance'?'Composição: '+g.breakdown.map(part=>fmt(part.count)+' × '+fmt(part.length)+' m').join(' + '):'';
    const measured=g.kind==='package'||g.kind==='lance'?
     '<small class="compact-meter-total">'+esc(fmt(g.meters)+' m medidos')+'</small>':'';
    return '<section class="compact-material-card"><div class="compact-material-head">'+
-    fullMaterial(g.name,composition,entries[0])+
+    fullMaterial(g.name,composition,entries[0],nested)+
     '<div class="compact-purchase"><strong>'+esc(buyLabel(g))+'</strong>'+measured+'</div></div>'+
     '<div class="compact-stage-list">'+stageDetails(entries,g.kind)+'</div></section>';
+  }
+  function familySections(rows){
+   // Agrupamento visual (família) é independente da consolidação comercial.
+   // Sem catalogId, agrupar só pelo nome-base, sem cruzar famílias incertas.
+   const families=new Map();
+   rows.forEach(({g,entries})=>{
+    const item=entries[0];
+    if(!item)return;
+    const catalog=item.catalogId?window.TereonXCatalog?.get?.(item.catalogId):null;
+    const parts=materialParts(g.name,item);
+    const title=item.catalogId==='FT_COND-001'?'Condutores elétricos':(catalog?.name||parts.base);
+    const key=item.catalogId?'catalog:'+item.catalogId:'legacy:'+parts.base;
+    if(!families.has(key))families.set(key,{name:title,variants:[],ids:new Set()});
+    const family=families.get(key);
+    family.variants.push({g,entries});
+    entries.forEach(entry=>family.ids.add(String(entry.id)));
+   });
+   return [...families.values()].map(family=>{
+    // Um único item não precisa de um nível extra de navegação.
+    if(family.variants.length===1){
+     const {g,entries}=family.variants[0];
+     return groupCard(g,entries);
+    }
+    const many=family.variants.length;
+    const launches=family.ids.size;
+    return '<details class="compact-family-section"><summary class="compact-family-heading">'+
+     '<strong>'+esc(family.name)+'</strong><span>'+many+' variações · '+launches+
+     ' lançamento(s)</span></summary><div class="compact-family-items">'+
+     family.variants.map(({g,entries})=>groupCard(g,entries,true)).join('')+
+     '</div></details>';
+   }).join('');
   }
   function stageMaterialRow(g,entries){
    const info=materialParts(g.name,entries[0]);
@@ -300,17 +333,16 @@ function draw(){
    });
   }else{
    const groups=window.TereonXQuant?.consolidate(l.items)||[];
-   const shown=new Set();
-   html+='<div class="compact-material-list">';
+   const shown=new Set(),rows=[];
    groups.forEach(g=>{
     const ids=new Set(g.sourceIds||[]);
     const entries=l.items.filter(it=>ids.has(String(it.id)));
     if(!entries.length)return;
     entries.forEach(it=>shown.add(String(it.id)));
-    html+=groupCard(g,entries);
+    rows.push({g,entries});
    });
-   // Legado: agrupar apenas material/especificação/unidade idênticos,
-   // mantendo quantidades originais e SEM conversão comercial.
+   // Legado: continua conservador. Não reinterpretar bitola, cor, unidade
+   // ou apresentação comercial de registros anteriores.
    const legacyGroups=new Map();
    l.items.filter(it=>!shown.has(String(it.id))).forEach(it=>{
     const specs=Object.entries(it.values||{}).sort((a,b)=>a[0].localeCompare(b[0]));
@@ -318,8 +350,8 @@ function draw(){
     if(!legacyGroups.has(key))legacyGroups.set(key,{name:it.name,kind:'legacy',unit:it.unit,units:0,items:[]});
     const g=legacyGroups.get(key);g.units+=Number(it.qty);g.items.push(it);
    });
-   legacyGroups.forEach(g=>{html+=groupCard(g,g.items);});
-   html+='</div>';
+   legacyGroups.forEach(g=>rows.push({g,entries:g.items}));
+   html+='<div class="compact-material-list">'+familySections(rows)+'</div>';
   }
   html+='<div style="margin-top:16px"><button class="btn full" data-action="share">↗ Compartilhar / Gerar relatório</button></div>'+
    '<div style="margin-top:10px;text-align:right"><a href="/x/contribuir.html" style="color:#4f6f59;font-size:12px">Não encontrou o material? Envie seu item para nós ›</a></div>';
