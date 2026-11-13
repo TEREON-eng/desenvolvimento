@@ -534,95 +534,95 @@ html[data-tx-appearance="tereon"] #listDialog{
  padding:3px 6px 6px 9px;
 }
 
-/* X.0.3.53 — etiquetas compactas de agrupamento e situação técnica.
-   São indicadores de leitura: não alteram aprovação, consolidação ou cadastro. */
-#listDialog{
- --tx-status-group-bg:rgba(102,139,119,.16);
- --tx-status-group-ink:#315944;
- --tx-status-group-border:rgba(102,139,119,.28);
- --tx-status-review-bg:rgba(180,135,51,.12);
- --tx-status-review-ink:#795a20;
- --tx-status-review-border:rgba(180,135,51,.25);
+
+/* X.0.3.55 — Situação da FICHA somente na escolha inicial de Adicionar item.
+   O indicador não é um status de lançamentos consolidados, nem homologação. */
+#addDialog.is-choosing .ficha-option-top{
+ display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;
+ min-width:0;width:100%;
 }
-html[data-tx-appearance="dark"] #listDialog,
-html[data-tx-appearance="tereon"] #listDialog{
- --tx-status-group-bg:rgba(102,139,119,.26);
- --tx-status-group-ink:#d1efda;
- --tx-status-group-border:rgba(169,204,180,.33);
- --tx-status-review-bg:rgba(199,154,66,.16);
- --tx-status-review-ink:#f5d99f;
- --tx-status-review-border:rgba(225,183,101,.28);
+#addDialog.is-choosing .ficha-option-top strong{
+ font-size:13px;font-weight:700;line-height:1.35;
+ overflow-wrap:anywhere;
 }
-#listDialog .compact-status-tags,
-#listDialog .compact-technical summary .compact-status-tags{
- display:flex;
- align-items:center;
- flex-wrap:wrap;
- gap:4px;
- margin-top:5px;
- max-width:100%;
- overflow:visible;
-}
-#listDialog .compact-status-chip,
-#listDialog .compact-technical summary .compact-status-chip{
- display:inline-block;
- flex:0 0 auto;
- width:auto;
- overflow:visible;
+#addDialog.is-choosing .ficha-maturity-tag{
+ display:inline-flex;align-items:center;justify-content:center;
+ flex:0 0 auto;width:auto;
+ padding:3px 7px;border:1px solid;border-radius:6px;
+ font-size:10px;line-height:1.2;font-weight:650;
  white-space:nowrap;
- font-size:10px;
- font-weight:630;
- line-height:1.15;
- padding:3px 6px;
- border:1px solid;
- border-radius:5px;
 }
-#listDialog .compact-status-chip.consolidated{
- color:var(--tx-status-group-ink);
- background:var(--tx-status-group-bg);
- border-color:var(--tx-status-group-border);
+#addDialog.is-choosing .ficha-maturity-tag.consolidated{
+ background:rgba(102,139,119,.16);
+ border-color:rgba(75,117,87,.38);
+ color:#2f5940;
 }
-#listDialog .compact-status-chip.review{
- color:var(--tx-status-review-ink);
- background:var(--tx-status-review-bg);
- border-color:var(--tx-status-review-border);
+#addDialog.is-choosing .ficha-maturity-tag.revision{
+ background:rgba(184,138,62,.14);
+ border-color:rgba(159,114,44,.34);
+ color:#75531c;
+}
+html[data-tx-appearance="dark"] #addDialog.is-choosing .ficha-maturity-tag.consolidated,
+html[data-tx-appearance="tereon"] #addDialog.is-choosing .ficha-maturity-tag.consolidated{
+ background:rgba(127,169,135,.19);
+ border-color:rgba(153,205,164,.43);
+ color:#e0f3e3;
+}
+html[data-tx-appearance="dark"] #addDialog.is-choosing .ficha-maturity-tag.revision,
+html[data-tx-appearance="tereon"] #addDialog.is-choosing .ficha-maturity-tag.revision{
+ background:rgba(189,148,66,.19);
+ border-color:rgba(222,186,109,.43);
+ color:#f6dcac;
 }
 
-/* X.0.3.54 — Tags só no título do agrupador principal Por insumo.
-   A descrição, linhas internas e lançamentos permanecem livres de etiquetas. */
-#listDialog .compact-technical summary .compact-material-label{
- display:block;
- flex:1 1 auto;
- min-width:0;
- overflow:hidden;
+/* O CSS antigo das opções tinha texto verde-escuro sobre fundo escuro.
+   Regras específicas após o tema, sem mexer em tags confirmadas ou no layout. */
+html[data-tx-appearance="dark"] #addDialog:not(.is-choosing) #choices .tag.option{
+ background:#36493d;color:#f5fbf6;border-color:#7a9984;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
 }
-#listDialog .compact-technical summary .compact-material-title-line{
- display:flex;
- align-items:center;
- flex-wrap:wrap;
- column-gap:7px;
- row-gap:3px;
- min-width:0;
- overflow:visible;
+html[data-tx-appearance="tereon"] #addDialog:not(.is-choosing) #choices .tag.option{
+ background:#284835;color:#f5fff3;border-color:#7aa88a;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
 }
-#listDialog .compact-material-title-line strong{
- display:inline-block;
- flex:0 1 auto;
- max-width:100%;
- overflow-wrap:anywhere;
- white-space:normal;
+html[data-tx-appearance="dark"] #addDialog:not(.is-choosing) #choices .tag.option:hover,
+html[data-tx-appearance="dark"] #addDialog:not(.is-choosing) #choices .tag.option:focus-visible{
+ background:#476451;border-color:#c7ff46;
 }
-#listDialog .compact-technical summary .compact-material-title-line .compact-status-tags{
- display:inline-flex;
- flex:0 0 auto;
- align-items:center;
- flex-wrap:wrap;
- margin:0;
- gap:4px;
- max-width:100%;
- overflow:visible;
+html[data-tx-appearance="tereon"] #addDialog:not(.is-choosing) #choices .tag.option:hover,
+html[data-tx-appearance="tereon"] #addDialog:not(.is-choosing) #choices .tag.option:focus-visible{
+ background:#3a6247;border-color:#c7ff46;
 }
-#listDialog .compact-material-title-line .compact-status-chip{
- font-size:10px;
- padding:2px 5px;
+html[data-tx-appearance="dark"] #addDialog:not(.is-choosing) #choices .tag.option.on,
+html[data-tx-appearance="tereon"] #addDialog:not(.is-choosing) #choices .tag.option.on{
+ background:#345a42;color:#f8fff7;border-color:#c7ff46;
+ box-shadow:inset 0 0 0 1px rgba(199,255,70,.28);
+}
+html[data-tx-appearance="dark"] #addDialog:not(.is-choosing) #choices .tag.option.is-blocked,
+html[data-tx-appearance="dark"] #addDialog:not(.is-choosing) #choices .tag.option.is-blocked:hover,
+html[data-tx-appearance="tereon"] #addDialog:not(.is-choosing) #choices .tag.option.is-blocked,
+html[data-tx-appearance="tereon"] #addDialog:not(.is-choosing) #choices .tag.option.is-blocked:hover{
+ background:#2a3530;color:#c3d2c7;border:1px dashed #799082;
+ box-shadow:none;opacity:1;
+}
+html[data-tx-appearance="dark"] #addDialog:not(.is-choosing) #choices [data-skip-optional],
+html[data-tx-appearance="tereon"] #addDialog:not(.is-choosing) #choices [data-skip-optional]{
+ background:#29372f;color:#e1ede2;border-color:#839e89;
+}
+html[data-tx-appearance="dark"] #addDialog:not(.is-choosing) #choices [data-skip-optional]:hover,
+html[data-tx-appearance="tereon"] #addDialog:not(.is-choosing) #choices [data-skip-optional]:hover{
+ background:#395344;border-color:#c7ff46;
+}
+html[data-tx-appearance="dark"] #addDialog:not(.is-choosing) .choice-head #fieldType,
+html[data-tx-appearance="tereon"] #addDialog:not(.is-choosing) .choice-head #fieldType{
+ background:#31473a;color:#edf7ee;border-color:#789681;
+}
+html[data-tx-appearance="dark"] #addDialog #tags .tag.linked,
+html[data-tx-appearance="tereon"] #addDialog #tags .tag.linked{
+ background:rgba(195,157,74,.23);
+ color:#ffebbd;border-color:#d3ad63;
+}
+html[data-tx-appearance="dark"] #addDialog #fieldHelp.choice-warning,
+html[data-tx-appearance="tereon"] #addDialog #fieldHelp.choice-warning{
+ background:rgba(195,157,74,.15);color:#f5dbab;border-left-color:#d6ad5a;
 }
