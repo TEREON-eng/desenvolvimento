@@ -626,3 +626,57 @@ html[data-tx-appearance="dark"] #addDialog #fieldHelp.choice-warning,
 html[data-tx-appearance="tereon"] #addDialog #fieldHelp.choice-warning{
  background:rgba(195,157,74,.15);color:#f5dbab;border-left-color:#d6ad5a;
 }
+
+/* X.0.3.56 — Família visual: recolher variantes de um mesmo insumo.
+   Somente Por insumo; Por etapa e a quantificação comercial permanecem intactas. */
+#listDialog .compact-family-section{
+ border:1px solid var(--tx-group-card-border,rgba(102,139,119,.24));
+ background:var(--tx-group-card-bg,rgba(102,139,119,.09));
+ border-radius:11px;
+ min-width:0;
+ overflow:hidden;
+}
+#listDialog .compact-family-heading{
+ display:flex;align-items:center;justify-content:space-between;
+ flex-wrap:wrap;gap:5px 10px;
+ padding:11px 12px;
+ background:var(--tx-group-title-bg,rgba(199,255,70,.085));
+ border-left:3px solid var(--tx-group-title-rule,rgba(97,141,43,.62));
+ color:var(--tx-app-text,#18221e);
+ list-style:none;cursor:pointer;
+ min-height:44px;
+}
+#listDialog .compact-family-heading::-webkit-details-marker{display:none}
+#listDialog .compact-family-heading strong{
+ font-size:13px;font-weight:720;overflow-wrap:anywhere;
+}
+#listDialog .compact-family-heading span{
+ color:var(--tx-app-muted,#65776c);
+ font-size:11px;
+}
+#listDialog .compact-family-heading::after{
+ content:'⌄';color:var(--tx-app-muted,#65776c);
+ font-size:13px;flex:0 0 auto;
+}
+#listDialog .compact-family-section[open]>.compact-family-heading::after{content:'⌃'}
+#listDialog .compact-family-items{
+ padding:7px 8px 9px;
+ display:grid;gap:7px;
+}
+#listDialog .compact-family-items>.compact-material-card{
+ background:var(--tx-inner-solid,var(--tx-app-surface,#FCFDFC));
+ border:1px solid var(--tx-inner-border,rgba(102,139,119,.22));
+ border-radius:8px;
+ box-shadow:none;
+ margin:0;
+}
+#listDialog .compact-family-items>.compact-material-card>.compact-material-head{
+ background:transparent;
+ border-left:0;
+ border-bottom:1px solid var(--tx-inner-border,rgba(102,139,119,.22));
+ border-radius:8px 8px 0 0;
+}
+#listDialog .compact-family-items>.compact-material-card .compact-stage-list{
+ border:0;
+ margin-top:4px;
+}
