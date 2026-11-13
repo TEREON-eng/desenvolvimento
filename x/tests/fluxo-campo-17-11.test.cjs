@@ -48,7 +48,7 @@ const list=listsApi.create(repo,{newId:()=>String(++n),newRecordUid:()=>('000000
  assert.equal(list.get(listId).stages.length,0);
  assert.throws(()=>share.model({name:'Invalida',items:[{name:'a',qty:0,unit:'m'}]}),/quantidade inválida/);
  assert.throws(()=>list.upsertItem(listId,{name:'Invalido',qty:Infinity,unit:'m',stage:'Geral'}),/Preencha/);
- const fixture=read('x/tests/fixtures/modal-adicionar-aprovado-x034.html');
+ const fixture=read('x/tests/fixtures/modal-adicionar-aprovado-x0357.html');
  const shell=read('x/index.html'),start=shell.indexOf('<dialog id="addDialog"');
  assert.ok(start>=0&&shell.slice(start,shell.indexOf('</dialog>',start)+9)===fixture,'modal aprovado não alterado');
  assert.ok(all.filter(f=>f.kind==='oficial').every(f=>f.homologada===true),'rótulo oficial exige homologação explícita');
