@@ -10,7 +10,8 @@ function canonical(id,v){
  return n;
 }
 const ignored=new Set(['DET-011']); // Unidade / apresentação comercial
-const anchors=['DET-001','DET-002','DET-004','DET-005','DET-008']; // Tipo, material, seção, isolação, cor
+const anchors=['DET-001','DET-002','DET-004']; // Tipo, material, seção
+const identifiers=['DET-005','DET-008']; // Exigir ao menos isolação ou cor confirmada em comum
 function ambiguousInsulation(id,a,b){
  if(id!=='DET-005')return false;
  const compound=normalize(a).includes(' ou ')?normalize(a):normalize(b).includes(' ou ')?normalize(b):null;
@@ -37,7 +38,8 @@ function compare(a,b){
  if(conflicts.length)return {status:'incompativel',common,missing,conflicts,ambiguous};
  if(ambiguous.length)return {status:'indeterminado',common,missing,conflicts,ambiguous};
  // Nunca sugerir correspondência só por família e uma palavra coincidente.
- if(!anchors.every(id=>A[id]&&B[id]&&canonical(id,A[id])===canonical(id,B[id])))
+ if(!anchors.every(id=>A[id]&&B[id]&&canonical(id,A[id])===canonical(id,B[id]))||
+     !identifiers.some(id=>A[id]&&B[id]&&canonical(id,A[id])===canonical(id,B[id])))
   return {status:'indeterminado',common,missing,conflicts,ambiguous};
  return {status:missing.length?'potencial':'identidade_confirmada',common,missing,conflicts,ambiguous};
 }
