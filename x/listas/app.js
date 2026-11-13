@@ -453,8 +453,11 @@ function fichaPresentation(f){
  // NÃO um estado de quantificação da lista nem uma homologação implícita.
  const status=String(f?.status||'').normalize('NFD')
   .replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
+ const maturityStatus=String(f?.maturity||'').normalize('NFD')
+  .replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
  let maturity='';
- if(['consolidado','consolidada'].includes(status))maturity='Consolidado';
+ // Maturidade da estrutura e estado técnico da publicação são eixos diferentes.
+ if(['consolidado','consolidada'].includes(maturityStatus)||['consolidado','consolidada'].includes(status))maturity='Consolidado';
  else if(/revis/.test(status)||f?.kind==='revisao'||f?.kind==='simulacao')maturity='Em revisão';
  return {
   name:f?.id==='FT_COND-001'?'Condutores elétricos':String(f?.name||'Material'),
@@ -471,7 +474,7 @@ function paintFichaChoices(){
    const display=fichaPresentation(f);
    return '<button type="button" class="ficha-option" data-ficha="'+esc(f.id)+'"><span class="ficha-option-top"><strong>'+esc(display.name)+'</strong>'+
     (display.tag?'<span class="ficha-maturity-tag '+display.tagClass+'" title="Situação informada na ficha técnica">'+esc(display.tag)+'</span>':'')+'</span>'+
-    '<small>'+esc(f.id)+'</small></button>';
+    '<small>'+esc(f.id)+(display.tag==='Consolidado'&&f.kind!=='oficial'?' · Publicação pendente':'')+'</small></button>';
   }).join(''):
    '<p class="tiny muted">Nenhuma ficha encontrada.</p>');
 }
