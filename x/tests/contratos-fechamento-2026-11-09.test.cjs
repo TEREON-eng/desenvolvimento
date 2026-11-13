@@ -9,10 +9,10 @@ const html=read('x/index.html'),ui=read('x/listas/app.js'),
  service=read('x/listas/servico.js'),integration=read('x/listas/integracao.js'),
  cloud=read('x/listas/nuvem/motor.js'),appearance=read('x/appearance.css'),
  header=read('x/components/header.js'),sw=read('x/sw.js'),pwa=read('x/pwa.js');
-const fixture=read('x/tests/fixtures/modal-adicionar-aprovado-x0357.html');
+const fixture=read('x/tests/fixtures/modal-adicionar-aprovado-x034.html');
 const start=html.indexOf('<dialog id="addDialog"');
 assert.ok(start>=0,'modal aprovado existe');
-assert.equal(html.slice(start,html.indexOf('</dialog>',start)+9),fixture,'estrutura do modal com navegação preservada por fixture X.0.3.57');
+assert.equal(html.slice(start,html.indexOf('</dialog>',start)+9),fixture,'estrutura aprovada preservada com navegação por tags, sem setas');
 assert.ok(ui.includes("if(a.dataset.action==='add')openAdd()"),'botão Adicionar usa modal aprovado');
 assert.ok(ui.includes('pickFirstMissing()')&&ui.includes('cleanHiddenValues()'),'tags retornam à pendência e respeitam condicionais');
 assert.ok(!/document\.|localStorage|TereonXCatalog|supabase/.test(service),'motor de listas sem dependências externas');
