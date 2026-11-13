@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "fonte": "Laboratório experimental TEREON X 12/11/2026, derivado de fichas-drive-2026-11-08.json; planilha Fichario.xlsm NÃO foi alterada",
-  "aviso": "Snapshot de laboratório, não homologado. Mantém fichas não alteradas do snapshot anterior. Confirmar detalhes na planilha de origem e na documentação técnica de fabricantes antes de comprar.",
+  "aviso": "Snapshot de laboratório: FT_COND-001 consolidada como estrutura de trabalho, mas ainda Em revisão e não homologada. Não alterar Fichario.xlsm original ou converter a consolidação em publicação técnica automática.",
   "fichas": [
     {
       "codigo": "FT_INFRA-001",
@@ -495,7 +495,14 @@
         "fio",
         "cabinho",
         "condutor"
-      ]
+      ],
+      "maturidade": "Consolidado",
+      "consolidacao": {
+        "data": "2026-11-12",
+        "origem": "Avaliação do fundador: estrutura e fluxo da ficha considerados consolidados para ensaio",
+        "escopo": "Modelo do fichário e dinâmica de especificação; não implica conformidade de produto nem homologação de todas as combinações",
+        "publicacao": "Pendente de auditoria técnica final das opções e regras do fichário original"
+      }
     },
     {
       "codigo": "FT_INFRA-002",
