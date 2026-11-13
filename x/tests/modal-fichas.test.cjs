@@ -81,31 +81,26 @@ function choice(v){
  assert.equal(element('fieldLabel').textContent,'Material');
  choice('PVC');
  assert.equal(element('fieldLabel').textContent,'Diâmetro nominal · PVC','condicional de diâmetro no laboratório');
- // Todos os detalhes — obrigatórios e opcionais — devem estar na navegação.
- const steps=[...element('progress').innerHTML.matchAll(/data-detail-index="(\d+)" title="([^"]+)"/g)]
-  .map(m=>({index:Number(m[1]),title:m[2]}));
- assert.ok(steps.length>3,'barra mostra mais do que as exigências obrigatórias');
- const optional=steps.find(t=>t.title.includes('Opcional'));
- const diameter=steps.find(t=>t.title.includes('Diâmetro nominal'));
- assert.ok(optional&&diameter,'opcional e diâmetro acessíveis por clique');
- const savedTags=element('tags').innerHTML;
- function goToDetail(index){
-  const button={dataset:{detailIndex:String(index)},closest:selector=>selector==='[data-detail-index]'?button:null};
-  element('progress').listeners.click({target:button});
+ // As próprias tags confirmadas são os atalhos; só o × remove.
+ assert.ok(!element('progress').innerHTML.includes('data-detail-index'),'progresso voltou a ser somente informativo');
+ assert.ok(element('tags').innerHTML.includes('data-edit-tag="DET-001"'),'Tipo oferece navegação');
+ assert.ok(element('tags').innerHTML.includes('data-edit-tag="DET-002"'),'Material oferece navegação');
+ assert.ok(element('tags').innerHTML.includes('data-remove="DET-002"'),'× independente continua acessível');
+ const nameBefore=element('liveName').textContent;
+ function actOnTag(action,id){
+  const button={dataset:{[action==='edit'?'editTag':'remove']:id},
+   closest:selector=>selector===(action==='edit'?'[data-edit-tag]':'[data-remove]')?button:null};
+  element('tags').listeners.click({target:button});
  }
- goToDetail(optional.index);
- assert.equal(element('fieldType').textContent,'Opcional','clicar abre o detalhe opcional');
- assert.ok(element('progress').innerHTML.includes('aria-current="step"'),'marcador atual acessível');
- if(optional.index>0){
-  const label=element('fieldLabel').textContent;
-  element('detailPrev').listeners.click();
-  assert.notEqual(element('fieldLabel').textContent,label,'seta anterior muda detalhe');
-  element('detailNext').listeners.click();
-  assert.equal(element('fieldLabel').textContent,label,'seta próxima retorna ao detalhe');
- }
- assert.equal(element('tags').innerHTML,savedTags,'navegação não altera valores confirmados');
- goToDetail(diameter.index);
- assert.equal(element('fieldLabel').textContent,'Diâmetro nominal · PVC');
+ actOnTag('edit','DET-001');
+ assert.equal(element('fieldLabel').textContent,'Tipo','tocar na tag Rígido retorna ao detalhe Tipo');
+ assert.equal(element('liveName').textContent,nameBefore,'navegar não altera nome nem confirma nova opção');
+ assert.ok(element('tags').innerHTML.includes('data-edit-tag="DET-002"'),'navegar não apaga Material');
+ actOnTag('edit','DET-002');
+ assert.equal(element('fieldLabel').textContent,'Material','tocar na tag PVC retorna ao detalhe Material');
+ assert.ok(element('choices').innerHTML.includes('data-pick="PVC"'),'detalhe confirmado pode ser revisto');
+ choice('PVC');
+ assert.equal(element('fieldLabel').textContent,'Diâmetro nominal · PVC','a seleção normal continua avançando');
  assert.ok(!element('choices').innerHTML.includes('data-pick="Aço"'),'não oferece material de aço ao selecionar detalhe PVC');
  assert.equal(element('saveItem').disabled,true,'sem diâmetro o eletroduto permanece incompleto');
  choice('3/4"');
