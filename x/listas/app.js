@@ -478,10 +478,20 @@ function paintFichaChoices(){
   }).join(''):
    '<p class="tiny muted">Nenhuma ficha encontrada.</p>');
 }
+function navigateDetail(index){
+ if(choosingFicha)return;
+ const available=getFields();
+ if(!available.length)return;
+ const target=Number(index);
+ if(!Number.isInteger(target)||target<0||target>=available.length)return;
+ fields=available;focus=target;optionNotice='';
+ redrawAdd(); // Apenas navegar: nenhuma característica é presumida ou removida.
+}
 function redrawAdd(){
  if(selectedFicha?.id==='FT_INFRA-001'&&!choosingFicha)populateUnitOptions();
  $('addDialog').classList.toggle('is-choosing',choosingFicha);
  if(choosingFicha){
+  $('detailPrev').disabled=true;$('detailNext').disabled=true;
   $('liveName').textContent='Selecione um material';
   $('progress').innerHTML='';
   $('counter').textContent=(window.TereonXCatalog?.list()||[]).length+' fichas disponíveis';
@@ -494,9 +504,21 @@ function redrawAdd(){
  }else{
   fields=getFields();
   $('liveName').textContent=name();
+  focus=Math.max(0,Math.min(focus,fields.length-1));
   const required=fields.filter(x=>x.required);
-  $('progress').innerHTML=required.map(x=>'<span class="segment'+(values[x.id]?' done':'')+'"></span>').join('');
-  $('counter').textContent=count()+' / '+required.length+' obrigatórios';
+  $('progress').innerHTML=fields.map((detail,index)=>{
+   const active=index===focus,confirmed=!!values[detail.id];
+   return '<button type="button" class="segment detail-step'+(detail.required?' required':' optional')+
+    (confirmed?' done':'')+(active?' current':'')+
+    '" data-detail-index="'+index+'" title="'+esc((index+1)+'/'+fields.length+' · '+detail.label+
+      ' · '+(detail.required?'Obrigatório':'Opcional')+' · '+(confirmed?'Confirmado':'Pendente'))+
+    '" aria-label="'+esc('Abrir detalhe '+(index+1)+' de '+fields.length+': '+detail.label+
+      ' ('+(detail.required?'obrigatório':'opcional')+(confirmed?', confirmado':', pendente')+')')+
+    '"'+(active?' aria-current="step"':'')+'></button>';
+  }).join('');
+  $('detailPrev').disabled=focus<=0||!fields.length;
+  $('detailNext').disabled=focus>=fields.length-1||!fields.length;
+  $('counter').textContent='Detalhe '+(fields.length?focus+1:0)+'/'+fields.length+' · '+count()+'/'+required.length+' obrigatórios';
   $('counter').nextElementSibling.textContent=selectedFicha?'Ficha em revisão':'Registro anterior';
   const activeField=fields[focus];
   const linked=new Set(selectedFicha&&activeField?window.TereonXCatalog.relatedTags(selectedFicha,values,activeField.id):[]);
@@ -743,6 +765,11 @@ $('createForm').addEventListener('submit',function(e){
  var id=safe(function(){return lists.createList(name);});
  if(!id)return;close('createDialog');activeId=id;navigate('list');
 });
+$('progress').addEventListener('click',function(e){
+ const b=e.target.closest('[data-detail-index]');if(b)navigateDetail(b.dataset.detailIndex);
+});
+$('detailPrev').addEventListener('click',function(){navigateDetail(focus-1);});
+$('detailNext').addEventListener('click',function(){navigateDetail(focus+1);});
 $('tags').addEventListener('click',function(e){
  var b=e.target.closest('[data-remove]');if(!b)return;
  delete values[b.dataset.remove];optionNotice='';
