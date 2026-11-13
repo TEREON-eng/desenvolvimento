@@ -754,3 +754,51 @@ html[data-tx-appearance="tereon"] #addDialog .detail-navigation .segment.detail-
  border-color:#c7ff46;
  box-shadow:0 0 0 2px var(--tx-app-surface),0 0 0 3px #c7ff46;
 }
+
+/* X.0.3.57 — apontar correspondências parciais sem alterar compras.
+   Alertas ficam fora dos cards; o usuário abre a revisão se desejar. */
+#listDialog .match-hint{
+ display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;
+ gap:8px;margin:10px 0 12px;padding:10px 11px;
+ border:1px solid var(--tx-app-border,#ccd9ce);border-radius:10px;
+ background:var(--tx-app-surface,#fff);
+ color:var(--tx-app-text,#233c2d);
+}
+#listDialog .match-hint span{display:grid;gap:3px;min-width:0}
+#listDialog .match-hint strong{font-size:12px}
+#listDialog .match-hint small{font-size:11px;color:var(--tx-app-muted,#60766b);line-height:1.35}
+#listDialog .match-hint button{
+ flex:0 0 auto;
+ background:var(--tx-app-border,#dce8df);
+ border:1px solid var(--tx-app-slate,#658575);
+ color:var(--tx-app-text,#213b2b);
+}
+#matchDialog{width:min(96vw,520px)}
+#matchDialog .dialog-inner{max-height:calc(100dvh - 28px);min-height:0}
+#matchDialog .match-body{
+ overflow-y:auto;min-height:0;display:grid;gap:9px;
+ scrollbar-width:thin;
+}
+#matchDialog .match-candidate{
+ padding:11px;border:1px solid var(--tx-app-border,#d6e1d9);
+ border-radius:10px;background:var(--tx-app-bg,#f3f5f4);
+ color:var(--tx-app-text,#203b29);
+ display:grid;gap:7px;
+}
+#matchDialog .match-candidate>strong{font-size:12px}
+#matchDialog .match-candidate p{font-size:12px;line-height:1.45;overflow-wrap:anywhere}
+#matchDialog .match-candidate small{color:var(--tx-app-muted,#687c70)}
+#matchDialog .match-candidate ul{
+ margin:0;padding-left:19px;font-size:12px;
+ color:var(--tx-app-text,#2c4033);
+ line-height:1.5;
+}
+#matchDialog .match-candidate li+li{margin-top:5px}
+#matchDialog .match-candidate-actions{
+ display:flex;justify-content:flex-end;
+}
+#matchDialog .match-candidate-actions button{
+ background:var(--tx-app-surface,#fff);
+ color:var(--tx-app-text,#213b2b);
+ border-color:var(--tx-app-slate,#759380);
+}
