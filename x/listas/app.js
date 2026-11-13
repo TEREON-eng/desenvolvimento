@@ -351,6 +351,10 @@ function draw(){
     const g=legacyGroups.get(key);g.units+=Number(it.qty);g.items.push(it);
    });
    legacyGroups.forEach(g=>rows.push({g,entries:g.items}));
+   const possible=window.TereonXMatch?.findReviewPairs(l.items)||[];
+   if(possible.length)html+='<div class="match-hint" role="status"><span><strong>'+possible.length+
+    ' possível(is) correspondência(s)</strong><small>Há lançamentos semelhantes que precisam de conferência técnica.</small></span>'+
+    '<button type="button" class="btn small" data-review-matches="1">Revisar</button></div>';
    html+='<div class="compact-material-list">'+familySections(rows)+'</div>';
   }
   html+='<div style="margin-top:16px"><button class="btn full" data-action="share">↗ Compartilhar / Gerar relatório</button></div>'+
@@ -560,7 +564,7 @@ function validate(){
   window.TereonXCatalog.missing(selectedFicha,values).length===0 : count()===6);
  $('saveItem').disabled=!(complete&&Number($('qty').value)>0&&$('stage').value.trim());
 }
-async function openAdd(item){
+async function openAdd(item,detailToReview){
  if(!list())return;
  editId=item?String(item.id):null;
  editingLegacyQuantity=!!(item?.catalogId==='FT_COND-001'&&item.qtyBasis!=='m'&&item.unit!=='m');
@@ -617,6 +621,10 @@ async function openAdd(item){
       else delete values['DET-011']; // Legado: não converter quantidade antiga de rolos em metros.
     }
     fields=getFields();focus=pickFirstMissing();
+    if(detailToReview){
+     const wanted=fields.findIndex(field=>field.id===detailToReview);
+     if(wanted>=0)focus=wanted; // Revisar a lacuna sem presumir uma resposta.
+    }
    }
   }
   loadingFichas=false;
@@ -636,12 +644,50 @@ function openCatalogAdd(item){
   draw();
  }}).catch(e=>alert('Erro ao abrir catálogo: '+e.message));
 }
+function openMatchReview(){
+ const active=list(),possible=active&&window.TereonXMatch?.findReviewPairs(active.items)||[];
+ if(!possible.length)return;
+ const names=window.TereonXCatalog?.get?.('FT_COND-001')?.details||[];
+ const fieldNames=new Map(names.map(d=>[d.id,d.name]));
+ const fallback={'DET-001':'Tipo','DET-002':'Material','DET-003':'Número de vias','DET-004':'Seção',
+  'DET-005':'Isolação','DET-006':'Classe de tensão','DET-007':'Cobertura','DET-008':'Cor',
+  'DET-009':'Classe de encordoamento','DET-010':'Comportamento ao fogo'};
+ const label=id=>fieldNames.get(id)||fallback[id]||id;
+ $('matchBody').innerHTML=possible.slice(0,12).map((pair,i)=>{
+  const A=active.items.find(it=>String(it.id)===pair.leftId);
+  const B=active.items.find(it=>String(it.id)===pair.rightId);
+  if(!A||!B)return '';
+  const gaps=pair.missing.map(m=>{
+   const missingItem=m.on==='left'?A:B;
+   const confirmedItem=m.on==='left'?B:A;
+   return '<li><strong>'+esc(label(m.id))+'</strong>: não informado no lançamento <strong>'+esc(missingItem.stage||'Geral')+
+    '</strong>; no outro lançamento: <strong>'+esc(m.confirmed)+'</strong>.</li>';
+  }).join('');
+  const toEdit=pair.missing.length?(pair.missing[0].on==='left'?A:B):A;
+  const detailId=pair.missing[0]?.id||'';
+  return '<section class="match-candidate"><strong>Possível par '+(i+1)+'</strong>'+
+   '<p><b>A:</b> '+esc(A.name)+' <small>· '+esc(A.stage||'Geral')+'</small></p>'+
+   '<p><b>B:</b> '+esc(B.name)+' <small>· '+esc(B.stage||'Geral')+'</small></p>'+
+   (gaps?'<ul>'+gaps+'</ul>':'<p>Os atributos confirmados coincidem, mas os nomes técnicos registrados são diferentes.</p>')+
+   '<div class="match-candidate-actions"><button type="button" class="btn small" data-match-edit="'+esc(String(toEdit.id))+
+   '" data-match-detail="'+esc(detailId)+'">Revisar especificação</button></div></section>';
+ }).join('')+(possible.length>12?'<p class="note">Mostrando 12 de '+possible.length+' pares. Revise a lista para reduzir as pendências.</p>':'');
+ $('matchDialog').showModal();
+}
 function close(id){$(id).close();}
 // Retorno global agora é o link HTML do cabeçalho; navegação de Listas preservada nos controles internos.
 document.addEventListener('click',function(e){
  if(!ready)return;
  // Os botões de agrupamento não possuem data-action; tratar ANTES do
  // roteador geral para que ambos funcionem dentro do modal de lista.
+ const review=e.target.closest('[data-review-matches]');
+ if(review&&page==='list'){e.preventDefault();openMatchReview();return;}
+ const matchEdit=e.target.closest('[data-match-edit]');
+ if(matchEdit&&page==='list'){
+  const entry=list()?.items.find(it=>String(it.id)===matchEdit.dataset.matchEdit);
+  if(entry){$('matchDialog').close();openAdd(entry,matchEdit.dataset.matchDetail||'');}
+  return;
+ }
  const viewButton=e.target.closest('[data-list-view]');
  if(viewButton&&page==='list'){
   e.preventDefault();
