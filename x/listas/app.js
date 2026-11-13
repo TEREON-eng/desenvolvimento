@@ -211,22 +211,7 @@ function draw(){
     technical.slice(base.length).replace(/^[ ·:,–—-]+/,'').trim():technical;
    return {base,description:unique(options).slice(0,4).join(' · ')||remaining,technical};
   }
-  function groupTags(entries){
-   // Consolidado é propriedade da APRESENTAÇÃO (2+ lançamentos reunidos),
-   // não equivale a uma ficha homologada nem altera status persistido.
-   const merged=(entries||[]).length>1;
-   const review=(entries||[]).some(it=>{
-    const ficha=it.catalogId?window.TereonXCatalog?.get?.(it.catalogId):null;
-    const status=String(it.fichaStatus||ficha?.status||'')
-     .normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
-    return it.simulacao===true||ficha?.kind==='revisao'||/revis|simulacao/.test(status);
-   });
-   const chips=[];
-   if(merged)chips.push('<span class="compact-status-chip consolidated" title="Dois ou mais lançamentos agrupados nesta visualização">Consolidado</span>');
-   if(review)chips.push('<span class="compact-status-chip review" title="Ficha técnica em revisão: especificação ainda não homologada">Em revisão</span>');
-   return chips.length?'<span class="compact-status-tags" aria-label="Identificação do material">'+chips.join('')+'</span>':'';
-  }
-  function fullMaterial(name,composition,sourceItem,entries){
+  function fullMaterial(name,composition,sourceItem){
    const info=materialParts(name,sourceItem),technical=esc(info.technical);
    // Cabeçalho mostra a família, com tipo selecionado na descrição.
    // A ficha, o nome técnico e a chave de consolidação não são renomeados.
@@ -234,7 +219,7 @@ function draw(){
    const heading=conductor?'Condutores elétricos':info.base;
    const subtitle=conductor?[info.base,info.description].filter(Boolean).join(' · '):info.description;
    return '<details class="compact-technical"><summary title="'+technical+'" aria-label="Ver especificação completa: '+technical+'">'+
-    '<span class="compact-material-label"><span class="compact-material-title-line"><strong>'+esc(heading)+'</strong>'+groupTags(entries)+'</span>'+
+    '<span class="compact-material-label"><strong>'+esc(heading)+'</strong>'+
     (subtitle?'<small>'+esc(subtitle)+'</small>':'')+'</span></summary>'+
     '<div class="compact-technical-full">'+technical+(composition?'<div>'+esc(composition)+'</div>':'')+'</div></details>';
   }
@@ -266,7 +251,7 @@ function draw(){
    const measured=g.kind==='package'||g.kind==='lance'?
     '<small class="compact-meter-total">'+esc(fmt(g.meters)+' m medidos')+'</small>':'';
    return '<section class="compact-material-card"><div class="compact-material-head">'+
-    fullMaterial(g.name,composition,entries[0],entries)+
+    fullMaterial(g.name,composition,entries[0])+
     '<div class="compact-purchase"><strong>'+esc(buyLabel(g))+'</strong>'+measured+'</div></div>'+
     '<div class="compact-stage-list">'+stageDetails(entries,g.kind)+'</div></section>';
   }
@@ -431,13 +416,31 @@ function populateUnitOptions(){
  $('unit').innerHTML=known.map(u=>'<option value="'+esc(u)+'">'+esc(u)+'</option>').join('');
  $('unit').value=known.includes(current)?current:known[0];
 }
+function fichaPresentation(f){
+ // Esta é a identificação do primeiro nível do seletor de fichas,
+ // NÃO um estado de quantificação da lista nem uma homologação implícita.
+ const status=String(f?.status||'').normalize('NFD')
+  .replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
+ let maturity='';
+ if(['consolidado','consolidada'].includes(status))maturity='Consolidado';
+ else if(/revis/.test(status)||f?.kind==='revisao'||f?.kind==='simulacao')maturity='Em revisão';
+ return {
+  name:f?.id==='FT_COND-001'?'Condutores elétricos':String(f?.name||'Material'),
+  tag:maturity,
+  tagClass:maturity==='Consolidado'?'consolidated':'revision'
+ };
+}
 function paintFichaChoices(){
  const all=window.TereonXCatalog?.list()||[];
  const q=fichaSearch.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
- const candidates=all.filter(f=>(f.name+' '+f.id+' '+f.reference+' '+(f.aliases||[]).join(' ')).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(q));
+ const candidates=all.filter(f=>(f.name+' '+(f.id==='FT_COND-001'?'Condutores elétricos ':'')+f.id+' '+f.reference+' '+(f.aliases||[]).join(' ')).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(q));
  $('choices').innerHTML='<input id="fichaSearch" class="ficha-search" type="search" autocomplete="off" placeholder="Buscar material ou família..." aria-label="Pesquisar fichas técnicas" value="'+esc(fichaSearch)+'">'+
-  (loadingFichas?'<p class="tiny muted">Carregando fichas...</p>':fichaError?'<p class="notice">'+esc(fichaError)+'</p>':candidates.length?candidates.map(f=>
-   '<button type="button" class="ficha-option" data-ficha="'+esc(f.id)+'"><strong>'+esc(f.name)+'</strong><small>'+esc(f.id)+' · '+esc(f.status||'Em revisão')+'</small></button>').join(''):
+  (loadingFichas?'<p class="tiny muted">Carregando fichas...</p>':fichaError?'<p class="notice">'+esc(fichaError)+'</p>':candidates.length?candidates.map(f=>{
+   const display=fichaPresentation(f);
+   return '<button type="button" class="ficha-option" data-ficha="'+esc(f.id)+'"><span class="ficha-option-top"><strong>'+esc(display.name)+'</strong>'+
+    (display.tag?'<span class="ficha-maturity-tag '+display.tagClass+'" title="Situação informada na ficha técnica">'+esc(display.tag)+'</span>':'')+'</span>'+
+    '<small>'+esc(f.id)+'</small></button>';
+  }).join(''):
    '<p class="tiny muted">Nenhuma ficha encontrada.</p>');
 }
 function redrawAdd(){
