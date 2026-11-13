@@ -22,6 +22,8 @@ jobs:
         run: node x/tests/quantificacao.test.cjs
       - name: Validar alternância Por insumo e Por etapa
         run: node x/tests/agrupamento-ui.test.cjs
+      - name: Validar famílias recolhíveis e compras sem misturar variações
+        run: node x/tests/agrupamento-familias.test.cjs
       - name: Validar cartões compactos por etapa
         run: node x/tests/etapas-compactas.test.cjs
       - name: Validar resumo de material cor e isolação
