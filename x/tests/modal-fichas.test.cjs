@@ -81,6 +81,31 @@ function choice(v){
  assert.equal(element('fieldLabel').textContent,'Material');
  choice('PVC');
  assert.equal(element('fieldLabel').textContent,'Diâmetro nominal · PVC','condicional de diâmetro no laboratório');
+ // Todos os detalhes — obrigatórios e opcionais — devem estar na navegação.
+ const steps=[...element('progress').innerHTML.matchAll(/data-detail-index="(\d+)" title="([^"]+)"/g)]
+  .map(m=>({index:Number(m[1]),title:m[2]}));
+ assert.ok(steps.length>3,'barra mostra mais do que as exigências obrigatórias');
+ const optional=steps.find(t=>t.title.includes('Opcional'));
+ const diameter=steps.find(t=>t.title.includes('Diâmetro nominal'));
+ assert.ok(optional&&diameter,'opcional e diâmetro acessíveis por clique');
+ const savedTags=element('tags').innerHTML;
+ function goToDetail(index){
+  const button={dataset:{detailIndex:String(index)},closest:selector=>selector==='[data-detail-index]'?button:null};
+  element('progress').listeners.click({target:button});
+ }
+ goToDetail(optional.index);
+ assert.equal(element('fieldType').textContent,'Opcional','clicar abre o detalhe opcional');
+ assert.ok(element('progress').innerHTML.includes('aria-current="step"'),'marcador atual acessível');
+ if(optional.index>0){
+  const label=element('fieldLabel').textContent;
+  element('detailPrev').listeners.click();
+  assert.notEqual(element('fieldLabel').textContent,label,'seta anterior muda detalhe');
+  element('detailNext').listeners.click();
+  assert.equal(element('fieldLabel').textContent,label,'seta próxima retorna ao detalhe');
+ }
+ assert.equal(element('tags').innerHTML,savedTags,'navegação não altera valores confirmados');
+ goToDetail(diameter.index);
+ assert.equal(element('fieldLabel').textContent,'Diâmetro nominal · PVC');
  assert.ok(!element('choices').innerHTML.includes('data-pick="Aço"'),'não oferece material de aço ao selecionar detalhe PVC');
  assert.equal(element('saveItem').disabled,true,'sem diâmetro o eletroduto permanece incompleto');
  choice('3/4"');
