@@ -35,7 +35,7 @@ function normalize(f){
   d.rows.forEach(row=>{if(!row.condition)pendencias.push('Condição não informada: '+d.name)});
  });
  return {id:clean(f.codigo),name:clean(f.nome),reference:clean(f.referencia)||clean(f.codigo),
-   status:clean(f.status),kind:sourceType,aliases:Array.isArray(f.apelidos)?f.apelidos.map(clean).filter(Boolean):[],collection:'catalogo-oficial',homologada:isOfficial(f),
+   status:clean(f.status),maturity:clean(f.maturidade),kind:sourceType,aliases:Array.isArray(f.apelidos)?f.apelidos.map(clean).filter(Boolean):[],collection:'catalogo-oficial',homologada:isOfficial(f),
    pendencias,details,source:'fichario-x/fichas-lab-2026-11-12.json',sourceName:clean(f.nomeNaPlanilha),sourcePendencias:Array.isArray(f.pendencias)?f.pendencias:[]};
 }
 const eq=(a,b)=>norm(a)===norm(b);
