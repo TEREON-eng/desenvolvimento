@@ -41,7 +41,12 @@ function compare(a,b){
  if(!anchors.every(id=>A[id]&&B[id]&&canonical(id,A[id])===canonical(id,B[id]))||
      !identifiers.some(id=>A[id]&&B[id]&&canonical(id,A[id])===canonical(id,B[id])))
   return {status:'indeterminado',common,missing,conflicts,ambiguous};
- return {status:missing.length?'potencial':'identidade_confirmada',common,missing,conflicts,ambiguous};
+ if(missing.length)return {status:'potencial',common,missing,conflicts,ambiguous};
+ // Igualdade dos valores presentes NÃO significa identidade completa se
+ // ambos omitiram tensão/cor/isolação. A ficha deve definir critérios finais.
+ if(!['DET-005','DET-006','DET-008'].every(id=>A[id]&&B[id]))
+  return {status:'indeterminado',common,missing,conflicts,ambiguous};
+ return {status:'identidade_confirmada',common,missing,conflicts,ambiguous};
 }
 function findReviewPairs(items){
  const records=(items||[]).filter(x=>x&&x.catalogId==='FT_COND-001'&&x.id!=null);
