@@ -1,3 +1,5 @@
+> **DOCUMENTO DE MÓDULO / LABORATÓRIO · curadoria 14/11/2026.** As etapas descritas abaixo podem ser fotografias antigas da implementação. Para o que vale agora, leia [Mestre](../../docs/MESTRE-TEREON-X.md), [Contratos](../../docs/CONTRATOS-VIGENTES.md), [Estado atual](../../docs/ESTADO-ATUAL.md). Este documento registra o laboratório v1 e sua afirmação de ausência de sincronização no Canivete **não** descreve toda a integração posterior da branch; conferir contrato de Listas atual.
+
 # TEREON X — Listas na Nuvem · Laboratório v1
 
 **Estado:** tabela e políticas Supabase aplicadas; código na branch `desenvolvimento`; testes de contrato simulados aprovados. Navegador e isolamento entre duas contas ainda não homologados.

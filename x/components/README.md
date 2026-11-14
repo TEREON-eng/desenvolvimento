@@ -1,3 +1,5 @@
+> **DOCUMENTO DE MÓDULO / LABORATÓRIO · curadoria 14/11/2026.** As etapas descritas abaixo podem ser fotografias antigas da implementação. Para o que vale agora, leia [Mestre](../docs/MESTRE-TEREON-X.md), [Contratos](../docs/CONTRATOS-VIGENTES.md), [Estado atual](../docs/ESTADO-ATUAL.md).
+
 # Cabeçalho compartilhado — TEREON X
 
 **Versão inicial:** x.0.3.18 (09/11/2026)

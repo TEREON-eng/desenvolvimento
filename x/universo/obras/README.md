@@ -1,3 +1,5 @@
+> **DOCUMENTO DE MÓDULO / LABORATÓRIO · curadoria 14/11/2026.** As etapas descritas abaixo podem ser fotografias antigas da implementação. Para o que vale agora, leia [Mestre](../../docs/MESTRE-TEREON-X.md), [Contratos](../../docs/CONTRATOS-VIGENTES.md), [Estado atual](../../docs/ESTADO-ATUAL.md). Uma declaração antiga de RLS ou de código implantado não substitui testes de contas reais e homologação.
+
 # TEREON X · Universo / Motor de Obras — Laboratório v1
 
 **Estado: código implantado na branch `desenvolvimento`; RLS e esquema confirmados no Supabase; fluxo de navegador ainda não homologado.**

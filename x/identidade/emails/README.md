@@ -1,3 +1,5 @@
+> **DOCUMENTO DE MÓDULO / LABORATÓRIO · curadoria 14/11/2026.** As etapas descritas abaixo podem ser fotografias antigas da implementação. Para o que vale agora, leia [Mestre](../../docs/MESTRE-TEREON-X.md), [Contratos](../../docs/CONTRATOS-VIGENTES.md), [Estado atual](../../docs/ESTADO-ATUAL.md).
+
 # E-mails de autenticação — TEREON X
 
 Projeto Supabase criado em novembro de 2026 no plano gratuito.

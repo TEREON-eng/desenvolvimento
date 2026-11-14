@@ -1,3 +1,5 @@
+> **DOCUMENTO DE MÓDULO / LABORATÓRIO · curadoria 14/11/2026.** As etapas descritas abaixo podem ser fotografias antigas da implementação. Para o que vale agora, leia [Mestre](../docs/MESTRE-TEREON-X.md), [Contratos](../docs/CONTRATOS-VIGENTES.md), [Estado atual](../docs/ESTADO-ATUAL.md).
+
 # TEREON X — Motor de Compartilhamento entre Usuários (laboratório v1)
 
 ## Escopo e contrato
