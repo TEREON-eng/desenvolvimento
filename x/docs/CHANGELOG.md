@@ -1,3 +1,9 @@
+## 13/11/2026 — Sincronização documental após interrupção (sem nova versão)
+- Confirmada no repositório **`TEREON-eng/desenvolvimento`**, branch `desenvolvimento`, a versão **X.0.3.60**, os arquivos de interpretador de Condutores e voz, a integração com o modal, os testes e a documentação inicial de entrada natural.
+- Atualizados **README, Guia Visual, Mapa de Módulos, Arquitetura Modular, Estado Vigente (com nota histórica), Matriz de Fichas, Auditoria do Núcleo, contrato de agrupamento e contrato de correspondência**, preservando as decisões originais e explicitando as implementações posteriores, para não confundir documentos históricos com o produto atual.
+- Criado [Marco de retomada de 13/11/2026](RETOMADA-TEREON-X-2026-11-13.md); [História Volume 03](HISTORIA-TEREON-X-VOLUME-03.md) ampliada com a mudança de questionário para interpretador, pedido de voz desde o piloto e ideia futura de reconhecer foto.
+- **Nenhuma homologação técnica, revisão da planilha de origem, alteração em `main` ou deploy foi realizada por esta atualização documental.** Não há nesta rodada confirmação de CI completo, teste real com microfone ou Worker publicado. A versão do app continua **X.0.3.60**.
+
 ## 13/11/2026 — X.0.3.60 · Condutores: busca natural com texto e microfone
 - Nova entrada no **mesmo modal** Adicionar item: o usuário descreve o material como sabe. O interpretador de Condutores sugere a ficha e atributos, mas **não confirma escolhas automaticamente**. A tela mostra sugestões com botões para confirmação individual, validadas pelo fichário técnico.
 - Implementados dois canais para a mesma entrada: **digitação** e **voz pt-BR** mediante toque no microfone quando `SpeechRecognition` ou `webkitSpeechRecognition` estiver disponível. O texto transcrito pode ser corrigido. Microfone opcional: sem suporte, rede ou permissão, manter entrada manual.
