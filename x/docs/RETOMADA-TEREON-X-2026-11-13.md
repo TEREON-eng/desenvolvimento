@@ -1,3 +1,5 @@
+> **ÚLTIMA ATUALIZAÇÃO DA RETOMADA — 13/11/2026 · X.0.3.61:** a X.0.3.60 foi **refinada** após teste do fundador. A experiência vigente não tem mais um segundo painel grande de confirmações dentro da ficha: **texto/voz → tags sugeridas com ? sob a pesquisa → toque para ✓ confirmar → nome técnico em formação → Avançar → ficha preenchida parcialmente com escolhas confirmadas**. Novo módulo `x/catalogo/confirmacao-rascunho.js` faz a transição com validações da ficha. `x/tests/busca-tags-inline.test.cjs` acrescentado às regressões. Os relatos abaixo sobre a X.0.3.60 ficam preservados como histórico, não como especificação vigente. Não há confirmação nesta rodada de CI integral, deploy Cloudflare, teste real de microfone ou homologação da ficha.
+
 # TEREON X — Marco de retomada de 13/11/2026
 **Estado registrado em 13/11/2026 · branch `desenvolvimento` · versão `x.0.3.60` · laboratório**
 **Este arquivo orienta uma próxima conversa; não é comprovação de deploy ou homologação.**
