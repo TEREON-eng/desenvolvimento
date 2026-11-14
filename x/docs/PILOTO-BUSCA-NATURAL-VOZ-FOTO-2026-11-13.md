@@ -1,3 +1,5 @@
+> **EVOLUÇÃO DO PILOTO — 13/11/2026 · X.0.3.61:** o primeiro fluxo da X.0.3.60 colocava uma segunda área de botões para confirmar sugestões **depois de escolher Condutores**, ocupando espaço demais. Aprovada nova interação: na **tela inicial de pesquisa por texto/voz**, as hipóteses aparecem em tags pequenas com **?**; tocar alterna para **✓ confirmado** e forma gradualmente o nome técnico. **Avançar para especificação** entra na ficha existente com apenas esses valores; a ficha abre somente os detalhes ainda faltantes. **O bloco grande de confirmação dentro da ficha foi removido**. O novo `x/catalogo/confirmacao-rascunho.js` aplica verificações do catálogo antes de transportar características; o motor de compra não foi alterado. A seção abaixo descreve a arquitetura original e deve ser lida com esta evolução de UX. Continuidade para voz e foto futura mantida. A experiência no celular e Cloudflare ainda exigem validação.
+
 # TEREON X — Piloto de busca natural por texto e voz
 **13/11/2026 · X.0.3.60 · branch `desenvolvimento` · laboratório, sem publicação confirmada**
 
