@@ -1,3 +1,5 @@
+> **NOVO EPISÓDIO — 14/11/2026:** o pedido de preservar toda a jornada antes de iniciar outra conversa virou o episódio **“A engenharia também precisa de memória”** no [Volume 03](HISTORIA-TEREON-X-VOLUME-03.md). O [marco de retomada de 14/11](RETOMADA-TEREON-X-2026-11-14.md) conecta as decisões técnicas e a história das iterações, inclusive a substituição da navegação por setas pelas tags e a evolução de um questionário para tradução da linguagem de obra. Os relatos e seus limites foram preservados; não declarar deploy ou homologação por ter documentação atualizada.
+
 > **CONTINUAÇÃO DA HISTÓRIA — 13/11/2026:** a evolução mais recente — famílias de materiais, tags que viram navegação e a virada de questionário para **interpretador de pedidos por texto/voz**, com foto como visão futura — foi registrada no [Diário Volume 03](HISTORIA-TEREON-X-VOLUME-03.md). O [marco de retomada](RETOMADA-TEREON-X-2026-11-13.md) reúne versões, documentos e limitações. A narrativa histórica abaixo deve ser mantida no seu contexto original, sem atribuir entregas posteriores a etapas antigas.
 
 # TEREON — Diário de Desenvolvimento | Continuação
