@@ -1,3 +1,5 @@
+> **CLASSIFICAÇÃO · 14/11/2026 — RETRATO HISTÓRICO.** O corpo conserva o contexto original e pode citar versões então vigentes. Para decisões e evidências atuais, consultar [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md) e [Estado atual](ESTADO-ATUAL.md).
+
 # TEREON X — Superauditoria de arquitetura, contratos e produto
 
 > **PRIORIZAÇÃO APÓS A AUDITORIA:** esta relação é ampla, mas **não exige resolver todos os achados antes de 17/11**. Priorizar riscos de Listas, ficha, modal, dados, compartilhamento e publicação; barreiras de gestão permanecem para sua integração real posterior. [Plano 17/11](FOCO-TESTE-CAMPO-17-11-2026.md).

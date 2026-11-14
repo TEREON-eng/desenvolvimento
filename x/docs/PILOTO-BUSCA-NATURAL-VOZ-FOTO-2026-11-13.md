@@ -1,6 +1,4 @@
-> **REFERÊNCIA MAIS RECENTE — 14/11/2026:** [Marco de retomada X.0.3.61](RETOMADA-TEREON-X-2026-11-14.md) contém sequência aprovada, responsáveis técnicos, exemplos, risco de inferência, status do código e pendências para a próxima conversa. A documentação abaixo conserva o histórico do piloto X.0.3.60 e os adendos X.0.3.61. O comportamento **vigente** é confirmar em tags ?→✓ **junto da pesquisa**, formar nome técnico, **Avançar** com apenas o confirmado; o painel interno duplicado foi descartado. Voz depende do navegador; foto ainda não existe. **CI integral, Cloudflare e teste Android permanecem sem confirmação.**
-
-> **EVOLUÇÃO DO PILOTO — 13/11/2026 · X.0.3.61:** o primeiro fluxo da X.0.3.60 colocava uma segunda área de botões para confirmar sugestões **depois de escolher Condutores**, ocupando espaço demais. Aprovada nova interação: na **tela inicial de pesquisa por texto/voz**, as hipóteses aparecem em tags pequenas com **?**; tocar alterna para **✓ confirmado** e forma gradualmente o nome técnico. **Avançar para especificação** entra na ficha existente com apenas esses valores; a ficha abre somente os detalhes ainda faltantes. **O bloco grande de confirmação dentro da ficha foi removido**. O novo `x/catalogo/confirmacao-rascunho.js` aplica verificações do catálogo antes de transportar características; o motor de compra não foi alterado. A seção abaixo descreve a arquitetura original e deve ser lida com esta evolução de UX. Continuidade para voz e foto futura mantida. A experiência no celular e Cloudflare ainda exigem validação.
+> **CLASSIFICAÇÃO · 14/11/2026 — ESPECIFICAÇÃO OU EVIDÊNCIA TÉCNICA DATADA.** O corpo conserva o contexto original e pode citar versões então vigentes. Para decisões e evidências atuais, consultar [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md) e [Estado atual](ESTADO-ATUAL.md). Código vigente X.0.3.61 usa ?→✓ na própria pesquisa; X.0.3.60 com grande painel interno foi revogada. Foto continua não implementada.
 
 # TEREON X — Piloto de busca natural por texto e voz
 **13/11/2026 · X.0.3.60 · branch `desenvolvimento` · laboratório, sem publicação confirmada**
@@ -55,3 +53,13 @@ Testes isolados já executados em ambiente JavaScript: exemplos de interpretaç�
 6. Testar nomes informais e ruídos reais de obra, registrar falsos positivos/negativos e ampliar o dicionário do piloto somente após evidências.
 
 **Referência de compatibilidade:** https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition
+
+---
+
+## Adendos pré-saneamento — preservados como histórico
+
+> Avisos de várias versões foram deslocados do início para não parecerem regras vigentes.
+
+> **REFERÊNCIA MAIS RECENTE — 14/11/2026:** [Marco de retomada X.0.3.61](RETOMADA-TEREON-X-2026-11-14.md) contém sequência aprovada, responsáveis técnicos, exemplos, risco de inferência, status do código e pendências para a próxima conversa. A documentação abaixo conserva o histórico do piloto X.0.3.60 e os adendos X.0.3.61. O comportamento **vigente** é confirmar em tags ?→✓ **junto da pesquisa**, formar nome técnico, **Avançar** com apenas o confirmado; o painel interno duplicado foi descartado. Voz depende do navegador; foto ainda não existe. **CI integral, Cloudflare e teste Android permanecem sem confirmação.**
+
+> **EVOLUÇÃO DO PILOTO — 13/11/2026 · X.0.3.61:** o primeiro fluxo da X.0.3.60 colocava uma segunda área de botões para confirmar sugestões **depois de escolher Condutores**, ocupando espaço demais. Aprovada nova interação: na **tela inicial de pesquisa por texto/voz**, as hipóteses aparecem em tags pequenas com **?**; tocar alterna para **✓ confirmado** e forma gradualmente o nome técnico. **Avançar para especificação** entra na ficha existente com apenas esses valores; a ficha abre somente os detalhes ainda faltantes. **O bloco grande de confirmação dentro da ficha foi removido**. O novo `x/catalogo/confirmacao-rascunho.js` aplica verificações do catálogo antes de transportar características; o motor de compra não foi alterado. A seção abaixo descreve a arquitetura original e deve ser lida com esta evolução de UX. Continuidade para voz e foto futura mantida. A experiência no celular e Cloudflare ainda exigem validação.

@@ -1,3 +1,5 @@
+> **CLASSIFICAÇÃO · 14/11/2026 — PROPOSTA/LABORATÓRIO.** O corpo conserva o contexto original e pode citar versões então vigentes. Para decisões e evidências atuais, consultar [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md) e [Estado atual](ESTADO-ATUAL.md).
+
 # TEREON X — Modelo gratuito e pago
 
 > **HIPÓTESES COMERCIAIS — 10/11:** Listas e Escola devem proporcionar utilidade gratuita real. Escola como plataforma de cursos e cobrança por colaboração profissional são possibilidades a testar, não serviços ou preços aprovados, nem prioridades do teste de 17/11. [Estado vigente](ESTADO-VIGENTE-10-11-2026.md).

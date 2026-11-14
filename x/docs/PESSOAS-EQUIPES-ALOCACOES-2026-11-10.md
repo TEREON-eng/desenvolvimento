@@ -1,3 +1,5 @@
+> **CLASSIFICAÇÃO · 14/11/2026 — PROPOSTA/LABORATÓRIO.** O corpo conserva o contexto original e pode citar versões então vigentes. Para decisões e evidências atuais, consultar [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md) e [Estado atual](ESTADO-ATUAL.md).
+
 # TEREON X — Pessoas, prestadores, equipes e alocações
 **10/11/2026 · Proposta arquitetural fundamentada nas decisões do fundador · SEM IMPLEMENTAÇÃO DE BANCO OU UI**
 

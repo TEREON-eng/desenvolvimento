@@ -1,3 +1,5 @@
+> **CLASSIFICAÇÃO · 14/11/2026 — RETRATO HISTÓRICO.** O corpo conserva o contexto original e pode citar versões então vigentes. Para decisões e evidências atuais, consultar [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md) e [Estado atual](ESTADO-ATUAL.md).
+
 # TEREON X — Revisão geral de regras, contratos e riscos
 
 > **REVISÃO HISTÓRICA — 09/11:** manter as conclusões na data original, sem considerá-las prova de CI/deploy no dia 10. Para o trabalho imediato vale a [prioridade de campo 17/11](FOCO-TESTE-CAMPO-17-11-2026.md), com Obras/Diário como laboratório paralelo. [Estado vigente](ESTADO-VIGENTE-10-11-2026.md).

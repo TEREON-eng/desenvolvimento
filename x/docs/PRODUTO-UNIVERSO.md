@@ -1,3 +1,5 @@
+> **CLASSIFICAÇÃO · 14/11/2026 — PROPOSTA/LABORATÓRIO.** O corpo conserva o contexto original e pode citar versões então vigentes. Para decisões e evidências atuais, consultar [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md) e [Estado atual](ESTADO-ATUAL.md).
+
 # TEREON X — Universo | Desenho funcional do produto
 
 > **VISÃO E LABORATÓRIO — 10/11:** “Universo” é nome histórico/técnico; **Obras** é a denominação da interface em evolução. A hierarquia vigente de projeto é **Obra → Escopo → Etapa → Subetapa**. Este módulo não integra a entrega crítica de 17/11. [Estado vigente](ESTADO-VIGENTE-10-11-2026.md).

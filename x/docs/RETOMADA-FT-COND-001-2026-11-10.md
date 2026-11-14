@@ -1,3 +1,5 @@
+> **CLASSIFICAÇÃO · 14/11/2026 — RETRATO HISTÓRICO.** O corpo conserva o contexto original e pode citar versões então vigentes. Para decisões e evidências atuais, consultar [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md) e [Estado atual](ESTADO-ATUAL.md).
+
 # Retomada — Ficha FT_COND-001 (Condutores BT)
 **Registro: 10/11/2026 · TEREON X · em estudo, SEM aprovação ou alteração da ficha**
 

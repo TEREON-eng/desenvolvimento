@@ -1,6 +1,4 @@
-> **CONTINUAÇÃO / RETOMADA MAIS RECENTE — 14/11/2026:** este documento representa o estado até 13/11 e permanece como referência histórica. O **marco vigente para abrir nova conversa** é [`RETOMADA-TEREON-X-2026-11-14.md`](RETOMADA-TEREON-X-2026-11-14.md), mantendo a X.0.3.61, tags de sugestões ?→✓ junto da pesquisa, nome técnico se formando e botão Avançar. Nesta atualização foram sincronizados arquivos, **sem mudar a versão do código ou declarar deploy/CI aprovados**.
-
-> **ÚLTIMA ATUALIZAÇÃO DA RETOMADA — 13/11/2026 · X.0.3.61:** a X.0.3.60 foi **refinada** após teste do fundador. A experiência vigente não tem mais um segundo painel grande de confirmações dentro da ficha: **texto/voz → tags sugeridas com ? sob a pesquisa → toque para ✓ confirmar → nome técnico em formação → Avançar → ficha preenchida parcialmente com escolhas confirmadas**. Novo módulo `x/catalogo/confirmacao-rascunho.js` faz a transição com validações da ficha. `x/tests/busca-tags-inline.test.cjs` acrescentado às regressões. Os relatos abaixo sobre a X.0.3.60 ficam preservados como histórico, não como especificação vigente. Não há confirmação nesta rodada de CI integral, deploy Cloudflare, teste real de microfone ou homologação da ficha.
+> **CLASSIFICAÇÃO · 14/11/2026 — RETRATO HISTÓRICO.** O corpo conserva o contexto original e pode citar versões então vigentes. Para decisões e evidências atuais, consultar [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md) e [Estado atual](ESTADO-ATUAL.md).
 
 # TEREON X — Marco de retomada de 13/11/2026
 **Estado registrado em 13/11/2026 · branch `desenvolvimento` · versão `x.0.3.60` · laboratório**
@@ -56,3 +54,13 @@
 **Prioridade:** testar a entrada por voz e descrição no celular/PWA real. Usar frases reais de empreiteiros; conferir transcrição, ambiguidades, seleções confirmadas e o modo sem microfone. Depois melhorar o dicionário e reconhecer novas famílias conforme ficha revisada. **Não** avançar para foto, integração com compras ou módulos paralelos antes de validar a precisão e o comportamento do piloto em campo.
 
 **Princípio preservado:** a pessoa **não precisa se organizar antes de pedir**; o fluxo traduz a intenção e a ficha organiza/valida, sem inventar características.
+
+---
+
+## Adendos pré-saneamento — preservados como histórico
+
+> Avisos de várias versões foram deslocados do início para não parecerem regras vigentes.
+
+> **CONTINUAÇÃO / RETOMADA MAIS RECENTE — 14/11/2026:** este documento representa o estado até 13/11 e permanece como referência histórica. O **marco vigente para abrir nova conversa** é [`RETOMADA-TEREON-X-2026-11-14.md`](RETOMADA-TEREON-X-2026-11-14.md), mantendo a X.0.3.61, tags de sugestões ?→✓ junto da pesquisa, nome técnico se formando e botão Avançar. Nesta atualização foram sincronizados arquivos, **sem mudar a versão do código ou declarar deploy/CI aprovados**.
+
+> **ÚLTIMA ATUALIZAÇÃO DA RETOMADA — 13/11/2026 · X.0.3.61:** a X.0.3.60 foi **refinada** após teste do fundador. A experiência vigente não tem mais um segundo painel grande de confirmações dentro da ficha: **texto/voz → tags sugeridas com ? sob a pesquisa → toque para ✓ confirmar → nome técnico em formação → Avançar → ficha preenchida parcialmente com escolhas confirmadas**. Novo módulo `x/catalogo/confirmacao-rascunho.js` faz a transição com validações da ficha. `x/tests/busca-tags-inline.test.cjs` acrescentado às regressões. Os relatos abaixo sobre a X.0.3.60 ficam preservados como histórico, não como especificação vigente. Não há confirmação nesta rodada de CI integral, deploy Cloudflare, teste real de microfone ou homologação da ficha.

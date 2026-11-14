@@ -1,4 +1,4 @@
-> **ADENDO DE FECHAMENTO — X.0.3.52 (12/11/2026):** no relatório Compras, lançamentos anteriores com **mesmo material técnico, mesmos detalhes e mesma unidade comercial** também passam a ser agregados como uma linha. Exemplo: Sala 2 com 8 `br3m` + Sala 1 com 2 `br3m` => **10 barras de 3 m**, com etapas identificadas, sem converter a quantidade em metros. Completo e Execução preservam lançamentos individuais. O e-mail não inventa assinatura do remetente. O teste de formatos foi ampliado e o teste histórico do catálogo alinhado ao DET-011 Unidade já existente desde 11/11. CI, publicação e PDF físico seguem pendentes.
+> **CLASSIFICAÇÃO · 14/11/2026 — ESPECIFICAÇÃO OU EVIDÊNCIA TÉCNICA DATADA.** O corpo conserva o contexto original e pode citar versões então vigentes. Para decisões e evidências atuais, consultar [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md) e [Estado atual](ESTADO-ATUAL.md).
 
 # TEREON X — Eletrodutos e compartilhamento para simulação de campo
 **12/11/2026 · X.0.3.51 · Branch `desenvolvimento` · Situação: EXPERIMENTAL, NÃO HOMOLOGADA**
@@ -76,3 +76,11 @@ Depois de consolidar a interface das listas, o fundador decidiu usar a versão v
 4. Gerar Compras por WhatsApp, Completo por e-mail e Execução por PDF; comparar os quantitativos e a legibilidade.
 5. Registrar dúvidas técnicas e corrigir **a ficha de origem** depois da validação; não ampliar famílias enquanto houver lacunas P0.
 6. A aprovação de publicação requer revisão humana do conteúdo técnico, testes de regressão e aceite explícito.
+
+---
+
+## Adendos pré-saneamento — preservados como histórico
+
+> Avisos de várias versões foram deslocados do início para não parecerem regras vigentes.
+
+> **ADENDO DE FECHAMENTO — X.0.3.52 (12/11/2026):** no relatório Compras, lançamentos anteriores com **mesmo material técnico, mesmos detalhes e mesma unidade comercial** também passam a ser agregados como uma linha. Exemplo: Sala 2 com 8 `br3m` + Sala 1 com 2 `br3m` => **10 barras de 3 m**, com etapas identificadas, sem converter a quantidade em metros. Completo e Execução preservam lançamentos individuais. O e-mail não inventa assinatura do remetente. O teste de formatos foi ampliado e o teste histórico do catálogo alinhado ao DET-011 Unidade já existente desde 11/11. CI, publicação e PDF físico seguem pendentes.

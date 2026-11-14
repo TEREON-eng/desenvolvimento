@@ -1,3 +1,5 @@
+> **CLASSIFICAÇÃO · 14/11/2026 — RETRATO HISTÓRICO.** O corpo conserva o contexto original e pode citar versões então vigentes. Para decisões e evidências atuais, consultar [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md) e [Estado atual](ESTADO-ATUAL.md).
+
 # TEREON X — revisão de coerência, independência e navegação
 **Data:** 08/11/2026 · **Versão:** x.0.3.14 · **Ambiente:** branch `desenvolvimento`
 **Condição:** arquitetura e UX em validação de laboratório, não homologação comercial.

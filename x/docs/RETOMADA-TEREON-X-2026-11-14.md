@@ -1,3 +1,5 @@
+> **CLASSIFICAÇÃO · 14/11/2026 — RETRATO HISTÓRICO.** O corpo conserva o contexto original e pode citar versões então vigentes. Para decisões e evidências atuais, consultar [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md) e [Estado atual](ESTADO-ATUAL.md). Este retrato foi preparado antes de verificar a falha efetiva do CI de 14/11: o workflow 43587644688 **falhou** em resumo-localizacao.
+
 # TEREON X — Marco de retomada para nova conversa
 **14/11/2026 · referência atual: X.0.3.61 · branch `desenvolvimento`**
 **Propósito:** conservar decisões, contratos técnicos e história de produto para continuar sem retrabalho.

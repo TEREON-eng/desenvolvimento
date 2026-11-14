@@ -1,3 +1,5 @@
+> **CLASSIFICAÇÃO · 14/11/2026 — RETRATO HISTÓRICO.** O corpo conserva o contexto original e pode citar versões então vigentes. Para decisões e evidências atuais, consultar [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md) e [Estado atual](ESTADO-ATUAL.md).
+
 # TEREON X — Validação técnica incremental (somente leitura)
 
 > **ERRATA DE 10/11/2026:** o serviço `x/listas/servico.js` **já validava** nome novo de lista em até 160 caracteres (`createList` e `renameList`); a lacuna local anterior estava em limite de itens/payload e, antes da X.0.3.30, em quantidade não finita. O limite visual de criação de 100 caracteres pode divergir dos 160 aceitos pelo motor/nuvem. Não reutilizar eventual afirmação histórica de que `createList` não aplicava limite de 160. [Auditoria atual](AUDITORIA-NUCLEO-LISTAS-17-11-2026.md).
