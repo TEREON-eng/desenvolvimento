@@ -1,3 +1,13 @@
+## 13/11/2026 — X.0.3.60 · Condutores: busca natural com texto e microfone
+- Nova entrada no **mesmo modal** Adicionar item: o usuário descreve o material como sabe. O interpretador de Condutores sugere a ficha e atributos, mas **não confirma escolhas automaticamente**. A tela mostra sugestões com botões para confirmação individual, validadas pelo fichário técnico.
+- Implementados dois canais para a mesma entrada: **digitação** e **voz pt-BR** mediante toque no microfone quando `SpeechRecognition` ou `webkitSpeechRecognition` estiver disponível. O texto transcrito pode ser corrigido. Microfone opcional: sem suporte, rede ou permissão, manter entrada manual.
+- O navegador pode utilizar serviço externo para reconhecimento de fala, e a voz pode não funcionar offline; informação de privacidade exibida na interface. TEREON não grava áudio em seu próprio armazenamento nesta etapa.
+- Exemplos: `fio flex 2,5 preto 450` gera **450/750 V como hipótese**, com alerta; `HEPR` não vira automaticamente a opção agregada `HEPR ou XLPE`; `flexível` não comprova classe de encordoamento.
+- Novos `x/catalogo/interpretador-condutores.js`, `x/catalogo/voz-entrada.js`, teste `x/tests/interpretador-voz-condutores.test.cjs`. Atualizados `x/listas/app.js`, `x/styles.css`, `x/index.html`, `x/sw.js`, `x/pwa.js`, `x/version.json`, `x/tests/modulos.test.cjs` e workflow.
+- **Foto de material** registrada como entrada futura do mesmo interpretador, não implementada; sem botão falso nem coleta automática de imagens.
+- Motor de compra, regras de fichas, agrupamento e tags aprovadas preservados. **CI completo, microfone real em celular e deploy Cloudflare ainda não confirmados.**
+- [Decisão, arquitetura, riscos e roteiro de campo](PILOTO-BUSCA-NATURAL-VOZ-FOTO-2026-11-13.md).
+
 ## 13/11/2026 — X.0.3.59 · Mapa completo de detalhes em tags pequenas
 - Depois de aprovar a navegação nas próprias tags, o fundador solicitou uma visão **completa** da especificação: a barra de progresso agora apresenta **uma posição para cada detalhe aplicável**, inclusive os opcionais, mantendo indicação visual de confirmado e pendente. Continua apenas informativa, sem voltar às setas da versão X.0.3.57.
 - A área de tags apresenta **todos os detalhes aplicáveis**, não só os escolhidos. Confirmados exibem os valores atuais e um botão ×; pendentes exibem uma identificação breve, em cor atenuada, sem ×. Tocar em qualquer um abre a escolha correspondente, sem preencher ou remover automaticamente.
