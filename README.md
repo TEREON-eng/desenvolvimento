@@ -1,62 +1,17 @@
-> **PONTO DE RETOMADA — 14/11/2026:** [Marco de retomada X.0.3.61](x/docs/RETOMADA-TEREON-X-2026-11-14.md) resume a busca natural por texto/voz com tags **? → ✓** na própria pesquisa, nome técnico em formação e **Avançar** para a ficha já parcialmente preenchida; preserva também regras de compra, status técnico das fichas, módulos, testes e narrativa. **Versão de código segue X.0.3.61, branch `desenvolvimento`, não verificada como deploy no Cloudflare.** Esta atualização é apenas documental.
+# TEREON X — Repositório de desenvolvimento
 
-> **ATUALIZAÇÃO DE EXPERIÊNCIA — 13/11/2026 · X.0.3.61 (laboratório):** a busca por texto/voz de Condutores agora mostra **tags pequenas com ? imediatamente abaixo do campo**. Tocar confirma ✓, atualiza o nome técnico e **Avançar para especificação** abre a ficha aprovada com **somente os atributos confirmados**. O painel grande e duplicado de confirmação **foi retirado de dentro da ficha**. Fichário/manual, regras técnicas e compra estrita preservados. [Piloto atual](x/docs/PILOTO-BUSCA-NATURAL-VOZ-FOTO-2026-11-13.md) · [Changelog](x/docs/CHANGELOG.md). Nenhum teste Android, CI integral ou deploy Cloudflare declarado nesta alteração.
+**TEREON — Tecnologia que faz a engenharia fluir.** Ramo de trabalho: **desenvolvimento**. Versão declarada em código: **X.0.3.61**; deploy e homologação não demonstrados por uma versão no arquivo.
 
-> **ESTADO ATUAL — 13/11/2026 · TEREON X.0.3.60 (laboratório):** o modal **Adicionar item** preserva o fichário/manual e acrescenta uma entrada por **descrição em linguagem da obra**, digitada ou transcrita por voz com autorização do usuário. O piloto de **Condutores** sugere atributos, exige confirmação individual e nunca soma/completa o material automaticamente. Voz por API do navegador pode depender de rede e serviço externo; teste real no celular e deploy Cloudflare **não confirmados**. Reconhecimento de **foto é intenção futura, não funcionalidade pronta**. A ficha FT_COND-001 permanece *Consolidada como estrutura*, mas *Em revisão* para homologação. [Arquitetura, decisões e teste de campo](x/docs/PILOTO-BUSCA-NATURAL-VOZ-FOTO-2026-11-13.md) · [Changelog](x/docs/CHANGELOG.md).
+## Leitura recomendada
+- [Mestre consolidado](x/docs/MESTRE-TEREON-X.md): visão, decisões estáveis e escopo.
+- [Contratos vigentes](x/docs/CONTRATOS-VIGENTES.md): regras obrigatórias e prevenção de regressão.
+- [Estado atual verificável](x/docs/ESTADO-ATUAL.md): evidências, bloqueios e incertezas.
+- [Índice documental](x/docs/INDICE-DOCUMENTACAO.md): onde encontrar estudos, arquivos e história.
+- [Guia visual](x/docs/GUIA-VISUAL-TEREON-X.md) · [Mapa de módulos](x/docs/MAPA-MODULOS.md) · [Regressão](x/docs/TESTES-REGRESSAO.md) · [Plano de campo](x/docs/FOCO-TESTE-CAMPO-17-11-2026.md).
+- [Índice histórico e proveniência](x/docs/HISTORIA-INDICE-E-VERIFICACAO-2026-11-14.md).
 
-> **12/11/2026 · X.0.3.56:** em Por insumo, múltiplas variações técnicas agora compartilham uma **família visual recolhível**, sem somar produtos com cores, bitolas ou apresentações diferentes. O motor de quantificação comercial continua independente. FT_COND-001 é **Consolidado como estrutura de fichário**, por avaliação do fundador, mas permanece **Em revisão / publicação Oficial pendente** até conferência dos detalhes técnicos existentes. [Changelog](x/docs/CHANGELOG.md) · [Matriz de fichas](x/docs/MATRIZ-FICHAS-17-11-2026.md).
+## Aplicativo
+PWA em **x/**. Núcleo prioritário para ensaio supervisionado de 17/11/2026: **Listas → Fichas/Catálogo → Especificação → Compartilhamento**. Texto e voz opcionais alimentam um interpretador piloto de Condutores, que produz **propostas**, nunca confirma atributos automaticamente. Fotos são visão futura, não implementação. Universo/Obras/Diário são laboratórios, e Solicitações/Compras serão motores próprios.
 
-> **Complemento X.0.3.52 · 12/11:** relatório Compras agora reúne lançamentos legados de mesmo material/unidade sem convertê-los automaticamente, preservando detalhamento por etapa e o formato original. A revisão experimental de Eletroduto e os canais WhatsApp/e-mail/PDF da X.0.3.51 continuam em teste. [Changelog](x/docs/CHANGELOG.md).
-
-> **ESTADO VIGENTE — 12/11/2026 · X.0.3.51 (branch `desenvolvimento`):** Listas X.0.3.50 aceitas como referência visual para teste; ficha `FT_INFRA-001` ajustada em **snapshot LAB independente** (`x/fichario-x/fichas-lab-2026-11-12.json`) sem modificar a fonte de 08/11 nem a planilha Fichario.xlsm. Relatórios Compras/Completo/Execução em WhatsApp, e-mail e PDF reorganizados para leitura; seis testes recentes adicionados ao CI. A execução do CI, a renderização do PDF em aparelho, o deploy Cloudflare e a homologação das fichas **não foram comprovados**. [Revisão e roteiro de campo](x/docs/REVISAO-ELETRODUTO-E-RELATORIOS-2026-11-12.md) · [Estado vigente](x/docs/ESTADO-VIGENTE-10-11-2026.md).
-
-# TEREON X — Repositório independente
-
-**Ambiente ativo:** TEREON X, sob `/x/`. A branch `desenvolvimento` recebe experimentos e testes; `main` recebe somente versões aprovadas. O endereço do Worker chamado `desenvolvimento` pode ser a **produção** do Cloudflare; não inferir ambiente pelo nome do hostname.
-
-## Estrutura do código
-- `x/index.html`: shell HTML de entrada; UI de listas em `x/listas/app.js`, serviço em `x/listas/servico.js`, persistência local em `store.js` e integração de conta/nuvem em `integracao.js`. O legado de edição de condutor permanece apenas na UI.
-- `x/catalogo/motor.js`: leitura e normalização de fichas, condições, obrigatoriedade e nome técnico; sem DOM/armazenamento de listas.
-- `x/catalogo/seletor.js`: interface do modal; salva exclusivamente por callback da Lista.
-- `x/biblioteca/index.html`: apresentação de fichas; apenas consulta.
-- `x/fichario-x/`: snapshots de testes, leitor e simulador isolado.
-- `x/motor-compartilhar.js`: recebe snapshot da lista e gera formatos.
-- `x/contribuir.html`: propostas e rascunhos, sem aprovação.
-- `x/integracao-sugestoes/`: backend Apps Script documentado, separado do app.
-- `x/sw.js`: cache PWA limitado ao escopo `/x/`.
-- `assets/`, `vendor/`, `fonts/`: dependências estáticas necessárias ao X.
-
-## Catálogo e homologação
-O rótulo **Catálogo Oficial** indica a coleção/candidatos em estudo, **não uma certificação**. O motor do catálogo ativo lê um snapshot de laboratório com **6 fichas reais em revisão e nenhuma homologada**, alterando só a ficha de eletrodutos em relação ao snapshot importado de 08/11. Nenhuma está homologada. Pendências permanecem visíveis; aprovação/publicação exige decisão explícita do responsável e mecanismo próprio (ainda não implementado). Não usar opções fictícias como especificações técnicas válidas.
-
-## Estado atual de referência — 09/11/2026
-- **X.0.3.29 na branch `desenvolvimento`**: layout de Minhas listas considerado bom pelo fundador; não significa homologação geral do aplicativo. `main` segue separada; nome do Worker não prova qual branch está publicada.
-- **[Retomada para próxima conversa](x/docs/RETOMADA-2026-11-09.md)** — ponto de continuidade e próxima prioridade.
-- **[Auditoria geral de regras e contratos](x/docs/REVISAO-GERAL-CONTRATOS-2026-11-09.md)** — evidências, divergências, riscos e porta de aceite.
-- **[Guia visual X.0.3.29](x/docs/GUIA-VISUAL-TEREON-X.md)** — temas, cabeçalhos e cartões.
-- CI atual, preview real, sincronização em dois aparelhos/contas, PDF e testes móveis ainda precisam de confirmação. Não declarar como homologado.
-
-## Documentação de referência
-- [Arquitetura e contratos](x/ARQUITETURA-MODULAR.md)
-- [Auditoria de independência dos motores](x/docs/AUDITORIA-MOTORES-2026-11-07.md)
-- [Matriz de módulos e contratos](x/docs/MAPA-MODULOS.md)
-- [Plano de testes e critérios de aceite](x/docs/TESTES-REGRESSAO.md)
-- [Histórico técnico](x/docs/CHANGELOG.md)
-
-## Segurança de evolução
-1. Trabalhar apenas em `desenvolvimento`; não fazer merge na `main` sem revisão/testes.
-2. Não editar arquivos de produção ou código do aplicativo antigo.
-3. Salvar/capturar backup dos dados locais antes de alterações de armazenamento.
-4. Registrar fatos verificados, limitações e riscos de cada revisão.
-
-
-## Refatoração incremental x.0.3.7
-O shell `x/index.html` agora contém apenas estrutura HTML e scripts ordenados. Estilos em `x/styles.css`, PWA em `x/pwa.js`, apresentação de listas em `x/listas/app.js`, operações em `x/listas/servico.js` e persistência em `x/listas/store.js`. A chave `tereon-x-lab-v1` foi preservada para manter listas históricas. Testes de contrato em `x/tests/modulos.test.cjs` e `x/tests/catalogo.test.cjs`, executados pelo GitHub Actions. Consulte a auditoria para limites conhecidos.
-
-## Documentação TEREON X consolidada — 07/11/2026
-- [Documento Mestre](x/docs/MESTRE-TEREON-X.md) e [Índice](x/docs/INDICE-DOCUMENTACAO.md)
-- [Universo: gestão de obras](x/docs/PRODUTO-UNIVERSO.md)
-- [Gratuito e pago: hipóteses](x/docs/MODELO-GRATUITO-PAGO.md)
-- [História: Diário Volume 02](x/docs/HISTORIA-TEREON-X.md)
-- [Identidade](x/identidade/README.md) e [Compartilhar entre contas](x/compartilhar-usuarios/README.md)
-Os laboratórios novos não alteram o aplicativo principal nem a branch main. Universo, Solicitações e cobrança são propostas, ainda não funcionalidades implementadas.
+## Qualidade
+A última execução do CI conferida antes desta consolidação **falhou** no teste resumo-localizacao; a suíte posterior ficou sem executar nessa rodada. Documentar não corrige testes, não faz deploy e não homologa ficha. Preserve a branch main e o modal aprovado. [README anterior integral](x/docs/README-RAIZ-PRE-SANEAMENTO-2026-11-14.md).
