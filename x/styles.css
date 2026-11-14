@@ -885,3 +885,81 @@ html[data-tx-appearance="tereon"] #addDialog #tags .selected-detail-tag .tag-rem
 #addDialog #tags .selected-detail-tag.is-pending .tag-open{
  min-width:21px;
 }
+
+/* X.0.3.60 — piloto de entrada natural texto / voz, preservando o modal.
+   Sugestões nunca equivalem a seleção confirmada na ficha. */
+#addDialog .ficha-intent-input{
+ flex:0 0 100%;display:flex;align-items:center;gap:7px;
+ min-width:0;width:100%;
+}
+#addDialog .ficha-intent-input .ficha-search{
+ flex:1 1 auto;width:auto;min-width:0;margin:0;
+ font-size:14px;padding:11px 10px;
+}
+#addDialog .ficha-intent-input .ficha-mic{
+ flex:0 0 auto;min-height:42px;min-width:74px;
+ padding:7px 9px;border:1px solid var(--tx-app-border,#aabbb0);
+ border-radius:9px;background:var(--tx-app-surface,#fff);
+ color:var(--tx-app-text,#143224);
+ font-size:12px;font-weight:650;cursor:pointer;
+}
+#addDialog .ficha-intent-input .ficha-mic[aria-pressed="true"]{
+ border-color:#be5362;background:rgba(195,54,76,.11);
+}
+#addDialog .ficha-intent-input .ficha-mic:focus-visible,
+#addDialog .interpreted-chip:focus-visible{
+ outline:2px solid var(--tx-app-accent,#1a5034);outline-offset:2px;
+}
+#addDialog .ficha-voice-status,
+#addDialog .ficha-interpret-preview{
+ flex:0 0 100%;width:100%;min-width:0;
+ font-size:11px;line-height:1.4;
+ color:var(--tx-app-muted,#56705e);
+}
+#addDialog .ficha-interpret-preview:empty{display:none}
+#addDialog .intent-preview{
+ display:grid;gap:6px;padding:10px 11px;
+ border-radius:10px;border:1px solid var(--tx-app-border,#ccdbd0);
+ background:var(--tx-app-surface,#f7faf7);
+ color:var(--tx-app-text,#163c27);
+}
+#addDialog .intent-preview>strong{font-size:12px}
+#addDialog .intent-token{
+ display:inline-block;padding:2px 5px;margin:2px 1px;
+ background:var(--tx-app-bg,#eaf2ec);
+ border:1px solid var(--tx-app-border,#d4e1d7);
+ border-radius:5px;color:var(--tx-app-text,#153524);
+}
+#addDialog .intent-warning{
+ display:block;color:var(--tx-app-text,#684e18);
+ font-size:11px;line-height:1.4;
+}
+#addDialog:not(.is-choosing) #choices .interpreted-proposals{
+ grid-column:1 / -1;
+ display:grid;gap:7px;padding:10px;
+ border:1px solid var(--tx-app-border,#b9d3c0);
+ border-radius:10px;
+ background:var(--tx-app-surface,#fff);
+ color:var(--tx-app-text,#183c26);
+}
+#addDialog .interpreted-proposals>strong{font-size:12px}
+#addDialog .interpreted-chip-list{display:flex;flex-wrap:wrap;gap:6px}
+#addDialog .interpreted-chip{
+ display:inline-flex;flex-wrap:wrap;gap:3px;align-items:center;
+ min-height:32px;padding:6px 8px;
+ border-radius:7px;border:1px solid var(--tx-app-border,#a9bea9);
+ color:var(--tx-app-text,#214b31);
+ background:var(--tx-app-bg,#eef4ee);
+ font-size:11px;cursor:pointer;
+}
+#addDialog .interpreted-chip:disabled{opacity:.42;cursor:not-allowed}
+html[data-tx-appearance="dark"] #addDialog .ficha-intent-input .ficha-mic,
+html[data-tx-appearance="tereon"] #addDialog .ficha-intent-input .ficha-mic,
+html[data-tx-appearance="dark"] #addDialog .interpreted-chip,
+html[data-tx-appearance="tereon"] #addDialog .interpreted-chip{
+ color:#f0f8f1;background:#344f3d;border-color:#8cae93;
+}
+html[data-tx-appearance="dark"] #addDialog .intent-warning,
+html[data-tx-appearance="tereon"] #addDialog .intent-warning{
+ color:#f2d7a5;
+}
