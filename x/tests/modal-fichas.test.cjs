@@ -92,6 +92,10 @@ function choice(v){
  assert.equal((mapped.match(/class="tag selected-detail-tag/g)||[]).length,4,'uma tag para cada detalhe aplicável');
  assert.equal((mapped.match(/ is-selected/g)||[]).length,2,'duas tags confirmadas');
  assert.equal((mapped.match(/ is-pending/g)||[]).length,2,'diâmetro e tipo ponta aparecem atenuados');
+ assert.ok(mapped.includes('class="tag-caption">Ø</span>'),'Diâmetro pendente usa símbolo técnico compacto');
+ assert.ok(mapped.includes('class="tag-caption">Ponta</span>'),'Tipo ponta opcional usa nome curto');
+ assert.ok(mapped.includes('aria-label="Selecionar Diâmetro nominal · PVC (não selecionado)"'),'nome completo fica acessível');
+ assert.ok(mapped.includes('class="tag-caption">Rígido</span>'),'tag selecionada continua mostrando valor');
  assert.ok(mapped.includes('data-edit-tag="DET-011"'),'Tipo ponta opcional também pode ser aberto');
  assert.ok(!mapped.includes('data-remove="DET-011"'),'pendente não pode ser removido');
  assert.ok(mapped.includes('data-remove="DET-002"'),'apenas preenchido possui ×');
@@ -108,6 +112,8 @@ function choice(v){
  }
  actOnTag('edit','DET-011');
  assert.equal(element('fieldLabel').textContent,'Tipo ponta','tocar na tag apagada abre o opcional ainda não preenchido');
+ assert.ok(element('progress').innerHTML.includes(' optional'),'progresso continua mostrando o opcional');
+
  assert.ok(element('tags').innerHTML.includes('data-edit-tag="DET-004"'),'tag de diâmetro pendente ainda visível');
  assert.ok(!element('tags').innerHTML.includes('data-remove="DET-011"'),'navegar para pendente não confirma valor');
  assert.equal(element('saveItem').disabled,true,'navegação não preenche diâmetro');
