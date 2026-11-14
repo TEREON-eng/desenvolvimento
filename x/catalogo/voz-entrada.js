@@ -10,17 +10,20 @@
   if(!Engine){onStatus('Voz indisponível neste navegador. Use texto ou ditado do teclado.',false);return false;}
   if(active){stop();onStatus('Microfone interrompido.',false);return false;}
   try{
+   let finished=false;
    const recognizer=new Engine();active=recognizer;
    recognizer.lang='pt-BR';recognizer.continuous=false;recognizer.interimResults=false;recognizer.maxAlternatives=1;
    recognizer.onstart=()=>{if(active===recognizer)onStatus('Ouvindo… fale o nome do material.',true)};
    recognizer.onresult=event=>{
     if(active!==recognizer)return;
+    finished=true;
     const transcript=String(event.results?.[event.resultIndex||0]?.[0]?.transcript||'').trim().slice(0,300);
     if(transcript){onText(transcript);onStatus('Transcrição pronta. Confira o texto e confirme as sugestões.',false)}
     else onStatus('Não entendi a fala. Tente novamente ou digite.',false);
    };
    recognizer.onerror=event=>{
     if(active!==recognizer)return;
+    finished=true;
     const error=String(event.error||'');
     onStatus(error==='not-allowed'||error==='service-not-allowed'?
      'Permissão de microfone negada. Você pode digitar.':
@@ -28,7 +31,7 @@
      error==='no-speech'?'Nenhuma fala reconhecida. Tente novamente.':
      'Não consegui transcrever. Use o texto ou tente outra vez.',false);
    };
-   recognizer.onend=()=>{if(active===recognizer){active=null;onStatus('',false)}};
+   recognizer.onend=()=>{if(active===recognizer){active=null;onStatus(finished?'':'A gravação terminou sem transcrição. Digite ou tente novamente.',false)}};
    recognizer.start();return true;
   }catch(_){active=null;onStatus('Não foi possível iniciar o microfone. Confira a permissão ou digite.',false);return false}
  }
