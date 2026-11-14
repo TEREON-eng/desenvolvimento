@@ -1,5 +1,7 @@
 # TEREON — Diário de Desenvolvimento | Volume 03
-**10/11/2026 · Continuação narrativa do TEREON X · Para memória do projeto e pauta de redes sociais**
+**Volume 03 · 10–14/11/2026, com retrospectivas de outubro · Memória do projeto e pauta de redes sociais**
+
+> **Curadoria 14/11/2026:** os capítulos iniciais retomam fatos anteriores para explicar a trajetória; não são novos eventos de 10/11. [Verificação de cronologia, fontes e lacunas](HISTORIA-INDICE-E-VERIFICACAO-2026-11-14.md). Histórico não define estado vigente.
 
 > **Como ler:** este arquivo registra acontecimentos, ideias e tensão real do desenvolvimento. Os episódios vêm de conversas e registros existentes. Texto editorial é interpretação, não transcrição nem promessa de entrega. O Volume 01 permanece a origem de DataFluxx/TEREON; o Volume 02 documenta a transição e a criação do X. Este volume não altera contratos de software.
 
@@ -143,3 +145,14 @@ Esse registro mostra uma tensão recorrente e produtiva: **completude técnica e
 A preparação para a próxima conversa produziu o [Marco de retomada de 14/11](RETOMADA-TEREON-X-2026-11-14.md), com cronologia de decisões, limites técnicos, arquivos, testes e riscos reais. A documentação histórica foi mantida como relato, e os documentos de estado vigente receberam links para o novo marco. **A atualização foi de documentação; não é notícia de versão lançada nem de teste de microfone/Cloudflare concluído.**
 
 **Pauta para conteúdo futuro:** “Por que guardamos também os erros e as ideias descartadas?” Um episódio possível é a navegação por setas que parecia promissora, mas foi trocada pela solução mais natural de tocar nas próprias tags, sugerida pelo irmão do fundador. Essa história demonstra que testar com pessoas e preservar a memória das escolhas é parte do desenvolvimento.
+
+
+## 14/11 — Quando atualizar documentos deixou de ser suficiente
+
+O fundador apontou que pedidos frequentes para “atualizar tudo” não estavam resolvendo o problema: decisões antigas continuavam aparecendo ao lado das novas. Na conferência, o Mestre conservava uma seção “situação vigente — X.0.3.29”, apesar de a versão declarada em código já ser X.0.3.61. A tarefa passou a ser **sanear**, isto é, escolher qual regra está valendo, distinguir prova de hipótese e preservar a trilha de decisões descartadas fora da referência operacional.
+
+A revisão também encontrou um fato desconfortável: no GitHub Actions de 14/11, os testes iniciais de busca por texto, tags e voz simulada tinham passado, mas a suíte parou em uma verificação de resumo de localização. Isso não prova falha geral do aplicativo nem CI integral verde. A discussão levou a uma estrutura com Mestre e Contratos consolidados, um Estado atual com incertezas explícitas, documentos experimentais classificados e arquivos pré-saneamento preservados.
+
+**Aprendizado editorial:** história é o lugar de guardar a tentativa e a correção. O contrato vigente deve dizer apenas o que vale agora. O diálogo e as objeções fazem parte do caminho, sem fingir que todas as decisões foram boas desde o começo.
+
+**Pauta futura:** “Quando a memória do projeto virou um problema de engenharia”. Síntese editorial de registros e crítica; sem atribuir citações literais nem afirmar lançamento, teste de Android ou deploy decorrente do saneamento.

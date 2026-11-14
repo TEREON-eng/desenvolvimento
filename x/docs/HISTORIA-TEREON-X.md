@@ -1,13 +1,11 @@
-> **NOVO EPISÓDIO — 14/11/2026:** o pedido de preservar toda a jornada antes de iniciar outra conversa virou o episódio **“A engenharia também precisa de memória”** no [Volume 03](HISTORIA-TEREON-X-VOLUME-03.md). O [marco de retomada de 14/11](RETOMADA-TEREON-X-2026-11-14.md) conecta as decisões técnicas e a história das iterações, inclusive a substituição da navegação por setas pelas tags e a evolução de um questionário para tradução da linguagem de obra. Os relatos e seus limites foram preservados; não declarar deploy ou homologação por ter documentação atualizada.
-
-> **CONTINUAÇÃO DA HISTÓRIA — 13/11/2026:** a evolução mais recente — famílias de materiais, tags que viram navegação e a virada de questionário para **interpretador de pedidos por texto/voz**, com foto como visão futura — foi registrada no [Diário Volume 03](HISTORIA-TEREON-X-VOLUME-03.md). O [marco de retomada](RETOMADA-TEREON-X-2026-11-13.md) reúne versões, documentos e limitações. A narrativa histórica abaixo deve ser mantida no seu contexto original, sem atribuir entregas posteriores a etapas antigas.
+> **HISTÓRIA · CURADORIA 14/11/2026.** Volume 02: 24/10–09/11/2026. O subtítulo antigo encerrava em 07/11, embora houvesse relato de 08–09/11; data editorial corrigida. Este registro contém observações e decisões na época, **não regras atuais**. [Conferência dos volumes](HISTORIA-INDICE-E-VERIFICACAO-2026-11-14.md) · [Estado atual](ESTADO-ATUAL.md).
 
 # TEREON — Diário de Desenvolvimento | Continuação
 
 > **HISTÓRIA — VOLUME 02:** memória narrativa de 24/10 a 09/11, preservada sem reinterpretação técnica. Continuação e pautas de redes sociais no [Volume 03](HISTORIA-TEREON-X-VOLUME-03.md). O Volume 01 continua como arquivo histórico externo e não foi sobrescrito.
 
 **Volume 02 — Da prática de campo à arquitetura TEREON X**
-**Período: 24/10 a 07/11/2026 · reconstrução a partir de conversas e artefatos; não inventar marcos sem prova.**
+**Período: 24/10 a 09/11/2026 · reconstrução a partir de conversas e artefatos; não inventar marcos sem prova.**
 Preserva-se o Diário Volume 01 (origens, DataFluxx e TEREON até 23/10), sem reescrevê-lo.
 
 ## 24–30/10 — Da lista ao processo real

@@ -1,3 +1,10 @@
+> **CRONOLOGIA, NÃO REGRA VIGENTE · 14/11/2026.** Este documento preserva versões, decisões e tentativas no momento em que ocorreram. Menções antigas a “vigente”, CI “a executar” ou aceite parcial não substituem [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md) e [Estado atual](ESTADO-ATUAL.md).
+
+## 14/11/2026 — Saneamento documental sem mudança do aplicativo
+- Mestre, Contratos, Guia visual, Mapa de módulos, Arquitetura, Regressões e Plano de campo foram condensados como referências atuais; os documentos integrais anteriores foram conservados com sufixo PRE-SANEAMENTO.
+- O estado da execução CI de SHA 41c9088d... foi **falha**, não verde, no teste resumo-localizacao; sem prova de novo deploy.
+- História: conferidos Volume 01 histórico na Biblioteca e Volumes 02/03 no repo; período editorial do Volume 02 ajustado para 24/10–09/11 e retrospectivas do Volume 03 explicadas. O relato não autoriza homologação.
+
 ## 14/11/2026 — Fechamento documental para troca de conversa (sem release)
 - Confirmados no GitHub `TEREON-eng/desenvolvimento`, branch `desenvolvimento`: `x/version.json = x.0.3.61`; carregamento do interpretador de Condutores, confirmação de rascunho e voz no shell; `x/sw.js` com cache `0.3.61`; integração por tags `? → ✓`, botão **Avançar** e remoção do painel grande interno da ficha.
 - Criado [Marco de retomada de 14/11/2026](RETOMADA-TEREON-X-2026-11-14.md) com decisões X.0.3.55–61, módulos, responsabilidades, testes, limitações de voz, condições de compra, maturidade das fichas, roteiro de campo e texto para abrir a próxima conversa.
