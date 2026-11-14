@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.60",
+  "version": "x.0.3.61",
   "build": "2026-11-13",
-  "notes": "Piloto Condutores: interpretar descrição livre por digitação ou voz pt-BR, oferecer propostas confirmáveis, sem preencher nem comprar automaticamente"
+  "notes": "Confirmar sugestões em tags ? logo abaixo da pesquisa; compor nome no primeiro nível e Avançar para ficha sem painel duplicado"
 }
