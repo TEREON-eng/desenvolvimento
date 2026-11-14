@@ -870,3 +870,18 @@ html[data-tx-appearance="tereon"] #addDialog #tags .selected-detail-tag .tag-rem
  background:rgba(255,116,131,.13);
  color:#ffb0b7;
 }
+
+/* X.0.3.59 — textos das tags enxutos, sem perder o valor original.
+   Valores longos ficam visualmente abreviados; tooltip e aria-label são completos. */
+#addDialog #tags .selected-detail-tag .tag-caption{
+ display:block;min-width:0;max-width:118px;
+ overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+#addDialog #tags .selected-detail-tag.is-pending .tag-caption{
+ max-width:55px;
+ font-weight:550;
+ letter-spacing:.005em;
+}
+#addDialog #tags .selected-detail-tag.is-pending .tag-open{
+ min-width:21px;
+}
