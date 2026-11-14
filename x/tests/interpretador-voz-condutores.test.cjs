@@ -60,8 +60,10 @@ assert.ok(app.includes("window.TereonXVoice?.start("),'microfone iniciado por cl
 assert.ok(app.includes("if(tag){toggleIntentTag("),'confirmação por clique na tag com ?');
 assert.ok(app.includes("if(advance){enterFicha("),'avançar para a ficha com as tags confirmadas');
 assert.ok(!app.includes('function draftSuggestionsHTML('),'segundo painel de sugestões removido da ficha');
-assert.ok(app.includes("if(!state?.available)"),'condição da ficha protege confirmação');
-assert.ok(app.includes("window.TereonXCatalog.conflicts(selectedFicha,next)"),'motor técnico valida regras');
+const draft=source('x/catalogo/confirmacao-rascunho.js');
+assert.ok(draft.includes('catalog.optionStates('),'ficha determina as opções aplicáveis');
+assert.ok(draft.includes('catalog.conflicts('),'ficha técnica valida incompatibilidades');
+assert.ok(draft.includes('catalog.visibleDetails('),'regras condicionais são preservadas');
 assert.ok(app.includes("window.TereonXIntentDraft?.apply("),'rascunho validado antes de transferir tags');
 assert.ok(app.includes("window.TereonXVoice?.stop()"),'microfone é interrompido ao sair');
 const html=source('x/index.html');
