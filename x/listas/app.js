@@ -555,7 +555,7 @@ function redrawAdd(){
     '<button type="button" class="tag-open" data-edit-tag="'+esc(x.id)+'" title="'+
     esc((chosen?'Revisar ':'Selecionar ')+x.label+(chosen?': '+values[x.id]:''))+
     '" aria-label="'+esc((chosen?'Revisar ':'Selecionar ')+x.label+
-      (chosen?': '+values[x.id]:' (não selecionado)'))+'">'+esc(caption)+'</button>'+
+      (chosen?': '+values[x.id]:' (não selecionado)'))+'"><span class="tag-caption">'+esc(caption)+'</span></button>'+
     (chosen?'<button type="button" class="tag-remove" data-remove="'+esc(x.id)+
      '" title="'+esc('Remover '+x.label)+'" aria-label="'+esc('Remover '+x.label)+'">×</button>':'')+
     '</span>';
