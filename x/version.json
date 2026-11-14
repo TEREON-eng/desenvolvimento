@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.59",
+  "version": "x.0.3.60",
   "build": "2026-11-13",
-  "notes": "Barra representa todos os detalhes aplicáveis; tags selecionadas e pendentes compactas (Ø, V, #), texto para editar e × vermelho para remover"
+  "notes": "Piloto Condutores: interpretar descrição livre por digitação ou voz pt-BR, oferecer propostas confirmáveis, sem preencher nem comprar automaticamente"
 }
