@@ -109,3 +109,22 @@ Outra frente voltou ao caminho do pedido na obra: o que o encarregado lança pre
 Depois de aprovar o contraste dos botões e a posição correta dos selos de maturidade das fichas, o fundador reconheceu outra tensão da experiência real: **as listas acumulavam muitos cartões quando duas especificações diferiam em apenas uma característica**. O motor fazia o que deveria para compras — não somava produtos diferentes —, mas era severo demais para navegação. Daí surgiu uma regra de produto: **família visual para encontrar; identidade técnica e comercial para quantificar**. No modo Por insumo, “Condutores elétricos” passou a recolher as variações de cor, seção ou isolação, mantendo sob ele cada lançamento editável e sua quantidade de compra própria. O modo Por etapa permaneceu separado, porque responde à pergunta de onde aplicar.
 Também surgiu uma decisão de maturidade: o fundador considera a ficha de Condutores estrutururalmente consolidada. A revisão do snapshot apontou, porém, detalhes ainda não aprovados para homologação (como a tensão opcional e a opção que agrupa HEPR e XLPE). Em vez de chamar a ficha de oficialmente publicada sem resolver isso, a X.0.3.56 separou **Consolidado como maturidade** de **Em revisão como status de publicação**. A escolha privilegia rastreabilidade e permite prosseguir com o laboratório.
 **Pauta editorial futura:** “Dois cabos quase iguais: por que eles devem ficar juntos na tela, mas separados no pedido de compra?” Não usar valores de pedidos de clientes sem autorização. [Registro técnico](CHANGELOG.md).
+
+
+## 13/11 — A tela já estava boa, mas pedir o material ainda era trabalhoso
+Ao utilizar o TEREON, o fundador percebeu que as melhorias na lista e no modal tinham resolvido muitos problemas: as tags podiam ser tocadas para revisitar um detalhe, o × vermelho removia uma confirmação e os atributos pendentes apareciam em símbolos compactos. A interface ficara mais completa. **O esforço para compor um item, entretanto, ainda incomodava.** A crítica mudou o rumo da conversa: construir um questionário melhor não bastava se o profissional já soubesse, em palavras próprias, o que precisava.
+
+Nasceu uma inversão de papel: **a pessoa descreve o material como fala na obra; o TEREON é o tradutor/intérprete e propõe uma especificação técnica**. Por exemplo, alguém poderia escrever “fio flex 2,5 preto 450”. O sistema identificaria possíveis características, avisaria que “450” não define sozinho “450/750 V” e pediria confirmação, em vez de inventar uma classe de tensão. A ficha técnica continua sendo o mecanismo das combinações válidas; a linguagem natural passa a ser uma porta de entrada.
+
+### O desafio do microfone — e a foto no horizonte
+A reação do fundador foi acelerar a ambição: **a voz deveria existir desde o início dessa experiência**; depois a IA poderia reconhecer informações a partir de uma foto. O pedido veio em tom de brincadeira, mas definiu um requisito real: o usuário não deve depender exclusivamente do teclado, especialmente em uma obra.
+
+Nesta rodada nasceu a **X.0.3.60**, primeiro piloto de **Condutores elétricos**, com descrição digitada e botão de fala quando o navegador oferece `SpeechRecognition`. A fala vira texto e segue **exatamente o mesmo interpretador**; sugestões aparecem para confirmação individual. Não se afirmou que o TEREON já entende qualquer fala, que transcreve offline ou que reconhece fotos. O motor inicial é um reconhecedor conservador de expressões; a foto foi **registrada como visão de futuro**, não entregue.
+
+### Por que esse episódio importa
+Não é apenas uma função de microfone. É a passagem da pergunta **“como fazemos o usuário preencher a ficha?”** para **“como a ficha entende a intenção que ele já expressou?”**. A primeira obriga o profissional a aprender o sistema; a segunda exige que o sistema respeite a linguagem dele, sem abrir mão da precisão técnica. É um bom eixo narrativo para a comunicação do TEREON.
+
+**Pauta editorial futura:** “Do fio 2,5 preto ao pedido técnico: quando a linguagem da obra encontra o fichário”. Uma segunda pauta possível: “Por que uma IA de engenharia precisa saber dizer ‘não sei’”. Não usar registros, fotos, áudio ou declarações de participantes reais sem autorização.
+
+**Fontes e limite do registro:** ideias e decisões da conversa de 13/11/2026, [piloto técnico](PILOTO-BUSCA-NATURAL-VOZ-FOTO-2026-11-13.md) e [marco de retomada](RETOMADA-TEREON-X-2026-11-13.md). Texto de memória editorial, não transcrição literal nem prova de experiência real no celular.
+
