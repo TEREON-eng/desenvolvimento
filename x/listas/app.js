@@ -482,6 +482,32 @@ function paintFichaChoices(){
   }).join(''):
    '<p class="tiny muted">Nenhuma ficha encontrada.</p>');
 }
+function shortDetailTag(label){
+ // Somente rótulo visual das tags pendentes. A pergunta completa continua
+ // no título acessível e é exibida quando o detalhe é aberto.
+ const clean=String(label||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+ if(/diametro/.test(clean))return 'Ø';
+ if(/secao/.test(clean))return '#';
+ if(/tensao/.test(clean))return 'V';
+ if(/temperatura/.test(clean))return '°C';
+ if(/numero de vias|nº de vias|n° de vias|quantidade de vias/.test(clean))return 'Vias';
+ if(/encordoamento/.test(clean))return 'Encord.';
+ if(/isolacao|isolamento/.test(clean))return 'Isol.';
+ if(/comportamento ao fogo/.test(clean))return 'Fogo';
+ if(/resistencia/.test(clean))return 'Resist.';
+ if(/galvaniz/.test(clean))return 'Galv.';
+ if(/unidade/.test(clean))return 'Un.';
+ if(/cobertura/.test(clean))return 'Cob.';
+ if(/nao halogenado/.test(clean))return 'LSZH';
+ if(/material/.test(clean))return 'Mat.';
+ if(/ponta/.test(clean))return 'Ponta';
+ if(/formacao/.test(clean))return 'Form.';
+ if(/perfil/.test(clean))return 'Perfil';
+ if(/capa/.test(clean))return 'Capa';
+ if(/cor\b/.test(clean))return 'Cor';
+ if(/tipo/.test(clean))return 'Tipo';
+ return label.length>9?label.slice(0,8).trimEnd()+'…':label;
+}
 function navigateTagDetail(detailId){
  // As tags mostram todos os detalhes aplicáveis, preenchidos ou pendentes.
  // Navegar muda apenas o foco; nem marca opção nem remove características.
@@ -522,7 +548,7 @@ function redrawAdd(){
   const activeField=fields[focus];
   const linked=new Set(selectedFicha&&activeField?window.TereonXCatalog.relatedTags(selectedFicha,values,activeField.id):[]);
   $('tags').innerHTML=fields.map(x=>{
-   const chosen=!!values[x.id],caption=chosen?values[x.id]:x.label;
+   const chosen=!!values[x.id],caption=chosen?values[x.id]:shortDetailTag(x.label);
    return '<span class="tag selected-detail-tag'+(x.required?' required':'')+
     (chosen?' is-selected':' is-pending')+(chosen&&linked.has(x.id)?' linked':'')+
     (activeField?.id===x.id?' is-current':'')+'">'+
