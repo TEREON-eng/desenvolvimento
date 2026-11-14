@@ -96,7 +96,7 @@ assert.equal(map.get(key),beforePrepare,'preparo repetido não regrava lista exi
 
 const html=src('x/index.html');
 const scripts=[...html.matchAll(/<script src="([^"]+)"/g)].map(x=>x[1].split('?')[0]);
-const expected=['/x/components/header.js','/x/listas/store.js','/x/listas/servico.js','/x/motor-compartilhar.js','/x/catalogo/motor.js','/x/catalogo/interpretador-condutores.js','/x/catalogo/voz-entrada.js','/x/catalogo/seletor.js','/x/listas/nuvem/motor.js','/x/listas/integracao.js','/x/listas/quantificacao.js','/x/listas/correspondencia.js','/x/listas/app.js','/x/status.js','/x/appearance.js','/x/pwa.js'];
+const expected=['/x/components/header.js','/x/listas/store.js','/x/listas/servico.js','/x/motor-compartilhar.js','/x/catalogo/motor.js','/x/catalogo/interpretador-condutores.js','/x/catalogo/confirmacao-rascunho.js','/x/catalogo/voz-entrada.js','/x/catalogo/seletor.js','/x/listas/nuvem/motor.js','/x/listas/integracao.js','/x/listas/quantificacao.js','/x/listas/correspondencia.js','/x/listas/app.js','/x/status.js','/x/appearance.js','/x/pwa.js'];
 assert.deepEqual(scripts,expected,'ordem explícita de dependências');
 assert.equal(/<script>/.test(html),false,'shell não deve conter lógica inline');
 for(const url of scripts)new vm.Script(src(url.slice(1)),{filename:url});
