@@ -592,7 +592,7 @@ function paintFichaChoices(){
  const all=window.TereonXCatalog?.list()||[],result=interpretDraft();
  const q=fichaSearch.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
  const matched=all.filter(f=>(f.name+' '+(f.id==='FT_COND-001'?'Condutores elétricos ':'')+f.id+' '+f.reference+' '+(f.aliases||[]).join(' ')).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(q));
- const candidates=result.family==='FT_COND-001'?[]:(matched.length?matched:result.family===null&&q.includes(' ')?all:[]);
+ const candidates=result.family==='FT_COND-001'?all:(matched.length?matched:result.family===null&&q.includes(' ')?all:[]);
  const supported=!!window.TereonXVoice?.supported?.();
  $('choices').innerHTML='<div class="ficha-intent-input"><input id="fichaSearch" class="ficha-search" type="search" maxlength="300" autocomplete="off" placeholder="Ex.: fio flex 2,5 preto 450" aria-label="Descreva o material como você conhece" value="'+esc(fichaSearch)+'">'+
   (supported?'<button type="button" id="fichaVoiceButton" class="ficha-mic" data-voice="1" aria-label="Ditar material" aria-pressed="false" title="A transcrição de voz pode usar serviço online do navegador.">🎙 Falar</button>':'')+'</div>'+
@@ -600,7 +600,7 @@ function paintFichaChoices(){
   '<div id="fichaInterpretPreview" class="ficha-interpret-preview" aria-live="polite">'+intentPreview(result)+'</div>'+
   (loadingFichas?'<p class="tiny muted">Carregando fichas...</p>':fichaError?'<p class="notice">'+esc(fichaError)+'</p>':candidates.length?candidates.map(f=>{
    const display=fichaPresentation(f);
-   return '<button type="button" class="ficha-option" data-ficha="'+esc(f.id)+'"><span class="ficha-option-top"><strong>'+esc(display.name)+'</strong>'+
+   return '<button type="button" class="ficha-option" data-ficha="'+esc(f.id)+'"'+(result.family==='FT_COND-001'?' hidden':'')+'><span class="ficha-option-top"><strong>'+esc(display.name)+'</strong>'+
     (display.tag?'<span class="ficha-maturity-tag '+display.tagClass+'" title="Situação informada na ficha técnica">'+esc(display.tag)+'</span>':'')+'</span>'+
     '<small>'+esc(f.id)+(display.tag==='Consolidado'&&f.kind!=='oficial'?' · Publicação pendente':'')+'</small></button>';
   }).join(''):'<p class="tiny muted">Nenhuma ficha encontrada.</p>');
