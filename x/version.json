@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.58",
+  "version": "x.0.3.59",
   "build": "2026-11-13",
-  "notes": "Navegar pelos detalhes tocando na tag confirmada; botão × independente remove, barra compacta anterior restaurada"
+  "notes": "Barra representa todos os detalhes aplicáveis; tags selecionadas e pendentes compactas (Ø, V, #), texto para editar e × vermelho para remover"
 }
