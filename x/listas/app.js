@@ -635,8 +635,8 @@ function redrawAdd(){
   $('fieldType').textContent=field?(field.required?'Obrigatório':'Opcional'):'Sem opções definidas';
   const states=selectedFicha&&field?window.TereonXCatalog.optionStates(selectedFicha,values,field.id):
    (field?field.options.map(option=>({option,available:true,reason:'',blockedBy:[]})):[]);
-  $('choices').innerHTML=field?states.map(x=>'<button type="button" class="tag option'+(values[field.id]===x.option?' on':'')+(x.available?'':' is-blocked')+'" '+(x.available?'data-pick':'data-blocked-option')+'="'+esc(x.option)+'"'+(!x.available?' aria-disabled="true" title="'+esc(x.reason)+'"':'')+'>'+esc(x.option)+(x.available?'':' <span class="option-lock" aria-hidden="true">⊘</span>')+'</button>').join('')+
-   (!field.required&&!values[field.id]&&!skippedOptional.has(field.id)?'<button type="button" class="tag" data-skip-optional="'+esc(field.id)+'">Pular · deixar em branco</button>':''):'';
+  $('choices').innerHTML=(selectedFicha?.id==='FT_COND-001'?draftSuggestionsHTML():'')+(field?states.map(x=>'<button type="button" class="tag option'+(values[field.id]===x.option?' on':'')+(x.available?'':' is-blocked')+'" '+(x.available?'data-pick':'data-blocked-option')+'="'+esc(x.option)+'"'+(!x.available?' aria-disabled="true" title="'+esc(x.reason)+'"':'')+'>'+esc(x.option)+(x.available?'':' <span class="option-lock" aria-hidden="true">⊘</span>')+'</button>').join('')+
+   (!field.required&&!values[field.id]&&!skippedOptional.has(field.id)?'<button type="button" class="tag" data-skip-optional="'+esc(field.id)+'">Pular · deixar em branco</button>':''):'');
   const incomplete=selectedFicha?.pendencias?.length||0;
   $('fieldHelp').textContent=optionNotice|| (selectedFicha?
    (incomplete?'Ficha em revisão: há '+incomplete+' pendência(s) cadastrais. ':'')+
@@ -689,6 +689,7 @@ async function openAdd(item,detailToReview){
   if(classified)migrated['DET-010']=classified;
   values=migrated;
  }
+ window.TereonXVoice?.stop();textInterpretation=null;voiceNotice='';
  fichaSearch='';fichaError='';loadingFichas=!item;
  selectedFicha=null;choosingFicha=!item;
  fields=legacyFields;focus=pickFirstMissing();
@@ -778,7 +779,7 @@ function openMatchReview(){
  }).join('')+(possible.length>12?'<p class="note">Mostrando 12 de '+possible.length+' pares. Revise a lista para reduzir as pendências.</p>':'');
  $('matchDialog').showModal();
 }
-function close(id){$(id).close();}
+function close(id){if(id==='addDialog')window.TereonXVoice?.stop();$(id).close();}
 // Retorno global agora é o link HTML do cabeçalho; navegação de Listas preservada nos controles internos.
 document.addEventListener('click',function(e){
  if(!ready)return;
@@ -841,7 +842,7 @@ if(a.dataset.action==='home'){e.preventDefault();navigate('home');return;}
   if(a.dataset.action==='add')openAdd();
  }
  if(e.target.closest('[data-ficha-back]')){
-  selectedFicha=null;choosingFicha=true;values={};skippedOptional.clear();fields=legacyFields;focus=0;fichaSearch='';redrawAdd();return;
+  window.TereonXVoice?.stop();selectedFicha=null;choosingFicha=true;values={};skippedOptional.clear();fields=legacyFields;focus=0;fichaSearch='';textInterpretation=null;redrawAdd();return;
  }
  const selectOne=e.target.closest('[data-select-list]');
  if(selectOne){
@@ -931,17 +932,24 @@ $('tags').addEventListener('click',function(e){
 });
 $('choices').addEventListener('input',function(e){
  if(e.target.id!=='fichaSearch')return;
- fichaSearch=e.target.value;
- const q=fichaSearch.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
- $('choices').querySelectorAll('[data-ficha]').forEach(button=>{
-  const ficha=window.TereonXCatalog.get(button.dataset.ficha);
-  const searchable=ficha?(ficha.name+' '+ficha.id+' '+ficha.reference+' '+(ficha.aliases||[]).join(' ')):button.textContent;
-  button.hidden=!searchable.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(q);
- });
+ fichaSearch=e.target.value.slice(0,300);
+ refreshMaterialSearch(); // Atualiza sem recriar input e perder o foco no celular.
 });
 $('choices').addEventListener('click',function(e){
+ const mic=e.target.closest('[data-voice]');
+ if(mic){
+  window.TereonXVoice?.start(transcript=>{
+   if(!choosingFicha||!$('addDialog')?.open)return;
+   fichaSearch=transcript;paintFichaChoices();
+  },onVoiceStatus);
+  return;
+ }
+ const suggested=e.target.closest('[data-proposal-id]');
+ if(suggested){confirmDraftSuggestion(suggested.dataset.proposalId,suggested.dataset.proposalValue);return;}
  const select=e.target.closest('[data-ficha]');
  if(select){
+  window.TereonXVoice?.stop();
+  textInterpretation=select.dataset.ficha==='FT_COND-001'&&fichaSearch.trim()?interpretDraft():null;
   selectedFicha=window.TereonXCatalog.get(select.dataset.ficha);
   if(!selectedFicha)return;
   choosingFicha=false;values={};skippedOptional.clear();
@@ -1007,6 +1015,6 @@ $('saveItem').addEventListener('click',function(){
  if(!safe(function(){return lists.upsertItem(activeId,itemData,editId);}))return;
  close('addDialog');editId=null;draw();
 });
-$('addDialog').addEventListener('cancel',function(){values={};});
+$('addDialog').addEventListener('cancel',function(){window.TereonXVoice?.stop();values={};textInterpretation=null;});
 draw();
 })();
