@@ -1,3 +1,5 @@
+> **CLASSIFICAÇÃO DOCUMENTAL · 14/11/2026 — RETRATO HISTÓRICO.** Este conteúdo registra a versão/data em que foi produzido. Menções a “vigente” no corpo são históricas, não regras atuais. Referências: [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md), [Estado verificável](ESTADO-ATUAL.md).
+
 # TEREON X — Capacidade e gestão do armazenamento
 **10/11/2026 · Dados reais consultados em modo somente leitura no Supabase + documentação oficial**
 

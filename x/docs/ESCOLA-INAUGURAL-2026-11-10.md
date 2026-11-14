@@ -1,3 +1,5 @@
+> **CLASSIFICAÇÃO DOCUMENTAL · 14/11/2026 — VISÃO/LAB.** Este conteúdo registra a versão/data em que foi produzido. Menções a “vigente” no corpo são históricas, não regras atuais. Referências: [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md), [Estado verificável](ESTADO-ATUAL.md).
+
 # TEREON X — Escola aberta desde o início
 **Decisão de produto registrada em 10/11/2026 · Estado: DIRETRIZ APROVADA, CURSO NÃO IMPLEMENTADO**
 

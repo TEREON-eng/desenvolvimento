@@ -1,8 +1,4 @@
-> **INTEGRIDADE DE COMPRA — 14/11/2026:** a X.0.3.61 apenas antecipa a confirmação das sugestões para a tela de pesquisa; o botão **Avançar** preenche o rascunho de ficha **sem criar lançamento nem alterar quantidades**. Todo agrupamento visual, apresentações de fornecimento, rastreabilidade, relatórios e separação comercial seguem regidos pelo contrato existente. Não inferir igualdade técnica de itens incompletos. [Marco de retomada](RETOMADA-TEREON-X-2026-11-14.md).
-
-> **COMPATIBILIDADE COM ENTRADA NATURAL — 13/11/2026, X.0.3.60:** este contrato de **agrupamento, composição de lances e relatórios de compra** não foi reescrito pelo novo interpretador. Texto e voz sugerem características **antes da gravação do lançamento**, com confirmação explícita e validação pelas fichas; não extraem nem convertem automaticamente comprimentos, rolos, etapas ou apresentações comerciais. A comparação de possíveis equivalências ainda não autoriza somar itens incompletos. A partir de uma futura foto valerá a mesma proteção; **foto não foi implementada**. [Entrada natural](PILOTO-BUSCA-NATURAL-VOZ-FOTO-2026-11-13.md).
-
-> **IMPLEMENTAÇÃO — 12/11/2026 · X.0.3.51:** “Implementação ainda pendente” no texto de criação abaixo é um marco histórico, **não** o estado vigente. O alternador Por insumo/Por etapa, a composição de lances com metragem preservada e os relatórios Compras/Completo/Execução em WhatsApp, e-mail e PDF já têm código na branch `desenvolvimento`. A revisão X.0.3.51 acrescenta formatação por canal e estrutura paginada no PDF, além de ficha Eletroduto LAB, sem alterar a fonte original. Ainda falta validação real dos canais, CI, PDF e deploy. [Detalhes](REVISAO-ELETRODUTO-E-RELATORIOS-2026-11-12.md).
+> **CLASSIFICAÇÃO DOCUMENTAL · 14/11/2026 — ESTUDO TÉCNICO DATADO.** Este conteúdo registra a versão/data em que foi produzido. Menções a “vigente” no corpo são históricas, não regras atuais. Referências: [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md), [Estado verificável](ESTADO-ATUAL.md).
 
 # TEREON X — Decisão de Listas, agrupamento e relatórios (12/11/2026)
 
@@ -50,3 +46,15 @@ Não introduzir uma segunda pergunta de unidade no modal nem romper a ficha `DET
 
 ## Transparência histórica
 Na conversa de 12/11/2026, a primeira tentativa de documentação foi gravada no repositório **legado** `jhcolba-del/tereon`, porque o assistente confundiu a origem de código; este arquivo corrige a **localização documental**. O código mais recente foi identificado em `TEREON-eng/desenvolvimento`. Nenhuma alteração funcional ou publicação foi realizada nesta etapa.
+
+---
+
+## Adendos datados pré-saneamento — preservados como histórico
+
+> Os avisos abaixo foram deslocados do início para impedir que versões antigas pareçam normas atuais.
+
+> **INTEGRIDADE DE COMPRA — 14/11/2026:** a X.0.3.61 apenas antecipa a confirmação das sugestões para a tela de pesquisa; o botão **Avançar** preenche o rascunho de ficha **sem criar lançamento nem alterar quantidades**. Todo agrupamento visual, apresentações de fornecimento, rastreabilidade, relatórios e separação comercial seguem regidos pelo contrato existente. Não inferir igualdade técnica de itens incompletos. [Marco de retomada](RETOMADA-TEREON-X-2026-11-14.md).
+
+> **COMPATIBILIDADE COM ENTRADA NATURAL — 13/11/2026, X.0.3.60:** este contrato de **agrupamento, composição de lances e relatórios de compra** não foi reescrito pelo novo interpretador. Texto e voz sugerem características **antes da gravação do lançamento**, com confirmação explícita e validação pelas fichas; não extraem nem convertem automaticamente comprimentos, rolos, etapas ou apresentações comerciais. A comparação de possíveis equivalências ainda não autoriza somar itens incompletos. A partir de uma futura foto valerá a mesma proteção; **foto não foi implementada**. [Entrada natural](PILOTO-BUSCA-NATURAL-VOZ-FOTO-2026-11-13.md).
+
+> **IMPLEMENTAÇÃO — 12/11/2026 · X.0.3.51:** “Implementação ainda pendente” no texto de criação abaixo é um marco histórico, **não** o estado vigente. O alternador Por insumo/Por etapa, a composição de lances com metragem preservada e os relatórios Compras/Completo/Execução em WhatsApp, e-mail e PDF já têm código na branch `desenvolvimento`. A revisão X.0.3.51 acrescenta formatação por canal e estrutura paginada no PDF, além de ficha Eletroduto LAB, sem alterar a fonte original. Ainda falta validação real dos canais, CI, PDF e deploy. [Detalhes](REVISAO-ELETRODUTO-E-RELATORIOS-2026-11-12.md).

@@ -1,4 +1,4 @@
-> **NOTA HISTÓRICA — 13/11/2026, X.0.3.60:** o documento registra fielmente a solução **X.0.3.57**, inclusive uma barra de progresso clicável e setas. **Essa navegação foi posteriormente rejeitada e substituída**: nas X.0.3.58–59, tocar na **tag de detalhe** abre o campo; o × vermelho remove, todas as tags aplicáveis (inclusive pendentes) aparecem compactas e o progresso é apenas informativo. O **aviso conservador de possíveis correspondências entre lançamentos** continuou válido e não realiza fusão. A X.0.3.60 acrescentou **entrada por descrição e voz de um novo material**, fluxo independente. Para testar o modal vigente, consulte [Guia Visual](GUIA-VISUAL-TEREON-X.md) e [Piloto texto/voz](PILOTO-BUSCA-NATURAL-VOZ-FOTO-2026-11-13.md), em vez das instruções de setas abaixo.
+> **CLASSIFICAÇÃO DOCUMENTAL · 14/11/2026 — ESTUDO TÉCNICO DATADO.** Este conteúdo registra a versão/data em que foi produzido. Menções a “vigente” no corpo são históricas, não regras atuais. Referências: [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md), [Estado verificável](ESTADO-ATUAL.md).
 
 # TEREON X.0.3.57 — Navegação por detalhes e revisão segura de equivalência
 **13/11/2026 · desenvolvimento · Implementado para laboratório; publicação/deploy e teste móvel não confirmados**
@@ -47,3 +47,11 @@ A captura é evidência de **aspecto visual e problema observado**, não prova d
 - `x/tests/correspondencia-progressiva.test.cjs` criado e integrado ao workflow; reaproveita os **15 cenários** da fixture `x/tests/fixtures/correspondencia-progressiva-condutores-v1.json` e testa múltiplas alternativas, nomes diferentes, separação comercial e ausência de inferência.
 - Verificações isoladas de sintaxe e algoritmo realizadas; **ainda não foi confirmado CI final, teste manual móvel ou Cloudflare publicado**.
 - Estado da versão: `x.0.3.57` no branch `desenvolvimento`.
+
+---
+
+## Adendos datados pré-saneamento — preservados como histórico
+
+> Os avisos abaixo foram deslocados do início para impedir que versões antigas pareçam normas atuais.
+
+> **NOTA HISTÓRICA — 13/11/2026, X.0.3.60:** o documento registra fielmente a solução **X.0.3.57**, inclusive uma barra de progresso clicável e setas. **Essa navegação foi posteriormente rejeitada e substituída**: nas X.0.3.58–59, tocar na **tag de detalhe** abre o campo; o × vermelho remove, todas as tags aplicáveis (inclusive pendentes) aparecem compactas e o progresso é apenas informativo. O **aviso conservador de possíveis correspondências entre lançamentos** continuou válido e não realiza fusão. A X.0.3.60 acrescentou **entrada por descrição e voz de um novo material**, fluxo independente. Para testar o modal vigente, consulte [Guia Visual](GUIA-VISUAL-TEREON-X.md) e [Piloto texto/voz](PILOTO-BUSCA-NATURAL-VOZ-FOTO-2026-11-13.md), em vez das instruções de setas abaixo.

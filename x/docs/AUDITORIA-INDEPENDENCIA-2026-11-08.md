@@ -1,3 +1,5 @@
+> **CLASSIFICAÇÃO DOCUMENTAL · 14/11/2026 — RETRATO HISTÓRICO.** Este conteúdo registra a versão/data em que foi produzido. Menções a “vigente” no corpo são históricas, não regras atuais. Referências: [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md), [Estado verificável](ESTADO-ATUAL.md).
+
 # Auditoria de independência — TEREON X
 **Data:** 08/11/2026 | **Branch auditada:** `desenvolvimento` | **Versão:** x.0.3.15
 

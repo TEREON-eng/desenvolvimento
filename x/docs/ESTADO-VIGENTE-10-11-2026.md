@@ -1,8 +1,4 @@
-> **ATENÇÃO — ESTADO HISTÓRICO DE 10/11:** o documento abaixo foi preservado, mas **a retomada vigente é de 14/11/2026** em [`RETOMADA-TEREON-X-2026-11-14.md`](RETOMADA-TEREON-X-2026-11-14.md), versão X.0.3.61: interpretação de pedidos por texto/voz para Condutores, tags ?→✓ junto da pesquisa e Avançar para ficha parcialmente montada, sem segundo painel. Não tomar o estado da UI de 10/11 como atual. O motor comercial e a homologação das fichas mantêm pendências.
-
-> **ADENDO DE RETOMADA — 13/11/2026 · estado mais recente X.0.3.60:** o relato abaixo é um retrato válido de **10–12/11**, mas não deve ser tomado como o estado atual. Desde então a navegação das características foi refinada até as **tags compactas de X.0.3.59** e a escolha de material ganhou **entrada natural por texto e microfone opcional para Condutores**, com sugestões não confirmadas na X.0.3.60. A análise de correspondências é conservadora, compra por apresentação não foi alterada, e **não há comprovação de CI integral, deploy Cloudflare nem teste físico de reconhecimento de voz**. Foto por IA é visão futura. [Documento de referência mais recente](PILOTO-BUSCA-NATURAL-VOZ-FOTO-2026-11-13.md) · [Mestre](MESTRE-TEREON-X.md).
-
-> **ATUALIZAÇÃO VIGENTE — 12/11/2026, X.0.3.51, branch `desenvolvimento`:** o visual das listas X.0.3.50 foi considerado adequado pelo fundador para uso e ajustes de campo. A prioridade agora é **ficha experimental de Eletrodutos (FT_INFRA-001)** e relatórios de **Compras, Completo e Execução** em WhatsApp/texto, e-mail e PDF. A ficha original do Fichário não foi alterada; o código usa cópia **não homologada**. O plano restrito de 17/11 permanece, sem declaração de produção publicada. [Revisão técnica e roteiro](REVISAO-ELETRODUTO-E-RELATORIOS-2026-11-12.md) · [Changelog](CHANGELOG.md). A tabela X.0.3.30 adiante é **histórica de 10/11**, não estado atual.
+> **CLASSIFICAÇÃO DOCUMENTAL · 14/11/2026 — RETRATO HISTÓRICO.** Este conteúdo registra a versão/data em que foi produzido. Menções a “vigente” no corpo são históricas, não regras atuais. Referências: [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md), [Estado verificável](ESTADO-ATUAL.md). Apesar do título, o estado de 10/11 foi **superado** por X.0.3.61; não o utilizar como situação atual.
 
 # TEREON X — Estado vigente e precedência documental
 **10/11/2026 · Página de orientação obrigatória; não substitui documentação histórica**
@@ -49,3 +45,15 @@
 Em 10/11 a superauditoria encontrou descompasso `header.js?v=8` no teste contra `v=9` em Obras; CI completo e deploy recente ainda não confirmados, bem como teste entre duas contas/dispositivos e revisão visual no aparelho. Nada disso deve ser classificado como resolvido por este documento.
 
 **Fontes:** [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md), [Superauditoria](SUPERAUDITORIA-TEREON-X-2026-11-10.md), [Diário narrativo Vol.03](HISTORIA-TEREON-X-VOLUME-03.md).
+
+---
+
+## Adendos datados pré-saneamento — preservados como histórico
+
+> Os avisos abaixo foram deslocados do início para impedir que versões antigas pareçam normas atuais.
+
+> **ATENÇÃO — ESTADO HISTÓRICO DE 10/11:** o documento abaixo foi preservado, mas **a retomada vigente é de 14/11/2026** em [`RETOMADA-TEREON-X-2026-11-14.md`](RETOMADA-TEREON-X-2026-11-14.md), versão X.0.3.61: interpretação de pedidos por texto/voz para Condutores, tags ?→✓ junto da pesquisa e Avançar para ficha parcialmente montada, sem segundo painel. Não tomar o estado da UI de 10/11 como atual. O motor comercial e a homologação das fichas mantêm pendências.
+
+> **ADENDO DE RETOMADA — 13/11/2026 · estado mais recente X.0.3.60:** o relato abaixo é um retrato válido de **10–12/11**, mas não deve ser tomado como o estado atual. Desde então a navegação das características foi refinada até as **tags compactas de X.0.3.59** e a escolha de material ganhou **entrada natural por texto e microfone opcional para Condutores**, com sugestões não confirmadas na X.0.3.60. A análise de correspondências é conservadora, compra por apresentação não foi alterada, e **não há comprovação de CI integral, deploy Cloudflare nem teste físico de reconhecimento de voz**. Foto por IA é visão futura. [Documento de referência mais recente](PILOTO-BUSCA-NATURAL-VOZ-FOTO-2026-11-13.md) · [Mestre](MESTRE-TEREON-X.md).
+
+> **ATUALIZAÇÃO VIGENTE — 12/11/2026, X.0.3.51, branch `desenvolvimento`:** o visual das listas X.0.3.50 foi considerado adequado pelo fundador para uso e ajustes de campo. A prioridade agora é **ficha experimental de Eletrodutos (FT_INFRA-001)** e relatórios de **Compras, Completo e Execução** em WhatsApp/texto, e-mail e PDF. A ficha original do Fichário não foi alterada; o código usa cópia **não homologada**. O plano restrito de 17/11 permanece, sem declaração de produção publicada. [Revisão técnica e roteiro](REVISAO-ELETRODUTO-E-RELATORIOS-2026-11-12.md) · [Changelog](CHANGELOG.md). A tabela X.0.3.30 adiante é **histórica de 10/11**, não estado atual.

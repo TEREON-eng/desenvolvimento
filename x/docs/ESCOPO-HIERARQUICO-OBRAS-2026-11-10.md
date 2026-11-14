@@ -1,3 +1,5 @@
+> **CLASSIFICAÇÃO DOCUMENTAL · 14/11/2026 — VISÃO/LAB.** Este conteúdo registra a versão/data em que foi produzido. Menções a “vigente” no corpo são históricas, não regras atuais. Referências: [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md), [Estado verificável](ESTADO-ATUAL.md).
+
 # TEREON X — Hierarquia de etapas e sugestão progressiva do escopo
 **10/11/2026 · Decisão conceitual aprovada em conversa, implementação de vínculo/Obras PENDENTE**
 

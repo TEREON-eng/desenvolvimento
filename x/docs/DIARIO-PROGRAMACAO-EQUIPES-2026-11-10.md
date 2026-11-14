@@ -1,3 +1,5 @@
+> **CLASSIFICAÇÃO DOCUMENTAL · 14/11/2026 — VISÃO/LAB.** Este conteúdo registra a versão/data em que foi produzido. Menções a “vigente” no corpo são históricas, não regras atuais. Referências: [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md), [Estado verificável](ESTADO-ATUAL.md).
+
 # TEREON X — Diário de Obras: programação de mão de obra
 **10/11/2026 · Laboratório mobile de simulação · branch `desenvolvimento` · SEM BANCO OU AUTORIZAÇÃO REAIS**
 

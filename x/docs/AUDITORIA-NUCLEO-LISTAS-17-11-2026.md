@@ -1,8 +1,4 @@
-> **ADENDO DE CONTINUIDADE — 14/11/2026:** priorizar antes do ensaio supervisionado de 17/11 validação CI/Cloudflare real, fluxo Android de busca por texto/voz, **tags ?→✓ na mesma tela, Avançar sem painel interno duplicado**, preservação de itens legados, quantidades e relatórios, além de revisão da `FT_COND-001`. A X.0.3.61 alterou **a forma de iniciar a composição**, não a confiabilidade comprovada dos dados comerciais ou a homologação. [Marco de retomada](RETOMADA-TEREON-X-2026-11-14.md).
-
-> **ATUALIZAÇÃO DO ESCOPO DE AUDITORIA — 13/11/2026 · X.0.3.60:** desde a auditoria original, o modal manteve tags e regras e recebeu **interpretação de texto natural e entrada por voz opcional para Condutores**, com confirmação explícita de sugestões. Criado teste de interpretação/voz simulada `x/tests/interpretador-voz-condutores.test.cjs` e integrado ao workflow; **ainda não há evidência aqui de CI integral, microfone real, PWA Android ou Cloudflare publicado**. Para o teste restrito de 17/11, confirmar: permissão de microfone, falhas de rede, fallback manual, diferenças entre “450” e “450/750 V”, não inferir isolamento/encordoamento e não alterar quantificação. As não conformidades P0 da matriz técnica original não desaparecem com uma busca mais intuitiva. [Roteiro](PILOTO-BUSCA-NATURAL-VOZ-FOTO-2026-11-13.md).
-
-> **ADENDO 12/11/2026 · X.0.3.51:** as falhas P0 de Eletroduto sem diâmetro, observadas em 10/11 abaixo, **continuam válidas no snapshot original**, mas foram corrigidas **para simulação no snapshot LAB ativo da branch**. Seleção condicional do fichário, persistência de lista e formato de compartilhamento preservam origem; Compras/Completo/Execução em texto/e-mail/PDF receberam revisão de hierarquia e avisos. Ainda restam P0 de outras fichas, sincronização entre dispositivos, CI completo, PDF efetivo e uso móvel. **Não interpretar o ensaio como homologação técnica ou publicação.** [Detalhes e provas](REVISAO-ELETRODUTO-E-RELATORIOS-2026-11-12.md).
+> **CLASSIFICAÇÃO DOCUMENTAL · 14/11/2026 — RETRATO HISTÓRICO.** Este conteúdo registra a versão/data em que foi produzido. Menções a “vigente” no corpo são históricas, não regras atuais. Referências: [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md), [Estado verificável](ESTADO-ATUAL.md). Eletroduto ganhou regras de diâmetro no snapshot LAB de 12/11, mas sem homologação; riscos do relatório original permanecem como retrato da data.
 
 # TEREON X — Auditoria do núcleo Listas para o campo em 17/11
 **10/11/2026 · Evidência de código, testes isolados, fixtures e contratos · Branch `desenvolvimento`**
@@ -66,4 +62,16 @@
 ## Decisão de segurança para o teste
 A opção mais segura é realizar o dia 17 como **ensaio restrito acompanhado**, com materiais e fichas revisados e conferência humana antes de usar qualquer saída como pedido de compra. Se uma ficha ainda estiver em revisão, exibir esse status; não promovê-la a catálogo oficial apenas para chegar à data.
 
-**Não executadas neste relatório:** alterações em fichas, dados de usuários, SQL, `main`, deploy ou homologação de pedidos reais. 
+**Não executadas neste relatório:** alterações em fichas, dados de usuários, SQL, `main`, deploy ou homologação de pedidos reais.
+
+---
+
+## Adendos datados pré-saneamento — preservados como histórico
+
+> Os avisos abaixo foram deslocados do início para impedir que versões antigas pareçam normas atuais.
+
+> **ADENDO DE CONTINUIDADE — 14/11/2026:** priorizar antes do ensaio supervisionado de 17/11 validação CI/Cloudflare real, fluxo Android de busca por texto/voz, **tags ?→✓ na mesma tela, Avançar sem painel interno duplicado**, preservação de itens legados, quantidades e relatórios, além de revisão da `FT_COND-001`. A X.0.3.61 alterou **a forma de iniciar a composição**, não a confiabilidade comprovada dos dados comerciais ou a homologação. [Marco de retomada](RETOMADA-TEREON-X-2026-11-14.md).
+
+> **ATUALIZAÇÃO DO ESCOPO DE AUDITORIA — 13/11/2026 · X.0.3.60:** desde a auditoria original, o modal manteve tags e regras e recebeu **interpretação de texto natural e entrada por voz opcional para Condutores**, com confirmação explícita de sugestões. Criado teste de interpretação/voz simulada `x/tests/interpretador-voz-condutores.test.cjs` e integrado ao workflow; **ainda não há evidência aqui de CI integral, microfone real, PWA Android ou Cloudflare publicado**. Para o teste restrito de 17/11, confirmar: permissão de microfone, falhas de rede, fallback manual, diferenças entre “450” e “450/750 V”, não inferir isolamento/encordoamento e não alterar quantificação. As não conformidades P0 da matriz técnica original não desaparecem com uma busca mais intuitiva. [Roteiro](PILOTO-BUSCA-NATURAL-VOZ-FOTO-2026-11-13.md).
+
+> **ADENDO 12/11/2026 · X.0.3.51:** as falhas P0 de Eletroduto sem diâmetro, observadas em 10/11 abaixo, **continuam válidas no snapshot original**, mas foram corrigidas **para simulação no snapshot LAB ativo da branch**. Seleção condicional do fichário, persistência de lista e formato de compartilhamento preservam origem; Compras/Completo/Execução em texto/e-mail/PDF receberam revisão de hierarquia e avisos. Ainda restam P0 de outras fichas, sincronização entre dispositivos, CI completo, PDF efetivo e uso móvel. **Não interpretar o ensaio como homologação técnica ou publicação.** [Detalhes e provas](REVISAO-ELETRODUTO-E-RELATORIOS-2026-11-12.md).

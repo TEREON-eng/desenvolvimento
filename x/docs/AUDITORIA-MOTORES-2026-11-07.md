@@ -1,3 +1,5 @@
+> **CLASSIFICAÇÃO DOCUMENTAL · 14/11/2026 — RETRATO HISTÓRICO.** Este conteúdo registra a versão/data em que foi produzido. Menções a “vigente” no corpo são históricas, não regras atuais. Referências: [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md), [Estado verificável](ESTADO-ATUAL.md).
+
 # Auditoria de arquitetura e código — TEREON X
 **Data:** 07/11/2026  
 **Escopo:** repositório `TEREON-eng/desenvolvimento`, branch `desenvolvimento`; código do X, documentação, dados de teste, dependências estáticas e configuração Cloudflare.  

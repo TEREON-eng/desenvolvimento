@@ -1,3 +1,5 @@
+> **CLASSIFICAÇÃO DOCUMENTAL · 14/11/2026 — ESTUDO TÉCNICO DATADO.** Este conteúdo registra a versão/data em que foi produzido. Menções a “vigente” no corpo são históricas, não regras atuais. Referências: [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md), [Estado verificável](ESTADO-ATUAL.md).
+
 # TEREON X — Contrato de etapas: Listas e Obras
 **10/11/2026 · Proposta de integração de produto · Implementação restrita à limpeza de etapas em Listas X.0.3.30**
 

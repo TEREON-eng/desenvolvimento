@@ -1,9 +1,7 @@
-> **DISTINÇÃO PARA RETOMADA — 14/11/2026:** não confundir **interpretação do novo pedido** (`interpretador-condutores.js`, tags ?→✓, rascunho e Avançar, X.0.3.61) com **comparação de dois lançamentos já existentes** (`listas/correspondencia.js`, aviso conservador para conferência). Nenhuma delas confirma automaticamente características ausentes nem autoriza somas comerciais. [Marco de retomada](RETOMADA-TEREON-X-2026-11-14.md).
-
-> **ATUALIZAÇÃO DE ESTADO — 13/11/2026, X.0.3.60:** este contrato nasceu como **proposta documental**, daí as referências históricas a “não implementado” abaixo. A **etapa conservadora de avisar possíveis correspondências entre dois lançamentos de Condutores** entrou no laboratório na X.0.3.57 (`x/listas/correspondencia.js`), ainda sem fusão automática nem nova política de compra. **Outra funcionalidade, distinta**, entrou na X.0.3.60: interpretar a *descrição de um novo pedido*, digitada ou transcrita por voz, para produzir **sugestões não confirmadas** (`x/catalogo/interpretador-condutores.js`). Ambos os fluxos consultam as fichas, mas **não devem ser confundidos nem usados como homologação**. Não foi implementada equivalência automática entre lançamentos, interpretação de foto nem alteração do motor de quantificação. [Piloto de texto/voz](PILOTO-BUSCA-NATURAL-VOZ-FOTO-2026-11-13.md) · [Changelog](CHANGELOG.md).
+> **CLASSIFICAÇÃO DOCUMENTAL · 14/11/2026 — ESTUDO TÉCNICO DATADO.** Este conteúdo registra a versão/data em que foi produzido. Menções a “vigente” no corpo são históricas, não regras atuais. Referências: [Mestre](MESTRE-TEREON-X.md), [Contratos](CONTRATOS-VIGENTES.md), [Estado verificável](ESTADO-ATUAL.md). O detector conservador parcial de Condutores entrou no laboratório X.0.3.57; fusão automática e política completa de equivalência **não** foram homologadas.
 
 # TEREON X — Contrato proposto de Correspondência Técnica Progressiva
-**13/11/2026 · proposta para validação do fundador · laboratório documental · não implementado no aplicativo**
+**13/11/2026 · proposta ampla, com detector conservador parcial implementado no laboratório X.0.3.57; fusão automática NÃO implementada**
 
 ## 1. A falha observada
 Dois pedidos podem referir-se ao mesmo produto, mas um contém menos características:
@@ -87,3 +85,13 @@ Esta matriz será guardada também em fixture JSON, que **ainda não executa** n
 No snapshot atual ela está com `maturidade: Consolidado`, mas com `status: Em revisão` e `homologada: false`. Antes de publicação, avaliar: tensão `DET-006` opcional; isolação `HEPR ou XLPE` representada como uma única opção; compatibilidade tensão/isolação/cobertura; classe de encordoamento; e regras de exclusão/condicionais do fichário. Não utilizar este contrato de equivalência como atalho para homologar produtos.
 
 **Estado da rodada:** contrato e casos documentados para revisão; nenhum comportamento do aplicativo alterado neste documento. O fundador decide a política final após leitura dos casos concretos.
+
+---
+
+## Adendos datados pré-saneamento — preservados como histórico
+
+> Os avisos abaixo foram deslocados do início para impedir que versões antigas pareçam normas atuais.
+
+> **DISTINÇÃO PARA RETOMADA — 14/11/2026:** não confundir **interpretação do novo pedido** (`interpretador-condutores.js`, tags ?→✓, rascunho e Avançar, X.0.3.61) com **comparação de dois lançamentos já existentes** (`listas/correspondencia.js`, aviso conservador para conferência). Nenhuma delas confirma automaticamente características ausentes nem autoriza somas comerciais. [Marco de retomada](RETOMADA-TEREON-X-2026-11-14.md).
+
+> **ATUALIZAÇÃO DE ESTADO — 13/11/2026, X.0.3.60:** este contrato nasceu como **proposta documental**, daí as referências históricas a “não implementado” abaixo. A **etapa conservadora de avisar possíveis correspondências entre dois lançamentos de Condutores** entrou no laboratório na X.0.3.57 (`x/listas/correspondencia.js`), ainda sem fusão automática nem nova política de compra. **Outra funcionalidade, distinta**, entrou na X.0.3.60: interpretar a *descrição de um novo pedido*, digitada ou transcrita por voz, para produzir **sugestões não confirmadas** (`x/catalogo/interpretador-condutores.js`). Ambos os fluxos consultam as fichas, mas **não devem ser confundidos nem usados como homologação**. Não foi implementada equivalência automática entre lançamentos, interpretação de foto nem alteração do motor de quantificação. [Piloto de texto/voz](PILOTO-BUSCA-NATURAL-VOZ-FOTO-2026-11-13.md) · [Changelog](CHANGELOG.md).
