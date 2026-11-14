@@ -128,3 +128,9 @@ Não é apenas uma função de microfone. É a passagem da pergunta **“como fa
 
 **Fontes e limite do registro:** ideias e decisões da conversa de 13/11/2026, [piloto técnico](PILOTO-BUSCA-NATURAL-VOZ-FOTO-2026-11-13.md) e [marco de retomada](RETOMADA-TEREON-X-2026-11-13.md). Texto de memória editorial, não transcrição literal nem prova de experiência real no celular.
 
+## 13/11 — A confirmação precisava caber no primeiro olhar
+Depois de aprovar o piloto em que o TEREON recebe uma descrição de Condutor por escrita ou voz, o fundador fez outra observação de uso: **a tela dentro da ficha ficou grande demais com uma segunda coleção de botões para confirmar sugestões**. A dinâmica prometia diminuir trabalho, mas criava uma etapa visual extra. O ajuste nasceu da própria crítica: por que não usar as **tags com interrogação diretamente abaixo da pesquisa**?
+
+Daí a solução da **X.0.3.61**: a descrição já inicia o nome técnico, as tags sugeridas ficam no primeiro nível e exigem um toque consciente para passar de **? a ✓**; o botão **Avançar** entra na ficha existente levando somente o que foi escolhido. A pessoa mantém o caminho manual e pode completar as pendências com as tags compactas que já haviam sido lapidadas. A confirmação não deixou de ser necessária; apenas foi deslocada para onde o usuário já estava atento, sem duplicar a interface.
+
+**Eixo para futura comunicação:** “A melhor pergunta é a que o profissional não precisa responder duas vezes”. A gravação em GitHub e o teste isolado demonstram o fluxo no código; **não há nesta rodada comprovação de aceite visual em celular ou publicação no Cloudflare**. [Changelog](CHANGELOG.md) · [marco de retomada](RETOMADA-TEREON-X-2026-11-13.md).
