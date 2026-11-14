@@ -1,3 +1,12 @@
+## 13/11/2026 — X.0.3.59 · Mapa completo de detalhes em tags pequenas
+- Depois de aprovar a navegação nas próprias tags, o fundador solicitou uma visão **completa** da especificação: a barra de progresso agora apresenta **uma posição para cada detalhe aplicável**, inclusive os opcionais, mantendo indicação visual de confirmado e pendente. Continua apenas informativa, sem voltar às setas da versão X.0.3.57.
+- A área de tags apresenta **todos os detalhes aplicáveis**, não só os escolhidos. Confirmados exibem os valores atuais e um botão ×; pendentes exibem uma identificação breve, em cor atenuada, sem ×. Tocar em qualquer um abre a escolha correspondente, sem preencher ou remover automaticamente.
+- Os nomes completos de pendências foram compactados: **Ø** (diâmetro), **#** (seção), **V** (tensão), **Mat.**, **Isol.**, **Cor**, **Encord.**, **Ponta**, **Fogo**, **Galv.**, entre outros. O texto técnico completo continua no título acessível e no campo de seleção. Valores selecionados longos são abreviados apenas na exibição da tag, preservando o valor original.
+- Tags ligeiramente menores, sem linha divisória entre conteúdo e exclusão; **× vermelho** nos temas Claro/Escuro/TEREON. Mantidos contorno duplo das obrigatórias, foco atual, destaque de dependências e a regra de exclusão condicionada já vigente.
+- Condicionais não aplicáveis **não** são mostradas como pendentes nem contam no progresso até se tornarem aplicáveis pela ficha. A estrutura HTML do modal permanece igual à referência originalmente aprovada.
+- Alterações em `x/listas/app.js`, `x/styles.css`, teste `x/tests/modal-fichas.test.cjs` e versionamento/cache **X.0.3.59**. `x/listas/quantificacao.js`, detector de correspondências, fichário, dados, compras, PDF, WhatsApp e e-mail **não foram alterados**.
+- Verificações isoladas realizadas; **CI completo, Cloudflare e teste visual/tátil no celular não confirmados**.
+
 ## 13/11/2026 — X.0.3.58 · Tags selecionadas como navegação e × para remover
 - O fundador recuperou um feedback perdido após travamento: não gostou da barra de todos os detalhes com setas (X.0.3.57) e trouxe uma sugestão do irmão — **reaproveitar as próprias tags confirmadas que se acumulam abaixo do seletor**.
 - **Clique no texto da tag:** abre a tela/etapa de seleção daquele mesmo detalhe, mostrando a opção atual e permitindo substituí-la. Apenas o foco muda; características confirmadas, quantidades, unidade, etapa e o nome técnico não são alterados por navegar.
