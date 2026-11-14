@@ -78,6 +78,7 @@ var fields=[
 ];
 const legacyFields=fields;
 let selectedFicha=null,choosingFicha=false,fichaSearch='',loadingFichas=false,fichaError='';
+let textInterpretation=null,voiceNotice='';
 const skippedOptional=new Set();
 let optionNotice='';
 let editingLegacyQuantity=false;
@@ -469,18 +470,84 @@ function fichaPresentation(f){
   tagClass:maturity==='Consolidado'?'consolidated':'revision'
  };
 }
+function interpretDraft(){
+ return window.TereonXInterpreter?.interpret(fichaSearch)||{family:null,proposals:[],warnings:[]};
+}
+function interpretPreview(result){
+ if(!fichaSearch.trim())return '';
+ if(result.family!=='FT_COND-001')return '<p class="tiny muted">Não reconheci a família com segurança. Escolha uma ficha ou reformule o pedido.</p>';
+ return '<div class="intent-preview"><strong>Possível material: Condutores elétricos</strong><p class="tiny muted">Sugestões para confirmar: '+
+  (result.proposals.length?result.proposals.map(p=>'<span class="intent-token">'+esc(p.value)+(p.quality==='interpretado'?' ?':'')+'</span>').join(' '):'nenhuma característica identificada')+'</p>'+
+  result.warnings.map(w=>'<small class="intent-warning">'+esc(w)+'</small>').join('')+
+  '<small>Nada foi preenchido automaticamente. Escolha a ficha para confirmar.</small></div>';
+}
+function refreshMaterialSearch(){
+ const interpreted=interpretDraft();
+ const preview=$('fichaInterpretPreview');if(preview)preview.innerHTML=interpretPreview(interpreted);
+ const q=fichaSearch.normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase();
+ $('choices').querySelectorAll('[data-ficha]').forEach(button=>{
+  const f=window.TereonXCatalog?.get?.(button.dataset.ficha);
+  const searchable=f?(f.name+' '+f.id+' '+f.reference+' '+(f.aliases||[]).join(' ')):button.textContent;
+  button.hidden=interpreted.family==='FT_COND-001'?button.dataset.ficha!=='FT_COND-001':
+   !searchable.normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().includes(q);
+ });
+}
+function onVoiceStatus(message,listening){
+ if(message)voiceNotice=message;
+ const status=$('fichaVoiceStatus');if(status)status.textContent=voiceNotice;
+ const button=$('fichaVoiceButton');
+ if(button){button.textContent=listening?'■ Parar':'🎙 Falar';button.setAttribute('aria-pressed',String(listening));}
+}
+function draftSuggestionsHTML(){
+ if(!textInterpretation||selectedFicha?.id!=='FT_COND-001')return '';
+ const applicable=getFields();
+ const labels=new Map(applicable.map(f=>[f.id,f.label]));
+ const available=textInterpretation.proposals.filter(p=>values[p.id]!==p.value);
+ const options=available.map(p=>{
+  const isVisible=labels.has(p.id);
+  return '<button type="button" class="interpreted-chip" data-proposal-id="'+esc(p.id)+
+   '" data-proposal-value="'+esc(p.value)+'"'+(!isVisible?' disabled title="Confirme primeiro o tipo do material"':'')+
+   ' aria-label="'+esc('Confirmar '+(labels.get(p.id)||p.id)+' como '+p.value)+'"><strong>'+
+   esc(labels.get(p.id)||p.id)+'</strong> · '+esc(p.value)+(p.quality==='interpretado'?' ?':'')+'</button>';
+ }).join('');
+ if(!available.length&&!textInterpretation.warnings.length)return '';
+ return '<div class="interpreted-proposals"><strong>Seu pedido — confirme as sugestões</strong>'+
+  (options?'<div class="interpreted-chip-list">'+options+'</div>':'')+
+  textInterpretation.warnings.map(w=>'<small class="intent-warning">'+esc(w)+'</small>').join('')+
+  '<small>Toque para confirmar cada característica. Pode escolher manualmente abaixo.</small></div>';
+}
+function confirmDraftSuggestion(id,value){
+ if(!textInterpretation||selectedFicha?.id!=='FT_COND-001')return;
+ const suggestion=textInterpretation.proposals.find(p=>p.id===id&&p.value===value);
+ if(!suggestion)return;
+ const field=getFields().find(f=>f.id===id);
+ if(!field){optionNotice='Confirme primeiro o tipo do condutor.';redrawAdd();return;}
+ const state=window.TereonXCatalog.optionStates(selectedFicha,values,id).find(x=>x.option===value);
+ if(!state?.available){optionNotice=state?.reason||'Sugestão incompatível com as escolhas atuais.';redrawAdd();return;}
+ const next={...values,[id]:value};
+ const errors=window.TereonXCatalog.conflicts(selectedFicha,next);
+ if(errors.length){optionNotice='Combinação não permitida: '+errors.join('; ');redrawAdd();return;}
+ reconcileInvalidOptional(next);
+ values=next;skippedOptional.delete(id);optionNotice='';
+ fields=getFields();focus=pickFirstMissing();redrawAdd();
+}
 function paintFichaChoices(){
  const all=window.TereonXCatalog?.list()||[];
- const q=fichaSearch.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
- const candidates=all.filter(f=>(f.name+' '+(f.id==='FT_COND-001'?'Condutores elétricos ':'')+f.id+' '+f.reference+' '+(f.aliases||[]).join(' ')).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(q));
- $('choices').innerHTML='<input id="fichaSearch" class="ficha-search" type="search" autocomplete="off" placeholder="Buscar material ou família..." aria-label="Pesquisar fichas técnicas" value="'+esc(fichaSearch)+'">'+
+ const result=interpretDraft();
+ const q=fichaSearch.normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().trim();
+ const candidates=all.filter(f=>result.family==='FT_COND-001'?f.id==='FT_COND-001':
+  (f.name+' '+(f.id==='FT_COND-001'?'Condutores elétricos ':'')+f.id+' '+f.reference+' '+(f.aliases||[]).join(' ')).normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().includes(q));
+ const supported=!!window.TereonXVoice?.supported?.();
+ $('choices').innerHTML='<div class="ficha-intent-input"><input id="fichaSearch" class="ficha-search" type="search" maxlength="300" autocomplete="off" placeholder="Ex.: fio flex 2,5 preto 450" aria-label="Descreva o material como você conhece" value="'+esc(fichaSearch)+'">'+
+  (supported?'<button type="button" id="fichaVoiceButton" class="ficha-mic" data-voice="1" aria-label="Ditar material" aria-pressed="false">🎙 Falar</button>':'')+'</div>'+
+  '<small id="fichaVoiceStatus" class="ficha-voice-status" role="status">'+esc(voiceNotice||(!supported?'Microfone indisponível neste navegador. Use o teclado ou seu ditado.':'O navegador pode usar um serviço online para transcrever a fala.'))+'</small>'+
+  '<div id="fichaInterpretPreview" class="ficha-interpret-preview" aria-live="polite">'+interpretPreview(result)+'</div>'+
   (loadingFichas?'<p class="tiny muted">Carregando fichas...</p>':fichaError?'<p class="notice">'+esc(fichaError)+'</p>':candidates.length?candidates.map(f=>{
    const display=fichaPresentation(f);
    return '<button type="button" class="ficha-option" data-ficha="'+esc(f.id)+'"><span class="ficha-option-top"><strong>'+esc(display.name)+'</strong>'+
     (display.tag?'<span class="ficha-maturity-tag '+display.tagClass+'" title="Situação informada na ficha técnica">'+esc(display.tag)+'</span>':'')+'</span>'+
     '<small>'+esc(f.id)+(display.tag==='Consolidado'&&f.kind!=='oficial'?' · Publicação pendente':'')+'</small></button>';
-  }).join(''):
-   '<p class="tiny muted">Nenhuma ficha encontrada.</p>');
+  }).join(''):'<p class="tiny muted">Nenhuma ficha encontrada.</p>');
 }
 function shortDetailTag(label){
  // Somente rótulo visual das tags pendentes. A pergunta completa continua
