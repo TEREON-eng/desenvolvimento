@@ -1,3 +1,5 @@
+> **NOTA HISTÓRICA — 13/11/2026, X.0.3.60:** o documento registra fielmente a solução **X.0.3.57**, inclusive uma barra de progresso clicável e setas. **Essa navegação foi posteriormente rejeitada e substituída**: nas X.0.3.58–59, tocar na **tag de detalhe** abre o campo; o × vermelho remove, todas as tags aplicáveis (inclusive pendentes) aparecem compactas e o progresso é apenas informativo. O **aviso conservador de possíveis correspondências entre lançamentos** continuou válido e não realiza fusão. A X.0.3.60 acrescentou **entrada por descrição e voz de um novo material**, fluxo independente. Para testar o modal vigente, consulte [Guia Visual](GUIA-VISUAL-TEREON-X.md) e [Piloto texto/voz](PILOTO-BUSCA-NATURAL-VOZ-FOTO-2026-11-13.md), em vez das instruções de setas abaixo.
+
 # TEREON X.0.3.57 — Navegação por detalhes e revisão segura de equivalência
 **13/11/2026 · desenvolvimento · Implementado para laboratório; publicação/deploy e teste móvel não confirmados**
 
