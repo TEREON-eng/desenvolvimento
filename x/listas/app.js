@@ -485,11 +485,15 @@ function refreshMaterialSearch(){
  const interpreted=interpretDraft();
  const preview=$('fichaInterpretPreview');if(preview)preview.innerHTML=interpretPreview(interpreted);
  const q=fichaSearch.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
- $('choices').querySelectorAll('[data-ficha]').forEach(button=>{
+ const buttons=[...$('choices').querySelectorAll('[data-ficha]')];
+ const matched=buttons.filter(button=>{
   const f=window.TereonXCatalog?.get?.(button.dataset.ficha);
   const searchable=f?(f.name+' '+f.id+' '+f.reference+' '+(f.aliases||[]).join(' ')):button.textContent;
+  return searchable.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(q);
+ });
+ buttons.forEach(button=>{
   button.hidden=interpreted.family==='FT_COND-001'?button.dataset.ficha!=='FT_COND-001':
-   !searchable.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(q);
+   !(matched.includes(button)||(matched.length===0&&q.includes(' ')));
  });
 }
 function onVoiceStatus(message,listening){
@@ -535,8 +539,10 @@ function paintFichaChoices(){
  const all=window.TereonXCatalog?.list()||[];
  const result=interpretDraft();
  const q=fichaSearch.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
- const candidates=all.filter(f=>result.family==='FT_COND-001'?f.id==='FT_COND-001':
+ const matched=all.filter(f=>result.family==='FT_COND-001'?f.id==='FT_COND-001':
   (f.name+' '+(f.id==='FT_COND-001'?'Condutores elétricos ':'')+f.id+' '+f.reference+' '+(f.aliases||[]).join(' ')).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(q));
+ // Texto livre fora do piloto não deve bloquear o acesso ao fichário manual.
+ const candidates=matched.length?matched:(result.family===null&&q.includes(' ')?all:[]);
  const supported=!!window.TereonXVoice?.supported?.();
  $('choices').innerHTML='<div class="ficha-intent-input"><input id="fichaSearch" class="ficha-search" type="search" maxlength="300" autocomplete="off" placeholder="Ex.: fio flex 2,5 preto 450" aria-label="Descreva o material como você conhece" value="'+esc(fichaSearch)+'">'+
   (supported?'<button type="button" id="fichaVoiceButton" class="ficha-mic" data-voice="1" aria-label="Ditar material" aria-pressed="false">🎙 Falar</button>':'')+'</div>'+
