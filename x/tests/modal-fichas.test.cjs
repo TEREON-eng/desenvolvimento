@@ -81,7 +81,21 @@ function choice(v){
  assert.equal(element('fieldLabel').textContent,'Material');
  choice('PVC');
  assert.equal(element('fieldLabel').textContent,'Diâmetro nominal · PVC','condicional de diâmetro no laboratório');
- // As próprias tags confirmadas são os atalhos; só o × remove.
+ // A barra representa TODOS os detalhes aplicáveis, inclusive o opcional.
+ const progress=element('progress').innerHTML;
+ assert.equal((progress.match(/class="segment/g)||[]).length,4,'4 posições: Tipo, Material, Diâmetro e Tipo ponta opcional');
+ assert.equal((progress.match(/ optional/g)||[]).length,1,'detalhe opcional também entra no progresso');
+ assert.equal((progress.match(/ done/g)||[]).length,2,'apenas valores confirmados são preenchidos');
+ assert.ok(!progress.includes('data-detail-index'),'progresso é informativo, não navegável');
+ // Todos os detalhes visíveis têm tags, preenchidas ou atenuadas.
+ const mapped=element('tags').innerHTML;
+ assert.equal((mapped.match(/class="tag selected-detail-tag/g)||[]).length,4,'uma tag para cada detalhe aplicável');
+ assert.equal((mapped.match(/ is-selected/g)||[]).length,2,'duas tags confirmadas');
+ assert.equal((mapped.match(/ is-pending/g)||[]).length,2,'diâmetro e tipo ponta aparecem atenuados');
+ assert.ok(mapped.includes('data-edit-tag="DET-011"'),'Tipo ponta opcional também pode ser aberto');
+ assert.ok(!mapped.includes('data-remove="DET-011"'),'pendente não pode ser removido');
+ assert.ok(mapped.includes('data-remove="DET-002"'),'apenas preenchido possui ×');
+ // As próprias tags são atalhos; apenas o × remove.
  assert.ok(!element('progress').innerHTML.includes('data-detail-index'),'progresso voltou a ser somente informativo');
  assert.ok(element('tags').innerHTML.includes('data-edit-tag="DET-001"'),'Tipo oferece navegação');
  assert.ok(element('tags').innerHTML.includes('data-edit-tag="DET-002"'),'Material oferece navegação');
@@ -92,6 +106,13 @@ function choice(v){
    closest:selector=>selector===(action==='edit'?'[data-edit-tag]':'[data-remove]')?button:null};
   element('tags').listeners.click({target:button});
  }
+ actOnTag('edit','DET-011');
+ assert.equal(element('fieldLabel').textContent,'Tipo ponta','tocar na tag apagada abre o opcional ainda não preenchido');
+ assert.ok(element('tags').innerHTML.includes('data-edit-tag="DET-004"'),'tag de diâmetro pendente ainda visível');
+ assert.ok(!element('tags').innerHTML.includes('data-remove="DET-011"'),'navegar para pendente não confirma valor');
+ assert.equal(element('saveItem').disabled,true,'navegação não preenche diâmetro');
+ actOnTag('edit','DET-004');
+ assert.equal(element('fieldLabel').textContent,'Diâmetro nominal · PVC','tag pendente de diâmetro abre seu detalhe');
  actOnTag('edit','DET-001');
  assert.equal(element('fieldLabel').textContent,'Tipo','tocar na tag Rígido retorna ao detalhe Tipo');
  assert.equal(element('liveName').textContent,nameBefore,'navegar não altera nome nem confirma nova opção');
