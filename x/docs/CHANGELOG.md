@@ -1,3 +1,9 @@
+## 14/11/2026 — Fechamento documental para troca de conversa (sem release)
+- Confirmados no GitHub `TEREON-eng/desenvolvimento`, branch `desenvolvimento`: `x/version.json = x.0.3.61`; carregamento do interpretador de Condutores, confirmação de rascunho e voz no shell; `x/sw.js` com cache `0.3.61`; integração por tags `? → ✓`, botão **Avançar** e remoção do painel grande interno da ficha.
+- Criado [Marco de retomada de 14/11/2026](RETOMADA-TEREON-X-2026-11-14.md) com decisões X.0.3.55–61, módulos, responsabilidades, testes, limitações de voz, condições de compra, maturidade das fichas, roteiro de campo e texto para abrir a próxima conversa.
+- Docs centrais, arquitetura, registros de testes e história vinculados ao novo marco. Históricos anteriores preservados sem apagar o contexto em que foram escritos.
+- **Apenas documentação**: sem alteração funcional, dados, planilha de origem, ficha homologada, `main` ou deploy. CI completo e teste real em Android/Cloudflare **não foram comprovados nesta rodada**.
+
 ## 13/11/2026 — X.0.3.61 · Compor na pesquisa, confirmar nas tags e avançar
 - Após testar a X.0.3.60, o fundador aprovou a direção da entrada natural, mas relatou que a **segunda área grande de botões de confirmação dentro da ficha ocupava espaço demais e prejudicava o modal**.
 - Nova decisão: **a própria pesquisa é o primeiro passo da composição**. Logo abaixo do campo de texto/voz, cada atributo encontrado aparece como **tag compacta com ?**, incluindo reconhecimento literal: isso identifica uma sugestão **a confirmar**, não um dado técnico já escolhido.
