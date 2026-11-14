@@ -28,6 +28,8 @@ jobs:
         run: node x/tests/correspondencia-progressiva.test.cjs
       - name: Validar interpretação de linguagem natural e entrada de voz
         run: node x/tests/interpretador-voz-condutores.test.cjs
+      - name: Validar confirmação das tags na busca e botão Avançar
+        run: node x/tests/busca-tags-inline.test.cjs
       - name: Validar cartões compactos por etapa
         run: node x/tests/etapas-compactas.test.cjs
       - name: Validar resumo de material cor e isolação
