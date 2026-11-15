@@ -89,6 +89,14 @@ const key=token[1];
 element('top').listeners.click({target:{closest:()=>({dataset:{removeTag:'DET-006',candidate:key}})}});
 assert.ok(element('top').innerHTML.includes('Classe de tensão · ?'),'remover a tensão torna a informação pendente');
 assert.ok(element('top').innerHTML.includes('data-pick="'+key+'" disabled'),'sem tensão não pode confirmar diretamente');
+element('top').listeners.click({target:{closest:()=>({dataset:{openTag:'DET-006',candidate:key}})}});
+assert.ok(element('top').innerHTML.includes('data-set-tag="DET-006" data-value="450/750 V"'),'tag pendente oferece escolha direta');
+element('top').listeners.click({target:{closest:()=>({dataset:{setTag:'DET-006',value:'450/750 V',candidate:key}})}});
+assert.ok(!element('top').innerHTML.includes('Classe de tensão · ?'),'preencher pela tag resolve pendência');
+assert.ok(!element('top').innerHTML.includes('data-pick="'+key+'" disabled'),'confirmação volta a ser possível');
+element('top').listeners.click({target:{closest:()=>({dataset:{removeTag:'DET-006',candidate:key}})}});
+assert.ok(element('top').innerHTML.includes('Classe de tensão · ?'),'usuário ainda pode remover a tag quando quiser');
+
 assert.ok(element('top').innerHTML.includes('PVC 70 °C'),'demais detalhes são preservados');
 element('top').listeners.click({target:{closest:()=>({dataset:{detail:key}})}});
 assert.equal(element('detailDialog').open,true,'Editar esta sugestão abre ficha preenchida');
