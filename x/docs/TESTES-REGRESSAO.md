@@ -1,9 +1,9 @@
 # TEREON X — Regressão e aceites ativos
 
-**Estado observado em 14/11/2026, antes deste saneamento.** Original com adendos históricos: [TESTES-REGRESSAO-PRE-SANEAMENTO-2026-11-14.md](TESTES-REGRESSAO-PRE-SANEAMENTO-2026-11-14.md).
+**Estado observado em 15/11/2026, desenvolvimento X.0.3.62 (versão declarada).** Original com adendos históricos: [TESTES-REGRESSAO-PRE-SANEAMENTO-2026-11-14.md](TESTES-REGRESSAO-PRE-SANEAMENTO-2026-11-14.md).
 
 ## GitHub Actions — resultado real
-[Execução 43587644688](https://github.com/TEREON-eng/desenvolvimento/actions/runs/43587644688), commit **41c9088d824343c0e074a90f903e2b1ba5350749**: **FALHA**. Dez etapas iniciais passaram (Listas, Eletroduto LAB, formatos de relatório, quantificação, agrupamentos, correspondência, interpretação/voz simulada, tags ?→✓, etapas compactas); **resumo-localizacao.test.cjs** falhou na linha 33, assertion “por insumo usa mesmo resumo”. Etapas posteriores **não executadas**. Há possível teste estático desatualizado em relação ao parâmetro de aninhamento do agrupador; verificar sem presumir correção funcional.
+[Execução 43747213711](https://github.com/TEREON-eng/desenvolvimento/actions/runs/43747213711), commit **ed27d947424ef8f2a07e2b3ceb566092b13ff3f1**: **SUCESSO** (44 etapas aprovadas, zero falhas e zero skipped, incluindo setup). Inclui `recomendador-condutores.test.cjs`, teste de invalidação de diâmetro associado à escolha do material, todas as famílias/serviços e regressões do modal. Versão de metadados X.0.3.62 foi consolidada depois; é preciso verificar CI do commit correspondente e servir efetivo do PWA/Cloudflare antes de promover.
 
 ## Casos obrigatórios do núcleo
 | Cenário | Resultado exigido |
@@ -17,6 +17,7 @@
 | Voz no Android | Permissão, transcrição pt-BR, parada, falha de rede e texto de fallback |
 | Materiais incompletos | Não declarar item/ficha homologado sem requisitos técnicos |
 | Por insumo/Por etapa | Sem fusão de cor, tensão, bitola ou unidade incompatível |
+| Recomendador LAB de Condutores | Lista atual → histórico confirmado → catálogo; candidatos completos vs revisar; não infere tensão e não soma quantidades |
 | Lances, RL e BR | Total/composição e origem preservados em Compras/Completo/Execução |
 | WhatsApp/e-mail/PDF reais | Conferir legibilidade, medidas, etapas e nenhuma mutação |
 | Criar/editar/duplicar/excluir | Persistência e etapa vazia corretas |

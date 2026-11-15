@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.61",
-  "build": "2026-11-13",
-  "notes": "Confirmar sugestões em tags ? logo abaixo da pesquisa; compor nome no primeiro nível e Avançar para ficha sem painel duplicado"
+  "version": "x.0.3.62",
+  "build": "2026-11-15",
+  "notes": "Correção da invalidação de detalhes condicionais e fundação isolada do recomendador de Condutores (laboratório; não integrado ao modal)"
 }
