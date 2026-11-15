@@ -172,3 +172,8 @@ O primeiro passo de implementação é um recomendador experimental puro de Cond
 ### 15/11 — A camada anterior, sem jogar fora o modal
 
 O fundador reforçou que o modal detalhado deveria ser preservado **justamente para permitir criar qualquer material**. As recomendações seriam uma camada anterior de escolha rápida, não substituição da liberdade de especificar. Para testar o caminho sem comprometer dados ou UI aprovada, foi criado um laboratório portátil de Condutores com busca/voz, cartões prioritários, alternativas expansíveis e botão Personalizar. Esse ensaio usa exemplos fictícios; não é versão homologada nem substitui o modal real. Link e roteiro: [teste do recomendador](TESTE-RECOMENDADOR-CONDUTORES-2026-11-15.md).
+
+
+### 15/11 — De um menu de materiais para uma sugestão que se deixa editar
+
+Após testar a primeira versão do recomendador em HTML, o fundador observou que os cartões já ajudavam, mas a tela ainda mostrava material demais. A sugestão foi recuperar a qualidade do modal antigo: **tags removíveis**, permitindo dispensar alguma característica proposta e, com um toque, **editar o próprio candidato**, em vez de escolher algo pronto ou recomeçar a especificação. A solução aprovada para laboratório passa a mostrar **uma sugestão principal**; demais materiais ficam recolhidos. Remover uma característica obrigatória cria pendência, não item final incompleto. Esse refinamento preserva a ficha detalhada já aprovada no TEREON; nenhuma lista real foi alterada.
