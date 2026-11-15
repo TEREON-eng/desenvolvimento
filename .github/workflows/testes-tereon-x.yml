@@ -30,6 +30,8 @@ jobs:
         run: node x/tests/interpretador-voz-condutores.test.cjs
       - name: Validar recomendador conservador de Condutores sem fusão automática
         run: node x/tests/recomendador-condutores.test.cjs
+      - name: Validar isolamento do novo catálogo v2 sem perda de listas
+        run: node x/tests/catalogo-v2-isolamento.test.cjs
       - name: Validar laboratório isolado de sugestões de Condutores
         run: node x/tests/recomendador-preview.test.cjs
       - name: Validar acesso e alvos de toque do laboratório mobile

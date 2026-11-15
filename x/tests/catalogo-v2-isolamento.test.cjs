@@ -1,0 +1,21 @@
+/* Fichario v2 nasce isolado: não retira legado nem altera Listas. */
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'../..');
+const read=p=>fs.readFileSync(path.join(root,p),'utf8');
+const v2=JSON.parse(read('x/catalogo-v2/registro-lab.json'));
+const v1=JSON.parse(read('x/fichario-x/fichas-lab-2026-11-12.json'));
+const html=read('x/index.html'),app=read('x/listas/app.js'),motor=read('x/catalogo/motor.js'),modal=html.slice(html.indexOf('<dialog id="addDialog"'),html.indexOf('</dialog>',html.indexOf('<dialog id="addDialog"'))+9);
+assert.equal(v2.schema_version,1);
+assert.equal(v2.estado,'LAB_VAZIO_NAO_PUBLICADO');
+assert.equal(v2.ativo_no_app,false);
+for(const k of ['fontes','familias','fichas_propostas','produtos_candidatos','regras_tecnicas_propostas','lotes_de_revisao'])assert.deepEqual(v2[k],[],k+' deve começar vazio');
+assert.equal(v2.compatibilidade.excluir_ou_migrar_automaticamente,false);
+assert.equal(v2.compatibilidade.nao_alterar_listas_existentes,true);
+assert.equal(v1.fichas.length,6,'as 6 fichas de trabalho não foram zeradas no PWA');
+assert.ok(v1.fichas.every(f=>f.status==='Em revisão'),'não há homologação implícita');
+assert.ok(motor.includes("fichas-lab-2026-11-12.json"),'motor legado conserva fonte ativa');
+assert.ok(html.includes('<dialog id="addDialog"')&&modal.includes('id="saveItem"'),'modal aprovado preservado');
+assert.ok(!html.includes('catalogo-v2/')&&!app.includes('catalogo-v2/'),'base vazia não é ligada às Listas');
+assert.ok(app.includes('catalogId'),'itens preservam referência técnica histórica');
+console.log('TEREON v2: registro novo vazio/isolado, 6 fichas legadas e modal/Listas preservados');

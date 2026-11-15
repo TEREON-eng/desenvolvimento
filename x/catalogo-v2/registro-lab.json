@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "nome": "TEREON — base técnica por evidências v2",
+  "data": "2026-11-15",
+  "estado": "LAB_VAZIO_NAO_PUBLICADO",
+  "ativo_no_app": false,
+  "metodo": "fabricante_e_referencia_para_evidencia_de_produto; sintese_por_familia_para_ficha_generica; revisao_humana_antes_de_publicar",
+  "objetivo": "materiais eletricos plausiveis e suficientemente especificados para listas; sem pretensao de cobertura exaustiva de SKUs",
+  "requisitos": {
+    "ficha_minima": "identidade, atributos obrigatorios por condicao, opcoes coerentes e regra de nome",
+    "produto_comercial": "fabricante, referencia, familia, fonte e atributos verificados por modelo",
+    "proveniencia": "fonte verificavel por atributo relevante, declaracao exata de escopo e campos nao informados",
+    "publicacao": "somente apos revisao e aprovacao explicita do fundador",
+    "unidades": "unidades de quantificacao e unidades/apresentacao de compra distintas",
+    "compatibilidade": "nao converter familia em SKU nem supor disponibilidade comercial por combinacao de tags"
+  },
+  "fontes": [],
+  "familias": [],
+  "fichas_propostas": [],
+  "produtos_candidatos": [],
+  "regras_tecnicas_propostas": [],
+  "lotes_de_revisao": [],
+  "compatibilidade": {
+    "fonte_legada": "x/fichario-x/fichas-lab-2026-11-12.json",
+    "quantidade_fichas_ativas_legadas": 6,
+    "excluir_ou_migrar_automaticamente": false,
+    "nao_alterar_listas_existentes": true
+  }
+}

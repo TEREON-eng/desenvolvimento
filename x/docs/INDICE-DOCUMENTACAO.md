@@ -13,6 +13,8 @@
 
 **Precedência:** os contratos e decisões consolidadas prevalecem sobre texto histórico de versões anteriores; o estado datado exige nova evidência para ser substituído. Status “Implementado” não equivale a “Homologado”.
 
+- [NOVA-ESTRATEGIA-FICHAS-IA-EVIDENCIAS-2026-11-15.md](NOVA-ESTRATEGIA-FICHAS-IA-EVIDENCIAS-2026-11-15.md) — produção assistida por IA, fontes comerciais, fichas genéricas e catálogo v2 isolado.
+
 - [RECOMENDADOR-TECNICO-CONDUTORES-2026-11-15.md](RECOMENDADOR-TECNICO-CONDUTORES-2026-11-15.md) — novo motor de recomendação; decisão de produto e ensaio técnico não integrado.
 
 - [TESTE-RECOMENDADOR-CONDUTORES-2026-11-15.md](TESTE-RECOMENDADOR-CONDUTORES-2026-11-15.md) — laboratório portátil e instruções de avaliação, sem mudar o app.
