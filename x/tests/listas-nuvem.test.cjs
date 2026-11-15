@@ -65,7 +65,7 @@ const client={auth:{getUser:async()=>({data:{user:{id:uid}},error:null})},from};
  const ui=fs.readFileSync(path.join(__dirname,'../listas/nuvem/lab.js'),'utf8');
  const central=fs.readFileSync(path.join(__dirname,'../laboratorios/index.html'),'utf8');
  assert.ok(page.includes('id="save-list"')&&page.includes('id="item-dialog"'));
- assert.ok(central.includes('../?view=lists')&&central.includes('../?view=create'),'usuário navega somente pelo motor unificado');
+ assert.ok(central.includes('location.replace')&&central.includes('location.search+location.hash'),'redirecionamento legado preserva query e hash no motor unificado');
  assert.ok(!central.includes('class="cloud-test"'),'laboratório técnico não concorre com Minhas listas');
  assert.ok(ui.includes('cloud.updateList')&&ui.includes('client.auth.getUser()'));
  assert.ok(!ui.includes('localStorage'),'laboratório não importa lista local');
