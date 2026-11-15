@@ -187,3 +187,8 @@ O fundador propôs eliminar mais uma etapa: em vez de clicar no × e abrir a fic
 ### 15/11 — A prova no telefone, antes de mexer no modal
 
 Após considerar a dinâmica boa no computador, o fundador pediu para experimentá-la no **celular**. A decisão de engenharia foi não substituir o modal detalhado aprovado: adicionou-se uma entrada identificada como LAB no fim da Home do TEREON X; ela abre o recomendador independente com dados fictícios. A interface foi adaptada para toque, teclado e dimensões pequenas. A versão declarada passou a **X.0.3.63**, com cache PWA específico e teste automático do link. O CI passou, mas **publicação Cloudflare e teste real no aparelho não foram comprovados**. O propósito desse passo é descobrir problemas de uso antes de integrar a recomendação às listas reais.
+
+
+### 15/11 — O laboratório finalmente acessível por Preview
+
+Ao pedir implantação de fato no celular, o fundador explicitou que precisava experimentar pelo próprio Cloudflare. O GitHub já estava conectado à integração Cloudflare; a confirmação surgiu no check **Workers Builds: desenvolvimento**, em vez de exigir um novo deploy manual. Um teste de requisições HTTP no GitHub Actions, [execução 43763788601](https://github.com/TEREON-eng/desenvolvimento/actions/runs/43763788601), verificou a versão **X.0.3.63** e o HTML da interface. URL pública de Preview: https://desenvolvimento-muts-desenvolvimento.tereon-app.workers.dev/x/laboratorios/recomendador-condutores.html. A branch `main` e o modal de especificação permaneceram inalterados, e as listas reais não são usadas no laboratório. O teste real de toque em aparelho físico permanece pendente.

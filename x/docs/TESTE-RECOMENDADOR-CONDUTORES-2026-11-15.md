@@ -4,18 +4,24 @@
 
 A decisão é manter **as recomendações como uma camada anterior**, preservando a ficha detalhada para *Personalizar* e a criação livre de materiais. **Refinamento de 15/11:** mostrar um único candidato cujas tags são editáveis por toque. O valor abre as alternativas daquela característica; o × separado permite removê-la, caso esteja bloqueando outra escolha. Remover uma característica necessária gera uma tag pendente (?), que também abre opções por toque. O formulário completo fica como alternativa para ajustes aprofundados. A recomendação é uma base editável, não uma escolha inflexível. Este teste é isolado e não modifica suas listas.
 
-## Prévia direta no celular (sem deploy Cloudflare)
+## TESTE PUBLICADO — Preview Cloudflare (15/11/2026)
+- **[Abrir a tela interativa diretamente no celular](https://desenvolvimento-muts-desenvolvimento.tereon-app.workers.dev/x/laboratorios/recomendador-condutores.html).**
+- **[Abrir o TEREON X — Ferramentas](https://desenvolvimento-muts-desenvolvimento.tereon-app.workers.dev/x/)** e tocar em **Testar recomendação por tags**.
+- Confirmação: [GitHub Actions de verificação HTTP](https://github.com/TEREON-eng/desenvolvimento/actions/runs/43763788601) concluiu com sucesso para o commit `b4165f536dea624cfe90b96fe8b20f53a5541b7a`; Cloudflare Workers Builds também concluiu e a versão servida foi **X.0.3.63**. [Testes gerais aprovados](https://github.com/TEREON-eng/desenvolvimento/actions/runs/43763788547).
+- Esta Preview usa **dados fictícios**; nenhuma lista é alterada. Toques no telefone físico, voz e ficha técnica real ainda requerem teste/validação.
+
+## Alternativa externa (não necessária quando a Preview está disponível)
 - Abrir a [prévia interativa do laboratório](https://raw.githack.com/TEREON-eng/desenvolvimento/desenvolvimento/x/laboratorios/recomendador-condutores.html) no navegador do celular. É fornecida por um serviço externo de HTML público do GitHub e pode exibir uma confirmação de segurança na primeira visita. **Não foi verificada a execução no aparelho físico**, nem a disponibilidade do serviço para esta URL específica.
 - Usar somente pedidos fictícios. A prévia não acessa listas reais, não grava itens e não substitui a publicação do Worker do TEREON. Links de retorno relativos à raiz `/x/` podem não funcionar no domínio do visualizador; use Voltar do navegador.
 - Se a prévia falhar, usar [visualizador alternativo](https://htmlpreview.github.io/?https://github.com/TEREON-eng/desenvolvimento/blob/desenvolvimento/x/laboratorios/recomendador-condutores.html) ou abrir o HTML baixado no Chrome, como documentado abaixo.
 
 ## Acesso pelo celular — X.0.3.63
 - A versão `desenvolvimento` tem o botão **Testar recomendação por tags** logo abaixo dos cartões da Home, levando à rota `/x/laboratorios/recomendador-condutores.html`.
-- Para esse botão aparecer num celular, o Worker Cloudflare precisa estar **servindo X.0.3.63**. O CI verde não publica por si só: esta conta não tem deploy confirmado. Se a publicação é manual no projeto, executar na raiz do repo `npx wrangler deploy` na branch `desenvolvimento` após confirmar as credenciais.
+- A Preview em Cloudflare **já foi comprovada** por GET HTTP na versão X.0.3.63; não é preciso executar deploy manual para este teste.
 - Abrir no navegador do celular o endereço de desenvolvimento do TEREON, conferir `/x/version.json` (deve conter `x.0.3.63`), entrar em **Ferramentas** e tocar no atalho. Alternativamente, na mesma hospedagem abrir diretamente o caminho acima.
 - O laboratório foi ajustado para áreas de toque de aproximadamente **44–48 px**, viewport com safe-area, controles de tag em botões separados, painel de opções com rolagem e detalhes em coluna única. Os exemplos de texto ficam recolhidos. Testar digitação com espaço, fechamento do teclado, rolamento, seleção de cor, pendências, descarte e retorno ao app.
 - Confirmar manualmente no Android/Chrome os fluxos `Preto → Azul`, `tensão × → ? → selecionar`, `Ver outras sugestões`, `Editar esta sugestão`, `Criar material do zero` e voltar para a Home. **Nenhum material é salvo**.
-- A ausência de navegador/Cloudflare neste teste impede afirmar que a página já esteja acessível remotamente. Não promover a `main` antes de homologação e teste supervisionado.
+- O acesso remoto HTTP foi confirmado, mas o funcionamento tátil no Android ainda precisa ser observado. Não promover a `main` antes de homologação e teste supervisionado.
 
 ## Acesso
 - Arquivo autossuficiente: `x/laboratorios/recomendador-condutores.html`. Contém os mesmos interpretador/recomendador/fichário experimental e a versão de voz usada nesta revisão, embutidos para rodar sem rede.

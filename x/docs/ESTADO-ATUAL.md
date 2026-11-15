@@ -1,6 +1,9 @@
 # TEREON X — Estado atual verificável
 
-**Revisão:** 15/11/2026 · **branch:** desenvolvimento · **versão declarada:** X.0.3.63 · **último CI verificado:** [execução verde 43759876132](https://github.com/TEREON-eng/desenvolvimento/actions/runs/43759876132), SHA **5a8027ed6933864ea7a831c2c4c1e91fc460273f**. **Cloudflare, URL efetivamente servida e celular físico permanecem sem verificação.**
+**VERIFICAÇÃO SUPERVENIENTE — 15/11/2026:** [Preview de Condutores](https://desenvolvimento-muts-desenvolvimento.tereon-app.workers.dev/x/laboratorios/recomendador-condutores.html) confirmada como acessível pelo [teste HTTP](https://github.com/TEREON-eng/desenvolvimento/actions/runs/43763788601), commit b4165f536dea624cfe90b96fe8b20f53a5541b7a. O Cloudflare Workers Builds e a regressão [46 etapas](https://github.com/TEREON-eng/desenvolvimento/actions/runs/43763788547) concluíram com sucesso. A resposta de `/x/version.json` era **x.0.3.63** e o HTML do recomendador estava presente. A Preview é isolada; **o laboratório utiliza dados simulados e não foi testado em aparelho físico**. As notas antigas de 'Cloudflare não conferido' abaixo descrevem o estado ANTERIOR e ficam superadas por esta evidência.
+
+
+**Revisão:** 15/11/2026 · **branch:** desenvolvimento · **versão declarada:** X.0.3.63 · **último CI verificado:** [execução verde 43759876132](https://github.com/TEREON-eng/desenvolvimento/actions/runs/43759876132), SHA **5a8027ed6933864ea7a831c2c4c1e91fc460273f**. **Cloudflare e URL da Preview agora verificados; celular físico permanece sem verificação.**
 
 Esta é uma fotografia da evidência disponível, **não** homologação de catálogo, CI, Cloudflare, Android ou compra real.
 
