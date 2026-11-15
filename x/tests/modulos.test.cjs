@@ -151,7 +151,7 @@ assert.ok(src('x/escola/index.html').includes('href="/x/biblioteca/"'),'Bibliote
 assert.ok(src('x/biblioteca/index.html').includes('href="/x/biblioteca/fichario/"'),'Fichário é primeiro livro da Biblioteca');
 assert.ok(src('x/biblioteca/fichario/index.html').includes('TereonXCatalog.load()'),'leitor técnico original preservado');
 assert.ok(src('x/components/header.js').includes('href="/x/identidade/lab.html"'),'Perfil no cabeçalho compartilhado');
-assert.ok(listUi.includes("initialView==='create'")&&listUi.includes("initialView==='lists'"),'links de entrada antigos seguem válidos');
+assert.ok(listUi.includes("initialView!=='create'")&&listUi.includes("initialView==='lists'"),'links de entrada antigos seguem válidos');
 assert.equal(src('x/listas/app.js').includes('localStorage'),false);
 assert.equal(src('x/listas/servico.js').includes('document.'),false);
 assert.equal(src('x/listas/store.js').includes('document.'),false);
