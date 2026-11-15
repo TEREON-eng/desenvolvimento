@@ -525,7 +525,7 @@ root.TereonXRecommend=Object.freeze({version:1,recommend});
 <script>(function(){'use strict';
 const $=id=>document.getElementById(id);
 // No arquivo portátil, rotas relativas /x/ não funcionam em file://.
-if(location.protocol==='file:')document.querySelectorAll('a[href="/x/?view=lists"]').forEach(a=>{
+if(typeof location!=='undefined'&&location.protocol==='file:')document.querySelectorAll('a[href="/x/?view=lists"]').forEach(a=>{
  a.href='https://desenvolvimento.tereon-app.workers.dev/x/?view=lists';
  a.title='Hospedagem de desenvolvimento anteriormente confirmada; disponibilidade atual não verificada.';
 });
