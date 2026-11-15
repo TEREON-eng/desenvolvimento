@@ -27,7 +27,7 @@
 4. Na ficha, mostrar detalhes aplicáveis, inclusive opcionais; texto de tag navega sem mutar, **× vermelho** remove. Barra não clicável, sem setas da X.0.3.57. Painel de confirmação duplicado da X.0.3.60 é revogado.
 5. Voz depende de suporte, permissão, rede e possivelmente serviço externo; texto sempre disponível. Não armazenar áudio no TEREON. Fotos não implementadas.
 
-## Próxima experiência principal (decidida; implementação visual pendente)
+## Próxima experiência principal (decidida; implementação no PWA pendente)
 A entrada por tags permanece operacional e **a ficha manual/detalhada continuará disponível mesmo depois da adoção do recomendador**. A camada de recomendações vem **antes** da ficha, nunca a substitui. A **experiência-alvo** é: pedido texto/voz → sugestões completas e tecnicamente coerentes, incluindo origens e diferenças → escolha do conjunto ou Personalizar na ficha → revisão de correspondências da Lista sem fusão automática. Ordenação: **Lista atual → escolhas anteriores confirmadas → catálogo auditado**. Sugerir de modo conservador, com perguntas somente quando necessárias. O laboratório de ranqueamento de Condutores está em [RECOMENDADOR-TECNICO-CONDUTORES-2026-11-15.md](RECOMENDADOR-TECNICO-CONDUTORES-2026-11-15.md); não foi conectado ao PWA e não usa IA treinada. 
 
 ## Identidade técnica e comercial
@@ -38,3 +38,6 @@ FT_COND-001: estrutura **Consolidada**, status **Em revisão**; tensão DET-006 
 
 ## Protocolo de alteração
 Antes de mudar: **problema → decisão → contratos afetados → caminhos/branch/SHA → testes automáticos → ensaio no aparelho → deploy comprovado → aceite**. Atualizar este documento substituindo trechos superados; preservar tentativa e histórico no CHANGELOG/Diário.
+
+### Laboratório UX — sugestão principal e tags removíveis (15/11)
+A apresentação inicial deve conter **um único candidato principal**, com as características sugeridas em tags com ×, as demais opções somente em menu expansível e **Editar esta sugestão** como caminho de primeira classe. Remover tag altera unicamente o rascunho; material originalmente recomendado não é mutado. Se remover atributo necessário, mostrar pendência e bloquear confirmar como está, mas manter a ficha editável com as demais características. **Escolher especificação** e **Editar** continuam opções distintas. A ficha completa permanece acessível para criar do zero. No momento, o recurso existe **somente em laboratório HTML**, não no PWA real.
