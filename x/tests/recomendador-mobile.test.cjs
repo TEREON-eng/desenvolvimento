@@ -1,0 +1,28 @@
+/* Garantir que o laboratório é alcançável na PWA sem invadir o modal aprovado. */
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const read=p=>fs.readFileSync(path.resolve(__dirname,'../..',p),'utf8');
+const home=read('x/index.html'),lab=read('x/laboratorios/recomendador-condutores.html');
+const sw=read('x/sw.js'),styles=read('x/styles.css'),pwa=read('x/pwa.js');
+const version=JSON.parse(read('x/version.json')).version;
+const route='/x/laboratorios/recomendador-condutores.html';
+assert.ok(home.includes('href="'+route+'"'),'Home tem um acesso direto ao teste no celular');
+assert.ok(home.includes('Não altera suas listas'),'link esclarece que é simulação');
+assert.ok(styles.includes('.home-lab-link'),'atalho do laboratório tem estilo isolado');
+assert.ok(home.includes('<dialog id="addDialog"')&&home.includes('</dialog>'),'modal aprovado permanece no arquivo principal');
+const start=home.indexOf('<dialog id="addDialog"'),end=home.indexOf('</dialog>',start)+9;
+assert.equal(home.slice(start,end),read('x/tests/fixtures/modal-adicionar-aprovado-x034.html'),'modal original sem alteração');
+assert.ok(sw.includes("'"+route+"'"),'service worker guarda a rota experimental para uso offline');
+assert.ok(sw.includes("const CACHE='tereon-x-lab-"+version.replace(/^x\./,'')+"'"),'versão do cache é compatível com a versão declarada');
+assert.ok(pwa.includes("const VERSION='"+version+"'"),'controlador PWA usa versão declarada');
+assert.ok(lab.includes('name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"'));
+assert.ok(lab.includes('min-height:44px')&&lab.includes('font-size:16px'),'mobile usa alvos táteis e não amplia teclado ao focar');
+assert.ok(lab.includes('.spec-chip-value{min-height:44px')&&lab.includes('.spec-chip-x{min-height:44px'),'valor e × com alvos distintos e adequados a toque');
+assert.ok(lab.includes('scroll-margin-top:70px')&&lab.includes('scrollIntoView?.'),'painel de opções pode ser levado à área visível');
+assert.ok(lab.includes('href="/x/" aria-label="Voltar às ferramentas'), 'voltar ao app sem fechar o navegador');
+assert.ok(lab.includes("const samples={"),'somente dados de simulação');
+assert.ok(!lab.includes('localStorage.'),'teste não acessa dados pessoais');
+const scripts=[...lab.matchAll(/<script(?:\s+[^>]*)?>([\s\S]*?)<\/script>/g)];
+assert.equal(scripts.length,6);
+for(const m of scripts)if(!m[0].includes('application/json'))new vm.Script(m[1],{filename:'mobile-lab.js'});
+console.log('TEREON X: laboratório mobile acessível por link, modal preservado, toque 44px, cache e versão coerentes');

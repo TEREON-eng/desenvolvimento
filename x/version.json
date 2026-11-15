@@ -1,5 +1,5 @@
 {
-  "version": "x.0.3.62",
+  "version": "x.0.3.63",
   "build": "2026-11-15",
-  "notes": "Correção da invalidação de detalhes condicionais e fundação isolada do recomendador de Condutores (laboratório; não integrado ao modal)"
+  "notes": "Atalho protegido para laboratório de recomendações e ajustes de toque/viewport em celular; ficha e listas preservadas."
 }

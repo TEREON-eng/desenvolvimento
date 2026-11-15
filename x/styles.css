@@ -1046,3 +1046,13 @@ html[data-tx-appearance="dark"] #addDialog.is-choosing .intent-tag.is-confirmed 
 html[data-tx-appearance="tereon"] #addDialog.is-choosing .intent-tag.is-confirmed b{
  color:#c7ff46;
 }
+
+/* Atalho isolado: o laboratório não substitui as ferramentas aprovadas da Home. */
+.home-lab-link{margin:16px 0 0;display:flex;align-items:center;gap:12px;padding:13px 15px;min-height:68px;border-radius:15px;background:#203b2d;color:#f4faef;border:1px solid #315b41;text-decoration:none}
+.home-lab-icon{flex:0 0 auto;font-size:23px;color:#c7ff46}
+.home-lab-copy{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+.home-lab-copy strong{font-size:14px;color:#f4faef}
+.home-lab-copy small{font-size:11px;color:#d4e2d5;line-height:1.4}
+.home-lab-arrow{font-size:25px;color:#c7ff46}
+.home-lab-link:focus-visible{outline:3px solid #77b45d;outline-offset:2px}
+@media (max-width:430px){.home-lab-link{padding:12px;min-height:66px}.home-lab-copy strong{font-size:13px}}

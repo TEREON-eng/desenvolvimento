@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="pt-BR"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="dark"><meta name="theme-color" content="#101815">
 <title>TEREON · Recomendador Condutores (laboratório)</title>
 <style>
@@ -90,12 +90,55 @@ select{width:100%;padding:10px;background:var(--bg);color:var(--fg);border:1px s
 .utility-strip details p{margin:6px 0}
 .compact-warning{font-size:.81rem;color:#ffe2ab;margin:7px 0 0}
 @media(max-width:560px){.candidate .actions{flex-direction:row}.candidate .actions button{min-width:0}.spec-chip-value{font-size:.78rem}}
+
+/* Mobile-first: áreas de toque >=44px, teclado não provoca zoom e painel curto.
+   CSS restrito ao arquivo portátil. Não modifica o modal aprovado do TEREON. */
+html,body{max-width:100%;overflow-x:clip}
+button{touch-action:manipulation;-webkit-tap-highlight-color:rgba(199,255,70,.16)}
+.searchbox input{font-size:16px}
+@media(max-width:640px){
+ .container{padding:14px 12px calc(65px + env(safe-area-inset-bottom));max-width:100%}
+ header{margin-bottom:15px;flex-wrap:wrap}
+ header .brand{font-size:.94rem}
+ header a{min-height:44px;display:inline-flex;align-items:center;padding:5px 2px}
+ h1{font-size:1.55rem;margin-top:4px}
+ .intro{font-size:.87rem;line-height:1.45;margin-bottom:12px}
+ .card{margin:10px 0;padding:12px;border-radius:14px}
+ .searchbox{gap:7px}
+ .searchbox input{min-height:48px;padding:12px 10px;font-size:16px}
+ .searchbox button{min-height:48px;padding:9px 10px;min-width:79px}
+ .blockhead{align-items:flex-start;gap:8px;margin:18px 0 6px}
+ .blockhead h2{font-size:1rem}
+ .blockhead span{font-size:.72rem;text-align:right;max-width:145px}
+ .candidate strong{font-size:.96rem;line-height:1.4;overflow-wrap:anywhere}
+ .spec-tags{margin-top:10px;gap:8px}
+ .spec-chip{min-height:46px;max-width:100%;padding:1px 3px 1px 0}
+ .spec-chip-value{min-height:44px;padding:8px 8px 8px 10px;white-space:normal;overflow-wrap:anywhere;text-align:left;line-height:1.3}
+ .spec-chip-x{min-height:44px;min-width:39px;padding:7px 10px;margin-left:1px}
+ .missing-chip{min-height:44px;white-space:normal;text-align:left}
+ .tag-editor{padding:10px;border-radius:10px;scroll-margin-top:70px}
+ .tag-editor-title button{min-height:44px}
+ .chip-options{max-height:min(35dvh,245px);gap:8px;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+ .chip-choice{min-height:44px;padding:9px 11px;white-space:normal;overflow-wrap:anywhere}
+ .candidate .actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:11px}
+ .candidate .actions button{min-width:0;min-height:46px}
+ #expand{display:block;width:100%;min-height:46px}
+ .utility-strip{gap:8px;padding:9px 2px;margin-top:10px}
+ .utility-strip button{min-height:44px}
+ .utility-strip a{min-height:44px;display:inline-flex;align-items:center}
+ dialog{max-height:calc(100dvh - 2*max(10px,env(safe-area-inset-top)));width:calc(100vw - 20px);overscroll-behavior:contain}
+ .dialogin{padding:15px}
+ .formgrid{grid-template-columns:minmax(0,1fr);gap:11px;margin:12px 0}
+ .formgrid select{font-size:16px;min-height:46px}
+ .footer button{min-height:48px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
 </style>
 </head><body>
 <div class="container">
-<header><div class="brand">TEREON <span class="muted small">/ LAB</span></div><a class="small" href="/x/?view=lists">Abrir listas do TEREON</a></header>
+<header><div class="brand">TEREON <span class="muted small">/ LAB</span></div><a class="small" href="/x/" aria-label="Voltar às ferramentas do TEREON">← Ferramentas</a></header>
 <main>
-<div class="eyebrow">Protótipo isolado · 15/11/2026</div>
+<div class="eyebrow">Teste para celular · Condutores · Dados simulados</div>
 <h1>Você pede. O TEREON sugere.</h1>
 <p class="intro">Toque na tag para trocar uma característica sem refazer o material. Use × só se precisar remover. <strong>Simulação:</strong> nada será salvo nas listas.</p>
 <section class="card" aria-label="Pesquisa do material">
@@ -641,6 +684,14 @@ function openTag(key,id){
  if(!item||!detail)return;
  activeTag=activeTag?.key===key&&activeTag.id===id?null:{key,id};
  tagNotice='';render();
+ // No celular, manter o painel de alternativas visível após tocar numa tag
+ // que esteja abaixo do teclado; nunca força scroll durante digitação.
+ if(activeTag&&window.requestAnimationFrame){
+  window.requestAnimationFrame(()=>{
+   const card=document.querySelector('[data-candidate-card="'+key.replace(/"/g,'')+'"] .tag-editor');
+   card?.scrollIntoView?.({block:'nearest',behavior:'auto'});
+  });
+ }
 }
 function setTag(key,id,value){
  const item=byKey(key);if(!item||!activeTag||activeTag.key!==key||activeTag.id!==id)return;
