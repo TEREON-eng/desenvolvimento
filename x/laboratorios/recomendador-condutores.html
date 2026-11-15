@@ -62,6 +62,15 @@ select{width:100%;padding:10px;background:var(--bg);color:var(--fg);border:1px s
 .footer{display:flex;gap:10px;margin-top:20px}
 .footer button{flex:1}
 @media(max-width:560px){.searchbox{gap:6px}.searchbox input{padding:11px}.actions{flex-direction:column}.container{padding:15px 12px 70px}.card{padding:13px}dialog{max-height:94svh}}
+
+.spec-tags{display:flex;flex-wrap:wrap;gap:7px;margin:13px 0 4px}
+.spec-chip{display:inline-flex;align-items:center;gap:7px;min-height:34px;border:1px solid #63746a;border-radius:10px;background:#293c31;color:var(--fg);font-size:.8rem;padding:4px 7px 4px 10px;max-width:100%}
+.spec-chip b{font-size:1.03rem;color:#ffdfd8;line-height:1;background:#476052;border-radius:6px;padding:3px 6px}
+.spec-chip:hover,.missing-chip:hover{border-color:var(--lime)}
+.missing-chip{font-size:.8rem;background:#47371d;color:#ffe3aa;border:1px dashed #a58e56;border-radius:10px;padding:7px 10px;min-height:34px}
+.field-heading{margin:10px 0 4px;color:var(--muted);font-size:.76rem}
+.candidate .actions{margin-top:12px}
+.candidate .actions button{min-width:120px}
 </style>
 </head><body>
 <div class="container">
@@ -69,7 +78,7 @@ select{width:100%;padding:10px;background:var(--bg);color:var(--fg);border:1px s
 <main>
 <div class="eyebrow">Protótipo isolado · 15/11/2026</div>
 <h1>Você pede. O TEREON sugere.</h1>
-<p class="intro">Teste a camada de recomendações antes da ficha detalhada. Neste laboratório, a lista, o histórico e os materiais são <strong>exemplos simulados</strong>. Nada será salvo nas suas listas.</p>
+<p class="intro">Teste UMA sugestão principal com tags removíveis, edite a partir dela e expanda alternativas apenas quando quiser. Neste laboratório, a lista, o histórico e os materiais são <strong>exemplos simulados</strong>. Nada será salvo nas suas listas.</p>
 <section class="card" aria-label="Pesquisa do material">
 <label class="eyebrow" for="search">Descreva o que precisa</label>
 <div class="searchbox" style="margin-top:9px"><input id="search" type="search" autocomplete="off" maxlength="300" placeholder="Ex.: fio flex 2,5 preto"><button id="mic" type="button" aria-label="Falar material">🎙 Falar</button></div>
@@ -77,14 +86,14 @@ select{width:100%;padding:10px;background:var(--bg);color:var(--fg);border:1px s
 <div class="examples" aria-label="Exemplos"><button type="button" data-example="fio flex 2,5 preto">Fio flex 2,5 preto</button><button type="button" data-example="fio flex 2,5 preto 450">Fio 2,5 preto 450</button><button type="button" data-example="fio 4 preto">Fio 4 preto</button><button type="button" data-example="quadro de sobrepor">Quadro sobrepor</button></div>
 </section>
 <div id="results" aria-live="polite">
-<div class="blockhead"><h2>Mais prováveis</h2><span id="summary"></span></div>
+<div class="blockhead"><h2>Principal sugestão</h2><span id="summary"></span></div>
 <div id="top"></div><button class="outline" type="button" id="expand" hidden>Ver outras opções</button><div id="other"></div><div id="review"></div>
 </div>
 <section class="card"><div class="eyebrow">Não encontrou exatamente o que precisa?</div><p>Continue com a ficha técnica detalhada. O caminho tradicional do TEREON permanece disponível.</p>
 <div class="actions"><button class="outline" type="button" id="personalize">Personalizar nesta demonstração</button><a class="button primary" style="text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;background:var(--lime);color:#1a261a" href="/x/?view=lists">Abrir ficha original no TEREON</a></div>
 <p class="small muted">Ao abrir a ficha original, a escolha desta demonstração ainda não é transferida automaticamente.</p></section>
 <div class="context" id="feedback" role="status" hidden></div>
-<section class="card small muted"><strong>O que este teste demonstra</strong><p>Prioridade: itens da lista atual → escolhas anteriores → catálogo. Especificações com lacunas ficam em revisão; a opção personalizada usa as regras do fichário experimental. Não há comparação com suas listas reais, aprendizado de preferências ou publicação de catálogo.</p><p>Se não aparecerem sugestões, confira se o pedido é de Condutores: o interpretador das outras famílias ainda não foi integrado.</p></section>
+<section class="card small muted"><strong>O que este teste demonstra</strong><p>Prioridade: itens da lista atual → escolhas anteriores → catálogo. Remover uma tag altera apenas o rascunho desta sugestão; a ficha detalhada abre com os demais valores já preenchidos. Especificações com lacunas ficam em revisão; a opção personalizada usa as regras do fichário experimental. Não há comparação com suas listas reais, aprendizado de preferências ou publicação de catálogo.</p><p>Se não aparecerem sugestões, confira se o pedido é de Condutores: o interpretador das outras famílias ainda não foi integrado.</p></section>
 </main></div>
 <dialog id="choiceDialog" aria-labelledby="choiceLabel"><div class="dialogin"><div class="modalhead"><div><div class="eyebrow">Conferir material completo</div><h2 id="choiceLabel">Confirma esta especificação?</h2></div><button data-close-dialog="choiceDialog" aria-label="Fechar">✕</button></div><div class="divider"></div><strong id="choiceHeading"></strong><p class="muted" id="choiceAttributes"></p><p class="small"><b>Origem:</b> <span id="choiceOrigin"></span></p><div class="notice" id="choiceHint"></div><div class="footer"><button data-close-dialog="choiceDialog" type="button">Voltar</button><button class="primary" type="button" id="choiceDone">Simular escolha</button></div></div></dialog>
 <dialog id="detailDialog" aria-labelledby="detailTitle"><div class="dialogin"><div class="modalhead"><div><div class="eyebrow">Ficha experimental de Condutores</div><h2 id="detailTitle">Personalizar</h2></div><button data-close-dialog="detailDialog" aria-label="Fechar">✕</button></div><p class="muted small">Ajuste as características. Este é um formulário de laboratório, <strong>não substitui o modal aprovado</strong>.</p><div class="formgrid" id="detailFields"></div><p class="small muted" role="status" id="detailCheck"></p><div class="footer"><button type="button" data-close-dialog="detailDialog">Voltar</button><button type="button" class="primary" id="detailDone" disabled>Usar especificação</button></div></div></dialog>
@@ -561,7 +570,11 @@ const samples={
 };
 const originLabel={lista:'Já está nesta lista',historico:'Escolhido anteriormente',catalogo:'Exemplo de catálogo'};
 const names=Object.fromEntries(ficha.details.map(x=>[x.id,x.name]));
-let extended=false,last=null,selected=null,draft=null;
+let extended=false,last=null,selected=null,draft=null,activeCandidate=null;
+const modifications=new Map();
+const keyOf=item=>item.origin+':'+item.id;
+const byKey=key=>last?.all.find(item=>keyOf(item)===key)||null;
+const proposed=item=>modifications.has(keyOf(item))?modifications.get(keyOf(item)):item.values;
 const technical=v=>catalog.technicalName(ficha,v);
 function label(v){
  const parts=[];
@@ -574,62 +587,83 @@ function speakStatus(message,listening){
  $('voiceStatus').textContent=message;
  $('mic').textContent=listening?'■ Parar':'🎙 Falar';
 }
-function makeCard(item,category){
- const source=originLabel[item.origin]||item.origin;
- const warnings=(item.issues||[]).map(x=>'<li>'+esc(x)+'</li>').join('');
- const count=item.occurrences?.length||1;
- return '<article class="card candidate">'+
-  '<div class="topline"><span class="tag'+(category==='review'?' need':'')+'">'+esc(source)+'</span>'+
-  '<span class="small muted">'+(category==='review'?'Precisa conferir':'Candidato completo · ficha em revisão')+'</span></div>'+
-  '<strong>'+esc(technical(item.values))+'</strong>'+
-  '<div class="desc">'+esc(label(item.values))+'</div>'+
-  (count>1?'<p class="status">Encontrado em '+count+' origens. Não serão somadas quantidades.</p>':'')+
-  (warnings?'<details class="status"><summary>Por que revisar?</summary><ul class="list">'+warnings+'</ul></details>':'')+
+function requiredMissing(values){
+ const missing=catalog.missing(ficha,values).filter(x=>x!=='__CONFLITO__');
+ const essentials=['DET-001','DET-002','DET-004','DET-005','DET-006','DET-008'];
+ if(window.TereonXInterpreter.interpret($('search').value).proposals.some(x=>x.id==='DET-009'))essentials.push('DET-009');
+ for(const id of essentials)if(!values[id]&&!missing.includes(id))missing.push(id);
+ return missing;
+}
+function completeness(item){
+ const values=proposed(item),missing=requiredMissing(values),problems=catalog.conflicts(ficha,values);
+ if(String(values['DET-005']||'').includes(' ou '))problems.push('Isolação HEPR ou XLPE exige definição');
+ const edited=modifications.has(keyOf(item));
+ return {values,missing,problems,ready:!missing.length&&!problems.length&&(item.complete||edited)};
+}
+function makeCard(item){
+ const state=completeness(item),source=originLabel[item.origin]||item.origin;
+ const key=keyOf(item),count=item.occurrences?.length||1;
+ const chipHtml=ficha.details.filter(d=>state.values[d.id]&&d.id!=='DET-011').map(d=>
+  '<button type="button" class="spec-chip" data-remove-tag="'+esc(d.id)+'" data-candidate="'+esc(key)+'" aria-label="Retirar sugestão: '+esc(d.name)+' '+esc(state.values[d.id])+'" title="Retirar esta característica da sugestão; não altera a Lista">'+
+   '<span>'+esc(d.id==='DET-004'?state.values[d.id]+' mm²':state.values[d.id])+'</span><b aria-hidden="true">×</b></button>').join('');
+ const missingHtml=state.missing.map(id=>
+  '<button type="button" class="missing-chip" data-detail="'+esc(key)+'" title="Definir em edição">'+esc(names[id]||id)+' · ?</button>').join('');
+ const unverified=item.complete===false&&!modifications.has(key);
+ const problems=state.problems.concat(unverified?item.issues:[]);
+ return '<article class="card candidate" data-candidate-card="'+esc(key)+'">'+
+  '<div class="topline"><span class="tag'+(state.ready?'':' need')+'">'+esc(source)+'</span>'+
+  '<span class="small muted">'+(state.ready?'Completo para conferir':'Precisa de revisão')+'</span></div>'+
+  '<strong>'+esc(technical(state.values))+'</strong>'+
+  '<div class="field-heading">Características propostas · toque no × para retirar</div>'+
+  '<div class="spec-tags" role="group" aria-label="Detalhes propostos">'+chipHtml+missingHtml+'</div>'+
+  (count>1?'<p class="status">Também encontrado em '+count+' origens. Nenhuma quantidade será somada.</p>':'')+
+  (problems.length?'<p class="status">'+esc(problems.length+' ponto(s) para conferir antes de usar')+'</p>':'')+
   '<div class="actions">'+
-  (category==='review'?'<button type="button" data-detail="'+esc(item.id)+'">Completar na ficha</button>':
-   '<button class="primary" type="button" data-pick="'+esc(item.id)+'">Escolher especificação</button>')+
-  '<button type="button" class="outline" data-detail="'+esc(item.id)+'">Personalizar</button>'+
+  '<button class="primary" type="button" data-detail="'+esc(key)+'">Editar esta sugestão</button>'+
+  '<button type="button" data-pick="'+esc(key)+'"'+(!state.ready?' disabled title="Defina os detalhes pendentes antes de confirmar"':'')+'>Confirmar como está</button>'+
   '</div></article>';
 }
 function render(){
- // Interpretar uma cópia normalizada, sem reescrever o campo enquanto o usuário digita.
- // Remover os espaços finais a cada tecla impede inserir a próxima palavra.
+ // A caixa mantém os espaços durante a digitação; apenas a interpretação recebe trim.
  const q=$('search').value.slice(0,300).trim();
  const intent=window.TereonXInterpreter.interpret(q);
  last=window.TereonXRecommend.recommend({intent,ficha,catalog,sources:samples});
  $('results').hidden=!q;
  if(!q)return;
  const found=last.top.length+last.more.length+last.review.length;
- $('summary').textContent=found+' correspondência(s) encontradas no cenário simulado';
+ $('summary').textContent=found+' candidato(s) disponíveis na simulação';
  if(!intent.family){
-  $('top').innerHTML='<div class="empty">Este piloto interpreta apenas pedidos de Condutores. Para Quadros, Proteções ou Infraestrutura, use a ficha normal do TEREON.</div>';
+  $('top').innerHTML='<div class="empty">Este piloto interpreta apenas Condutores. Para outras famílias, use a ficha do TEREON.</div>';
   $('other').innerHTML='';$('expand').hidden=true;$('review').innerHTML='';return;
  }
- $('top').innerHTML=last.top.map(i=>makeCard(i,'top')).join('')||
-  '<div class="empty">Nenhum candidato completo para este pedido. Confira abaixo os itens com lacunas ou personalize pela ficha.</div>';
- $('expand').hidden=last.more.length===0;
- $('expand').textContent=(extended?'Ocultar outras opções':'Ver mais '+last.more.length+' opção(ões)');
- $('other').innerHTML=extended?last.more.map(i=>makeCard(i,'top')).join(''):'';
- $('review').innerHTML=last.review.length?
-  '<div class="blockhead"><h2>Possíveis, mas incompletos</h2><span>'+last.review.length+' para revisar</span></div>'+
-  last.review.map(i=>makeCard(i,'review')).join(''):'';
- if(last.question){
-  $('review').insertAdjacentHTML('afterbegin','<div class="notice">Pergunta decisiva: <strong>'+esc(last.question.name)+'</strong>. O TEREON não pode preencher esse dado sozinho.</div>');
- }
+ const complete=[...last.top,...last.more];
+ // Mostrar apenas UM candidato principal; todos os demais permanecem recolhidos.
+ const main=complete[0]||last.review[0]||null;
+ const others=complete.length?complete.slice(1).concat(last.review):last.review.slice(1);
+ $('top').innerHTML=main?makeCard(main):
+  '<div class="empty">Ainda não tenho material correspondente. Experimente outra descrição ou personalize.</div>';
+ $('expand').hidden=others.length===0;
+ $('expand').textContent=(extended?'Ocultar alternativas':'Ver outras sugestões ('+others.length+')');
+ $('other').innerHTML=extended?others.map(makeCard).join(''):'';
+ $('review').innerHTML=main&&!completeness(main).ready?
+  '<div class="notice">Esta sugestão tem detalhes pendentes. Retire ou altere as tags e use <strong>Editar esta sugestão</strong> para completar o que faltar.</div>':'';
 }
-function showChoice(id){
- const item=last?.all.find(x=>x.id===id);if(!item)return;
- selected=item;
- $('choiceHeading').textContent=technical(item.values);
- $('choiceAttributes').textContent=label(item.values);
+function showChoice(key){
+ const item=byKey(key);if(!item)return;
+ const state=completeness(item);
+ if(!state.ready){showDetail(key);return;}
+ selected={...item,values:{...state.values}};
+ $('choiceHeading').textContent=technical(selected.values);
+ $('choiceAttributes').textContent=label(selected.values);
  $('choiceOrigin').textContent=originLabel[item.origin]||item.origin;
- $('choiceHint').textContent='Especificação completa no piloto, mas a ficha técnica permanece Em revisão. Confirmação apenas ilustrativa.';
+ $('choiceHint').textContent='Os valores foram conferidos estruturalmente no laboratório, mas a ficha ainda não é homologada. Esta escolha é apenas ilustrativa.';
  $('choiceDialog').showModal();
 }
-function showDetail(id){
- const item=id?last?.all.find(x=>x.id===id):null;
- draft=item?{...item.values}:{};
- $('detailTitle').textContent=item?'Personalizar a sugestão':'Criar material personalizado';
+function showDetail(key){
+ const item=key?byKey(key):null;
+ activeCandidate=item?key:null;
+ draft=item?{...proposed(item)}:{};
+ $('detailTitle').textContent=item?'Editar a sugestão':'Criar material personalizado';
  $('detailDialog').showModal();drawDetail();
 }
 function drawDetail(){
@@ -642,8 +676,7 @@ function drawDetail(){
    (!s.available?' disabled':'')+'>'+esc(s.option)+(s.available?'':' — incompatível')+'</option>').join('')+
    '</select></label>';
  }).join('');
- const missing=catalog.missing(ficha,draft).filter(x=>x!=='__CONFLITO__');
- if(!draft[D.tensao]&&!missing.includes(D.tensao))missing.push(D.tensao);
+ const missing=requiredMissing(draft);
  const conflicts=catalog.conflicts(ficha,draft);
  const generic=String(draft[D.isol]||'').includes(' ou ');
  const good=!missing.length&&!conflicts.length&&!generic;
@@ -654,30 +687,41 @@ function drawDetail(){
   (generic?' · isolação HEPR ou XLPE ainda ambígua':'');
  $('detailDone').disabled=!good;
 }
-function reconcile(changedId){
- // Ao mudar uma escolha, nunca carregar detalhes que passaram a ser inválidos.
+function reconcile(target=draft){
+ // A retirada de uma tag nunca grava na Lista; só invalida detalhes que se tornaram incompatíveis.
  for(let p=0;p<ficha.details.length+1;p++){
   let removed=false;
   for(const d of ficha.details){
-   if(!draft[d.id])continue;
-   const others={...draft};delete others[d.id];
-   const valid=catalog.optionsFor(ficha,others,d.id).includes(draft[d.id]);
-   if(!valid){delete draft[d.id];removed=true;}
+   if(!target[d.id])continue;
+   const others={...target};delete others[d.id];
+   if(!catalog.optionsFor(ficha,others,d.id).includes(target[d.id])){
+    delete target[d.id];removed=true;
+   }
   }
   if(!removed)break;
  }
 }
-$('search').addEventListener('input',()=>{extended=false;render()});
+function removeTag(key,id){
+ const item=byKey(key);if(!item||!proposed(item)[id])return;
+ const values={...proposed(item)};
+ delete values[id];
+ reconcile(values);
+ modifications.set(key,values);
+ $('feedback').hidden=true;
+ render();
+}
+$('search').addEventListener('input',()=>{extended=false;modifications.clear();render()});
 $('search').addEventListener('keydown',e=>{if(e.key==='Enter')$('search').blur()});
 document.querySelectorAll('[data-example]').forEach(btn=>btn.addEventListener('click',()=>{
- $('search').value=btn.dataset.example;extended=false;render();$('search').focus();
+ $('search').value=btn.dataset.example;extended=false;modifications.clear();render();$('search').focus();
 }));
 $('expand').addEventListener('click',()=>{extended=!extended;render()});
 $('top').addEventListener('click',pick);
 $('other').addEventListener('click',pick);
 $('review').addEventListener('click',pick);
 function pick(e){
- const button=e.target.closest('[data-pick],[data-detail]');if(!button)return;
+ const button=e.target.closest('[data-remove-tag],[data-pick],[data-detail]');if(!button)return;
+ if(button.dataset.removeTag){removeTag(button.dataset.candidate,button.dataset.removeTag);return;}
  if(button.dataset.pick)showChoice(button.dataset.pick);
  else showDetail(button.dataset.detail);
 }
@@ -688,13 +732,18 @@ $('detailFields').addEventListener('change',e=>{
  reconcile(sel.dataset.field);drawDetail();
 });
 $('detailDone').addEventListener('click',()=>{
- const item={id:'personalizado',origin:'catalogo',values:{...draft},issues:[],complete:true,homologated:false};
+ const missing=requiredMissing(draft);
+ if(missing.length||catalog.conflicts(ficha,draft).length||String(draft[D.isol]||'').includes(' ou ')){drawDetail();return;}
+ const current=activeCandidate?byKey(activeCandidate):null;
+ if(current)modifications.set(activeCandidate,{...draft});
  $('detailDialog').close();
- selected=item;
+ selected=current?{...current,values:{...draft}}:
+  {id:'personalizado',origin:'catalogo',values:{...draft},issues:[],complete:true,homologated:false};
+ render(); // O cartão atualizado mostra as tags efetivamente mantidas.
  $('choiceHeading').textContent=technical(draft);
  $('choiceAttributes').textContent=label(draft);
- $('choiceOrigin').textContent='Montagem personalizada nesta simulação';
- $('choiceHint').textContent='O valor foi revisado no laboratório. Nenhuma lista, catálogo ou preferência real foi alterada.';
+ $('choiceOrigin').textContent=current?(originLabel[current.origin]||current.origin):'Material criado nesta simulação';
+ $('choiceHint').textContent='Você revisou esta especificação no laboratório. A ficha está Em revisão e nenhuma lista real será alterada.';
  $('choiceDialog').showModal();
 });
 $('choiceDone').addEventListener('click',()=>{
@@ -707,7 +756,7 @@ document.querySelectorAll('[data-close-dialog]').forEach(x=>x.addEventListener('
 $('mic').disabled=!window.TereonXVoice.supported();
 $('mic').title=$('mic').disabled?'Reconhecimento indisponível. Digite ou use o microfone do teclado.':'A fala pode ser processada por serviço externo do navegador.';
 $('mic').addEventListener('click',()=>{
- window.TereonXVoice.start(t=>{$('search').value=t;extended=false;render()},speakStatus);
+ window.TereonXVoice.start(t=>{$('search').value=t;extended=false;modifications.clear();render()},speakStatus);
 });
 $('search').value='fio flex 2,5 preto';
 render();
