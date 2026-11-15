@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "state": "PILOTO_NAO_OFICIAL",
+  "date": "2026-11-15",
+  "scope": "Linhas de quadros CEMAR/Legrand e Brum verificadas em páginas públicas dos fabricantes; captura preliminar sem consulta a ficha específica de todos os modelos.",
+  "source_rules": "Produto completo: fabricante+referência+origem; informação de linha NÃO equivale a capacidade técnica ou atributo de SKU. Campos desconhecidos devem permanecer ausentes, nunca preenchidos por média.",
+  "fontes": [
+    {
+      "id": "SRC-CEMAR-LEGRAND-QDSTN",
+      "fabricante": "CEMAR / Legrand",
+      "tipo": "catalogo_oficial_web",
+      "url": "https://www.legrand.com.br/pt-pt/catalogo/quadros-e-paineis/quadros-distribuicao-metalicos/qdstn-tg-ii-qdstn-tg-u-ii",
+      "consulta": "2026-11-15",
+      "acesso": "publico",
+      "situacao": "verificado_catalogo_linha"
+    },
+    {
+      "id": "SRC-BRUM-VOLT",
+      "fabricante": "Brum",
+      "tipo": "pagina_oficial_linha",
+      "url": "https://www.brum.com.br/linha-volt",
+      "consulta": "2026-11-15",
+      "acesso": "publico",
+      "situacao": "verificado_catalogo_linha"
+    },
+    {
+      "id": "SRC-BRUM-BR",
+      "fabricante": "Brum",
+      "tipo": "pagina_oficial_linha",
+      "url": "https://www.brum.com.br/linha-br",
+      "consulta": "2026-11-15",
+      "acesso": "publico",
+      "situacao": "verificado_catalogo_linha"
+    },
+    {
+      "id": "SRC-BRUM-PRODUTOS",
+      "fabricante": "Brum",
+      "tipo": "catalogo_linhas_oficial",
+      "url": "https://www.brum.com.br/produtos",
+      "consulta": "2026-11-15",
+      "acesso": "publico",
+      "situacao": "verificado_catalogo_linha"
+    }
+  ],
+  "registros": [
+    {
+      "id": "CEMAR-904331N",
+      "fonte": "SRC-CEMAR-LEGRAND-QDSTN",
+      "fabricante": "CEMAR / Legrand",
+      "serie": "QDSTN-TG II",
+      "referencia_fabricante": "904331N",
+      "familia_tereon_proposta": "Quadro de distribuição",
+      "atributos_extraidos": {
+        "instalacao": "sobrepor",
+        "material": "metal",
+        "capacidade_modulos_din": 16,
+        "corrente_anunciada_a": 100,
+        "cor": "branco"
+      },
+      "campos_nao_verificados": [
+        "itens inclusos",
+        "barramento incluso/corrente própria",
+        "corrente nominal do conjunto verificada em ficha técnica",
+        "grau proteção",
+        "dimensões"
+      ],
+      "revisao_tecnica": "pendente",
+      "ficha_tereon_vinculada": null,
+      "origem": "catalogo_publico_fabricante",
+      "entrada_no_catalogo_oficial": false
+    },
+    {
+      "id": "CEMAR-904461BRN",
+      "fonte": "SRC-CEMAR-LEGRAND-QDSTN",
+      "fabricante": "CEMAR / Legrand",
+      "serie": "QDSTN-TG II",
+      "referencia_fabricante": "904461BRN",
+      "familia_tereon_proposta": "Quadro de distribuição",
+      "atributos_extraidos": {
+        "instalacao": "sobrepor",
+        "material": "metal",
+        "capacidade_modulos_din": 16,
+        "corrente_anunciada_a": 150,
+        "cor": "branco"
+      },
+      "campos_nao_verificados": [
+        "itens inclusos",
+        "barramento incluso/corrente própria",
+        "corrente nominal do conjunto verificada em ficha técnica",
+        "grau proteção",
+        "dimensões"
+      ],
+      "revisao_tecnica": "pendente",
+      "ficha_tereon_vinculada": null,
+      "origem": "catalogo_publico_fabricante",
+      "entrada_no_catalogo_oficial": false
+    },
+    {
+      "id": "CEMAR-904462BRN",
+      "fonte": "SRC-CEMAR-LEGRAND-QDSTN",
+      "fabricante": "CEMAR / Legrand",
+      "serie": "QDSTN-TG II",
+      "referencia_fabricante": "904462BRN",
+      "familia_tereon_proposta": "Quadro de distribuição",
+      "atributos_extraidos": {
+        "instalacao": "sobrepor",
+        "material": "metal",
+        "capacidade_modulos_din": 24,
+        "corrente_anunciada_a": 150,
+        "cor": "branco"
+      },
+      "campos_nao_verificados": [
+        "itens inclusos",
+        "barramento incluso/corrente própria",
+        "corrente nominal do conjunto verificada em ficha técnica",
+        "grau proteção",
+        "dimensões"
+      ],
+      "revisao_tecnica": "pendente",
+      "ficha_tereon_vinculada": null,
+      "origem": "catalogo_publico_fabricante",
+      "entrada_no_catalogo_oficial": false
+    },
+    {
+      "id": "BRUM-VOLT100-LINHA",
+      "fonte": "SRC-BRUM-VOLT",
+      "fabricante": "Brum",
+      "serie": "VOLT 100",
+      "referencia_fabricante": null,
+      "familia_tereon_proposta": "Quadro de distribuição",
+      "atributos_extraidos": {
+        "material": "aço carbono",
+        "grau_protecao_ip": "IP40",
+        "resistencia_impacto_ik": "IK08",
+        "limite_corrente_divulgado_linha_a": 120,
+        "tipo_valor_corrente": "até 120 A (declaração da linha, não do SKU)"
+      },
+      "campos_nao_verificados": [
+        "referência comercial/SKU",
+        "módulos do SKU",
+        "barramento incluso",
+        "corrente nominal específica da referência",
+        "dimensões",
+        "instalação de modelo específico"
+      ],
+      "revisao_tecnica": "pendente",
+      "ficha_tereon_vinculada": null,
+      "origem": "catalogo_publico_fabricante",
+      "entrada_no_catalogo_oficial": false
+    },
+    {
+      "id": "BRUM-VOLT250-LINHA",
+      "fonte": "SRC-BRUM-VOLT",
+      "fabricante": "Brum",
+      "serie": "VOLT 250",
+      "referencia_fabricante": null,
+      "familia_tereon_proposta": "Quadro de distribuição",
+      "atributos_extraidos": {
+        "material": "aço carbono",
+        "grau_protecao_ip": "IP40",
+        "resistencia_impacto_ik": "IK08",
+        "capacidade_polos_din_linha": 72,
+        "limite_corrente_divulgado_linha_a": 250,
+        "tipo_valor_corrente": "até 250 A (declaração da linha, não do SKU)"
+      },
+      "campos_nao_verificados": [
+        "referência comercial/SKU",
+        "barramento incluso",
+        "corrente nominal específica da referência",
+        "dimensões"
+      ],
+      "revisao_tecnica": "pendente",
+      "ficha_tereon_vinculada": null,
+      "origem": "catalogo_publico_fabricante",
+      "entrada_no_catalogo_oficial": false
+    },
+    {
+      "id": "BRUM-BR-LINHA",
+      "fonte": "SRC-BRUM-BR",
+      "fabricante": "Brum",
+      "serie": "BR",
+      "referencia_fabricante": null,
+      "familia_tereon_proposta": "Quadro de distribuição",
+      "atributos_extraidos": {
+        "material": "ABS",
+        "instalacao_opcoes": [
+          "sobrepor",
+          "embutir"
+        ],
+        "capacidade_maxima_polos_linha": 72,
+        "grau_protecao_ip": "IP40",
+        "resistencia_impacto_ik": "IK06"
+      },
+      "campos_nao_verificados": [
+        "referência comercial/SKU",
+        "corrente nominal de cada referência",
+        "barramento incluso",
+        "dimensões"
+      ],
+      "revisao_tecnica": "pendente",
+      "ficha_tereon_vinculada": null,
+      "origem": "catalogo_publico_fabricante",
+      "entrada_no_catalogo_oficial": false
+    }
+  ]
+}
