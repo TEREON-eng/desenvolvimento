@@ -17,7 +17,7 @@ const holder={innerHTML:''};
 const elements={};
 const lookup=id=>id==='choices'?holder:(elements[id]??={textContent:'',innerHTML:'',nextElementSibling:{textContent:''}});
 const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-const fn=new Function('window','fichaSearch','loadingFichas','fichaError','
+const fn=new Function('window','fichaSearch','loadingFichas','fichaError','$','esc','voiceNotice','intentNotice','intentSelected',
  app.slice(begin,end)+'return {fichaPresentation,paintFichaChoices};');
 const picker=fn(window,'',false,'',lookup,esc,'','',{});
 picker.paintFichaChoices();
