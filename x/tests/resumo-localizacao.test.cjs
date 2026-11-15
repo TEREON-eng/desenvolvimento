@@ -30,6 +30,6 @@ const infra=materialParts('Eletroduto rígido de PVC 3/4"',{catalogId:'FT_INFRA-
 assert.equal(infra.base,'Eletroduto');
 assert.equal(infra.description,'Rígido · PVC · 3/4"');
 const p=src.indexOf('  function groupCard('),q=src.indexOf('  function stageMaterialRow(',p);
-assert.ok(/fullMaterial\\s*\\(\\s*g\\.name\\s*,\\s*composition\\s*,\\s*entries\\[0\\]\\s*(?:,\\s*nested\\s*)?\\)/.test(src.slice(p,q)),'por insumo usa mesmo resumo');
+assert.ok(src.slice(p,q).includes('fullMaterial(g.name,composition,entries[0],nested)'), 'por insumo usa mesmo resumo');
 assert.ok(src.slice(q,q+500).includes('materialParts(g.name,entries[0])'),'por etapa usa mesmo resumo');
 console.log('Resumo de localização: condutor, PVC, cor, isolamento, cobertura e duas visões OK');
