@@ -189,7 +189,7 @@ function choice(v){
  assert.equal(element('fieldLabel').textContent,'Classe de encordoamento');
  click('[data-skip-optional]',{skipOptional:'DET-009'});
  assert.equal(element('fieldLabel').textContent,'Comportamento ao fogo');
- assert.ok(element('choices').innerHTML.includes('data-pick="Comum"'));
+ assert.ok(element('choices').innerHTML.includes('data-blocked-option="Comum"'),'com isolamento não halogenado, comportamento Comum não pode ser escolhido');
  assert.ok(element('choices').innerHTML.includes('data-pick="Não halogenado com baixa emissão de fumaça (LSZH)"'));
  assert.ok(!element('liveName').textContent.includes('LSZH'),'não presume classificação');
  choice('Não halogenado com baixa emissão de fumaça (LSZH)');
