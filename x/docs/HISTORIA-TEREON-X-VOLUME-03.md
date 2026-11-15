@@ -167,3 +167,8 @@ Foi definida uma ordem de lembrança: primeiro materiais já presentes na lista,
 O primeiro passo de implementação é um recomendador experimental puro de Condutores, separado da interface: ele organiza candidatos já especificados, destaca lacunas e não inventa atributos ou soma quantidades. O teste de campo Android e a homologação das fichas continuam pendentes. **O projeto não lançou uma IA elétrica treinada nesta data.**
 
 **Pauta narrativa:** “O app estava funcionando, mas o problema de usar ainda não tinha terminado.” Preservar a crítica como aprendizado, não como declaração de produto pronto.
+
+
+### 15/11 — A camada anterior, sem jogar fora o modal
+
+O fundador reforçou que o modal detalhado deveria ser preservado **justamente para permitir criar qualquer material**. As recomendações seriam uma camada anterior de escolha rápida, não substituição da liberdade de especificar. Para testar o caminho sem comprometer dados ou UI aprovada, foi criado um laboratório portátil de Condutores com busca/voz, cartões prioritários, alternativas expansíveis e botão Personalizar. Esse ensaio usa exemplos fictícios; não é versão homologada nem substitui o modal real. Link e roteiro: [teste do recomendador](TESTE-RECOMENDADOR-CONDUTORES-2026-11-15.md).

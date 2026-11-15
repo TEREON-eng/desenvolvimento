@@ -15,6 +15,8 @@
 
 - [RECOMENDADOR-TECNICO-CONDUTORES-2026-11-15.md](RECOMENDADOR-TECNICO-CONDUTORES-2026-11-15.md) — novo motor de recomendação; decisão de produto e ensaio técnico não integrado.
 
+- [TESTE-RECOMENDADOR-CONDUTORES-2026-11-15.md](TESTE-RECOMENDADOR-CONDUTORES-2026-11-15.md) — laboratório portátil e instruções de avaliação, sem mudar o app.
+
 ## Inventário dos demais arquivos (papel, não autoridade normativa)
 
 ### História e cronologia
