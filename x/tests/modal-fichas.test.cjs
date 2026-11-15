@@ -167,7 +167,7 @@ function choice(v){
  click('[data-ficha]',{ficha:'FT_INFRA-001'});
  assert.ok(element('fieldLabel').innerHTML.includes('data-ficha-back="1"'));
  click('[data-ficha-back]',{fichaBack:'1'});
- assert.equal(element('fieldLabel').textContent,'Escolher material','remover tag retorna à escolha de ficha');
+ assert.equal(element('fieldLabel').textContent,'Descreva o material','trocar ficha retorna à busca natural do modal aprovado');
  assert.equal(element('addDialog').classList['is-choosing'],true,'modo de seleção usa área ampliada');
  assert.equal(element('saveItem').disabled,true,'trocar ficha impede salvamento sem nova confirmação');
  // Condutores: pergunta real DET-010, vinda da planilha, por último.
