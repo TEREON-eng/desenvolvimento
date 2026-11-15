@@ -156,3 +156,14 @@ A revisão também encontrou um fato desconfortável: no GitHub Actions de 14/11
 **Aprendizado editorial:** história é o lugar de guardar a tentativa e a correção. O contrato vigente deve dizer apenas o que vale agora. O diálogo e as objeções fazem parte do caminho, sem fingir que todas as decisões foram boas desde o começo.
 
 **Pauta futura:** “Quando a memória do projeto virou um problema de engenharia”. Síntese editorial de registros e crítica; sem atribuir citações literais nem afirmar lançamento, teste de Android ou deploy decorrente do saneamento.
+
+
+## 15/11 — Da especificação assistida à recomendação de material pronto
+
+O fundador retomou uma insatisfação que não se resolvia apenas ajustando o modal: mesmo com tags bem apresentadas, ainda se exigiam muitos toques para construir o material. A consequência prática eram lançamentos parecidos, com características omitidas e dúvida de equivalência. A nova direção foi inverter o esforço: o usuário diz como pede na obra e o TEREON apresenta algumas especificações completas, com lista expansível de alternativas e opção Personalizar para usar a ficha existente.
+
+Foi definida uma ordem de lembrança: primeiro materiais já presentes na lista, depois os confirmados anteriormente por aquele profissional, e então o catálogo técnico auditado. O usuário sugeriu também aproveitar catálogos de fabricantes, com Cemar/Legrand e Brum como primeiros exemplos. Aprender preferências a partir do que foi **efetivamente escolhido**, sem interpretar cada sugestão ignorada como rejeição, tornou-se a regra prudente.
+
+O primeiro passo de implementação é um recomendador experimental puro de Condutores, separado da interface: ele organiza candidatos já especificados, destaca lacunas e não inventa atributos ou soma quantidades. O teste de campo Android e a homologação das fichas continuam pendentes. **O projeto não lançou uma IA elétrica treinada nesta data.**
+
+**Pauta narrativa:** “O app estava funcionando, mas o problema de usar ainda não tinha terminado.” Preservar a crítica como aprendizado, não como declaração de produto pronto.

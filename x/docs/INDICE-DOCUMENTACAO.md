@@ -13,6 +13,8 @@
 
 **Precedência:** os contratos e decisões consolidadas prevalecem sobre texto histórico de versões anteriores; o estado datado exige nova evidência para ser substituído. Status “Implementado” não equivale a “Homologado”.
 
+- [RECOMENDADOR-TECNICO-CONDUTORES-2026-11-15.md](RECOMENDADOR-TECNICO-CONDUTORES-2026-11-15.md) — novo motor de recomendação; decisão de produto e ensaio técnico não integrado.
+
 ## Inventário dos demais arquivos (papel, não autoridade normativa)
 
 ### História e cronologia

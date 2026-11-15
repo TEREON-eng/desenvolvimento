@@ -18,6 +18,7 @@
 | CT-12 Solicitações | Pendente/Aprovada/Em compras/Comprado/Recebido são estados de processo futuro, não de sincronização de Lista. |
 | CT-13 Interface | Temas Claro/Escuro/TEREON preservam comportamento, contraste e acessibilidade; tags de ficha e barra informativa seguem fluxo aprovado. |
 | CT-14 Release | Decisão, implementação, CI, aparelho, deploy e homologação são etapas distintas, cada uma exigindo evidência própria. |
+| CT-15 Recomendação (LAB) | Prioridade de busca Lista atual → histórico confirmado do usuário → catálogo técnico auditado. Mostrar candidatos completos com origem, alternativas expandíveis e Personalizar; lacunas requerem pergunta/revisão. Não escolher por popularidade, não usar ausência de clique como rejeição, não somar itens sem aceite. |
 
 ## Entrada progressiva vigente
 1. No primeiro nível do modal, o pedido é digitado ou transcrito pelo navegador no **mesmo campo**.
@@ -25,6 +26,9 @@
 3. O nome técnico parcial usa apenas escolhas aceitas. **Avançar** valida com catálogo (visibleDetails/optionStates/conflicts) e entrega à ficha somente valores válidos. Sem confirmação, continua manualmente.
 4. Na ficha, mostrar detalhes aplicáveis, inclusive opcionais; texto de tag navega sem mutar, **× vermelho** remove. Barra não clicável, sem setas da X.0.3.57. Painel de confirmação duplicado da X.0.3.60 é revogado.
 5. Voz depende de suporte, permissão, rede e possivelmente serviço externo; texto sempre disponível. Não armazenar áudio no TEREON. Fotos não implementadas.
+
+## Próxima experiência principal (decidida; implementação visual pendente)
+A entrada por tags permanece operacional até aprovação da substituição. A **experiência-alvo** é: pedido texto/voz → sugestões completas e tecnicamente coerentes, incluindo origens e diferenças → escolha do conjunto ou Personalizar na ficha → revisão de correspondências da Lista sem fusão automática. Ordenação: **Lista atual → escolhas anteriores confirmadas → catálogo auditado**. Sugerir de modo conservador, com perguntas somente quando necessárias. O laboratório de ranqueamento de Condutores está em [RECOMENDADOR-TECNICO-CONDUTORES-2026-11-15.md](RECOMENDADOR-TECNICO-CONDUTORES-2026-11-15.md); não foi conectado ao PWA e não usa IA treinada. 
 
 ## Identidade técnica e comercial
 **Família** (catalogId) ≠ **identidade técnica confirmada** ≠ **completude** ≠ **unidade/apresentação de compra**. Ausência de dado não indica equivalência, conflito de cor/tensão/bitola impede fusão, e unidade m/rl100m/br3m/lance exige tratamento comercial distinto. Detector de correspondências pode **sugerir revisão**, não copiar atributos nem consolidar automaticamente.
@@ -34,8 +38,3 @@ FT_COND-001: estrutura **Consolidada**, status **Em revisão**; tensão DET-006 
 
 ## Protocolo de alteração
 Antes de mudar: **problema → decisão → contratos afetados → caminhos/branch/SHA → testes automáticos → ensaio no aparelho → deploy comprovado → aceite**. Atualizar este documento substituindo trechos superados; preservar tentativa e histórico no CHANGELOG/Diário.
-
-## 15/11/2026 — Direção aprovada: materiais completos por recomendação
-A experiência principal em evolução é **pedido por texto/voz → 2–3 sugestões completas → Ver todas / Personalizar → confirmar o conjunto → verificar a Lista**, com perguntas decisivas apenas quando faltam informações. Ordem de busca: **itens da lista atual → especificações anteriores confirmadas → catálogo auditado**. Uma proposta não escolhida não é feedback negativo; aprender principalmente a partir de escolhas explícitas. Popularidade altera ordenação, não fatos técnicos. Fornecedores e fabricantes são fontes rastreadas; SKU/linha não entra no Oficial por simples importação.
-
-**Implementação nesta rodada:** laboratório puro `x/catalogo/recomendador-condutores.js` com teste: classifica candidatos já especificados, faz ranking sem autoatributos ou merge, identifica lacunas e produz uma pergunta decisiva. **Não há integração visual ainda, nem geração automática de novas combinações, nem IA treinada ou catálogo homologado.** O motor atual do modal permanece intocado, até ensaio do fluxo novo. Ficha FT_COND-001 LAB continua Em revisão; tensão DET-006 opcional na origem e “HEPR ou XLPE” genérico bloqueiam status de candidato completo no recomendador, mas exigem revisão na fonte antes de liberação comercial.
