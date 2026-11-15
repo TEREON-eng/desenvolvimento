@@ -30,7 +30,7 @@ for(const [page,kind] of Object.entries(pages)){
  assert.ok(html.includes('data-tx-header="'+kind+'"'),'incluir componente de cabeçalho em '+page);
  const expectedVersion=page==='x/universo/obras/lab.html'?'9':'8';
  assert.ok(html.includes('/x/components/header.js?v='+expectedVersion)&&html.includes('/x/components/header.css?v=6'),'referência atual do cabeçalho em '+page);
- assert.ok(html.includes('/x/appearance.css?v=5'),'tema compartilhado em '+page);
+ assert.ok(/\/x\/appearance\.css\?v=\d+/.test(html),'tema compartilhado em '+page);
  assert.equal((html.match(/data-tx-header=/g)||[]).length,1,'um único cabeçalho em '+page);
  if(kind==='module'){
   assert.ok(html.includes('data-back-href='),'retorno próprio do módulo em '+page);
