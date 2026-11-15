@@ -1,6 +1,6 @@
 # TEREON X — Estado atual verificável
 
-**Revisão:** 15/11/2026 · **branch:** desenvolvimento · **versão declarada nesta atualização:** X.0.3.62 (build 15/11/2026). **Última execução integral comprovada para X.0.3.62:** [CI verde em 07c28af](https://github.com/TEREON-eng/desenvolvimento/actions/runs/43747413219). **A publicação/versão efetiva no Cloudflare não foi conferida.**
+**Revisão:** 15/11/2026 · **branch:** desenvolvimento · **versão declarada:** X.0.3.63 · **último CI verificado:** [execução verde 43759876132](https://github.com/TEREON-eng/desenvolvimento/actions/runs/43759876132), SHA **5a8027ed6933864ea7a831c2c4c1e91fc460273f**. **Cloudflare, URL efetivamente servida e celular físico permanecem sem verificação.**
 
 Esta é uma fotografia da evidência disponível, **não** homologação de catálogo, CI, Cloudflare, Android ou compra real.
 
@@ -13,7 +13,7 @@ Listas de materiais é a semente. O profissional descreve como sabe; a ferrament
 | Listas, agrupamentos Por insumo/Por etapa, edição e relatórios | Implementações e testes isolados | Fluxo completo em Android e nuvem entre dispositivos pendente |
 | Busca de Condutores | Interpretador determinístico de texto com hipóteses | Não é IA generativa geral; outras famílias sem esse interpretador |
 | Tags ?→✓, nome progressivo e Avançar | Código e regressão integral aprovados | UX real em celular não verificada |
-| Recomendador de Condutores (LAB, não integrado à UI) | Ranqueia candidatos já especificados por lista atual → histórico → catálogo, sem completar dados | Ainda não gera variantes de produto e não substituiu a montagem manual; ficha em revisão |
+| Recomendador de Condutores (LAB, atalho na Home) | Simula candidatos por lista atual → histórico → catálogo, tags editáveis e opções recolhidas; acesso pela Home em X.0.3.63 | Não está integrado à criação das listas nem usa dados reais; depende de deploy e teste no celular |
 | Voz pt-BR | Adaptador SpeechRecognition/webkitSpeechRecognition; teste simulado passou | Suporte, microfone real, serviço externo/rede e fallback em Android por validar |
 | Fotos | Somente visão futura | Não implementado |
 | FT_COND-001 | Estrutura Consolidada | Ficha **Em revisão**; tensão DET-006 opcional e isolação HEPR ou XLPE agregada |
@@ -25,7 +25,7 @@ Listas de materiais é a semente. O profissional descreve como sabe; a ferrament
 | Cloudflare | Configuração no repo | URL/SHA/versionamento efetivamente servidos não conferidos nesta revisão |
 
 ## CI — fato verificado
-[Execução 43747413219](https://github.com/TEREON-eng/desenvolvimento/actions/runs/43747413219), SHA **07c28af199f8b0edceab0cbd1de0fba6735828de**, 15/11/2026: **SUCCESS**. Foram aprovadas todas as etapas de teste do workflow (44 etapas, incluindo setup/checkout; **zero falhas/ignorados**). A suíte agora cobre `recomendador-condutores.test.cjs` e o teste real de remoção do detalhe condicional na UI. A falha anterior de 14/11 era parcialmente causada por verificações desatualizadas, mas o teste de Eletroduto revelou também **um defeito real corrigido no código de Listas**. A verificação cobre também a atualização de versão X.0.3.62. CI de código não comprova deploy ou comportamento no aparelho.
+[Execução 43759876132](https://github.com/TEREON-eng/desenvolvimento/actions/runs/43759876132), SHA **5a8027ed6933864ea7a831c2c4c1e91fc460273f**, 15/11/2026: **SUCCESS**. Workflow automático: **46 etapas concluídas, zero falhas e zero etapas ignoradas**, incluindo novo teste do atalho mobile, alvos de toque, cache e preservação da estrutura integral do modal aprovado. Não houve execução de navegador físico, medição de layout Android ou deploy Cloudflare neste teste.
 
 ## Riscos que bloqueiam aprovação de pedidos reais
 1. Saneamento técnico da **fonte das fichas**: Condutores (seção, tensão, formação, isolação, encordoamento, cor, temperatura conforme construção), Eletrodutos/Curvas e itens faltantes.
@@ -35,4 +35,4 @@ Listas de materiais é a semente. O profissional descreve como sabe; a ferrament
 5. Sincronização entre dois aparelhos e duas contas sem perda ou status enganoso.
 
 ## Critério de veracidade
-**Decidido ≠ implementado ≠ teste simulado ≠ CI verde ≠ publicado ≠ validado no aparelho ≠ homologado.** Nesta rodada houve um ajuste de invalidação de detalhe dependente no código do modal e adição de recomendador **somente de laboratório**; **não** se alteraram fichas originais, a branch main nem se confirmou deploy. Substitua este relatório apenas com nova evidência datada e SHA; não empilhe notas de versões antigas.
+**Decidido ≠ implementado ≠ teste simulado ≠ CI verde ≠ publicado ≠ validado no aparelho ≠ homologado.** Nesta rodada houve um ajuste de invalidação de detalhe dependente no código do modal e adição de recomendador **somente de laboratório**; **não** se alteraram fichas originais, a branch main nem se confirmou deploy. A única integração ao shell do app foi um atalho à página LAB isolada, sem conexão com armazenamento real. Substitua este relatório apenas com nova evidência datada e SHA; não empilhe notas de versões antigas.

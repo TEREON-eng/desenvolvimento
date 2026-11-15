@@ -182,3 +182,8 @@ Após testar a primeira versão do recomendador em HTML, o fundador observou que
 ### 15/11 — O toque na tag como edição direta
 
 O fundador propôs eliminar mais uma etapa: em vez de clicar no × e abrir a ficha para mudar um atributo, **tocar diretamente na tag** deveria oferecer opções daquele detalhe. O × continua como recurso para eliminar uma característica que esteja impedindo outra seleção. Também pediu enxugar a parte inferior da tela. O laboratório portátil foi atualizado com edição por toque, escolha em painel compacto, valores incompatíveis bloqueados e dois painéis inferiores reduzidos a uma faixa pequena de ações; exemplos e explicações ficaram recolhidos. A ficha tradicional e o modal real não foram substituídos. Nada foi integrado às listas reais.
+
+
+### 15/11 — A prova no telefone, antes de mexer no modal
+
+Após considerar a dinâmica boa no computador, o fundador pediu para experimentá-la no **celular**. A decisão de engenharia foi não substituir o modal detalhado aprovado: adicionou-se uma entrada identificada como LAB no fim da Home do TEREON X; ela abre o recomendador independente com dados fictícios. A interface foi adaptada para toque, teclado e dimensões pequenas. A versão declarada passou a **X.0.3.63**, com cache PWA específico e teste automático do link. O CI passou, mas **publicação Cloudflare e teste real no aparelho não foram comprovados**. O propósito desse passo é descobrir problemas de uso antes de integrar a recomendação às listas reais.

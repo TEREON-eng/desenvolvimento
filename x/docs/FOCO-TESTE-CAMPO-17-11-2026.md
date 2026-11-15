@@ -6,8 +6,8 @@
 O profissional deve conseguir criar uma lista, descrever materiais como costuma pedir, confirmar uma especificação coerente, alterar quantidade/etapa, reencontrar os lançamentos e compartilhar sem depender de treinamento passo a passo. Observar dificuldade real, não buscar elogio.
 
 ## Preparação 14–16/11
-1. CI automático integral aprovado para X.0.3.62; conferir **a versão efetivamente servida** no Cloudflare, com SHA e URL, antes de prometer acesso externo.
-2. Testar no celular/PWA **texto/voz → tags ?/✓ abaixo da busca → nome em formação → Avançar para ficha**. Verificar o caminho manual, erro de permissão de microfone e comportamento do teclado.
+1. CI automático integral aprovado para X.0.3.63; conferir **a versão efetivamente servida** no Cloudflare, com SHA e URL, antes de prometer acesso externo.
+2. Testar no celular/PWA primeiro o **atalho LAB de recomendação** (somente simulação): digitar, trocar tags com toque, remover tag com ×, abrir opções com ?, navegar entre alternativas e ficha personalizada. Separadamente, testar o **fluxo real de Listas**: texto/voz → tags ?/✓ → Avançar para ficha. Não misturar evidências nem transferir dados do LAB para listas reais.
 3. Conferir Condutores, Eletrodutos/Curvas na **fonte técnica** e status de revisão, com materiais de demonstração se não houver ficha homologada.
 4. Registrar backup seguro, conta/visitante, rede, dados antes/depois da recarga e modos de compartilhamento.
 

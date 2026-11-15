@@ -1,9 +1,9 @@
 # TEREON X — Regressão e aceites ativos
 
-**Estado observado em 15/11/2026, desenvolvimento X.0.3.62 (versão declarada).** Original com adendos históricos: [TESTES-REGRESSAO-PRE-SANEAMENTO-2026-11-14.md](TESTES-REGRESSAO-PRE-SANEAMENTO-2026-11-14.md).
+**Estado observado em 15/11/2026, desenvolvimento X.0.3.63 (versão declarada).** Original com adendos históricos: [TESTES-REGRESSAO-PRE-SANEAMENTO-2026-11-14.md](TESTES-REGRESSAO-PRE-SANEAMENTO-2026-11-14.md).
 
 ## GitHub Actions — resultado real
-[Execução 43747413219](https://github.com/TEREON-eng/desenvolvimento/actions/runs/43747413219), commit **07c28af199f8b0edceab0cbd1de0fba6735828de**: **SUCESSO** (44 etapas aprovadas, zero falhas e zero skipped, incluindo setup). Inclui `recomendador-condutores.test.cjs`, teste de invalidação de diâmetro associado à escolha do material, todas as famílias/serviços e regressões do modal. O CI do commit de X.0.3.62 também passou; ainda é preciso conferir deploy, PWA real e aceite antes de promover.
+[Execução 43759876132](https://github.com/TEREON-eng/desenvolvimento/actions/runs/43759876132), commit **5a8027ed6933864ea7a831c2c4c1e91fc460273f**: **SUCESSO** (46 etapas, sem falhas nem etapas ignoradas, incluindo setup). Coberto: interpretador e recomendador de Condutores, laboratório HTML, atalho mobile com cache/versão coerentes, preservação integral do modal e testes de Listas, fichas, Obras e compartilhamento. **Deploy Cloudflare, uso real em Android e homologação não comprovados.**
 
 ## Casos obrigatórios do núcleo
 | Cenário | Resultado exigido |
@@ -18,6 +18,7 @@
 | Materiais incompletos | Não declarar item/ficha homologado sem requisitos técnicos |
 | Por insumo/Por etapa | Sem fusão de cor, tensão, bitola ou unidade incompatível |
 | Recomendador LAB de Condutores | Lista atual → histórico confirmado → catálogo; candidatos completos vs revisar; não infere tensão e não soma quantidades |
+| Acesso mobile LAB | Home mostra link dedicado; toque na tag/× em controles separados, campo sem perder espaços, tela pequena e botão Voltar; conferir física/visualmente no Android após deploy |
 | Lances, RL e BR | Total/composição e origem preservados em Compras/Completo/Execução |
 | WhatsApp/e-mail/PDF reais | Conferir legibilidade, medidas, etapas e nenhuma mutação |
 | Criar/editar/duplicar/excluir | Persistência e etapa vazia corretas |
