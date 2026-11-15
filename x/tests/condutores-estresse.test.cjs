@@ -2,16 +2,17 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const root=path.resolve(__dirname,'../..'),read=p=>fs.readFileSync(path.join(root,p),'utf8');
-const source=JSON.parse(read('x/fichario-x/fichas-drive-2026-11-08.json'));
+const source=JSON.parse(read('x/fichario-x/fichas-lab-2026-11-12.json'));
 const context={window:{},console,fetch:async()=>({ok:true,json:async()=>structuredClone(source)})};
 vm.createContext(context);new vm.Script(read('x/catalogo/motor.js')).runInContext(context);
 const cat=context.window.TereonXCatalog;
 (async()=>{
  const all=await cat.load(),f=all.find(x=>x.id==='FT_COND-001');
- assert.equal(all.length,6);assert.equal(f.details.length,10);
- assert.equal(f.details.at(-1).id,'DET-010');
- assert.equal(f.details.at(-1).name,'Comportamento ao fogo');
- assert.equal(f.details.at(-1).required,false);
+ assert.equal(all.length,6);assert.equal(f.details.length,11,'snapshot atual tem detalhe comercial Unidade');
+ const fireDetail=f.details.find(x=>x.id==='DET-010');
+ assert.equal(fireDetail.name,'Comportamento ao fogo');
+ assert.equal(fireDetail.required,false);
+ assert.equal(f.details.at(-1).id,'DET-011','unidade continua separada da identidade técnica');
  assert.ok(!f.details.some(x=>x.id==='DET-LSZH'));
  const PVC='PVC 70 °C',NH='Termoplástico não halogenado 70 °C',HEPR='HEPR ou XLPE 90 °C';
  const LSZH='Não halogenado com baixa emissão de fumaça (LSZH)';
