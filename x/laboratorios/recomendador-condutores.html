@@ -71,6 +71,25 @@ select{width:100%;padding:10px;background:var(--bg);color:var(--fg);border:1px s
 .field-heading{margin:10px 0 4px;color:var(--muted);font-size:.76rem}
 .candidate .actions{margin-top:12px}
 .candidate .actions button{min-width:120px}
+.spec-chip{padding:2px 3px 2px 0;gap:0;overflow:hidden}
+.spec-chip-value{background:transparent;border:0;min-height:31px;padding:4px 8px 4px 11px;font-size:.8rem;text-align:left;font-weight:600}
+.spec-chip-value::after{content:" ▾";color:var(--lime)}
+.spec-chip-x{padding:3px 7px;margin-left:1px;min-height:26px;background:#405a49;border:0;border-radius:7px;font-size:1rem;color:#ffe3d9}
+.spec-chip-value:focus-visible,.spec-chip-x:focus-visible,.chip-choice:focus-visible{outline:2px solid var(--lime);outline-offset:1px}
+.tag-editor{padding:11px;background:#202f28;border:1px solid #5e7165;border-radius:12px;margin:12px 0 0}
+.tag-editor-title{font-size:.86rem;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.chip-options{display:flex;flex-wrap:wrap;gap:7px;max-height:170px;overflow-y:auto;margin:10px 0 6px}
+.chip-choice{min-height:34px;padding:6px 10px;font-size:.8rem;background:#314539}
+.chip-choice.current{border-color:var(--lime)}
+.chip-choice:disabled{opacity:.4}
+.tag-editor small{display:block;margin-top:6px;line-height:1.45}
+.utility-strip{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 2px;margin-top:14px}
+.utility-strip button{min-height:36px;font-size:.85rem}
+.utility-strip a{font-size:.83rem}
+.utility-strip details{flex-basis:100%;font-size:.8rem;color:var(--muted)}
+.utility-strip details p{margin:6px 0}
+.compact-warning{font-size:.81rem;color:#ffe2ab;margin:7px 0 0}
+@media(max-width:560px){.candidate .actions{flex-direction:row}.candidate .actions button{min-width:0}.spec-chip-value{font-size:.78rem}}
 </style>
 </head><body>
 <div class="container">
@@ -78,22 +97,23 @@ select{width:100%;padding:10px;background:var(--bg);color:var(--fg);border:1px s
 <main>
 <div class="eyebrow">Protótipo isolado · 15/11/2026</div>
 <h1>Você pede. O TEREON sugere.</h1>
-<p class="intro">Teste UMA sugestão principal com tags removíveis, edite a partir dela e expanda alternativas apenas quando quiser. Neste laboratório, a lista, o histórico e os materiais são <strong>exemplos simulados</strong>. Nada será salvo nas suas listas.</p>
+<p class="intro">Toque na tag para trocar uma característica sem refazer o material. Use × só se precisar remover. <strong>Simulação:</strong> nada será salvo nas listas.</p>
 <section class="card" aria-label="Pesquisa do material">
 <label class="eyebrow" for="search">Descreva o que precisa</label>
 <div class="searchbox" style="margin-top:9px"><input id="search" type="search" autocomplete="off" maxlength="300" placeholder="Ex.: fio flex 2,5 preto"><button id="mic" type="button" aria-label="Falar material">🎙 Falar</button></div>
 <div class="small muted" id="voiceStatus" role="status"></div>
-<div class="examples" aria-label="Exemplos"><button type="button" data-example="fio flex 2,5 preto">Fio flex 2,5 preto</button><button type="button" data-example="fio flex 2,5 preto 450">Fio 2,5 preto 450</button><button type="button" data-example="fio 4 preto">Fio 4 preto</button><button type="button" data-example="quadro de sobrepor">Quadro sobrepor</button></div>
+<details class="examples-details small muted" style="margin-top:9px"><summary>Exemplos para testar</summary><div class="examples" aria-label="Exemplos"><button type="button" data-example="fio flex 2,5 preto">Fio flex 2,5 preto</button><button type="button" data-example="fio flex 2,5 preto 450">Fio 2,5 preto 450</button><button type="button" data-example="fio 4 preto">Fio 4 preto</button><button type="button" data-example="quadro de sobrepor">Quadro sobrepor</button></div></details>
 </section>
 <div id="results" aria-live="polite">
 <div class="blockhead"><h2>Principal sugestão</h2><span id="summary"></span></div>
 <div id="top"></div><button class="outline" type="button" id="expand" hidden>Ver outras opções</button><div id="other"></div><div id="review"></div>
 </div>
-<section class="card"><div class="eyebrow">Não encontrou exatamente o que precisa?</div><p>Continue com a ficha técnica detalhada. O caminho tradicional do TEREON permanece disponível.</p>
-<div class="actions"><button class="outline" type="button" id="personalize">Personalizar nesta demonstração</button><a class="button primary" style="text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;background:var(--lime);color:#1a261a" href="/x/?view=lists">Abrir ficha original no TEREON</a></div>
-<p class="small muted">Ao abrir a ficha original, a escolha desta demonstração ainda não é transferida automaticamente.</p></section>
+<div class="utility-strip">
+<button type="button" id="personalize" class="outline">＋ Criar material do zero</button>
+<a href="/x/?view=lists">Abrir ficha original no TEREON</a>
+<details><summary>Sobre este teste</summary><p>Lista, histórico e catálogo são exemplos simulados. A ficha de Condutores continua Em revisão; não há homologação técnica nem alteração de dados reais. O laboratório não transfere a escolha ao aplicativo.</p></details>
+</div>
 <div class="context" id="feedback" role="status" hidden></div>
-<section class="card small muted"><strong>O que este teste demonstra</strong><p>Prioridade: itens da lista atual → escolhas anteriores → catálogo. Remover uma tag altera apenas o rascunho desta sugestão; a ficha detalhada abre com os demais valores já preenchidos. Especificações com lacunas ficam em revisão; a opção personalizada usa as regras do fichário experimental. Não há comparação com suas listas reais, aprendizado de preferências ou publicação de catálogo.</p><p>Se não aparecerem sugestões, confira se o pedido é de Condutores: o interpretador das outras famílias ainda não foi integrado.</p></section>
 </main></div>
 <dialog id="choiceDialog" aria-labelledby="choiceLabel"><div class="dialogin"><div class="modalhead"><div><div class="eyebrow">Conferir material completo</div><h2 id="choiceLabel">Confirma esta especificação?</h2></div><button data-close-dialog="choiceDialog" aria-label="Fechar">✕</button></div><div class="divider"></div><strong id="choiceHeading"></strong><p class="muted" id="choiceAttributes"></p><p class="small"><b>Origem:</b> <span id="choiceOrigin"></span></p><div class="notice" id="choiceHint"></div><div class="footer"><button data-close-dialog="choiceDialog" type="button">Voltar</button><button class="primary" type="button" id="choiceDone">Simular escolha</button></div></div></dialog>
 <dialog id="detailDialog" aria-labelledby="detailTitle"><div class="dialogin"><div class="modalhead"><div><div class="eyebrow">Ficha experimental de Condutores</div><h2 id="detailTitle">Personalizar</h2></div><button data-close-dialog="detailDialog" aria-label="Fechar">✕</button></div><p class="muted small">Ajuste as características. Este é um formulário de laboratório, <strong>não substitui o modal aprovado</strong>.</p><div class="formgrid" id="detailFields"></div><p class="small muted" role="status" id="detailCheck"></p><div class="footer"><button type="button" data-close-dialog="detailDialog">Voltar</button><button type="button" class="primary" id="detailDone" disabled>Usar especificação</button></div></div></dialog>
@@ -570,7 +590,7 @@ const samples={
 };
 const originLabel={lista:'Já está nesta lista',historico:'Escolhido anteriormente',catalogo:'Exemplo de catálogo'};
 const names=Object.fromEntries(ficha.details.map(x=>[x.id,x.name]));
-let extended=false,last=null,selected=null,draft=null,activeCandidate=null;
+let extended=false,last=null,selected=null,draft=null,activeCandidate=null,activeTag=null,tagNotice='';
 const modifications=new Map();
 const keyOf=item=>item.origin+':'+item.id;
 const byKey=key=>last?.all.find(item=>keyOf(item)===key)||null;
@@ -600,22 +620,57 @@ function completeness(item){
  const edited=modifications.has(keyOf(item));
  return {values,missing,problems,ready:!missing.length&&!problems.length&&(item.complete||edited)};
 }
+function tagEditor(item){
+ const key=keyOf(item);
+ if(!activeTag||activeTag.key!==key)return '';
+ const id=activeTag.id,detail=ficha.details.find(d=>d.id===id);
+ if(!detail)return '';
+ const values=proposed(item),states=catalog.optionStates(ficha,values,id);
+ return '<div class="tag-editor" role="group" aria-label="Alterar '+esc(detail.name)+'">'+
+  '<div class="tag-editor-title"><span>'+esc(detail.name)+'</span>'+
+  '<button type="button" class="linkish" data-close-tag="1" aria-label="Fechar opções">Fechar</button></div>'+
+  '<div class="chip-options">'+states.map(choice=>
+   '<button type="button" class="chip-choice'+(choice.option===values[id]?' current':'')+
+   '" data-set-tag="'+esc(id)+'" data-value="'+esc(choice.option)+'" data-candidate="'+esc(key)+'"'+
+   (choice.available?'':' disabled')+' title="'+esc(choice.available?'Alterar para '+choice.option:choice.reason||'Incompatível com outra característica')+'">'+esc(choice.option)+'</button>').join('')+'</div>'+
+  '<small>Opções incompatíveis ficam bloqueadas. Se necessário, retire a tag conflitante pelo ×.</small>'+
+  (tagNotice?'<div class="compact-warning" role="status">'+esc(tagNotice)+'</div>':'')+'</div>';
+}
+function openTag(key,id){
+ const item=byKey(key),detail=ficha.details.find(d=>d.id===id);
+ if(!item||!detail)return;
+ activeTag=activeTag?.key===key&&activeTag.id===id?null:{key,id};
+ tagNotice='';render();
+}
+function setTag(key,id,value){
+ const item=byKey(key);if(!item||!activeTag||activeTag.key!==key||activeTag.id!==id)return;
+ const state=catalog.optionStates(ficha,proposed(item),id).find(x=>x.option===value);
+ if(!state?.available){tagNotice='Esta escolha está bloqueada por outra característica. Remova a conflitante, se necessário.';render();return;}
+ const next={...proposed(item),[id]:value};
+ const issues=catalog.conflicts(ficha,next);
+ if(issues.length){tagNotice='Combinação incompatível: '+issues.join('; ')+'. Remova primeiro a tag conflitante.';render();return;}
+ modifications.set(key,next);
+ activeTag=null;tagNotice='';$('feedback').hidden=true;render();
+}
 function makeCard(item){
  const state=completeness(item),source=originLabel[item.origin]||item.origin;
  const key=keyOf(item),count=item.occurrences?.length||1;
  const chipHtml=ficha.details.filter(d=>state.values[d.id]&&d.id!=='DET-011').map(d=>
-  '<button type="button" class="spec-chip" data-remove-tag="'+esc(d.id)+'" data-candidate="'+esc(key)+'" aria-label="Retirar sugestão: '+esc(d.name)+' '+esc(state.values[d.id])+'" title="Retirar esta característica da sugestão; não altera a Lista">'+
-   '<span>'+esc(d.id==='DET-004'?state.values[d.id]+' mm²':state.values[d.id])+'</span><b aria-hidden="true">×</b></button>').join('');
+  '<span class="spec-chip">'+
+  '<button type="button" class="spec-chip-value" data-open-tag="'+esc(d.id)+'" data-candidate="'+esc(key)+'" aria-label="Alterar '+esc(d.name)+': '+esc(state.values[d.id])+'" title="Toque para trocar este detalhe">'+
+  esc(d.id==='DET-004'?state.values[d.id]+' mm²':state.values[d.id])+'</button>'+
+  '<button type="button" class="spec-chip-x" data-remove-tag="'+esc(d.id)+'" data-candidate="'+esc(key)+'" aria-label="Remover '+esc(d.name)+' da sugestão" title="Retire esta característica se ela bloquear outra opção">×</button>'+
+  '</span>').join('');
  const missingHtml=state.missing.map(id=>
-  '<button type="button" class="missing-chip" data-detail="'+esc(key)+'" title="Definir em edição">'+esc(names[id]||id)+' · ?</button>').join('');
+  '<button type="button" class="missing-chip" data-open-tag="'+esc(id)+'" data-candidate="'+esc(key)+'" title="Definir este detalhe">'+esc(names[id]||id)+' · ?</button>').join('');
  const unverified=item.complete===false&&!modifications.has(key);
  const problems=state.problems.concat(unverified?item.issues:[]);
  return '<article class="card candidate" data-candidate-card="'+esc(key)+'">'+
   '<div class="topline"><span class="tag'+(state.ready?'':' need')+'">'+esc(source)+'</span>'+
   '<span class="small muted">'+(state.ready?'Completo para conferir':'Precisa de revisão')+'</span></div>'+
   '<strong>'+esc(technical(state.values))+'</strong>'+
-  '<div class="field-heading">Características propostas · toque no × para retirar</div>'+
-  '<div class="spec-tags" role="group" aria-label="Detalhes propostos">'+chipHtml+missingHtml+'</div>'+
+  '<div class="field-heading">Toque na tag para trocar · × para remover</div>'+
+  '<div class="spec-tags" role="group" aria-label="Detalhes propostos">'+chipHtml+missingHtml+'</div>'+tagEditor(item)+
   (count>1?'<p class="status">Também encontrado em '+count+' origens. Nenhuma quantidade será somada.</p>':'')+
   (problems.length?'<p class="status">'+esc(problems.length+' ponto(s) para conferir antes de usar')+'</p>':'')+
   '<div class="actions">'+
@@ -703,6 +758,7 @@ function reconcile(target=draft){
 }
 function removeTag(key,id){
  const item=byKey(key);if(!item||!proposed(item)[id])return;
+ activeTag=null;tagNotice='';
  const values={...proposed(item)};
  delete values[id];
  reconcile(values);
@@ -710,17 +766,20 @@ function removeTag(key,id){
  $('feedback').hidden=true;
  render();
 }
-$('search').addEventListener('input',()=>{extended=false;modifications.clear();render()});
+$('search').addEventListener('input',()=>{extended=false;modifications.clear();activeTag=null;tagNotice='';render()});
 $('search').addEventListener('keydown',e=>{if(e.key==='Enter')$('search').blur()});
 document.querySelectorAll('[data-example]').forEach(btn=>btn.addEventListener('click',()=>{
- $('search').value=btn.dataset.example;extended=false;modifications.clear();render();$('search').focus();
+ $('search').value=btn.dataset.example;extended=false;modifications.clear();activeTag=null;tagNotice='';render();$('search').focus();
 }));
 $('expand').addEventListener('click',()=>{extended=!extended;render()});
 $('top').addEventListener('click',pick);
 $('other').addEventListener('click',pick);
 $('review').addEventListener('click',pick);
 function pick(e){
- const button=e.target.closest('[data-remove-tag],[data-pick],[data-detail]');if(!button)return;
+ const button=e.target.closest('[data-close-tag],[data-open-tag],[data-set-tag],[data-remove-tag],[data-pick],[data-detail]');if(!button)return;
+ if(button.dataset.closeTag){activeTag=null;tagNotice='';render();return;}
+ if(button.dataset.openTag){openTag(button.dataset.candidate,button.dataset.openTag);return;}
+ if(button.dataset.setTag){setTag(button.dataset.candidate,button.dataset.setTag,button.dataset.value);return;}
  if(button.dataset.removeTag){removeTag(button.dataset.candidate,button.dataset.removeTag);return;}
  if(button.dataset.pick)showChoice(button.dataset.pick);
  else showDetail(button.dataset.detail);
@@ -756,7 +815,7 @@ document.querySelectorAll('[data-close-dialog]').forEach(x=>x.addEventListener('
 $('mic').disabled=!window.TereonXVoice.supported();
 $('mic').title=$('mic').disabled?'Reconhecimento indisponível. Digite ou use o microfone do teclado.':'A fala pode ser processada por serviço externo do navegador.';
 $('mic').addEventListener('click',()=>{
- window.TereonXVoice.start(t=>{$('search').value=t;extended=false;modifications.clear();render()},speakStatus);
+ window.TereonXVoice.start(t=>{$('search').value=t;extended=false;modifications.clear();activeTag=null;tagNotice='';render()},speakStatus);
 });
 $('search').value='fio flex 2,5 preto';
 render();
