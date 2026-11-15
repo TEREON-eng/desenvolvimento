@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark"><meta name="theme-color" content="#101815">
+<title>TEREON · Recomendador Condutores (laboratório)</title>
+<style>
+:root{color-scheme:dark;--bg:#101815;--surface:#1a2520;--soft:#26362d;--border:#405249;--fg:#f3f8f1;--muted:#c6d4c8;--lime:#c7ff46;--radius:16px}
+*{box-sizing:border-box}
+html,body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--fg)}
+body{min-height:100svh}
+a{color:var(--lime)}
+button,input,select{font:inherit}
+button{cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+.container{max-width:860px;margin:auto;padding:22px 16px 90px}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:27px}
+.brand{letter-spacing:.13em;font-weight:850;color:var(--lime)}
+.eyebrow{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:650}
+h1{margin:6px 0 9px;font-size:clamp(1.55rem,5vw,2.15rem);line-height:1.18}
+h2{font-size:1.15rem;margin:0}
+p{line-height:1.5}
+.intro{color:var(--muted);margin:0 0 18px}
+.card{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);padding:17px;margin:14px 0}
+.muted{color:var(--muted)}
+.small{font-size:.83rem}
+.searchbox{display:flex;align-items:stretch;gap:10px}
+.searchbox input{flex:1;min-width:0;background:var(--bg);border:1px solid var(--border);border-radius:12px;color:var(--fg);padding:14px;font-size:1rem}
+.searchbox input:focus,select:focus{outline:2px solid var(--lime);outline-offset:1px}
+button,.button{border:1px solid var(--border);border-radius:11px;padding:10px 13px;background:var(--soft);color:var(--fg);font-weight:600;min-height:42px}
+button.primary{background:var(--lime);color:#1a261a;border-color:var(--lime)}
+button.outline{background:transparent}
+button.linkish{color:var(--lime);background:transparent;border-color:transparent;text-decoration:underline}
+button:hover:not(:disabled){filter:brightness(1.12)}
+.examples{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.examples button{font-size:.78rem;min-height:34px;padding:6px 9px}
+.blockhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:23px 0 8px}
+.blockhead span{font-size:.82rem;color:var(--muted)}
+.candidate{padding:16px}
+.candidate strong{font-size:1.01rem}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.tag{display:inline-flex;padding:4px 8px;border-radius:999px;background:#334539;color:#e9f5e8;font-size:.75rem;font-weight:650}
+.tag.need{background:#4c3b25;color:#fff0b7}
+.spec{color:var(--fg);line-height:1.55;overflow-wrap:anywhere}
+.desc{margin-top:7px;color:var(--muted);font-size:.85rem}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.actions button{flex:1}
+.status{margin-top:10px;font-size:.84rem;color:var(--muted)}
+.context{border-left:3px solid var(--lime);padding:7px 13px;background:#18271c;border-radius:4px}
+.list{padding-left:17px}
+.list li{margin:5px 0}
+.empty{background:var(--soft);border-radius:12px;padding:14px;color:var(--muted)}
+.notice{border:1px solid #7b6737;color:#fff0be;background:#362c1c;border-radius:12px;padding:12px;margin:12px 0}
+.divider{height:1px;background:var(--border);margin:14px 0}
+[hidden]{display:none!important}
+dialog{border:1px solid var(--border);border-radius:16px;padding:0;width:min(620px,calc(100% - 24px));max-height:88vh;overflow:auto;background:var(--surface);color:var(--fg)}
+dialog::backdrop{background:rgba(0,0,0,.77)}
+.dialogin{padding:20px}
+.modalhead{display:flex;justify-content:space-between;align-items:start;gap:15px}
+.formgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:11px;margin:15px 0}
+.formgrid label{display:flex;flex-direction:column;gap:5px;color:var(--muted);font-size:.86rem}
+select{width:100%;padding:10px;background:var(--bg);color:var(--fg);border:1px solid var(--border);border-radius:9px;min-height:42px}
+.footer{display:flex;gap:10px;margin-top:20px}
+.footer button{flex:1}
+@media(max-width:560px){.searchbox{gap:6px}.searchbox input{padding:11px}.actions{flex-direction:column}.container{padding:15px 12px 70px}.card{padding:13px}dialog{max-height:94svh}}
+</style>
+</head><body>
+<div class="container">
+<header><div class="brand">TEREON <span class="muted small">/ LAB</span></div><a class="small" href="/x/?view=lists">Abrir listas do TEREON</a></header>
+<main>
+<div class="eyebrow">Protótipo isolado · 15/11/2026</div>
+<h1>Você pede. O TEREON sugere.</h1>
+<p class="intro">Teste a camada de recomendações antes da ficha detalhada. Neste laboratório, a lista, o histórico e os materiais são <strong>exemplos simulados</strong>. Nada será salvo nas suas listas.</p>
+<section class="card" aria-label="Pesquisa do material">
+<label class="eyebrow" for="search">Descreva o que precisa</label>
+<div class="searchbox" style="margin-top:9px"><input id="search" type="search" autocomplete="off" maxlength="300" placeholder="Ex.: fio flex 2,5 preto"><button id="mic" type="button" aria-label="Falar material">🎙 Falar</button></div>
+<div class="small muted" id="voiceStatus" role="status"></div>
+<div class="examples" aria-label="Exemplos"><button type="button" data-example="fio flex 2,5 preto">Fio flex 2,5 preto</button><button type="button" data-example="fio flex 2,5 preto 450">Fio 2,5 preto 450</button><button type="button" data-example="fio 4 preto">Fio 4 preto</button><button type="button" data-example="quadro de sobrepor">Quadro sobrepor</button></div>
+</section>
+<div id="results" aria-live="polite">
+<div class="blockhead"><h2>Mais prováveis</h2><span id="summary"></span></div>
+<div id="top"></div><button class="outline" type="button" id="expand" hidden>Ver outras opções</button><div id="other"></div><div id="review"></div>
+</div>
+<section class="card"><div class="eyebrow">Não encontrou exatamente o que precisa?</div><p>Continue com a ficha técnica detalhada. O caminho tradicional do TEREON permanece disponível.</p>
+<div class="actions"><button class="outline" type="button" id="personalize">Personalizar nesta demonstração</button><a class="button primary" style="text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;background:var(--lime);color:#1a261a" href="/x/?view=lists">Abrir ficha original no TEREON</a></div>
+<p class="small muted">Ao abrir a ficha original, a escolha desta demonstração ainda não é transferida automaticamente.</p></section>
+<div class="context" id="feedback" role="status" hidden></div>
+<section class="card small muted"><strong>O que este teste demonstra</strong><p>Prioridade: itens da lista atual → escolhas anteriores → catálogo. Especificações com lacunas ficam em revisão; a opção personalizada usa as regras do fichário experimental. Não há comparação com suas listas reais, aprendizado de preferências ou publicação de catálogo.</p><p>Se não aparecerem sugestões, confira se o pedido é de Condutores: o interpretador das outras famílias ainda não foi integrado.</p></section>
+</main></div>
+<dialog id="choiceDialog" aria-labelledby="choiceLabel"><div class="dialogin"><div class="modalhead"><div><div class="eyebrow">Conferir material completo</div><h2 id="choiceLabel">Confirma esta especificação?</h2></div><button data-close-dialog="choiceDialog" aria-label="Fechar">✕</button></div><div class="divider"></div><strong id="choiceHeading"></strong><p class="muted" id="choiceAttributes"></p><p class="small"><b>Origem:</b> <span id="choiceOrigin"></span></p><div class="notice" id="choiceHint"></div><div class="footer"><button data-close-dialog="choiceDialog" type="button">Voltar</button><button class="primary" type="button" id="choiceDone">Simular escolha</button></div></div></dialog>
+<dialog id="detailDialog" aria-labelledby="detailTitle"><div class="dialogin"><div class="modalhead"><div><div class="eyebrow">Ficha experimental de Condutores</div><h2 id="detailTitle">Personalizar</h2></div><button data-close-dialog="detailDialog" aria-label="Fechar">✕</button></div><p class="muted small">Ajuste as características. Este é um formulário de laboratório, <strong>não substitui o modal aprovado</strong>.</p><div class="formgrid" id="detailFields"></div><p class="small muted" role="status" id="detailCheck"></p><div class="footer"><button type="button" data-close-dialog="detailDialog">Voltar</button><button type="button" class="primary" id="detailDone" disabled>Usar especificação</button></div></div></dialog>
+<script id="snapshot" type="application/json">{"schema":1,"fonte":"Laboratório experimental TEREON X 12/11/2026, derivado de fichas-drive-2026-11-08.json; planilha Fichario.xlsm NÃO foi alterada","aviso":"Snapshot de laboratório: FT_COND-001 consolidada como estrutura de trabalho, mas ainda Em revisão e não homologada. Não alterar Fichario.xlsm original ou converter a consolidação em publicação técnica automática.","fichas":[{"codigo":"FT_INFRA-001","nome":"Eletroduto","categoria":"INFRAESTRUTURA","status":"Em revisão","tipo":"real","detalhes":[{"id":"DET-001","ordem":1,"nome":"Tipo","valores":["Rígido","Flexível"],"condicao":"Sempre","classificacao":"Obrigatório"},{"id":"DET-002","ordem":2,"nome":"Material","valores":["PVC","Aço"],"condicao":"Rígido","classificacao":"Obrigatório"},{"id":"DET-002","ordem":2,"nome":"Material","valores":["PVC","Aço","PEAD"],"condicao":"Flexível","classificacao":"Obrigatório"},{"id":"DET-003","ordem":3,"nome":"Diâmetro nominal · aço","valores":["1/2\"","3/4\"","1\"","1.1/4\"","1.1/2\"","2\"","2.1/2\"","3\"","4\""],"condicao":"Aço","classificacao":"Obrigatório"},{"id":"DET-004","ordem":4,"nome":"Diâmetro nominal · PVC","valores":["1/2\"","3/4\"","1\"","1.1/4\"","1.1/2\"","2\"","2.1/2\"","3\"","4\""],"condicao":"PVC","classificacao":"Obrigatório"},{"id":"DET-005","ordem":5,"nome":"Diâmetro nominal · PEAD","valores":["1/2\"","3/4\"","1\"","1.1/4\"","1.1/2\"","2\"","2.1/2\"","3\"","4\""],"condicao":"Flexível+PEAD","classificacao":"Obrigatório"},{"id":"DET-006","ordem":6,"nome":"Capa do eletroduto","valores":["COM capa","SEM capa"],"condicao":"Flexível+Aço","classificacao":"Obrigatório"},{"id":"DET-007","ordem":7,"nome":"Perfil","valores":["Liso","Corrugado"],"condicao":"Flexível+PVC // Flexível+PEAD","classificacao":"Obrigatório"},{"id":"DET-008","ordem":8,"nome":"Classe de resistência · PVC flexível","valores":["Leve","Média","Pesada"],"condicao":"Flexível+PVC","classificacao":"Obrigatório"},{"id":"DET-009","ordem":9,"nome":"Classe de resistência · PVC rígido (pendente de revisão)","valores":[],"condicao":"Rígido+PVC","classificacao":""},{"id":"DET-010","ordem":10,"nome":"Galvanização do aço rígido","valores":["Galvanização eletrolítica","Imersão a quente (a fogo)"],"condicao":"Rígido+Aço","classificacao":"Obrigatório"},{"id":"DET-011","ordem":11,"nome":"Tipo ponta","valores":["Rosqueável","Soldável"],"condicao":"Rígido+PVC","classificacao":""},{"id":"DET-012","ordem":12,"nome":"Unidade de compra","valores":["m","rl25","rl50","rl100"],"condicao":"Flexível","classificacao":""},{"id":"DET-013","ordem":13,"nome":"Unidade de compra","valores":["br3m"],"condicao":"Rígido","classificacao":""}],"revisaoLaboratorio":{"data":"2026-11-12","status":"EXPERIMENTAL — revisão de campo; não é ficha homologada","base":"Fichario.xlsm / snapshot importado de 08/11/2026","observacoes":["Classe PVC flexível: rótulos preliminares, sem afirmar classificação normativa ou resistência medida","PVC rígido: classe de resistência ainda sem opções validadas","Diâmetros disponíveis reproduzem snapshot anterior e dependem de conferência comercial","Unidades continuam expressas na unidade de compra escolhida; não converter em metros sem decisão técnica"]},"pendencias":["Revisar diâmetros comerciais e resistência do PVC rígido na planilha de origem","Validar rótulos de resistência por norma/produto antes de publicar","Conferir regras de eletrodutos flexíveis de aço, com/sem capa, e uso de PEAD"]},{"codigo":"FT_COND-001","nome":"Condutores isolados","categoria":"CONDUTORES","status":"Em revisão","tipo":"real","detalhes":[{"id":"DET-001","ordem":1,"nome":"Tipo","valores":["Condutor isolado"],"condicao":"Sempre","exclusao":"Cobertura","classificacao":"Obrigatório","origemLinha":11,"status":"Aprovado","compoeNome":"Sim"},{"id":"DET-001","ordem":1,"nome":"Tipo","valores":["Cabo unipolar"],"condicao":"Sempre","exclusao":"","classificacao":"Obrigatório","origemLinha":12,"status":"Aprovado","compoeNome":"Sim"},{"id":"DET-001","ordem":1,"nome":"Tipo","valores":["Cabo multipolar"],"condicao":"Sempre","exclusao":"Cor","classificacao":"Obrigatório","origemLinha":13,"status":"Aprovado","compoeNome":"Sim"},{"id":"DET-002","ordem":2,"nome":"Material","valores":["Cobre","Alumínio"],"condicao":"Sempre","exclusao":"","classificacao":"Obrigatório","origemLinha":14,"status":"Aprovado","compoeNome":"Sim"},{"id":"DET-003","ordem":3,"nome":"Qnt de vias","valores":["2","3","4","5","6"],"condicao":"Cabo multipolar","exclusao":"","classificacao":"Obrigatório","origemLinha":15,"status":"Aprovado","compoeNome":"Sim ({valor} x)"},{"id":"DET-004","ordem":4,"nome":"Seção","valores":["1,5","2,5","4,0","6,0","10,0","16,0","25,0","35,0","50,0","70,0","95,0","120,0","150,0","185,0","240,0"],"condicao":"Sempre","exclusao":"","classificacao":"Obrigatório","origemLinha":16,"status":"Aprovado","compoeNome":"Sim (#{valor} mm²)"},{"id":"DET-005","ordem":5,"nome":"Isolação","valores":["PVC 70 °C"],"condicao":"Sempre","exclusao":"Não halogenado com baixa emissão de fumaça (LSZH)","classificacao":"Obrigatório","origemLinha":15,"status":"Aprovado","compoeNome":"Sim (Isolação {valor})"},{"id":"DET-005","ordem":5,"nome":"Isolação","valores":["HEPR ou XLPE 90 °C"],"condicao":"Sempre","exclusao":"450/750 V","classificacao":"Obrigatório","origemLinha":16,"status":"Aprovado","compoeNome":"Sim (Isolação {valor})"},{"id":"DET-005","ordem":5,"nome":"Isolação","valores":["Termoplástico não halogenado 70 °C"],"condicao":"Sempre","exclusao":"","classificacao":"Obrigatório","origemLinha":17,"status":"Aprovado","compoeNome":"Sim (Isolação {valor})"},{"id":"DET-006","ordem":6,"nome":"Classe de tensão","valores":["450/750 V","0,6/1,0 kV"],"condicao":"Sempre","exclusao":"","classificacao":"Opcional","origemLinha":20,"status":"Aprovado","compoeNome":"Sim"},{"id":"DET-007","ordem":7,"nome":"Cobertura","valores":["PVC 70 °C"],"condicao":"Cabo unipolar//Cabo multipolar","exclusao":"Não halogenado com baixa emissão de fumaça (LSZH)","classificacao":"Opcional","origemLinha":21,"status":"Aprovado","compoeNome":"Sim"},{"id":"DET-007","ordem":7,"nome":"Cobertura","valores":["Termoplástico não halogenado 70 °C"],"condicao":"Cabo unipolar//Cabo multipolar","exclusao":"","classificacao":"Opcional","origemLinha":22,"status":"Aprovado","compoeNome":"Sim"},{"id":"DET-008","ordem":8,"nome":"Cor","valores":["Preto","Azul","Verde","Vermelho","Amarelo","Cinza","Marrom"],"condicao":"Sempre","exclusao":"","classificacao":"Obrigatório","origemLinha":23,"status":"Aprovado","compoeNome":"Sim"},{"id":"DET-009","ordem":9,"nome":"Classe de encordoamento","valores":["Classe I (Sólido)","Classe II (Encordoado flexível)","Classe V (Flexivel)","Classe VI (Extraflexível)"],"condicao":"Sempre","exclusao":"","classificacao":"Opcional","origemLinha":24,"status":"Aprovado","compoeNome":"Sim"},{"id":"DET-010","ordem":10,"nome":"Comportamento ao fogo","valores":["Comum"],"condicao":"PVC 70 °C","exclusao":"","classificacao":"Opcional","origemLinha":25,"status":"Aprovado","compoeNome":"Sim"},{"id":"DET-010","ordem":10,"nome":"Comportamento ao fogo","valores":["Não halogenado com baixa emissão de fumaça (LSZH)"],"condicao":"!PVC 70 °C","exclusao":"","classificacao":"Opcional","origemLinha":26,"status":"Aprovado","compoeNome":"Sim"},{"id":"DET-011","ordem":11,"nome":"Unidade","valores":["m","rl50m","rl100m","rl200m","2 lances","3 lances"],"condicao":"Sempre","exclusao":"","classificacao":"Opcional","origemLinha":27,"status":"Aprovado","compoeNome":"Não"}],"pendencias":["Fonte: Fichario.xlsm salvo 11/11/2026 20:37 BRT. Comportamento ao fogo DET-010 em duas linhas, opcional, com Comum condicionado a PVC 70 °C e LSZH condicionado a !PVC 70 °C.","Condição !PVC significa ausência de PVC confirmado nas tags; ela NÃO prova que o produto atende aos requisitos de baixa emissão de fumaça. Selecionar LSZH registra exigência explícita do profissional.","Revisar classificação IEC 60228 de encordoamento e a compatibilidade de produtos antes de homologar comercialmente.","Unidade DET-011 sincronizada de Fichario.xlsm salvo 11/11/2026 21:20 BRT: m; rl50m; rl100m; rl200m; 2 lances; 3 lances. Campo de unidade no modal é a fonte da apresentação; medições continuam em metros."],"nomeNaPlanilha":"Condutores isolados","apelidos":["Cabo","fio","cabinho","condutor"],"maturidade":"Consolidado","consolidacao":{"data":"2026-11-12","origem":"Avaliação do fundador: estrutura e fluxo da ficha considerados consolidados para ensaio","escopo":"Modelo do fichário e dinâmica de especificação; não implica conformidade de produto nem homologação de todas as combinações","publicacao":"Pendente de auditoria técnica final das opções e regras do fichário original"}},{"codigo":"FT_INFRA-002","nome":"Curva para eletroduto","categoria":"INFRAESTRUTURA","status":"Em revisão","tipo":"real","detalhes":[{"id":"DET-001","ordem":1,"nome":"Tipo","valores":["45°","90°"],"condicao":"Sempre","classificacao":"Obrigatório"},{"id":"DET-002","ordem":2,"nome":"Material","valores":["Aço","PVC"],"condicao":"Sempre","classificacao":"Obrigatório"},{"id":"DET-003","ordem":3,"nome":"Diâmetro","valores":["1/2\"","3/4\"","1\"","1.1/4\"","1.1/2\"","2\"","2.1/2\"","3\"","4\""],"condicao":"","classificacao":""},{"id":"DET-004","ordem":4,"nome":"Revestimento_Aço","valores":["Galvanização eletrolítica","Imersão a quente (a fogo)"],"condicao":"","classificacao":""},{"id":"DET-005","ordem":5,"nome":"Tipo ponta","valores":["Rosqueável","Soldável"],"condicao":"PVC","classificacao":""}]},{"codigo":"FT_INFRA-003","nome":"Conectores para eletroduto","categoria":"INFRAESTRUTURA","status":"Em revisão","tipo":"real","detalhes":[{"id":"DET-001","ordem":1,"nome":"Tipo","valores":["Reto","Cônico","Múltiplo"],"condicao":"Sempre","classificacao":"Obrigatório","observacao":"Na planilha, os três valores aparecem separados por vírgula."},{"id":"DET-002","ordem":2,"nome":"Diâmetro","valores":["1/2\"","3/4\"","1\"","1.1/4\"","1.1/2\"","2\"","2.1/2\"","3\"","4\""],"condicao":"Sempre","classificacao":"Obrigatório"}]},{"codigo":"FT_INFRA-004","nome":"Abraçadeiras","nomeNaPlanilha":"Conectores para eletroduto","categoria":"INFRAESTRUTURA","status":"Em revisão","tipo":"real","pendencias":["Na aba FT_INFRA-004, a célula B5 contém 'Conectores para eletroduto'. Nome exibido usa o assunto da aba e o código, sem modificar a fonte."],"detalhes":[{"id":"DET-001","ordem":1,"nome":"Tipo","valores":["Tipo \"D\" c/ cunha","Tipo \"U\" p/ perfialdo","Tipo \"U Ohmega\""],"condicao":"Sempre","classificacao":"Obrigatório"},{"id":"DET-002","ordem":2,"nome":"Diâmetro","valores":["1/2\"","3/4\"","1\"","1.1/4\"","1.1/2\"","2\"","2.1/2\"","3\"","4\""],"condicao":"Sempre","classificacao":"Obrigatório"}]},{"codigo":"FT_INFRA-005","nome":"Caixa de passagem","categoria":"INFRAESTRUTURA","status":"Em revisão","tipo":"real","detalhes":[{"id":"DET-001","ordem":1,"nome":"Tipo","valores":["Sobrepor","Embutir"],"condicao":"Sempre","classificacao":"Obrigatório"},{"id":"DET-002","ordem":2,"nome":"Material","valores":["Chapa de aço","Alumínio","PVC"],"condicao":"Sempre","classificacao":"Obrigatório"},{"id":"DET-003","ordem":3,"nome":"Tamanho","valores":["10x10","20x20","30x30","40x40"],"condicao":"","classificacao":""},{"id":"DET-004","ordem":4,"nome":"Tamanho PVC","valores":["4x2","4x4"],"condicao":"PVC+Embutir","classificacao":""}]}]}</script>
+<script>/* TEREON X — motor de catálogo / biblioteca v1.
+   Catálogo para listas e acervo de fichas compartilham a mesma fonte.
+   Visibilidade no catálogo não significa aprovação ou homologação. */
+(function(root){
+'use strict';
+let cache=null,loading=null;
+const clean=x=>String(x??'').trim();
+const norm=x=>clean(x).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+function isOfficial(f){return f?.publicacao?.homologada===true && ['aprovada','publicada','oficial'].includes(norm(f.status)) && f.tipo!=='hipotetica';}
+/* Um grupo (DET-xxx) representa UMA pergunta. Linhas com o mesmo ID representam
+   opções com condições/exclusões locais; fichas antigas de várias opções por linha
+   continuam suportadas. Sem qualquer inferência de produto ou homologação. */
+function normalize(f){
+ if(!f||!clean(f.codigo)||!clean(f.nome))throw Error('Ficha sem identificação');
+ const groups=new Map();
+ (f.detalhes||[]).forEach((d,i)=>{
+  const name=clean(d.nome),options=Array.isArray(d.valores)?d.valores.map(clean).filter(Boolean):clean(d.valores).split(';').map(clean).filter(Boolean);
+  if(!name&&!options.length)return;
+  const id=clean(d.id)||'DET-'+(i+1),order=Number(d.ordem)||i+1;
+  if(groups.has(id)&&groups.get(id).name!==name)throw Error('ID de detalhe duplicado com nomes diferentes: '+id);
+  if(!groups.has(id))groups.set(id,{id,name:name||'[Detalhe sem nome]',order,options:[],rows:[],condition:'',required:false,classification:''});
+  const g=groups.get(id);
+  if(g.order!==order)throw Error('Ordens diferentes para o mesmo detalhe: '+id);
+  g.required=g.required||norm(d.classificacao).includes('obrigat');
+  g.classification=g.required?'Obrigatório':(clean(d.classificacao)||g.classification);
+  options.forEach(o=>{if(!g.options.some(x=>norm(x)===norm(o)))g.options.push(o)});
+  g.rows.push({options,condition:clean(d.condicao),exclusion:clean(d.exclusao),nameRule:clean(d.compoeNome),originLine:d.origemLinha||null});
+ });
+ const details=[...groups.values()].sort((a,b)=>a.order-b.order);
+ for(const d of details)d.condition=d.rows.length===1?d.rows[0].condition:'';
+ const sourceType=f.tipo==='hipotetica'?'simulacao':isOfficial(f)?'oficial':'revisao';
+ const pendencias=[...(Array.isArray(f.pendencias)?f.pendencias:[]),...(sourceType==='simulacao'?['Ficha ainda não criada: opções fictícias']:[])];
+ details.forEach(d=>{
+  if(d.name==='[Detalhe sem nome]'||!d.options.length)pendencias.push('Revisar: '+d.name);
+  d.rows.forEach(row=>{if(!row.condition)pendencias.push('Condição não informada: '+d.name)});
+ });
+ return {id:clean(f.codigo),name:clean(f.nome),reference:clean(f.referencia)||clean(f.codigo),
+   status:clean(f.status),maturity:clean(f.maturidade),kind:sourceType,aliases:Array.isArray(f.apelidos)?f.apelidos.map(clean).filter(Boolean):[],collection:'catalogo-oficial',homologada:isOfficial(f),
+   pendencias,details,source:'fichario-x/fichas-lab-2026-11-12.json',sourceName:clean(f.nomeNaPlanilha),sourcePendencias:Array.isArray(f.pendencias)?f.pendencias:[]};
+}
+const eq=(a,b)=>norm(a)===norm(b);
+function applyRule(rule,values,details){
+ const r=clean(rule);if(!r||norm(r)==='sempre')return {visible:true,verified:!!r};
+ // '//' = OU, '+' = E, '!' = NÃO (nega SOMENTE a opção seguinte).
+ // Uma opção negada precisa existir na ficha; ausência de seleção não prova característica técnica.
+ const clauses=r.split('//').map(x=>x.trim());
+ if(clauses.some(x=>!x))return {visible:false,verified:false};
+ const groups=clauses.map(clause=>clause.split('+').map(token=>token.trim()));
+ if(groups.some(tokens=>tokens.some(token=>!token||token==='!')))return {visible:false,verified:false};
+ const parsed=groups.map(tokens=>tokens.map(token=>{
+  const negative=token.startsWith('!');
+  return {negative,value:negative?token.slice(1).trim():token};
+ }));
+ const known=parsed.every(tokens=>tokens.every(token=>token.value&&!token.value.startsWith('!')&&
+  details.some(d=>d.options.some(option=>eq(option,token.value)))));
+ if(!known)return {visible:false,verified:false};
+ const chosen=Object.values(values||{});
+ return {visible:parsed.some(tokens=>tokens.every(token=>{
+  const present=chosen.some(v=>eq(v,token.value));
+  return token.negative?!present:present;
+ })),verified:true};
+}
+function excludedTargets(f,values){
+ const tokens=[];
+ for(const d of f.details){
+  const chosen=values?.[d.id];
+  if(!chosen)continue;
+  const row=d.rows.find(r=>r.options.some(o=>eq(o,chosen)));
+  if(row?.exclusion)tokens.push(...row.exclusion.split(';').map(x=>x.trim()).filter(Boolean));
+ }
+ return tokens;
+}
+function blocked(f,values,d,option){
+ const targets=excludedTargets(f,values);
+ const byOthers=targets.some(t=>(eq(t,d.name)||eq(t,option))&&!(eq(values?.[d.id],option)));
+ if(byOthers)return true;
+ // Exclusion must work both ways regardless of confirmation order.
+ const targetRows=d.rows.filter(r=>r.options.some(x=>eq(x,option)));
+ return targetRows.some(r=>r.exclusion.split(';').map(x=>x.trim()).filter(Boolean).some(t=>{
+   return f.details.some(other=>other.id!==d.id&&values?.[other.id]&&(eq(t,other.name)||eq(t,values[other.id])));
+ }));
+}
+function optionsFor(f,values,id){
+ const d=f.details.find(x=>x.id===id);if(!d)return [];
+ return d.rows.flatMap(row=>{
+  const rule=applyRule(row.condition,values,f.details);
+  if(!rule.visible)return [];
+  return row.options.filter(o=>!blocked(f,values,d,o));
+ }).filter((o,i,a)=>a.findIndex(x=>eq(x,o))===i);
+}
+/* Descreve opções disponíveis e bloqueadas sem apagá-las da interface.
+   A restrição continua sendo a da ficha, sem inferência técnica. */
+function optionStates(f,values,id){
+ const d=f.details.find(x=>x.id===id);if(!d)return [];
+ const chosen=values||{};
+ return d.options.map(option=>{
+  const rows=d.rows.filter(r=>r.options.some(o=>eq(o,option)));
+  const applicable=rows.some(row=>applyRule(row.condition,chosen,f.details).visible);
+  const blockers=new Map();
+  for(const other of f.details){
+   if(other.id===d.id||!chosen[other.id])continue;
+   const selected=chosen[other.id];
+   const origin=other.rows.find(r=>r.options.some(o=>eq(o,selected)));
+   if(origin?.exclusion.split(';').some(t=>eq(t.trim(),d.name)||eq(t.trim(),option)))
+    blockers.set(other.id,{id:other.id,name:other.name,value:selected});
+   if(rows.some(row=>row.exclusion.split(';').some(t=>eq(t.trim(),other.name)||eq(t.trim(),selected))))
+    blockers.set(other.id,{id:other.id,name:other.name,value:selected});
+  }
+  const conditional=rows.some(row=>row.condition&&!eq(row.condition,'Sempre'));
+  const related=[...blockers.values()];
+  return {option,available:applicable&&!related.length,blockedBy:related,
+   reason:related.length?'Incompatível com '+related.map(x=>x.name+': '+x.value).join(', '):
+    !applicable?(conditional?'Não disponível para as características confirmadas':'Condição da ficha não atendida'):'',
+   conditional};
+ });
+}
+function relatedTags(f,values,id){
+ const d=f.details.find(x=>x.id===id);if(!d)return [];
+ const selected=values||{},links=new Set();
+ for(const other of f.details){
+  if(other.id===id||!selected[other.id])continue;
+  const choice=selected[other.id];
+  if(d.rows.some(row=>row.condition.split('//').some(clause=>clause.split('+').some(token=>eq(token.trim(),choice)))))
+   links.add(other.id);
+  const row=other.rows.find(r=>r.options.some(o=>eq(o,choice)));
+  if(row?.exclusion.split(';').some(t=>eq(t.trim(),d.name)||d.options.some(o=>eq(o,t.trim()))))
+   links.add(other.id);
+  if(d.rows.some(r=>r.exclusion.split(';').some(t=>eq(t.trim(),other.name)||eq(t.trim(),choice))))
+   links.add(other.id);
+ }
+ return [...links];
+}
+function visibleDetails(f,values){
+ return f.details.filter(d=>optionsFor(f,values||{},d.id).length>0);
+}
+function conflicts(f,values){
+ const out=[];
+ for(const d of f.details){
+  const chosen=values?.[d.id];if(!chosen)continue;
+  if(!d.options.some(x=>eq(x,chosen)))out.push('Opção inexistente em '+d.name+': '+chosen);
+  else if(!optionsFor(f,{...values,[d.id]:undefined},d.id).some(o=>eq(o,chosen)))out.push('Combinação incompatível: '+d.name+' = '+chosen);
+ }
+ return out;
+}
+/* Sequência de seleção: obrigatórios primeiro, salvo opcional que afeta
+   diretamente um obrigatório pendente por condição ou exclusão.
+   Ignorar não é confirmar: skipped é apenas estado transitório do modal. */
+function nextDetail(f,values,skipped=[]){
+ const ignored=new Set(skipped||[]);
+ const present=visibleDetails(f,values||{});
+ const required=present.filter(d=>d.required&&!values?.[d.id]);
+ const pendingOptional=present.filter(d=>!d.required&&!values?.[d.id]&&!ignored.has(d.id));
+ for(const target of required){
+  const prerequisite=pendingOptional.find(source=>source.rows.some(row=>{
+   const terms=row.exclusion.split(';').map(x=>x.trim()).filter(Boolean);
+   if(terms.some(t=>eq(t,target.name)||target.options.some(o=>eq(t,o))))return true;
+   return target.rows.some(trow=>trow.condition.split('//').some(clause=>
+    clause.split('+').some(token=>row.options.some(o=>eq(o,token)))));
+  }));
+  if(prerequisite)return prerequisite.id;
+  return target.id;
+ }
+ return pendingOptional[0]?.id||null;
+}
+function missing(f,values){
+ const out=[];
+ for(const d of f.details){
+  if(!d.required)continue;
+  const opts=optionsFor(f,values||{},d.id);
+  if(!opts.length){
+   // Condição de exibição falsa => detalhe não se aplica e não é obrigatório.
+   // Exclusão explícita do detalhe inteiro => não se aplica.
+   // Há linhas aplicáveis, porém todas as opções excluídas => conflito real.
+   const hidden=excludedTargets(f,values).some(t=>eq(t,d.name));
+   const statuses=d.rows.map(r=>applyRule(r.condition,values||{},f.details));
+   const applicable=statuses.some(s=>s.visible);
+   const malformed=statuses.some(s=>!s.verified);
+   if(!hidden&&(applicable||malformed))out.push(d.id);
+   continue;
+  }
+  if(!values?.[d.id]||!opts.some(o=>eq(o,values[d.id])))out.push(d.id);
+ }
+ return [...new Set([...out,...(conflicts(f,values).length?['__CONFLITO__']:[])])];
+}
+function technicalName(f,values){
+ const selected=f.details.filter(d=>values?.[d.id]);
+ const hasRules=selected.some(d=>d.rows.some(r=>r.nameRule));
+ if(!hasRules){
+  const picks=visibleDetails(f,values).filter(d=>values?.[d.id]).map(d=>values[d.id]);
+  return f.name+(picks.length?' · '+picks.join(' · '):'');
+ }
+ const parts=[];
+ for(const d of selected){
+  const chosen=values[d.id];
+  const row=d.rows.find(r=>r.options.some(x=>eq(x,chosen)));
+  const rule=clean(row?.nameRule);
+  if(!rule||norm(rule)==='nao')continue;
+  const matched=/^sim(?:\s*\(([\s\S]*)\))?$/i.exec(rule);
+  if(!matched)continue; // Não interpretar sintaxe desconhecida como nome válido.
+  parts.push(matched[1]===undefined?chosen:matched[1].replace(/\{valor\}/gi,chosen).trim());
+ }
+ return parts.join(' ').replace(/\s+/g,' ').trim()||f.name;
+}
+async function load(){
+ if(cache)return cache;
+ if(!loading)loading=fetch('/x/fichario-x/fichas-lab-2026-11-12.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Catálogo indisponível ('+r.status+')');return r.json()}).then(d=>{
+  if(d.schema!==1||!Array.isArray(d.fichas))throw Error('Esquema de catálogo incompatível');
+  const all=d.fichas.map(normalize);const ids=new Set();
+  all.forEach((f,i)=>{if(ids.has(f.id)){f.pendencias.push('Código do fichário duplicado: '+f.id);f.id=f.id+'-SIM-'+String(i+1).padStart(2,'0');}ids.add(f.id)});
+  cache=Object.freeze(all);return cache;
+ }).catch(e=>{loading=null;throw e});
+ return loading;
+}
+function list(){return cache||[]}
+function get(id){return list().find(f=>f.id===id)||null}
+root.TereonXCatalog=Object.freeze({version:2,load,list,get,isOfficial,normalize,visibleDetails,missing,technicalName,applyRule,optionsFor,conflicts,nextDetail,optionStates,relatedTags});
+})(window);
+</script>
+<script>/* TEREON X — piloto do interpretador de pedidos de Condutores.
+   Texto digitado ou transcrição de voz entram pela MESMA função pura.
+   Saída são propostas NÃO CONFIRMADAS; nenhum dado técnico é salvo aqui. */
+(function(root){
+'use strict';
+const fold=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();
+const has=(input,re)=>re.test(input);
+function interpret(raw){
+ const source=String(raw||'').slice(0,300),text=fold(source);
+ const proposals=[],warnings=[];
+ let family=null;
+ if(has(text,/\b(fio|cabinho|condutor|cabo|cabos|fios)\b/))family='FT_COND-001';
+ if(!family)return {source,family:null,proposals,warnings};
+ const add=(id,value,quality,explanation='')=>{
+  if(!proposals.some(p=>p.id===id))proposals.push({id,value,quality,explanation});
+ };
+ // Termos populares são sugestões de TIPO; fio/cabo sem construção é ambíguo.
+ if(has(text,/\b(multipolar|multi\s*polar)\b/))add('DET-001','Cabo multipolar','interpretado','Confirme o tipo e a quantidade de vias.');
+ else if(has(text,/\b(unipolar|uni\s*polar)\b/))add('DET-001','Cabo unipolar','interpretado','Confirme a construção.');
+ else if(has(text,/\b(fio|cabinho|condutor)\b/))add('DET-001','Condutor isolado','interpretado','Nome popular; confirme o tipo.');
+ if(has(text,/\b(cobre|cu)\b/))add('DET-002','Cobre','literal');
+ if(has(text,/\b(aluminio|alum)\b/))add('DET-002','Alumínio','literal');
+ // Seção: formato decimal, com ênfase em valores existentes na ficha.
+ const sizes=['1,5','2,5','4,0','6,0','10,0','16,0','25,0','35,0','50,0','70,0','95,0','120,0','150,0','185,0','240,0'];
+ let size=null;
+ if(has(text,/\bdois e meio\b/))size='2,5';
+ else{
+  for(const val of sizes){
+   const n=Number(val.replace(',','.'));
+   const forms=[val,val.replace(',','.')];
+   if(Number.isInteger(n))forms.push(String(n));
+   if(forms.some(f=>new RegExp('(^|[^\\d])'+f.replace('.','\\.').replace(',','[,]')+'(?=$|[^\\d])').test(text))){size=val;break;}
+  }
+ }
+ if(size)add('DET-004',size,'interpretado','Seção sugerida; confira em mm².');
+ const colors={preto:'Preto',preta:'Preto',azul:'Azul',verde:'Verde',vermelho:'Vermelho',vermelha:'Vermelho',amarelo:'Amarelo',amarela:'Amarelo',cinza:'Cinza',marrom:'Marrom'};
+ for(const [word,color] of Object.entries(colors)){
+  if(new RegExp('\\b'+word+'\\b').test(text)){add('DET-008',color,'literal');break;}
+ }
+ if(has(text,/\bpvc\b/))add('DET-005','PVC 70 °C','interpretado','Confira a temperatura; PVC não implica automaticamente 70 °C.');
+ if(has(text,/\b(hepr|xlpe|lszh|nao halogenado)\b/)){
+  warnings.push('Isolação '+(has(text,/\bhepr\b/)?'HEPR':has(text,/\bxlpe\b/)?'XLPE':'não halogenada')+
+   ': verificar na ficha; não substituir por uma opção conjunta automaticamente.');
+ }
+ const exact750=has(text,/\b450\s*[/\\-]\s*750\s*v?\b/);
+ const exact1kv=has(text,/\b0[,.]6\s*[/\\-]\s*1[,.]?0?\s*k?v\b/);
+ if(exact750)add('DET-006','450/750 V','literal');
+ else if(exact1kv)add('DET-006','0,6/1,0 kV','literal');
+ else if(has(text,/\b450\b|\b750\s*v\b/)){
+  add('DET-006','450/750 V','interpretado','450 ou 750 V isolados não confirmam a classe 450/750 V.');
+  warnings.push('A tensão informada está incompleta; confirme 450/750 V ou outra opção.');
+ }else if(has(text,/\b1\s*k\s*v\b/)){
+  add('DET-006','0,6/1,0 kV','interpretado','1 kV sozinho não define a classe completa.');
+  warnings.push('A menção a 1 kV precisa de confirmação na ficha.');
+ }
+ if(has(text,/\b(extraflexivel|extra flexivel)\b/))
+  add('DET-009','Classe VI (Extraflexível)','interpretado','Flexibilidade é indício, não ensaio de encordoamento.');
+ else if(has(text,/\b(flexivel|flex|flexionado)\b/))
+  add('DET-009','Classe V (Flexivel)','interpretado','Flexível não comprova sozinho a classe de encordoamento.');
+ if(has(text,/\b(2|3|4|5|6)\s*(vias|condutores)\b/) &&
+    proposals.some(p=>p.id==='DET-001'&&p.value==='Cabo multipolar')){
+  const n=text.match(/\b([23456])\s*(vias|condutores)\b/);
+  if(n)add('DET-003',n[1],'interpretado','Confirme o número de vias.');
+ }
+ proposals.sort((a,b)=>Number(a.id.slice(-3))-Number(b.id.slice(-3)));
+ return {source,family,proposals,warnings};
+}
+root.TereonXInterpreter=Object.freeze({interpret,version:'condutores-1'});
+})(typeof window!=='undefined'?window:globalThis);
+</script>
+<script>/* TEREON X — Recomendador conservador de Condutores, laboratório v1.
+ * Não gera atributos faltantes, não altera Listas, não publica fichas.
+ * Fontes em ordem: lista atual, histórico confirmado, catálogo.
+ */
+(function(root){'use strict';
+const FAMILY='FT_COND-001';
+const ORDER=['lista','historico','catalogo'];
+const noCommercial=new Set(['DET-011']);
+const requiredForRecommendation=['DET-001','DET-002','DET-004','DET-005','DET-006','DET-008'];
+const norm=v=>String(v??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();
+function equal(id,a,b){
+ if(id==='DET-004'){
+  const x=Number(String(a).replace(',','.')),y=Number(String(b).replace(',','.'));
+  if(Number.isFinite(x)&&Number.isFinite(y))return x===y;
+ }
+ return norm(a)===norm(b);
+}
+function signature(values){
+ return Object.keys(values||{}).filter(k=>!noCommercial.has(k)&&values[k]!=null&&String(values[k]).trim())
+  .sort().map(k=>k+':'+norm(values[k])).join('|');
+}
+function technicalCheck(ficha,values,catalog){
+ const problems=[];
+ if(!ficha||typeof catalog?.missing!=='function'||typeof catalog?.conflicts!=='function')
+  return {complete:false,problems:['Ficha técnica ou validador indisponível'],missing:[]};
+ const missing=catalog.missing(ficha,values).filter(id=>id!=='__CONFLITO__');
+ for(const id of requiredForRecommendation)if(!values[id]&&!missing.includes(id))missing.push(id);
+ for(const id of missing)problems.push('Detalhe ausente: '+id);
+ for(const message of catalog.conflicts(ficha,values))problems.push(String(message));
+ if(norm(values['DET-005']).includes(' ou '))problems.push('Isolação genérica: definir HEPR ou XLPE com fonte técnica');
+ return {complete:problems.length===0,problems,missing};
+}
+function assess(intent,record,origin,ficha,catalog){
+ if(!record||record.catalogId!==FAMILY||!record.values||typeof record.values!=='object')return null;
+ const values={...record.values},assessment=technicalCheck(ficha,values,catalog);
+ let score=0;
+ const requestWarnings=[];
+ for(const proposal of intent.proposals||[]){
+  const present=values[proposal.id];
+  if(!present){if(proposal.quality==='literal')requestWarnings.push('Não confirmado no candidato: '+proposal.id);continue;}
+  if(equal(proposal.id,present,proposal.value)){
+   score+=proposal.quality==='literal'?8:4;
+  }else if(proposal.quality==='literal'||proposal.id==='DET-004'){
+   return null; // Pedido explícito e candidato incompatível: não recomendar.
+  }else{
+   requestWarnings.push('Verificar ambiguidade: '+proposal.id);
+  }
+ }
+ // "Flexível" sem classe confirmada não é ficha pronta para este pedido.
+ const flexAsked=(intent.proposals||[]).some(p=>p.id==='DET-009');
+ if(flexAsked&&!values['DET-009'])requestWarnings.push('Classe de encordoamento não confirmada');
+ const complete=assessment.complete&&requestWarnings.length===0;
+ return {id:String(record.id??record.reference??record.name??'sem-id'),name:String(record.name||ficha?.name||'Condutor'),
+  origin,values,unit:record.unit==null?null:String(record.unit),
+  complete,homologated:complete&&ficha?.homologada===true,
+  issues:[...assessment.problems,...requestWarnings],missing:assessment.missing.slice(),
+  score,confirmedCount:Math.max(0,Number(record.confirmedCount)||0),
+  occurrences:[{origin,id:String(record.id??record.reference??record.name??'sem-id'),unit:record.unit==null?null:String(record.unit)}]
+ };
+}
+function recommend(input){
+ const opts=input||{},intent=opts.intent||{},ficha=opts.ficha,catalog=opts.catalog;
+ const empty={top:[],more:[],review:[],question:null,all:[]};
+ if(intent.family!==FAMILY)return empty;
+ const sources=opts.sources||{};
+ const collections=[
+  {key:'lista',rows:sources.currentList||[]},
+  {key:'historico',rows:sources.history||[]},
+  {key:'catalogo',rows:sources.catalog||[]}
+ ];
+ const eligible=[],reviews=[],seen=new Map();
+ for(const {key,rows} of collections){
+  if(!Array.isArray(rows))continue;
+  for(const record of rows){
+   const item=assess(intent,record,key,ficha,catalog);
+   if(!item)continue;
+   // Deduplicar somente especificações completas; nunca somar quantidade.
+   const keyId=item.complete?signature(item.values):null;
+   if(keyId&&seen.has(keyId)){
+    seen.get(keyId).occurrences.push(...item.occurrences);
+    continue;
+   }
+   if(keyId)seen.set(keyId,item);
+   (item.complete?eligible:reviews).push(item);
+  }
+ }
+ const compare=(a,b)=>ORDER.indexOf(a.origin)-ORDER.indexOf(b.origin)||b.score-a.score||b.confirmedCount-a.confirmedCount||a.name.localeCompare(b.name,'pt-BR');
+ eligible.sort(compare);reviews.sort(compare);
+ const count=Math.min(3,Math.max(1,Number(opts.limit)||3));
+ // Apenas pergunta por uma lacuna real; não escolhe a resposta.
+ let question=null;
+ if(!eligible.length&&reviews.length){
+  const first=reviews[0];
+  const priority=['DET-006','DET-005','DET-004','DET-001','DET-002','DET-008','DET-009'];
+  const id=priority.find(i=>first.missing.includes(i));
+  if(id){
+   const detail=ficha?.details?.find(d=>d.id===id);
+   question={id,name:detail?.name||id,candidateId:first.id};
+  }
+ }
+ return {top:eligible.slice(0,count),more:eligible.slice(count),review:reviews,question,all:[...eligible,...reviews]};
+}
+root.TereonXRecommend=Object.freeze({version:1,recommend});
+})(typeof window!=='undefined'?window:globalThis);
+</script>
+<script>/* TEREON X — voz opcional para o mesmo campo de texto do intérprete.
+   Sem armazenamento de áudio no TEREON; o serviço de reconhecimento é do navegador. */
+(function(root){'use strict';
+ let active=null;
+ const ctor=()=>root.SpeechRecognition||root.webkitSpeechRecognition;
+ function supported(){return !!ctor();}
+ function stop(){if(!active)return;const instance=active;active=null;try{instance.abort();}catch(_){}}
+ function start(onText,onStatus){
+  const Engine=ctor();
+  if(!Engine){onStatus('Voz indisponível neste navegador. Use texto ou ditado do teclado.',false);return false;}
+  if(active){stop();onStatus('Microfone interrompido.',false);return false;}
+  try{
+   let finished=false;
+   const recognizer=new Engine();active=recognizer;
+   recognizer.lang='pt-BR';recognizer.continuous=false;recognizer.interimResults=false;recognizer.maxAlternatives=1;
+   recognizer.onstart=()=>{if(active===recognizer)onStatus('Ouvindo… fale o nome do material.',true)};
+   recognizer.onresult=event=>{
+    if(active!==recognizer)return;
+    finished=true;
+    const transcript=String(event.results?.[event.resultIndex||0]?.[0]?.transcript||'').trim().slice(0,300);
+    if(transcript){onText(transcript);onStatus('Transcrição pronta. Confira o texto e confirme as sugestões.',false)}
+    else onStatus('Não entendi a fala. Tente novamente ou digite.',false);
+   };
+   recognizer.onerror=event=>{
+    if(active!==recognizer)return;
+    finished=true;
+    const error=String(event.error||'');
+    onStatus(error==='not-allowed'||error==='service-not-allowed'?
+     'Permissão de microfone negada. Você pode digitar.':
+     error==='network'?'Reconhecimento sem conexão. Você pode digitar.':
+     error==='no-speech'?'Nenhuma fala reconhecida. Tente novamente.':
+     'Não consegui transcrever. Use o texto ou tente outra vez.',false);
+   };
+   recognizer.onend=()=>{if(active===recognizer){active=null;onStatus(finished?'':'A gravação terminou sem transcrição. Digite ou tente novamente.',false)}};
+   recognizer.start();return true;
+  }catch(_){active=null;onStatus('Não foi possível iniciar o microfone. Confira a permissão ou digite.',false);return false}
+ }
+ root.TereonXVoice=Object.freeze({supported,start,stop});
+})(typeof window!=='undefined'?window:globalThis);
+</script>
+<script>(function(){'use strict';
+const $=id=>document.getElementById(id);
+const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+const catalog=window.TereonXCatalog;
+const raw=JSON.parse($('snapshot').textContent);
+const ficha=catalog.normalize(raw.fichas.find(f=>f.codigo==='FT_COND-001'));
+const D={
+ tipo:'DET-001',mat:'DET-002',sec:'DET-004',isol:'DET-005',tensao:'DET-006',cor:'DET-008',classe:'DET-009'
+};
+const base={
+ [D.tipo]:'Condutor isolado',[D.mat]:'Cobre',[D.sec]:'2,5',[D.isol]:'PVC 70 °C',
+ [D.tensao]:'450/750 V',[D.cor]:'Preto',[D.classe]:'Classe V (Flexivel)'
+};
+function record(id,extra={},attrs={}){return {
+ id,catalogId:'FT_COND-001',name:'Condutor elétrico',values:{...base,...attrs},
+ unit:'rl100m',qty:extra.qty||100,stage:extra.stage||'Geral',confirmedCount:extra.confirmedCount||0
+}}
+const samples={
+ currentList:[
+  record('l-01',{qty:100,stage:'Sala 01'}),
+  record('l-02',{qty:70,stage:'Sala 02'},{[D.tensao]:undefined}),
+ ],
+ history:[
+  record('h-01',{confirmedCount:12}),
+  record('h-02',{confirmedCount:5},{[D.sec]:'4,0'}),
+ ],
+ catalog:[
+  record('c-01',{},{[D.tensao]:'0,6/1,0 kV'}),
+  record('c-02',{},{[D.sec]:'4,0'}),
+  record('c-03',{},{[D.classe]:'Classe I (Sólido)'}),
+ ]
+};
+const originLabel={lista:'Já está nesta lista',historico:'Escolhido anteriormente',catalogo:'Exemplo de catálogo'};
+const names=Object.fromEntries(ficha.details.map(x=>[x.id,x.name]));
+let extended=false,last=null,selected=null,draft=null;
+const technical=v=>catalog.technicalName(ficha,v);
+function label(v){
+ const parts=[];
+ for(const id of [D.mat,D.sec,D.isol,D.tensao,D.cor,D.classe]){
+  if(v[id])parts.push(id===D.sec?v[id]+' mm²':v[id]);
+ }
+ return parts.join(' · ')||'Especificação em revisão';
+}
+function speakStatus(message,listening){
+ $('voiceStatus').textContent=message;
+ $('mic').textContent=listening?'■ Parar':'🎙 Falar';
+}
+function makeCard(item,category){
+ const source=originLabel[item.origin]||item.origin;
+ const warnings=(item.issues||[]).map(x=>'<li>'+esc(x)+'</li>').join('');
+ const count=item.occurrences?.length||1;
+ return '<article class="card candidate">'+
+  '<div class="topline"><span class="tag'+(category==='review'?' need':'')+'">'+esc(source)+'</span>'+
+  '<span class="small muted">'+(category==='review'?'Precisa conferir':'Candidato completo · ficha em revisão')+'</span></div>'+
+  '<strong>'+esc(technical(item.values))+'</strong>'+
+  '<div class="desc">'+esc(label(item.values))+'</div>'+
+  (count>1?'<p class="status">Encontrado em '+count+' origens. Não serão somadas quantidades.</p>':'')+
+  (warnings?'<details class="status"><summary>Por que revisar?</summary><ul class="list">'+warnings+'</ul></details>':'')+
+  '<div class="actions">'+
+  (category==='review'?'<button type="button" data-detail="'+esc(item.id)+'">Completar na ficha</button>':
+   '<button class="primary" type="button" data-pick="'+esc(item.id)+'">Escolher especificação</button>')+
+  '<button type="button" class="outline" data-detail="'+esc(item.id)+'">Personalizar</button>'+
+  '</div></article>';
+}
+function render(){
+ const q=$('search').value.trim().slice(0,300);
+ $('search').value=q;
+ const intent=window.TereonXInterpreter.interpret(q);
+ last=window.TereonXRecommend.recommend({intent,ficha,catalog,sources:samples});
+ $('results').hidden=!q;
+ if(!q)return;
+ const found=last.top.length+last.more.length+last.review.length;
+ $('summary').textContent=found+' correspondência(s) encontradas no cenário simulado';
+ if(!intent.family){
+  $('top').innerHTML='<div class="empty">Este piloto interpreta apenas pedidos de Condutores. Para Quadros, Proteções ou Infraestrutura, use a ficha normal do TEREON.</div>';
+  $('other').innerHTML='';$('expand').hidden=true;$('review').innerHTML='';return;
+ }
+ $('top').innerHTML=last.top.map(i=>makeCard(i,'top')).join('')||
+  '<div class="empty">Nenhum candidato completo para este pedido. Confira abaixo os itens com lacunas ou personalize pela ficha.</div>';
+ $('expand').hidden=last.more.length===0;
+ $('expand').textContent=(extended?'Ocultar outras opções':'Ver mais '+last.more.length+' opção(ões)');
+ $('other').innerHTML=extended?last.more.map(i=>makeCard(i,'top')).join(''):'';
+ $('review').innerHTML=last.review.length?
+  '<div class="blockhead"><h2>Possíveis, mas incompletos</h2><span>'+last.review.length+' para revisar</span></div>'+
+  last.review.map(i=>makeCard(i,'review')).join(''):'';
+ if(last.question){
+  $('review').insertAdjacentHTML('afterbegin','<div class="notice">Pergunta decisiva: <strong>'+esc(last.question.name)+'</strong>. O TEREON não pode preencher esse dado sozinho.</div>');
+ }
+}
+function showChoice(id){
+ const item=last?.all.find(x=>x.id===id);if(!item)return;
+ selected=item;
+ $('choiceHeading').textContent=technical(item.values);
+ $('choiceAttributes').textContent=label(item.values);
+ $('choiceOrigin').textContent=originLabel[item.origin]||item.origin;
+ $('choiceHint').textContent='Especificação completa no piloto, mas a ficha técnica permanece Em revisão. Confirmação apenas ilustrativa.';
+ $('choiceDialog').showModal();
+}
+function showDetail(id){
+ const item=id?last?.all.find(x=>x.id===id):null;
+ draft=item?{...item.values}:{};
+ $('detailTitle').textContent=item?'Personalizar a sugestão':'Criar material personalizado';
+ $('detailDialog').showModal();drawDetail();
+}
+function drawDetail(){
+ const visible=catalog.visibleDetails(ficha,draft);
+ $('detailFields').innerHTML=visible.map(d=>{
+  const states=catalog.optionStates(ficha,draft,d.id);
+  return '<label>'+esc(d.name)+(d.required?' *':'')+
+   '<select data-field="'+esc(d.id)+'"><option value="">Não informado</option>'+
+   states.map(s=>'<option value="'+esc(s.option)+'"'+(draft[d.id]===s.option?' selected':'')+
+   (!s.available?' disabled':'')+'>'+esc(s.option)+(s.available?'':' — incompatível')+'</option>').join('')+
+   '</select></label>';
+ }).join('');
+ const missing=catalog.missing(ficha,draft).filter(x=>x!=='__CONFLITO__');
+ if(!draft[D.tensao]&&!missing.includes(D.tensao))missing.push(D.tensao);
+ const conflicts=catalog.conflicts(ficha,draft);
+ const generic=String(draft[D.isol]||'').includes(' ou ');
+ const good=!missing.length&&!conflicts.length&&!generic;
+ $('detailCheck').textContent=good?
+  'Valores preenchidos conforme as opções do fichário experimental. Ainda não é homologação de produto.':
+  'Para confirmar: '+(missing.map(id=>names[id]||id).join(', ')||'')+
+  (conflicts.length?' · '+conflicts.join('; '):'')+
+  (generic?' · isolação HEPR ou XLPE ainda ambígua':'');
+ $('detailDone').disabled=!good;
+}
+function reconcile(changedId){
+ // Ao mudar uma escolha, nunca carregar detalhes que passaram a ser inválidos.
+ for(let p=0;p<ficha.details.length+1;p++){
+  let removed=false;
+  for(const d of ficha.details){
+   if(!draft[d.id])continue;
+   const others={...draft};delete others[d.id];
+   const valid=catalog.optionsFor(ficha,others,d.id).includes(draft[d.id]);
+   if(!valid){delete draft[d.id];removed=true;}
+  }
+  if(!removed)break;
+ }
+}
+$('search').addEventListener('input',()=>{extended=false;render()});
+$('search').addEventListener('keydown',e=>{if(e.key==='Enter')$('search').blur()});
+document.querySelectorAll('[data-example]').forEach(btn=>btn.addEventListener('click',()=>{
+ $('search').value=btn.dataset.example;extended=false;render();$('search').focus();
+}));
+$('expand').addEventListener('click',()=>{extended=!extended;render()});
+$('top').addEventListener('click',pick);
+$('other').addEventListener('click',pick);
+$('review').addEventListener('click',pick);
+function pick(e){
+ const button=e.target.closest('[data-pick],[data-detail]');if(!button)return;
+ if(button.dataset.pick)showChoice(button.dataset.pick);
+ else showDetail(button.dataset.detail);
+}
+$('personalize').addEventListener('click',()=>showDetail(null));
+$('detailFields').addEventListener('change',e=>{
+ const sel=e.target.closest('[data-field]');if(!sel)return;
+ if(sel.value)draft[sel.dataset.field]=sel.value;else delete draft[sel.dataset.field];
+ reconcile(sel.dataset.field);drawDetail();
+});
+$('detailDone').addEventListener('click',()=>{
+ const item={id:'personalizado',origin:'catalogo',values:{...draft},issues:[],complete:true,homologated:false};
+ $('detailDialog').close();
+ selected=item;
+ $('choiceHeading').textContent=technical(draft);
+ $('choiceAttributes').textContent=label(draft);
+ $('choiceOrigin').textContent='Montagem personalizada nesta simulação';
+ $('choiceHint').textContent='O valor foi revisado no laboratório. Nenhuma lista, catálogo ou preferência real foi alterada.';
+ $('choiceDialog').showModal();
+});
+$('choiceDone').addEventListener('click',()=>{
+ $('choiceDialog').close();
+ $('feedback').textContent='✓ Escolha simulada: '+technical(selected.values)+'. Nenhuma lista foi alterada.';
+ $('feedback').hidden=false;
+ $('feedback').scrollIntoView({behavior:'smooth',block:'nearest'});
+});
+document.querySelectorAll('[data-close-dialog]').forEach(x=>x.addEventListener('click',()=>$(x.dataset.closeDialog).close()));
+$('mic').disabled=!window.TereonXVoice.supported();
+$('mic').title=$('mic').disabled?'Reconhecimento indisponível. Digite ou use o microfone do teclado.':'A fala pode ser processada por serviço externo do navegador.';
+$('mic').addEventListener('click',()=>{
+ window.TereonXVoice.start(t=>{$('search').value=t;extended=false;render()},speakStatus);
+});
+$('search').value='fio flex 2,5 preto';
+render();
+})();</script>
+</body></html>

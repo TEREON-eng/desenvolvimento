@@ -30,6 +30,8 @@ jobs:
         run: node x/tests/interpretador-voz-condutores.test.cjs
       - name: Validar recomendador conservador de Condutores sem fusão automática
         run: node x/tests/recomendador-condutores.test.cjs
+      - name: Validar laboratório isolado de sugestões de Condutores
+        run: node x/tests/recomendador-preview.test.cjs
       - name: Validar confirmação das tags na busca e botão Avançar
         run: node x/tests/busca-tags-inline.test.cjs
       - name: Validar cartões compactos por etapa
