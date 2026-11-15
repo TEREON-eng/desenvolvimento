@@ -729,7 +729,7 @@ $('personalize').addEventListener('click',()=>showDetail(null));
 $('detailFields').addEventListener('change',e=>{
  const sel=e.target.closest('[data-field]');if(!sel)return;
  if(sel.value)draft[sel.dataset.field]=sel.value;else delete draft[sel.dataset.field];
- reconcile(sel.dataset.field);drawDetail();
+ reconcile(draft);drawDetail();
 });
 $('detailDone').addEventListener('click',()=>{
  const missing=requiredMissing(draft);
