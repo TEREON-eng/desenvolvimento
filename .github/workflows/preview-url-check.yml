@@ -1,0 +1,42 @@
+name: TEREON X - verificar URL Preview no celular
+on:
+  push:
+    branches: [desenvolvimento]
+    paths:
+      - ".github/workflows/preview-url-check.yml"
+jobs:
+  preview-url:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Verificar URLs candidatas de Preview sem alterar Cloudflare
+        shell: bash
+        run: |
+          set -u
+          urls=(
+            "https://desenvolvimento-muts-desenvolvimento.tereon-app.workers.dev"
+            "https://desenvolvimento-muts-desenvolvimento.jhcolba.workers.dev"
+            "https://desenvolvimento-muts.tereon-app.workers.dev"
+          )
+          for base in "${urls[@]}"; do
+            echo "::group::Verificando ${base}"
+            version="$(curl -fsSL --connect-timeout 5 --max-time 12 "${base}/x/version.json" 2>&1)" || { echo "${version}"; echo "::endgroup::"; continue; }
+            echo "Version: ${version}"
+            if ! grep -Fq 'x.0.3.63' <<< "${version}"; then
+              echo "Não contém a versão esperada x.0.3.63"
+              echo "::endgroup::"
+              continue
+            fi
+            page="$(curl -fsSL --connect-timeout 5 --max-time 12 "${base}/x/laboratorios/recomendador-condutores.html" 2>&1)" || { echo "${page:0:800}"; echo "::endgroup::"; continue; }
+            if grep -Fq 'id="search"' <<< "${page}" && grep -Fq 'data-open-tag' <<< "${page}"; then
+              echo "Preview publicamente acessível: ${base}/x/laboratorios/recomendador-condutores.html"
+              echo "### Preview do recomendador de Condutores" >> "${GITHUB_STEP_SUMMARY}"
+              echo "${base}/x/laboratorios/recomendador-condutores.html" >> "${GITHUB_STEP_SUMMARY}"
+              echo "::endgroup::"
+              exit 0
+            fi
+            echo "Página retornou sem a estrutura esperada"
+            echo "::endgroup::"
+          done
+          echo "::error::Nenhum dos endereços candidatos apresentou a versão esperada. Consulte o URL real em Cloudflare > Worker desenvolvimento > Preview."
+          exit 1
