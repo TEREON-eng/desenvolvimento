@@ -3,7 +3,7 @@
 **Estado observado em 15/11/2026, desenvolvimento X.0.3.62 (versão declarada).** Original com adendos históricos: [TESTES-REGRESSAO-PRE-SANEAMENTO-2026-11-14.md](TESTES-REGRESSAO-PRE-SANEAMENTO-2026-11-14.md).
 
 ## GitHub Actions — resultado real
-[Execução 43747213711](https://github.com/TEREON-eng/desenvolvimento/actions/runs/43747213711), commit **ed27d947424ef8f2a07e2b3ceb566092b13ff3f1**: **SUCESSO** (44 etapas aprovadas, zero falhas e zero skipped, incluindo setup). Inclui `recomendador-condutores.test.cjs`, teste de invalidação de diâmetro associado à escolha do material, todas as famílias/serviços e regressões do modal. Versão de metadados X.0.3.62 foi consolidada depois; é preciso verificar CI do commit correspondente e servir efetivo do PWA/Cloudflare antes de promover.
+[Execução 43747413219](https://github.com/TEREON-eng/desenvolvimento/actions/runs/43747413219), commit **07c28af199f8b0edceab0cbd1de0fba6735828de**: **SUCESSO** (44 etapas aprovadas, zero falhas e zero skipped, incluindo setup). Inclui `recomendador-condutores.test.cjs`, teste de invalidação de diâmetro associado à escolha do material, todas as famílias/serviços e regressões do modal. O CI do commit de X.0.3.62 também passou; ainda é preciso conferir deploy, PWA real e aceite antes de promover.
 
 ## Casos obrigatórios do núcleo
 | Cenário | Resultado exigido |
