@@ -38,7 +38,9 @@ assert.equal(color.top[0].origin,'historico','cor divergente excluída, sem inve
 const vague=ctx.window.TereonXInterpreter.interpret('fio flex 2,5 preto 450');
 const oneKV=record('1kv',{...values,'DET-006':'0,6/1,0 kV'});
 const tension=suggest.recommend({...input,intent:vague,sources:{catalog:[catalogItem,oneKV]}});
-assert.equal(tension.top.length,2,'450 ambíguo não elimina outra tensão');
+assert.equal(tension.top.length,1,'450 ambíguo não confirma automaticamente alternativa diferente');
+assert.equal(tension.review.length,1,'outra tensão continua visível para conferência, sem ser confirmada');
+assert.equal(tension.review[0].id,'1kv','alternativa de 1 kV preservada como revisão');
 assert.ok(tension.top.some(x=>x.issues.length===0),'há candidato integralmente identificado');
 const different=ctx.window.TereonXInterpreter.interpret('quadro de distribuição sobrepor');
 assert.equal(suggest.recommend({...input,intent:different}).top.length,0,'não aplica motor de condutores a outra família');
