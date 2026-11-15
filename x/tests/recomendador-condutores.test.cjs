@@ -1,0 +1,47 @@
+/* Recomendação conservadora: lista > histórico > catálogo, sem autoatributos. */
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const root=path.resolve(__dirname,'../..'),read=p=>fs.readFileSync(path.join(root,p),'utf8');
+const ctx={window:{}};vm.createContext(ctx);
+for(const p of ['x/catalogo/motor.js','x/catalogo/interpretador-condutores.js','x/catalogo/recomendador-condutores.js'])
+ new vm.Script(read(p)).runInContext(ctx);
+const ficheRaw=JSON.parse(read('x/fichario-x/fichas-lab-2026-11-12.json')).fichas.find(x=>x.codigo==='FT_COND-001');
+const catalog=ctx.window.TereonXCatalog,ficha=catalog.normalize(ficheRaw);
+const suggest=ctx.window.TereonXRecommend;
+const values={'DET-001':'Condutor isolado','DET-002':'Cobre','DET-004':'2,5','DET-005':'PVC 70 °C','DET-006':'450/750 V','DET-008':'Preto','DET-009':'Classe V (Flexivel)'};
+const record=(id,attrs,extra={})=>({id,catalogId:'FT_COND-001',name:'Condutor isolado de cobre 2,5 mm² PVC preto 450/750 V',values:{...attrs},unit:'rl100m',qty:100,qtyBasis:'m',...extra});
+const current=record('lista-1',values),historical=record('hist-1',values,{confirmedCount:400});
+const catalogItem=record('cat-1',values);
+const input={intent:ctx.window.TereonXInterpreter.interpret('fio flex 2,5 preto'),ficha,catalog,
+ sources:{currentList:[current],history:[historical],catalog:[catalogItem]}};
+const before=JSON.stringify(input.sources);
+const r=suggest.recommend(input);
+assert.equal(r.top.length,1,'mesmo condutor só aparece uma vez na recomendação');
+assert.equal(r.top[0].origin,'lista','lista atual prevalece sobre histórico e catálogo');
+assert.equal(r.top[0].occurrences.length,3,'preserva proveniências; não soma quantidades');
+assert.equal(r.top[0].complete,true,'todos os atributos do candidato têm valor concreto');
+assert.equal(r.top[0].homologated,false,'ficha LAB Em revisão nunca vira Oficial');
+assert.equal(JSON.stringify(input.sources),before,'nenhuma mutação nem consolidação comercial');
+const noVoltage=record('sem-tensao',Object.fromEntries(Object.entries(values).filter(([id])=>id!=='DET-006')));
+const onlyReview=suggest.recommend({...input,sources:{currentList:[noVoltage]}});
+assert.equal(onlyReview.top.length,0,'tensão ausente não vira material completo');
+assert.equal(onlyReview.review.length,1);
+assert.equal(onlyReview.question.id,'DET-006','perguntar o atributo essencial que falta');
+assert.ok(!('DET-006' in onlyReview.review[0].values),'jamais completar tensão por hipótese');
+const ambiguous=record('ambigua',{...values,'DET-005':'HEPR ou XLPE 90 °C'});
+const alt=suggest.recommend({...input,sources:{catalog:[ambiguous]}});
+assert.equal(alt.top.length,0,'HEPR ou XLPE não é construção individual confirmada');
+assert.equal(alt.review.length,1);
+const blue=record('azul',{...values,'DET-008':'Azul'});
+const color=suggest.recommend({...input,sources:{currentList:[blue],history:[historical]}});
+assert.equal(color.top[0].origin,'historico','cor divergente excluída, sem inventar equivalência');
+const vague=ctx.window.TereonXInterpreter.interpret('fio flex 2,5 preto 450');
+const oneKV=record('1kv',{...values,'DET-006':'0,6/1,0 kV'});
+const tension=suggest.recommend({...input,intent:vague,sources:{catalog:[catalogItem,oneKV]}});
+assert.equal(tension.top.length,2,'450 ambíguo não elimina outra tensão');
+assert.ok(tension.top.some(x=>x.issues.length===0),'há candidato integralmente identificado');
+const different=ctx.window.TereonXInterpreter.interpret('quadro de distribuição sobrepor');
+assert.equal(suggest.recommend({...input,intent:different}).top.length,0,'não aplica motor de condutores a outra família');
+const missingClass=record('sem-classe',Object.fromEntries(Object.entries(values).filter(([id])=>id!=='DET-009')));
+assert.equal(suggest.recommend({...input,sources:{catalog:[missingClass]}}).review.length,1,'pedido flexível pede conferência da classe');
+console.log('Recomendador Condutores: prioridade, lacunas, ambiguidade, proveniência e não mutação OK');

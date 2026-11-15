@@ -34,3 +34,8 @@ FT_COND-001: estrutura **Consolidada**, status **Em revisão**; tensão DET-006 
 
 ## Protocolo de alteração
 Antes de mudar: **problema → decisão → contratos afetados → caminhos/branch/SHA → testes automáticos → ensaio no aparelho → deploy comprovado → aceite**. Atualizar este documento substituindo trechos superados; preservar tentativa e histórico no CHANGELOG/Diário.
+
+## 15/11/2026 — Direção aprovada: materiais completos por recomendação
+A experiência principal em evolução é **pedido por texto/voz → 2–3 sugestões completas → Ver todas / Personalizar → confirmar o conjunto → verificar a Lista**, com perguntas decisivas apenas quando faltam informações. Ordem de busca: **itens da lista atual → especificações anteriores confirmadas → catálogo auditado**. Uma proposta não escolhida não é feedback negativo; aprender principalmente a partir de escolhas explícitas. Popularidade altera ordenação, não fatos técnicos. Fornecedores e fabricantes são fontes rastreadas; SKU/linha não entra no Oficial por simples importação.
+
+**Implementação nesta rodada:** laboratório puro `x/catalogo/recomendador-condutores.js` com teste: classifica candidatos já especificados, faz ranking sem autoatributos ou merge, identifica lacunas e produz uma pergunta decisiva. **Não há integração visual ainda, nem geração automática de novas combinações, nem IA treinada ou catálogo homologado.** O motor atual do modal permanece intocado, até ensaio do fluxo novo. Ficha FT_COND-001 LAB continua Em revisão; tensão DET-006 opcional na origem e “HEPR ou XLPE” genérico bloqueiam status de candidato completo no recomendador, mas exigem revisão na fonte antes de liberação comercial.
