@@ -701,7 +701,7 @@ function render(){
  $('expand').textContent=(extended?'Ocultar alternativas':'Ver outras sugestões ('+others.length+')');
  $('other').innerHTML=extended?others.map(makeCard).join(''):'';
  $('review').innerHTML=main&&!completeness(main).ready?
-  '<div class="notice">Esta sugestão tem detalhes pendentes. Retire ou altere as tags e use <strong>Editar esta sugestão</strong> para completar o que faltar.</div>':'';
+  '<p class="compact-warning">Detalhes pendentes: toque na tag com ? para completar.</p>':'';
 }
 function showChoice(key){
  const item=byKey(key);if(!item)return;
