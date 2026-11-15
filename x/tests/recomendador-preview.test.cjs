@@ -41,6 +41,16 @@ for(const x of scripts.filter(x=>!x.tag.includes('application/json')))
  new vm.Script(x.content,{filename:'lab-runtime.js'}).runInContext(context);
 assert.ok(element('top').innerHTML.includes('data-pick='),'pesquisa inicial exibe sugestão completa');
 assert.ok(element('top').innerHTML.includes('Já está nesta lista'),'precedência da lista atual aparece no card');
+// Regressão: espaços, múltiplas palavras e espaços finais devem permanecer no input.
+element('search').value='fio ';
+element('search').listeners.input();
+assert.equal(element('search').value,'fio ','espaço após a palavra não pode desaparecer');
+element('search').value+='flex ';
+element('search').listeners.input();
+assert.equal(element('search').value,'fio flex ','espaço entre e depois das palavras permanece digitável');
+element('search').value+='2,5 preto';
+element('search').listeners.input();
+assert.ok(element('top').innerHTML.includes('data-pick='),'busca de expressão completa continua funcionando');
 assert.ok(element('review').innerHTML.includes('Completar na ficha'),'item com lacunas não é sugerido como pronto');
 element('search').value='fio flex 2,5 preto 450';
 element('search').listeners.input();
