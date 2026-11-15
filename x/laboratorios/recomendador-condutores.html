@@ -592,8 +592,9 @@ function makeCard(item,category){
   '</div></article>';
 }
 function render(){
- const q=$('search').value.trim().slice(0,300);
- $('search').value=q;
+ // Interpretar uma cópia normalizada, sem reescrever o campo enquanto o usuário digita.
+ // Remover os espaços finais a cada tecla impede inserir a próxima palavra.
+ const q=$('search').value.slice(0,300).trim();
  const intent=window.TereonXInterpreter.interpret(q);
  last=window.TereonXRecommend.recommend({intent,ficha,catalog,sources:samples});
  $('results').hidden=!q;
