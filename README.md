@@ -14,6 +14,8 @@
 PWA em **x/**. Núcleo prioritário para ensaio supervisionado de 17/11/2026: **Listas → Fichas/Catálogo → Especificação → Compartilhamento**. Texto e voz opcionais alimentam um interpretador piloto de Condutores, que produz **propostas**, nunca confirma atributos automaticamente. Fotos são visão futura, não implementação. Universo/Obras/Diário são laboratórios, e Solicitações/Compras serão motores próprios.
 
 ## Laboratório mobile
+[Abrir prévia interativa do recomendador no celular](https://raw.githack.com/TEREON-eng/desenvolvimento/desenvolvimento/x/laboratorios/recomendador-condutores.html) — visualização externa do HTML público, com dados simulados, sem deploy Cloudflare; disponibilidade e toque em aparelho real não verificados. 
+
 Na Home do desenvolvimento há um atalho discreto **Testar recomendação por tags**. Essa rota usa apenas dados simulados e NÃO altera listas ou fichas oficiais. A página é publicada somente após implantação do Worker; o commit no GitHub não comprova deploy.
 
 ## Qualidade
