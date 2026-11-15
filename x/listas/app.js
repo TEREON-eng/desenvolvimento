@@ -391,7 +391,8 @@ function reconcileInvalidOptional(target=values){
  while(changed){
   changed=false;
   for(const d of selectedFicha.details){
-   if(d.required||!target[d.id])continue;
+   // Também limpar obrigatórios DERIVADOS: mudar material invalida o diâmetro associado.
+   if(!target[d.id])continue;
    const chosen=target[d.id];
    const alternatives=window.TereonXCatalog.optionsFor(selectedFicha,{...target,[d.id]:undefined},d.id);
    if(!alternatives.includes(chosen)){
