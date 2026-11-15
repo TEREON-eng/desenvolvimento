@@ -11,6 +11,8 @@ assert.ok(snapshot.fichas.some(f=>f.codigo==='FT_COND-001'&&f.status==='Em revis
 for(const x of scripts.filter(x=>!x.tag.includes('application/json')))new vm.Script(x.content,{filename:'inline-lab.js'});
 assert.ok(source.includes('id="search"')&&source.includes('id="expand"')&&source.includes('id="personalize"'));
 assert.ok(source.includes('id="detailDialog"')&&source.includes('id="choiceDialog"'));
+assert.ok(source.includes('class="utility-strip"')&&source.includes('<summary>Sobre este teste</summary>'),'painéis inferiores compactados e informações secundárias recolhidas');
+assert.ok(!source.includes('Não encontrou exatamente o que precisa?'),'remover painel inferior redundante');
 assert.ok(source.includes("const samples={"),'dados fictícios claramente isolados das listas');
 assert.ok(source.includes('Nenhuma lista foi alterada.'),'feedback não promete persistência');
 assert.ok(!source.includes('TereonXLists.create('),'laboratório não instancia motor de dados reais');
@@ -62,6 +64,21 @@ element('search').listeners.input();
 assert.equal(element('expand').hidden,false,'pedido vago permite mostrar mais candidatos');
 element('expand').listeners.click();
 assert.ok(element('other').innerHTML.includes('data-detail='),'Ver outras sugestões revela materiais editáveis');
+// Ao tocar no texto da tag, trocar apenas aquele detalhe, sem passar pelo × ou formulário.
+element('search').value='fio flex 2,5 preto';
+element('search').listeners.input();
+const changeKey=element('top').innerHTML.match(/data-open-tag="DET-008" data-candidate="([^"]+)"/);
+assert.ok(changeKey,'valor da cor é tocável');
+const changeCandidate=changeKey[1];
+element('top').listeners.click({target:{closest:()=>({dataset:{openTag:'DET-008',candidate:changeCandidate}})}});
+assert.ok(element('top').innerHTML.includes('data-set-tag="DET-008" data-value="Azul"'),'toque abre escolhas da ficha para aquele detalhe');
+assert.ok(element('top').innerHTML.includes('data-set-tag="DET-008" data-value="Preto"'),'valor anterior segue disponível');
+element('top').listeners.click({target:{closest:()=>({dataset:{setTag:'DET-008',value:'Azul',candidate:changeCandidate}})}});
+assert.ok(element('top').innerHTML.includes('data-open-tag="DET-008"'),'a tag permanece editável após troca');
+assert.ok(element('top').innerHTML.includes('>Azul</button>'),'cor trocada diretamente na sugestão');
+assert.ok(element('top').innerHTML.includes('PVC 70 °C'),'demais detalhes foram mantidos');
+assert.ok(element('top').innerHTML.includes('data-pick="'+changeCandidate+'"'),'troca válida ainda permite conferir o conjunto');
+assert.equal(element('detailDialog').open,undefined,'troca de tag não abre ficha completa');
 // O × atua SOMENTE sobre a sugestão, conserva as outras tags e exige editar pendências.
 element('search').value='fio flex 2,5 preto';
 element('search').listeners.input();
